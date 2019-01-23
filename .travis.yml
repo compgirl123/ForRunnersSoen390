@@ -58,11 +58,15 @@ before_install:
 - mkdir -p $ANDROID_HOME/licenses
 - echo -e "d56f5187479451eabf01fb78af6dfcb131a6481e" >> $ANDROID_HOME/licenses/android-sdk-license
 - echo -e "84831b9409646a918e30573bab4c9c91346d8abd" >> $ANDROID_HOME/licenses/android-sdk-preview-license
+
 script:
-- npm install
-- rm -rf platforms/ plugins/
-- cordova prepare android
-- cordova compile android --release
+- yarn install
+- cordova plugin ls
+- cordova platform ls
+- ionic cordova platform rm android --save
+- ionic cordova platform add android@latest --save 
+- npm i -D -E @ionic/v1-toolkit
+- ionic cordova build browser --prod 
 
 deploy:
   provider: pages
