@@ -61,14 +61,14 @@ before_install:
 
 script:
 - yarn install
-- npm run clean
-- npm run lint
-- npm run test-ci
-- npm run build
 - cordova plugin add cordova-plugin-whitelist
 - cordova plugin ls
 - cordova platform ls
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./travis/build-android.sh ; fi
+- npm i -D -E @ionic/v1-toolkit
+- ionic cordova platform rm android --save
+- ionic cordova platform add android@latest --save 
+- ionic cordova build browser --prod 
+
 
 deploy:
   provider: pages
