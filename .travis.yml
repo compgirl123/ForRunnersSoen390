@@ -64,6 +64,7 @@ script:
 - cordova plugin add cordova-plugin-whitelist
 - cordova plugin ls
 - cordova platform ls
+- npm cache clean 
 - npm i -D -E @ionic/v1-toolkit
 - ionic cordova platform rm android --save
 - ionic cordova platform add android@latest --save 
