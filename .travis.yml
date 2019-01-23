@@ -63,9 +63,9 @@ script:
 - cordova plugin ls
 - cordova platform ls
 - ionic cordova platform rm android --save
-- ionic cordova platform add android@latest --save --verbose
+- sudo ionic cordova platform add android@latest --save 
 - npm i -D -E @ionic/v1-toolkit
-- ionic cordova build browser --prod --verbose
+- sudo ionic cordova build browser --prod 
 
 deploy:
   provider: pages
