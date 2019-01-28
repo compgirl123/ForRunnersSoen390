@@ -9,31 +9,39 @@
         "parents": {
           "/*": [
             {
-              "xml": "<feature name=\"PowerManagement\"><param name=\"android-package\" value=\"org.apache.cordova.powermanagement.PowerManagement\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"IntentPlugin\"><param name=\"android-package\" value=\"com.napolitano.cordova.plugin.intent.IntentPlugin\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"ActivityRecognitionPlugin\"><param name=\"android-package\" value=\"cordova.plugin.activity.recognition.ActivityRecognitionPlugin\" /></feature>",
-              "count": 1
-            },
-            {
               "xml": "<feature name=\"AppVersion\"><param name=\"android-package\" value=\"uk.co.whiteoctober.cordova.AppVersion\" /></feature>",
               "count": 1
             },
             {
-              "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+              "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
               "count": 1
             },
             {
-              "xml": "<feature name=\"BackgroundMode\"><param name=\"android-package\" value=\"de.appplant.cordova.plugin.background.BackgroundMode\" /></feature>",
+              "xml": "<feature name=\"Insomnia\"><param name=\"android-package\" value=\"nl.xservices.plugins.Insomnia\" /></feature>",
               "count": 1
             },
             {
-              "xml": "<preference name=\"KeepRunning\" value=\"true\" />",
+              "xml": "<feature name=\"NativeStorage\"><param name=\"android-package\" value=\"NativeStorage\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"GPSLocation\"><param name=\"android-package\" value=\"fr.louisbl.cordova.gpslocation.CordovaGPSLocation\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Globalization\"><param name=\"android-package\" value=\"org.apache.cordova.globalization.Globalization\" /></feature>",
               "count": 1
             },
             {
@@ -49,43 +57,11 @@
               "count": 1
             },
             {
-              "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Globalization\"><param name=\"android-package\" value=\"org.apache.cordova.globalization.Globalization\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"GPSLocation\"><param name=\"android-package\" value=\"fr.louisbl.cordova.gpslocation.CordovaGPSLocation\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Insomnia\"><param name=\"android-package\" value=\"nl.xservices.plugins.Insomnia\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"NativeStorage\"><param name=\"android-package\" value=\"NativeStorage\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
               "xml": "<feature name=\"SocialSharing\"><param name=\"android-package\" value=\"nl.xservices.plugins.SocialSharing\" /></feature>",
               "count": 1
             },
             {
-              "xml": "<feature name=\"MusicControl\"><param name=\"android-package\" value=\"net.khertan.plugin.MusicControl\" /></feature>",
+              "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
               "count": 1
             }
           ],
@@ -101,45 +77,25 @@
         "parents": {
           "/*": [
             {
-              "xml": "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-              "count": 3
-            },
-            {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
               "count": 1
             },
             {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
               "count": 2
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+              "count": 3
             }
           ],
-          "/manifest/application": [
+          "application": [
             {
-              "xml": "<service android:name=\"cordova.plugin.activity.recognition.ActivityRecognitionIntentService\" />",
-              "count": 1
-            },
-            {
-              "xml": "<service android:name=\"de.appplant.cordova.plugin.background.ForegroundService\" />",
-              "count": 1
-            },
-            {
-              "xml": "<provider android:authorities=\"${applicationId}.sharing.provider\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:name=\"nl.xservices.plugins.FileProvider\"><meta-data android:name=\"android.support.FILE_PROVIDER_PATHS\" android:resource=\"@xml/sharing_paths\" /></provider>",
+              "xml": "<provider android:authorities=\"${applicationId}.provider\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:name=\"org.apache.cordova.camera.FileProvider\"><meta-data android:name=\"android.support.FILE_PROVIDER_PATHS\" android:resource=\"@xml/camera_provider_paths\" /></provider>",
               "count": 1
             }
           ],
           "/manifest": [
-            {
-              "xml": "<uses-permission android:name=\"com.google.android.gms.permission.ACTIVITY_RECOGNITION\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />",
-              "count": 1
-            },
             {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
               "count": 1
@@ -153,9 +109,15 @@
               "count": 1
             }
           ],
-          "application": [
+          "/*/application": [
             {
-              "xml": "<provider android:authorities=\"${applicationId}.provider\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:name=\"android.support.v4.content.FileProvider\"><meta-data android:name=\"android.support.FILE_PROVIDER_PATHS\" android:resource=\"@xml/provider_paths\" /></provider>",
+              "xml": "<receiver android:enabled=\"true\" android:name=\"nl.xservices.plugins.ShareChooserPendingIntent\"><intent-filter><action android:name=\"android.intent.action.SEND\" /></intent-filter></receiver>",
+              "count": 1
+            }
+          ],
+          "/manifest/application": [
+            {
+              "xml": "<provider android:authorities=\"${applicationId}.sharing.provider\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:name=\"nl.xservices.plugins.FileProvider\"><meta-data android:name=\"android.support.FILE_PROVIDER_PATHS\" android:resource=\"@xml/sharing_paths\" /></provider>",
               "count": 1
             }
           ]
@@ -178,46 +140,10 @@
     }
   },
   "installed_plugins": {
-    "at.gofg.sportscomputer.powermanagement": {
-      "PACKAGE_NAME": "net.khertan.forrunners"
-    },
-    "com.napolitano.cordova.plugin.intent": {
-      "PACKAGE_NAME": "net.khertan.forrunners"
-    },
-    "cordova-custom-config": {
-      "PACKAGE_NAME": "net.khertan.forrunners"
-    },
-    "cordova-plugin-activity-recognition": {
-      "PACKAGE_NAME": "net.khertan.forrunners"
-    },
     "cordova-plugin-app-version": {
       "PACKAGE_NAME": "net.khertan.forrunners"
     },
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "net.khertan.forrunners"
-    },
-    "cordova-plugin-background-mode": {
-      "PACKAGE_NAME": "net.khertan.forrunners"
-    },
-    "cordova-plugin-ble-central": {
-      "PACKAGE_NAME": "net.khertan.forrunners"
-    },
-    "cordova-plugin-camera": {
-      "PACKAGE_NAME": "net.khertan.forrunners"
-    },
-    "cordova-plugin-file": {
-      "PACKAGE_NAME": "net.khertan.forrunners"
-    },
-    "cordova-plugin-filepicker": {
-      "PACKAGE_NAME": "net.khertan.forrunners"
-    },
     "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "net.khertan.forrunners"
-    },
-    "cordova-plugin-globalization": {
-      "PACKAGE_NAME": "net.khertan.forrunners"
-    },
-    "cordova-plugin-gpslocation": {
       "PACKAGE_NAME": "net.khertan.forrunners"
     },
     "cordova-plugin-insomnia": {
@@ -226,25 +152,44 @@
     "cordova-plugin-nativestorage": {
       "PACKAGE_NAME": "net.khertan.forrunners"
     },
-    "cordova-plugin-request-location-accuracy": {
+    "cordova-plugin-gpslocation": {
       "PACKAGE_NAME": "net.khertan.forrunners"
     },
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "net.khertan.forrunners"
     },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "net.khertan.forrunners"
+    },
+    "cordova-plugin-request-location-accuracy": {
+      "PACKAGE_NAME": "net.khertan.forrunners"
+    },
+    "cordova-custom-config": {
+      "PACKAGE_NAME": "net.khertan.forrunners"
+    },
     "cordova-plugin-statusbar": {
       "PACKAGE_NAME": "net.khertan.forrunners"
     },
-    "cordova-plugin-whitelist": {
+    "cordova-plugin-globalization": {
+      "PACKAGE_NAME": "net.khertan.forrunners"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "net.khertan.forrunners"
+    },
+    "cordova-plugin-ble-central": {
+      "PACKAGE_NAME": "net.khertan.forrunners"
+    },
+    "cordova-plugin-file": {
       "PACKAGE_NAME": "net.khertan.forrunners"
     },
     "es6-promise-plugin": {
       "PACKAGE_NAME": "net.khertan.forrunners"
     },
     "cordova-plugin-x-socialsharing": {
+      "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
       "PACKAGE_NAME": "net.khertan.forrunners"
     },
-    "net.khertan.plugin.MusicControl": {
+    "cordova-plugin-device": {
       "PACKAGE_NAME": "net.khertan.forrunners"
     },
     "cordova-plugin-tts": {
@@ -254,30 +199,6 @@
   "dependent_plugins": {},
   "modules": [
     {
-      "id": "at.gofg.sportscomputer.powermanagement.device",
-      "file": "plugins/at.gofg.sportscomputer.powermanagement/www/powermanagement.js",
-      "pluginId": "at.gofg.sportscomputer.powermanagement",
-      "clobbers": [
-        "window.powerManagement"
-      ]
-    },
-    {
-      "id": "com.napolitano.cordova.plugin.intent.IntentPlugin",
-      "file": "plugins/com.napolitano.cordova.plugin.intent/www/android/IntentPlugin.js",
-      "pluginId": "com.napolitano.cordova.plugin.intent",
-      "clobbers": [
-        "IntentPlugin"
-      ]
-    },
-    {
-      "id": "cordova-plugin-activity-recognition.ActivityRecognition",
-      "file": "plugins/cordova-plugin-activity-recognition/www/ActivityRecognition.js",
-      "pluginId": "cordova-plugin-activity-recognition",
-      "clobbers": [
-        "cordova.plugins.ActivityRecognition"
-      ]
-    },
-    {
       "id": "cordova-plugin-app-version.AppVersionPlugin",
       "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
       "pluginId": "cordova-plugin-app-version",
@@ -286,28 +207,115 @@
       ]
     },
     {
-      "id": "cordova-plugin-device.device",
-      "file": "plugins/cordova-plugin-device/www/device.js",
-      "pluginId": "cordova-plugin-device",
+      "id": "cordova-plugin-geolocation.geolocation",
+      "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+      "pluginId": "cordova-plugin-geolocation",
       "clobbers": [
-        "device"
+        "navigator.geolocation"
       ]
     },
     {
-      "id": "cordova-plugin-background-mode.BackgroundMode",
-      "file": "plugins/cordova-plugin-background-mode/www/background-mode.js",
-      "pluginId": "cordova-plugin-background-mode",
+      "id": "cordova-plugin-geolocation.PositionError",
+      "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+      "pluginId": "cordova-plugin-geolocation",
+      "runs": true
+    },
+    {
+      "id": "cordova-plugin-insomnia.Insomnia",
+      "file": "plugins/cordova-plugin-insomnia/www/Insomnia.js",
+      "pluginId": "cordova-plugin-insomnia",
       "clobbers": [
-        "cordova.plugins.backgroundMode",
-        "plugin.backgroundMode"
+        "window.plugins.insomnia"
       ]
     },
     {
-      "id": "cordova-plugin-ble-central.ble",
-      "file": "plugins/cordova-plugin-ble-central/www/ble.js",
-      "pluginId": "cordova-plugin-ble-central",
+      "id": "cordova-plugin-nativestorage.mainHandle",
+      "file": "plugins/cordova-plugin-nativestorage/www/mainHandle.js",
+      "pluginId": "cordova-plugin-nativestorage",
       "clobbers": [
-        "ble"
+        "NativeStorage"
+      ]
+    },
+    {
+      "id": "cordova-plugin-nativestorage.LocalStorageHandle",
+      "file": "plugins/cordova-plugin-nativestorage/www/LocalStorageHandle.js",
+      "pluginId": "cordova-plugin-nativestorage"
+    },
+    {
+      "id": "cordova-plugin-nativestorage.NativeStorageError",
+      "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
+      "pluginId": "cordova-plugin-nativestorage"
+    },
+    {
+      "id": "cordova-plugin-gpslocation.Coordinates",
+      "file": "plugins/cordova-plugin-gpslocation/www/Coordinates.js",
+      "pluginId": "cordova-plugin-gpslocation",
+      "clobbers": [
+        "Coordinates"
+      ]
+    },
+    {
+      "id": "cordova-plugin-gpslocation.PositionError",
+      "file": "plugins/cordova-plugin-gpslocation/www/PositionError.js",
+      "pluginId": "cordova-plugin-gpslocation",
+      "clobbers": [
+        "PositionError"
+      ]
+    },
+    {
+      "id": "cordova-plugin-gpslocation.Position",
+      "file": "plugins/cordova-plugin-gpslocation/www/Position.js",
+      "pluginId": "cordova-plugin-gpslocation",
+      "clobbers": [
+        "Position"
+      ]
+    },
+    {
+      "id": "cordova-plugin-gpslocation.GPSLocation",
+      "file": "plugins/cordova-plugin-gpslocation/www/GPSLocation.js",
+      "pluginId": "cordova-plugin-gpslocation",
+      "clobbers": [
+        "window.GPSLocation"
+      ]
+    },
+    {
+      "id": "cordova-plugin-splashscreen.SplashScreen",
+      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+      "pluginId": "cordova-plugin-splashscreen",
+      "clobbers": [
+        "navigator.splashscreen"
+      ]
+    },
+    {
+      "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
+      "file": "plugins/cordova-plugin-request-location-accuracy/www/android/RequestLocationAccuracy.js",
+      "pluginId": "cordova-plugin-request-location-accuracy",
+      "clobbers": [
+        "cordova.plugins.locationAccuracy"
+      ]
+    },
+    {
+      "id": "cordova-plugin-statusbar.statusbar",
+      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+      "pluginId": "cordova-plugin-statusbar",
+      "clobbers": [
+        "window.StatusBar"
+      ]
+    },
+    {
+      "id": "cordova-plugin-globalization.GlobalizationError",
+      "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
+      "pluginId": "cordova-plugin-globalization",
+      "clobbers": [
+        "window.GlobalizationError"
+      ]
+    },
+    {
+      "id": "cordova-plugin-globalization.globalization",
+      "file": "plugins/cordova-plugin-globalization/www/globalization.js",
+      "pluginId": "cordova-plugin-globalization",
+      "clobbers": [
+        "navigator.globalization"
       ]
     },
     {
@@ -340,6 +348,14 @@
       "pluginId": "cordova-plugin-camera",
       "clobbers": [
         "CameraPopoverHandle"
+      ]
+    },
+    {
+      "id": "cordova-plugin-ble-central.ble",
+      "file": "plugins/cordova-plugin-ble-central/www/ble.js",
+      "pluginId": "cordova-plugin-ble-central",
+      "clobbers": [
+        "ble"
       ]
     },
     {
@@ -516,126 +532,6 @@
       "runs": true
     },
     {
-      "id": "cordova-plugin-filepicker.FilePicker",
-      "file": "plugins/cordova-plugin-filepicker/www/FilePicker.js",
-      "pluginId": "cordova-plugin-filepicker",
-      "clobbers": [
-        "FilePicker"
-      ]
-    },
-    {
-      "id": "cordova-plugin-geolocation.geolocation",
-      "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
-      "pluginId": "cordova-plugin-geolocation",
-      "clobbers": [
-        "navigator.geolocation"
-      ]
-    },
-    {
-      "id": "cordova-plugin-geolocation.PositionError",
-      "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
-      "pluginId": "cordova-plugin-geolocation",
-      "runs": true
-    },
-    {
-      "id": "cordova-plugin-globalization.GlobalizationError",
-      "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
-      "pluginId": "cordova-plugin-globalization",
-      "clobbers": [
-        "window.GlobalizationError"
-      ]
-    },
-    {
-      "id": "cordova-plugin-globalization.globalization",
-      "file": "plugins/cordova-plugin-globalization/www/globalization.js",
-      "pluginId": "cordova-plugin-globalization",
-      "clobbers": [
-        "navigator.globalization"
-      ]
-    },
-    {
-      "id": "cordova-plugin-gpslocation.Coordinates",
-      "file": "plugins/cordova-plugin-gpslocation/www/Coordinates.js",
-      "pluginId": "cordova-plugin-gpslocation",
-      "clobbers": [
-        "Coordinates"
-      ]
-    },
-    {
-      "id": "cordova-plugin-gpslocation.PositionError",
-      "file": "plugins/cordova-plugin-gpslocation/www/PositionError.js",
-      "pluginId": "cordova-plugin-gpslocation",
-      "clobbers": [
-        "PositionError"
-      ]
-    },
-    {
-      "id": "cordova-plugin-gpslocation.Position",
-      "file": "plugins/cordova-plugin-gpslocation/www/Position.js",
-      "pluginId": "cordova-plugin-gpslocation",
-      "clobbers": [
-        "Position"
-      ]
-    },
-    {
-      "id": "cordova-plugin-gpslocation.GPSLocation",
-      "file": "plugins/cordova-plugin-gpslocation/www/GPSLocation.js",
-      "pluginId": "cordova-plugin-gpslocation",
-      "clobbers": [
-        "window.GPSLocation"
-      ]
-    },
-    {
-      "id": "cordova-plugin-insomnia.Insomnia",
-      "file": "plugins/cordova-plugin-insomnia/www/Insomnia.js",
-      "pluginId": "cordova-plugin-insomnia",
-      "clobbers": [
-        "window.plugins.insomnia"
-      ]
-    },
-    {
-      "id": "cordova-plugin-nativestorage.mainHandle",
-      "file": "plugins/cordova-plugin-nativestorage/www/mainHandle.js",
-      "pluginId": "cordova-plugin-nativestorage",
-      "clobbers": [
-        "NativeStorage"
-      ]
-    },
-    {
-      "id": "cordova-plugin-nativestorage.LocalStorageHandle",
-      "file": "plugins/cordova-plugin-nativestorage/www/LocalStorageHandle.js",
-      "pluginId": "cordova-plugin-nativestorage"
-    },
-    {
-      "id": "cordova-plugin-nativestorage.NativeStorageError",
-      "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
-      "pluginId": "cordova-plugin-nativestorage"
-    },
-    {
-      "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
-      "file": "plugins/cordova-plugin-request-location-accuracy/www/android/RequestLocationAccuracy.js",
-      "pluginId": "cordova-plugin-request-location-accuracy",
-      "clobbers": [
-        "cordova.plugins.locationAccuracy"
-      ]
-    },
-    {
-      "id": "cordova-plugin-splashscreen.SplashScreen",
-      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-      "pluginId": "cordova-plugin-splashscreen",
-      "clobbers": [
-        "navigator.splashscreen"
-      ]
-    },
-    {
-      "id": "cordova-plugin-statusbar.statusbar",
-      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
-      "pluginId": "cordova-plugin-statusbar",
-      "clobbers": [
-        "window.StatusBar"
-      ]
-    },
-    {
       "id": "es6-promise-plugin.Promise",
       "file": "plugins/es6-promise-plugin/www/promise.js",
       "pluginId": "es6-promise-plugin",
@@ -650,11 +546,11 @@
       ]
     },
     {
-      "id": "net.khertan.plugin.MusicControl.MusicControl",
-      "file": "plugins/net.khertan.plugin.MusicControl/www/MusicControl.js",
-      "pluginId": "net.khertan.plugin.MusicControl",
+      "id": "cordova-plugin-device.device",
+      "file": "plugins/cordova-plugin-device/www/device.js",
+      "pluginId": "cordova-plugin-device",
       "clobbers": [
-        "window.musicControl"
+        "device"
       ]
     },
     {
@@ -667,29 +563,23 @@
     }
   ],
   "plugin_metadata": {
-    "at.gofg.sportscomputer.powermanagement": "1.1.0",
-    "com.napolitano.cordova.plugin.intent": "0.1.3",
-    "cordova-custom-config": "5.0.2",
-    "cordova-plugin-activity-recognition": "1.0.0",
     "cordova-plugin-app-version": "0.1.9",
-    "cordova-plugin-device": "1.1.2",
-    "cordova-plugin-background-mode": "0.7.2",
-    "cordova-plugin-ble-central": "1.1.4",
-    "cordova-plugin-camera": "4.0.2",
-    "cordova-plugin-file": "4.3.3",
-    "cordova-plugin-filepicker": "1.1.4",
     "cordova-plugin-geolocation": "2.2.0",
-    "cordova-plugin-globalization": "1.0.9",
-    "cordova-plugin-gpslocation": "1.0.0",
     "cordova-plugin-insomnia": "4.3.0",
     "cordova-plugin-nativestorage": "2.0.2",
-    "cordova-plugin-request-location-accuracy": "2.2.2",
+    "cordova-plugin-gpslocation": "1.0.0",
     "cordova-plugin-splashscreen": "3.2.2",
-    "cordova-plugin-statusbar": "2.2.3",
     "cordova-plugin-whitelist": "1.2.2",
+    "cordova-plugin-request-location-accuracy": "2.2.3",
+    "cordova-custom-config": "5.0.3",
+    "cordova-plugin-statusbar": "2.4.2",
+    "cordova-plugin-globalization": "1.11.0",
+    "cordova-plugin-camera": "4.0.3",
+    "cordova-plugin-ble-central": "1.2.2",
+    "cordova-plugin-file": "4.3.3",
     "es6-promise-plugin": "4.2.2",
-    "cordova-plugin-x-socialsharing": "5.1.8",
-    "net.khertan.plugin.MusicControl": "0.0.1",
+    "cordova-plugin-x-socialsharing": "5.4.4",
+    "cordova-plugin-device": "1.1.7",
     "cordova-plugin-tts": "0.2.3"
   }
 }
