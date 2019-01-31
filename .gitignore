@@ -26,13 +26,12 @@ ehthumbs.db
 Thumbs.db 
 *.un~
 
-plugins/*
+plugins/
 *.keystore
 *.key
 
 platforms/android/
-plugins/*
-node_modules/*
+node_modules/
 # Built application files
 *.apk
 *.ap_
@@ -57,7 +56,7 @@ proguard/
 captures/
 # IntelliJ
 *.iml
-.idea/*
+.idea/
 # Keystore files
 # Uncomment the following line if you do not want to check your keystore files in.
 #*.jks
