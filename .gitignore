@@ -30,7 +30,7 @@ plugins/*
 *.keystore
 *.key
 
-platforms/android/*
+platforms/android/
 plugins/*
 node_modules/*
 # Built application files
