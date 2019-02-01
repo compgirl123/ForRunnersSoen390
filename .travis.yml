@@ -41,3 +41,9 @@ script:
 - ionic cordova platform add android
 - npm i -D -E @ionic/v1-toolkit
 - ionic cordova build android 
+
+env:
+  global:
+  - export ANDROID_HOME="$HOME/android-sdk-linux"
+  - PATH=$PATH:$ANDROID_HOME/tools
+  - PATH=$PATH:$ANDROID_HOME/platform-tools 
