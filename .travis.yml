@@ -33,8 +33,7 @@ cache:
   directories:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
-  - "$HOME/Library/Caches/Yarn/v1/"
-  - "$HOME/.cache/yarn/v1/"
+  - "node_modules"
 
 before_script:
  - npm install -g ionic cordova
@@ -42,4 +41,5 @@ before_script:
 script:
 - ionic cordova platform remove android
 - ionic cordova platform add android
+- nm i -D -E @ionic/v1-toolkit
 - ionic cordova build android 
