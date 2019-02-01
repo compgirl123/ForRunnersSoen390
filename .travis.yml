@@ -20,7 +20,9 @@ matrix:
       - extra-google-m2repository
       - extra-android-m2repository
     licenses:
+    - android-sdk-preview-license-.+
     - android-sdk-license-.+
+    - google-gdk-license-.+
   allow_failures:
   - os: osx
     language: objective-c
@@ -39,8 +41,8 @@ cache:
   - "$HOME/.cache/yarn/v1/"
   
 before_install:
-- mkdir -p $ANDROID_HOME/licenses
-- echo -e "d56f5187479451eabf01fb78af6dfcb131a6481e" >> $ANDROID_HOME/licenses/android-sdk-license
+- yes | sdkmanager "platforms;android-27"
+- chmod +x gradlew
 
 before_script:
  - npm install -g ionic cordova
