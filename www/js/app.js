@@ -165,6 +165,17 @@ angular
         }
       })
 
+      .state("app.signin", {
+        url: "/signin",
+        cache: false,
+        views: {
+          menuContent: {
+            templateUrl: "templates/signin.html"
+            //controller: "EquipmentsCtrl"
+          }
+        }
+      })
+
       .state("app.sessions", {
         url: "/sessions",
         views: {
