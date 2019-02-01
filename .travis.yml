@@ -6,9 +6,7 @@ matrix:
   include:
   - os: linux
     sudo: false
-    language: node_js
-    node_js:
-      - "10.15.0"
+    language: android
     android:
       components:
       - tools
