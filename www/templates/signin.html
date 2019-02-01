@@ -1,9 +1,29 @@
+<style>
+        .item-content {
+          background-color:#80dfff;
+          padding-left: 20%;
+          padding-top: 50%;
+        }
+</style>
+
 <ion-view view-title="Sign In">
-    <ion-content>
+    <ion-content class= "item-content">
             <ion-label fixed>Email</ion-label>
-                <input type="text" placeholder="email">
+            <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated">
+                <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus">
+                    <input class="native-input sc-ion-input-ios" aria-labelledby="ion-input-1-lbl" autocapitalize="off" autocomplete="off" autocorrect="off" name="ion-input-1" placeholder="email" required="" type="text">
+                </ion-input>
             <ion-label fixed>Password</ion-label>
-                <input type="text" placeholder="password">
+                <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus">
+                    <input class="native-input sc-ion-input-ios" aria-labelledby="ion-input-1-lbl" autocapitalize="off" autocomplete="off" autocorrect="off" name="ion-input-1" placeholder="password" required="" type="password">
+                </ion-input>
+                <!--<ion-button type="submit" class="sc-ion-button-ios-h button button-block button-solid ion-activatable ion-focusable hydrated activated" expand="block">
+                    <button type="submit" class="button-native sc-ion-button-ios">
+                        <span class="button-inner sc-ion-button-ios sc-ion-button-ios-s">Create Account</span>
+                    </button>
+                </ion-button>-->
     </ion-content>
 </ion-view>
+
+
         
