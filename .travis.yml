@@ -41,5 +41,5 @@ before_script:
 script:
 - ionic cordova platform remove android
 - ionic cordova platform add android
-- nmp i -D -E @ionic/v1-toolkit
+- npm i -D -E @ionic/v1-toolkit
 - ionic cordova build android 
