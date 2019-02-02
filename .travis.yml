@@ -63,7 +63,4 @@ script:
 - yarn install
 - cordova plugin ls
 - cordova platform ls
-- ionic cordova platform remove android
-- ionic cordova platform add android 
-- npm i -D -E @ionic/v1-toolkit
-- ionic cordova build android 
+- ionic cordova build android
