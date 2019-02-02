@@ -7720,7 +7720,7 @@ input[type="tel"],
 input[type="color"] {
   display: block;
   padding-top: 2px;
-  padding-left: 0;
+  padding-left: 5px;
   height: 34px;
   color: #111;
   vertical-align: middle;
