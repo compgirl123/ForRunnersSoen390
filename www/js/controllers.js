@@ -4282,6 +4282,21 @@ angular
 
   })
 
+  .controller("SignInCtrl", function($scope) {
+    //"use strict";
+
+    //$scope.promptForRating = function() {
+    //AppRate.preferences.storeAppURL.android = 'market://details?id=net.khertan.forrunners';
+    //AppRate.preferences.promptAgainForEachNewVersion = false;
+    //AppRate.promptForRating();
+    //};
+
+    //if ($scope.sessions.length > 8) {
+    //    $scope.promptForRating();
+    //}
+
+  })
+
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
     "use strict";
     $scope.help_cur = 1;

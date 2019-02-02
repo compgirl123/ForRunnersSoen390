@@ -170,8 +170,8 @@ angular
         cache: false,
         views: {
           menuContent: {
-            templateUrl: "templates/signin.html"
-            //controller: "EquipmentsCtrl"
+            templateUrl: "templates/signin.html",
+            controller: "SignInCtrl"
           }
         }
       })
