@@ -179,6 +179,17 @@ angular
         }
       })
 
+      .state("app.signin", {
+        url: "/signin",
+        cache: false,
+        views: {
+          menuContent: {
+            templateUrl: "templates/signin.html",
+            controller: "SignInCtrl"
+          }
+        }
+      })
+
       .state("app.sessions", {
         url: "/sessions",
         views: {
