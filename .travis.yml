@@ -1,6 +1,7 @@
 branches:
   only:
   - master
+  - travis_dev
 matrix:
   include:
   - os: linux
