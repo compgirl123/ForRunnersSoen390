@@ -4288,6 +4288,10 @@ angular
     // add logic for sign in page to connect front-end to back-end database
   })
 
+  .controller("ProfileCtrl", function($scope) {
+    // add logic for profile page to connect front-end to back-end database
+  })
+
   .controller('ExampleDbCtrl', function($scope, $cordovaSQLite){
     $scope.insert = function(){
       var query = "INSERT INTO example(first_name, last_name) VALUES (?,?)";

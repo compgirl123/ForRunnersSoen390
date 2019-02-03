@@ -190,6 +190,17 @@ angular
         }
       })
 
+      .state("app.profile", {
+        url: "/profile",
+        cache: false,
+        views: {
+          menuContent: {
+            templateUrl: "templates/profile.html",
+            controller: "ProfileCtrl"
+          }
+        }
+      })
+
       .state("app.sessions", {
         url: "/sessions",
         views: {
