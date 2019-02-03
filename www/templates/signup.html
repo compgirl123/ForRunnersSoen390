@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<ion-view view-title="{{ '_sign_up' | translate }}">
+    <ion-content class= "signup-bckground-color">
+        <div class="signup">
+
+        <ion-label fixed>Username</ion-label>
+            <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="usrname">
+                </div>
+            </ion-input>
+
+        <ion-label fixed>Email</ion-label>
+            <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="email">
+                </div>
+            </ion-input>
+
+        <ion-label fixed>Password</ion-label>
+            <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus"></ion-input>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password">
+                </div>
+            </ion-input>
+
+        <ion-item text-wrap class = "confirmpassword">
+        <ion-label fixed>Confirm Password</ion-label>
+        </ion-item>
+
+            <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus"></ion-input>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="confirmPassword">
+                </div>
+            </ion-input>
+        </div>
+        
+        <div class="signupbutton">
+                <button class="button button-full button-dark">
+                    SIGN UP
+                </button>
+        </div>
+
+        <div class = "redirect">
+            <h6>Already a user? <a href="signin.html" style="color:white"> click here</a></h6>
+        </div>
+    
+
+
+    </ion-content>
+</ion-view>

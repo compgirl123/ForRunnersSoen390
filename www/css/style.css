@@ -288,3 +288,38 @@ small {
 .mid-bar h3 {
     font-size: 1.5em !important;
 }
+
+.signupbutton{
+    padding-left: 30%;
+    padding-right: 30%;
+    border-radius: 25px;
+}
+
+input[type=text],
+input[type=password] {
+    border-radius: 20px;
+
+}
+
+.confirmpassword{
+    padding-left: 0%;
+    padding-bottom: 0%;
+    padding-top: 0%;
+}
+
+h6{
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+}
+
+.signup-bckground-color {
+    background-image: url('../../img/background.png');
+}
+
+.signup{
+    height:auto;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 10%; 
+}

@@ -165,6 +165,16 @@ angular
         }
       })
 
+      .state("app.signup", {
+        url: "/signup",
+        cache: false,
+        views: {
+          menuContent: {
+            templateUrl: "templates/signup.html",
+            controller: "SignUpCtrl"
+          }
+        }
+      })
       .state("app.sessions", {
         url: "/sessions",
         views: {
@@ -389,7 +399,8 @@ angular
       _editable: "Touch to edit",
       _edit_session: "Edit Session",
       _session_name: "Session Name",
-      _session_type: "Session Type"
+      _session_type: "Session Type",
+      _sign_up: "Sign up"
     });
 
     $translateProvider.translations("fr-FR", {
@@ -569,7 +580,7 @@ angular
       _edit_session: "Edition",
       _editable: "Toucher pour modifier",
       _session_name: "Nom de la session",
-      _session_type: "Type de la session"
+      _session_type: "Type de la session",
     });
 
     $translateProvider.translations("de-DE", {
