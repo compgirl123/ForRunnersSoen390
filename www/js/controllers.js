@@ -4282,7 +4282,9 @@ angular
 
   })
 
-
+  .controller("SignUpCtrl", function($scope) {
+    // add logic for sign up page to connect front-end to back-end database
+  })
   
   .controller("SignInCtrl", function($scope) {
     // add logic for sign in page to connect front-end to back-end database
