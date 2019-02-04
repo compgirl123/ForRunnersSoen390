@@ -1,0 +1,28 @@
+<ion-view view-title="Database Example">
+	<ion-content padding="50" ng-controller="ExampleDbCtrl">
+		<form>
+			<div class="list">
+			  <label class="item item-input item-floating-label">
+			    <span class="input-label">First Name</span>
+			    <input type="text" placeholder="First Name" ng-model="first_name">
+			  </label>
+			  <label class="item item-input item-floating-label">
+			    <span class="input-label">Last Name</span>
+			    <input type="text" placeholder="Last Name" ng-model="last_name">
+			  </label>
+			  <button class="button button-block" ng-click="insert()">Add</button>
+			</div>
+		</form>
+
+		<div class="h4">Records in Example Database</div>
+		<div class="row">	
+			<div class="col col-40">First Name</div>
+			<div class="col col-40">Last Name</div>
+		</div>
+		<div class="row" ng-repeat="item in alldata">
+			<div class="col col-40">{{item.first_name}}</div>
+			<div class="col col-40">{{item.last_name}}</div>
+		</div>
+	</ion-content>
+
+</ion-view>

@@ -4285,7 +4285,32 @@ angular
   .controller("SignUpCtrl", function($scope) {
     // add logic for sign up page to connect front-end to back-end database
   })
+  
+  .controller("SignInCtrl", function($scope) {
+    // add logic for sign in page to connect front-end to back-end database
+  })
 
+  .controller('ExampleDbCtrl', function($scope, $cordovaSQLite){
+    $scope.insert = function(){
+      var query = "INSERT INTO example(first_name, last_name) VALUES (?,?)";
+      $cordovaSQLite.execute(db,query,[$scope.first_name, $scope.last_name]);
+      $scope.load();
+    }
+    $scope.load = function(){
+      $scope.alldata = [];
+      $cordovaSQLite.execute(db,"SELECT first_name, last_name FROM example")
+      .then(
+          function(result){
+            if(result.rows.length){
+              for(var i=0; i<result.rows.length;i++){
+                $scope.alldata.push(result.rows.item(i));
+              }
+            }
+          }
+        );
+    }
+    
+  })
 
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
     "use strict";

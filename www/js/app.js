@@ -1,3 +1,4 @@
+var db=null;
 angular
   .module("app", [
     "ionic",
@@ -7,10 +8,11 @@ angular
     "pascalprecht.translate", //'ionic-material', 'ionMdInput',
     "leaflet-directive",
     "ionic-modal-select",
-    "iosDblclick"
+    "iosDblclick",
+    "ngCordova"
   ])
 
-  .run(function($ionicPlatform) {
+  .run(function($ionicPlatform, $cordovaSQLite) {
     "use strict";
 
     $ionicPlatform.ready(function() {
@@ -70,6 +72,9 @@ angular
       if (window.device) {
         console.log(window.device);
       }
+      db=window.openDatabase("ForRunners.db", "1.0", "ForRunners", "2000");
+      $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT, email VARCHAR UNIQUE, password VARCHAR)");
+      $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS example(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT)");
     });
   })
 
@@ -125,6 +130,15 @@ angular
         }
       })
 
+      .state("app.database_example", {
+        url: "/database_example",
+        views: {
+          menuContent: {
+            templateUrl: "templates/database_example.html"
+          }
+        }
+      })
+
       .state("app.about", {
         url: "/about",
         views: {
@@ -175,6 +189,19 @@ angular
           }
         }
       })
+
+      .state("app.signin", {
+        url: "/signin",
+        cache: false,
+        views: {
+          menuContent: {
+            templateUrl: "templates/signin.html",
+            controller: "SignInCtrl"
+          }
+        }
+      })
+
+
       .state("app.sessions", {
         url: "/sessions",
         views: {
