@@ -4285,10 +4285,6 @@ angular
   .controller("SignUpCtrl", function($scope) {
     // add logic for sign up page to connect front-end to back-end database
   })
-  
-  .controller("SignInCtrl", function($scope) {
-    // add logic for sign in page to connect front-end to back-end database
-  })
 
   .controller("ProfileCtrl", function($scope,$ionicPopup,$ionicPopover,$cordovaSQLite) {
     // add logic for profile page to connect front-end to back-end database
@@ -4404,8 +4400,62 @@ angular
           }
         );
     }
-    
   })
+
+  .controller("SignInCtrl", function($scope, $cordovaSQLite) {
+    $scope.search = function(){
+      var columns = [id];
+      var selection = email + " = ?" + " AND " + password + " = ?";
+      var selectionArgs = [$scope.email, $scope.password];
+
+      var query = db.query(TABLE_USER, columns, selection, selectionArgs, null, null, null).then(
+        function(result){
+          $scope.result=false;
+          if (result.length > 0) {
+            $scope.result=true;
+            return true;
+          }    
+          return false;
+        });              
+      if(query()==true){
+        return true;
+      }
+      return false;
+    }
+
+    $scope.putUser = function(){
+      /*var query = "INSERT INTO users (email, password) VALUES (?,?)";
+      $cordovaSQLite.execute(db,query,[$scope.email, $scope.password]);
+      $scope.returnValidator();*/
+    }
+
+    $scope.returnValidator = function(){
+      $scope.alldata2 = [];
+      var query = "SELECT email, password FROM users WHERE email="+"'"+$scope.email+"'"+"";
+      //alert(query);
+      $cordovaSQLite.execute(db,query)
+      .then(
+          function(result){
+            //alert(query);
+            if(result.rows.length){
+              //alert(query);
+              for(var i=0; i<result.rows.length;i++){
+                $scope.alldata2.push(result.rows.item(i));
+                //alert(query);
+                alert(result.rows.item(i)["email"]);
+                alert("Email is valid");
+              }
+              
+            }
+            else{
+              alert("Email/password does not exist. Please try again");
+            }
+          }
+        );
+    }
+  })
+
+  
 
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
     "use strict";

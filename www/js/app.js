@@ -438,7 +438,8 @@ angular
       _edit_session: "Edit Session",
       _session_name: "Session Name",
       _session_type: "Session Type",
-      _sign_up: "Sign up"
+      _sign_up: "Sign up",
+      _sign_in: "Sign In"
     });
 
     $translateProvider.translations("fr-FR", {
