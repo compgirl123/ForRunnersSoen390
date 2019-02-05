@@ -8,59 +8,27 @@
                 </div>
                 <form>
                 <div class="list login">
-
-                <label class="item item-input item-floating-label">
                         <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated">
-                                <ion-label fixed>Email</ion-label>
-                                <input type="text" class="form-control" placeholder="Email" ng-model="email" id="usr">
+                                <ion-label fixed class="black"> Email</ion-label>
+                                <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Email" ng-model="email" id="usr">
+                                </div>
                         </ion-input>
-                </label>
-                <label class="item item-input item-floating-label">
+                
+                
                         <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus">
-                                <ion-label fixed>Password</ion-label> 
-                                <input type="password" placeholder="Password" class="form-control" id="pwd" ng-model="password">
+                                <ion-label fixed class="black">Password</ion-label> 
+                                <div class="form-group">
+                                        <input type="password" placeholder="Password" class="form-control " id="pwd" ng-model="password">
+                                </div>
                         </ion-input>
-                </label>
-                <div class="signinloginbutton">
-                        <button class="button button-block button-positive" ng-click="returnValidator()" >
-                                Sign In
-                        </button>
-                 </div> 
+                
+                        <div class="signinloginbutton">
+                                <button class="button button-block button-positive" ng-click="returnValidator()" >
+                                        Sign In
+                                </button>
+                        </div> 
                 </div>
             </form>
-    
         </ion-content>
-    
-    </ion-view>
-<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<ion-view view-title="Sign In">
-   <ion-content class= "signin-bckground-color">
-           <div class="hero no-header flat" style="background: url(img/icon.png) center; height:150px;">
-           </div>
-       <div class="login">
-           
-               
-               <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated">
-               <div class="form-group">
-                       <input type="text" class="form-control" id="usr">
-                     </div>
-                   </ion-input>
-        
-           <ion-label fixed>Password</ion-label>
-           <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus"></ion-input>
-           <div class="form-group">
-                   <input type="password" class="form-control" id="pwd">
-                 </div>
-               </ion-input>
-
-               <div class="signinloginbutton">
-                       <button class="button button-block button-positive" ng-click="putUser()" >
-                               Sign In
-                       </button>
-               </div>
-
-           </div>
-   </ion-content>
-</ion-view>-->
+</ion-view>
