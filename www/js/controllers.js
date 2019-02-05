@@ -4424,14 +4424,14 @@ angular
     }
 
     $scope.putUser = function(){
-      /*var query = "INSERT INTO users (email, password) VALUES (?,?)";
+      var query = "INSERT INTO users (email, password) VALUES (?,?)";
       $cordovaSQLite.execute(db,query,[$scope.email, $scope.password]);
-      $scope.returnValidator();*/
+      $scope.returnValidator();
     }
 
     $scope.returnValidator = function(){
       $scope.alldata2 = [];
-      var query = "SELECT email, password FROM users WHERE email="+"'"+$scope.email+"'"+"";
+      var query = "SELECT email, password FROM users WHERE email="+"'"+$scope.email+"'"+"AND password='"+$scope.password+"'";
       //alert(query);
       $cordovaSQLite.execute(db,query)
       .then(
