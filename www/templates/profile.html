@@ -1,0 +1,19 @@
+<ion-view view-title="{{ '_profile' | translate }}">
+    <ion-content>
+    		<img ng-click="setPhoto($index)" src="img/profile-picture.png" class="profile-picture">
+    		<div class="list">
+    			<div class="item item-divider" ng-click="editName();">
+            		Name : {{userName}}
+        		</div>
+        		<div class="item item-divider" ng-click="editAge();">
+            		Age : {{userAge}}
+            	</div>
+            	<div class="item item-divider" ng-click="editWeight()">
+            		Weight : {{userWeight}}
+            	</div>
+            	<div class="item item-divider" ng-click="editHeight()">
+            		Height : {{userHeight}}
+            	</div>
+            </div>
+    </ion-content>
+</ion-view>

@@ -287,3 +287,13 @@ h6{
     padding-top: 10%; 
 }
 
+.profile-picture {
+  vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding: 10px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}

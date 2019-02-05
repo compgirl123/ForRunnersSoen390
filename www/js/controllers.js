@@ -4290,6 +4290,101 @@ angular
     // add logic for sign in page to connect front-end to back-end database
   })
 
+  .controller("ProfileCtrl", function($scope,$ionicPopup,$ionicPopover,$cordovaSQLite) {
+    // add logic for profile page to connect front-end to back-end database
+
+    $scope.editName = function() {
+      if ($scope.userName== undefined) {
+        $scope.userName = "";
+      }
+
+      var editPopup = $ionicPopup.prompt({
+        template: "User name",
+        title: "Enter your name",
+        inputType: "text",
+        defaultText: $scope.userName.toString()
+      });
+
+      editPopup.then(function(res) {
+        $scope.saveName(res);
+      });
+    };
+
+    $scope.saveName = function(name) {
+      if (name === undefined) return;
+      $scope.userName = name;
+    };
+
+    $scope.editAge = function() {
+      if ($scope.userAge== undefined) {
+        $scope.userAge = "";
+      }
+
+      var editPopup = $ionicPopup.prompt({
+        template: "User age",
+        title: "Enter your age",
+        inputType: "text",
+        defaultText: $scope.userAge.toString()
+      });
+
+      editPopup.then(function(res) {
+        $scope.saveAge(res);
+      });
+    };
+
+    $scope.saveAge = function(age) {
+      if (age === undefined) return;
+      $scope.userAge = age;
+    };
+
+    $scope.editWeight = function() {
+      if ($scope.userWeight== undefined) {
+        $scope.userWeight = "";
+      }
+
+      var editPopup = $ionicPopup.prompt({
+        template: "User weight",
+        title: "Enter your weight",
+        inputType: "text",
+        defaultText: $scope.userWeight.toString()
+      });
+
+      editPopup.then(function(res) {
+        $scope.saveWeight(res);
+      });
+    };
+
+    $scope.saveWeight = function(weight) {
+      if (weight === undefined) return;
+      $scope.userWeight = weight + " Kg";
+    };
+
+    $scope.editHeight = function() {
+      if ($scope.userHeight== undefined) {
+        $scope.userHeight = "";
+      }
+
+      var editPopup = $ionicPopup.prompt({
+        template: "User height",
+        title: "Enter your height",
+        inputType: "text",
+        defaultText: $scope.userHeight.toString()
+      });
+
+      editPopup.then(function(res) {
+        $scope.saveHeight(res);
+      });
+    };
+
+    $scope.saveHeight = function(height) {
+      if (height === undefined) return;
+      $scope.userHeight = height + " m";
+    };
+
+
+
+  })
+
   .controller('ExampleDbCtrl', function($scope, $cordovaSQLite){
     $scope.insert = function(){
       var query = "INSERT INTO example(first_name, last_name) VALUES (?,?)";

@@ -201,7 +201,17 @@ angular
         }
       })
 
-
+      .state("app.profile", {
+        url: "/profile",
+        cache: false,
+        views: {
+          menuContent: {
+            templateUrl: "templates/profile.html",
+            controller: "ProfileCtrl"
+          }
+        }
+      })
+  
       .state("app.sessions", {
         url: "/sessions",
         views: {
@@ -411,6 +421,7 @@ angular
       _cadence: "Step Rate",
       _sendlogs: "Send logs",
       _equipments: "Equipment",
+      _profile: "Profile",
       _add_equipment: "Add a equipment",
       _duration_interval_detail: "Announce information at regular interval",
       _distance_interval_detail: "Announce information at kilometer interval",
@@ -456,6 +467,7 @@ angular
       _confirm_delete_eq: "Etes vous sur de vouloir supprimer cet equipement?",
       _delete_eq: "Supprimer",
       _equipments: "Equipements",
+      _profile: "Profil",
       _add_equipment: "Ajouter un equipement",
       _gpx_export_title: "Export GPX",
       _gpx_file_exported: "Toute vos sessions ont été exportées au format GPX.",
@@ -768,6 +780,7 @@ angular
       _cadence: "Rythmus",
       _sendlogs: "Sende Logdateien",
       _equipments: "Equipments",
+      _profile: "Profil",
       _add_equipment: "Füge Equipment hinzu",
       _duration_interval_detail: "Ansagen in Zeitintervallen (in Minuten)",
       _distance_interval_detail: "Ansagen nach Distanzen (in Kilometer)",
@@ -942,6 +955,7 @@ angular
       _cadence: "Rythmus",
       _sendlogs: "Sende Logdateien",
       _equipments: "Equipments",
+      _profile: "Perfil",
       _add_equipment: "Füge Equipment hinzu",
       _duration_interval_detail: "Ansagen in Zeitintervallen (in Minuten)",
       _distance_interval_detail: "Ansagen nach Distanzen (in Kilometer)",
@@ -1118,6 +1132,7 @@ angular
       _cadence: "Taxa de passo",
       _sendlogs: "Enviar logs",
       _equipments: "Equipamentos",
+      _profile: "Perfil",
       _add_equipment: "Addicionar um equipamento",
       _duration_interval_detail: "Anuncie informações em intervalos regulares",
       _distance_interval_detail:
