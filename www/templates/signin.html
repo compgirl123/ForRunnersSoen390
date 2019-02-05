@@ -1,16 +1,27 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 <ion-view view-title="Sign In">
-        <ion-content padding="50" ng-controller="SignInCtrl">
-            <form>
-                <div class="list">
-                  <label class="item item-input item-floating-label">
-                    <span class="input-label">email</span>
-                    <input type="text" placeholder="email" ng-model="email">
-                  </label>
-                  <label class="item item-input item-floating-label">
-                    <span class="input-label">password</span>
-                    <input type="password" placeholder="password" ng-model="password">
-                  </label>
-                  <div class="signinloginbutton">
+        <ion-content class="signin-bckground-color" padding="50" ng-controller="SignInCtrl">
+                <div class="hero no-header flat" style="background: url(img/icon.png) center; height:150px;">
+                </div>
+                <form>
+                <div class="list login">
+
+                <label class="item item-input item-floating-label">
+                        <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated">
+                                <ion-label fixed>Email</ion-label>
+                                <input type="text" class="form-control" placeholder="Email" ng-model="email" id="usr">
+                        </ion-input>
+                </label>
+                <label class="item item-input item-floating-label">
+                        <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus">
+                                <ion-label fixed>Password</ion-label> 
+                                <input type="password" placeholder="Password" class="form-control" id="pwd" ng-model="password">
+                        </ion-input>
+                </label>
+                <div class="signinloginbutton">
                         <button class="button button-block button-positive" ng-click="returnValidator()" >
                                 Sign In
                         </button>
@@ -30,7 +41,7 @@
            </div>
        <div class="login">
            
-               <ion-label fixed>Email</ion-label>
+               
                <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated">
                <div class="form-group">
                        <input type="text" class="form-control" id="usr">
