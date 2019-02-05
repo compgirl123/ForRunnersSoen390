@@ -4443,12 +4443,12 @@ angular
                 $scope.alldata2.push(result.rows.item(i));
                 //alert(query);
                 alert(result.rows.item(i)["email"]);
-                alert("Email is valid");
+                alert("Both email and password are correct. Welcome!");
               }
               
             }
             else{
-              alert("Email/password does not exist. Please try again");
+              alert("The Email/password is not correct. Please try again");
             }
           }
         );
