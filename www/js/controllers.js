@@ -4436,19 +4436,24 @@ angular
       $cordovaSQLite.execute(db,query)
       .then(
           function(result){
-            //alert(query);
-            if(result.rows.length){
-              //alert(query);
-              for(var i=0; i<result.rows.length;i++){
-                $scope.alldata2.push(result.rows.item(i));
-                //alert(query);
-                alert(result.rows.item(i)["email"]);
-                alert("Both email and password are correct. Welcome!");
+            errmessage = document.getElementById("error");
+            errmessage.innerHTML = "";
+            try{
+              if(result.rows.length){
+                for(var i=0; i<result.rows.length;i++){
+                  $scope.alldata2.push(result.rows.item(i));
+                  alert(result.rows.item(i)["email"]);
+                  alert("Both email and password are correct. Welcome!");
+                }
+                
               }
-              
+              else{
+                throw "";
+              }
+
             }
-            else{
-              alert("The Email/password is not correct. Please try again");
+            catch(err){
+              errmessage.innerHTML = "<p class=\"errorMessage\"><i class=\"fas fa-exclamation-triangle\"></i> The email and/or the password is/are not correct. Please try again.</p> ";
             }
           }
         );

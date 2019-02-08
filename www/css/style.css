@@ -306,4 +306,15 @@ h6{
     
 }
 
+.errorMessage{
+    /* color:#FD1E31;
+    text-shadow: 2px 2px rgb(255, 255, 255);
+    font-weight: bold; */
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px 3px 3px 3px;
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+
 
