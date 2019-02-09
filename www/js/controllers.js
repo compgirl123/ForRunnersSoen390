@@ -2360,7 +2360,7 @@ angular
         }
         //backgroundGeoLocation.stop();
         $interval.cancel($scope.runningTimeInterval);
-        
+
         try {
           delete $scope.session.firsttime;
         } catch (exception) {}
@@ -2671,8 +2671,8 @@ angular
               $scope.prefs.gpslostannounce &&
               timenew - 30 > $scope.gpslostlastannounce
             ) {
-          
-            
+
+
               $scope.speakText($scope.translateFilter("_gps_lost"));
               $scope.gpslostlastannounce = timenew;
             }
@@ -2775,7 +2775,7 @@ angular
                     if (altnew < $scope.session.minalt) {
                       $scope.session.minalt = altnew;
                       $scope.session.elevation =
-                  
+
                         $scope.session.maxalt - $scope.session.minalt;
                     }
                   }
@@ -4285,13 +4285,35 @@ angular
   .controller("SignUpCtrl", function($scope) {
     // add logic for sign up page to connect front-end to back-end database
   })
-  
+
   .controller("SignInCtrl", function($scope) {
     // add logic for sign in page to connect front-end to back-end database
   })
 
   .controller("ProfileCtrl", function($scope,$ionicPopup,$ionicPopover,$cordovaSQLite) {
     // add logic for profile page to connect front-end to back-end database
+
+    $scope.insert = function(){
+      var query = "INSERT INTO example(name,age,weight,height) VALUES (?,?,?,?)";
+      $cordovaSQLite.execute(db,query,[$scope.userName, $scope.userAge, $scope.userWeight, $scope.userHeight]);
+      $scope.load();
+    }
+
+    $scope.load = function(){
+      $scope.alldata = [];
+      $cordovaSQLite.execute(db,"SELECT name , age , weight , height FROM users_profile")
+      .then(
+          function(result){
+            if(result.rows.length){
+              for(var i=0; i<result.rows.length;i++){
+                $scope.alldata.push(result.rows.item(i));
+              }
+            }
+          }
+        );
+    }
+
+
 
     $scope.editName = function() {
       if ($scope.userName== undefined) {
@@ -4404,7 +4426,7 @@ angular
           }
         );
     }
-    
+
   })
 
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {

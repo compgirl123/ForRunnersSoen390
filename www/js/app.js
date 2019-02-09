@@ -140,6 +140,15 @@ angular
         }
       })
 
+      .state("app.profile", {
+        url: "/profile",
+        views: {
+          menuContent: {
+            templateUrl: "templates/Profile.html"
+          }
+        }
+      })
+
       .state("app.about", {
         url: "/about",
         views: {
