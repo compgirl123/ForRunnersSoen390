@@ -4286,8 +4286,52 @@ angular
     // add logic for sign up page to connect front-end to back-end database
   })
 
+  .controller("LogoutCtrl", function($scope, $cordovaSQLite) {
+    // add logic for logout page to connect front-end to back-end database
+    $scope.logout = function(name){
+      //var query = "delete from loggedin2";
+      // deletes all entries from loggedin2 table. Only uncomment if you want everything deleted
+      var query = "delete from loggedin2";
+    $cordovaSQLite.execute(db,query).then(
+      function(result){
+        alert(result);
+          /*for(var i=0; i<result.rows.length;i++){
+            $scope.displayEmail = result.rows.item(i)["email"];
+          }*/
+      }
+    );
+    };
+    
+  })
+
   .controller("ProfileCtrl", function($scope,$ionicPopup,$ionicPopover,$cordovaSQLite) {
     // add logic for profile page to connect front-end to back-end database
+    $scope.isLoggedIn = function(name){
+      var queryloggedin = "SELECT email FROM loggedin2 DESC LIMIT 1";
+      $cordovaSQLite.execute(db,query).then(
+        function(result){
+            for(var i=0; i<result.rows.length;i++){
+              alert("I")
+              //$scope.displayEmail = result.rows.item(i)["email"];
+            }
+        },
+        function (err) {
+          alert('ERROR: ' + err);
+        }
+      );
+    };
+    $scope.displayEmail = function(name) {
+      var query2 = "SELECT email FROM loggedin2 DESC LIMIT 1";
+      var query = "SELECT email FROM loggedin2 ORDER BY id DESC LIMIT 1";
+      $cordovaSQLite.execute(db,query).then(
+        function(result){
+            for(var i=0; i<result.rows.length;i++){
+              $scope.displayEmail = result.rows.item(i)["email"];
+            }
+        }
+      );
+      return $scope.displayEmail;
+    };
 
     $scope.editName = function() {
       if ($scope.userName== undefined) {
@@ -4304,7 +4348,7 @@ angular
       editPopup.then(function(res) {
         $scope.saveName(res);
       });
-    };
+  };
 
     $scope.saveName = function(name) {
       if (name === undefined) return;
@@ -4442,8 +4486,22 @@ angular
               for(var i=0; i<result.rows.length;i++){
                 $scope.alldata2.push(result.rows.item(i));
                 //alert(query);
+                var query = "INSERT INTO loggedin2 (email,password) VALUES (?,?)";
+
+                $cordovaSQLite.execute(db,query,[$scope.email,$scope.password]).then(
+                  function (res) {
+                      alert('INSERTED ID: ' + res);
+                  },
+                  function (err) {
+                      alert('ERROR: ' + err);
+                  }
+                );
+                //alert($scope.email);
                 alert(result.rows.item(i)["email"]);
                 alert("Both email and password are correct. Welcome!");
+                // put alert here to redirect
+                window.location.href = "/#/app/profile";
+                // redirects to profile
               }
               
             }
@@ -4456,7 +4514,6 @@ angular
   })
 
   
-
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
     "use strict";
     $scope.help_cur = 1;

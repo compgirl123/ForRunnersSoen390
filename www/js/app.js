@@ -75,6 +75,7 @@ angular
       db=window.openDatabase("ForRunners.db", "1.0", "ForRunners", "2000");
       $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT, email VARCHAR UNIQUE, password VARCHAR)");
       $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS example(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT)");
+      $cordovaSQLite.execute(db,"CREATE TABLE loggedin2(id INTEGER PRIMARY KEY AUTOINCREMENT, email VARCHAR UNIQUE, password VARCHAR )");
     });
   })
 
@@ -197,6 +198,17 @@ angular
           menuContent: {
             templateUrl: "templates/signin.html",
             controller: "SignInCtrl"
+          }
+        }
+      })
+
+      .state("app.logout", {
+        url: "/logout",
+        cache: false,
+        views: {
+          menuContent: {
+            templateUrl: "templates/logout.html",
+            controller: "LogoutCtrl"
           }
         }
       })
@@ -439,7 +451,8 @@ angular
       _session_name: "Session Name",
       _session_type: "Session Type",
       _sign_up: "Sign up",
-      _sign_in: "Sign In"
+      _sign_in: "Sign In",
+      _logout: "Logout"
     });
 
     $translateProvider.translations("fr-FR", {
