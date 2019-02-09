@@ -4503,10 +4503,13 @@ angular
                 window.location.href = "/#/app/profile";
                 // redirects to profile
               }
-              
+              else{
+                throw "";
+              }
+
             }
-            else{
-              alert("The Email/password is not correct. Please try again");
+            catch(err){
+              errmessage.innerHTML = "<p class=\"errorMessage\"><i class=\"fas fa-exclamation-triangle\"></i> The email and/or the password is/are not correct. Please try again.</p> ";
             }
           }
         );
