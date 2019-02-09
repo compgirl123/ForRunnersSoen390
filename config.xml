@@ -93,26 +93,27 @@
     </platform>
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
-    <plugin name="cordova-plugin-app-version" spec="~0.1.9" />
-    <plugin name="cordova-plugin-geolocation" spec="~2.2.0" />
+    <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
+    <plugin name="cordova-plugin-geolocation" spec="^2.2.0" />
     <plugin name="cordova-plugin-insomnia" spec="https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git" />
-    <plugin name="cordova-plugin-nativestorage" spec="~2.0.2" />
-    <plugin name="cordova-plugin-gpslocation" spec="~1.0.0" />
-    <plugin name="cordova-plugin-splashscreen" spec="~3.2.2" />
-    <plugin name="cordova-plugin-whitelist" spec="~1.2.2" />
-    <plugin name="cordova-plugin-request-location-accuracy" spec="^2.2.2" />
-    <plugin name="cordova-custom-config" spec="^5.0.2" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
-    <plugin name="cordova-plugin-globalization" spec="^1.0.9" />
-    <plugin name="cordova-plugin-camera" spec="^4.0.2" />
-    <plugin name="cordova-plugin-ble-central" spec="^1.1.4">
+    <plugin name="cordova-plugin-nativestorage" spec="^2.0.2" />
+    <plugin name="cordova-plugin-gpslocation" spec="^1.0.0" />
+    <plugin name="cordova-plugin-splashscreen" spec="^3.2.2" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.2.2" />
+    <plugin name="cordova-plugin-request-location-accuracy" spec="^2.2.3" />
+    <plugin name="cordova-custom-config" spec="^5.0.3" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <plugin name="cordova-plugin-globalization" spec="^1.11.0" />
+    <plugin name="cordova-plugin-camera" spec="^4.0.3" />
+    <plugin name="cordova-plugin-ble-central" spec="^1.2.2">
         <variable name="BLUETOOTH_USAGE_DESCRIPTION" value="Use bluetooth to connect to HearthRate Bluetooth Monitor" />
     </plugin>
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
     <plugin name="cordova-plugin-filepicker" spec="https://github.com/jcesarmobile/FilePicker-Phonegap-iOS-Plugin.git" />
-    <plugin name="cordova-plugin-x-socialsharing" spec="^5.1.8" />
-    <plugin name="cordova-plugin-device" spec="~1.1.2" />
+    <plugin name="cordova-plugin-device" spec="^1.1.7" />
     <plugin name="cordova-plugin-tts" spec="^0.2.3" />
-    <plugin name="cordova-sqlite-storage" spec="git+https://github.com/litehelpers/Cordova-sqlite-storage.git" />
-    <engine name="android" spec="~7.1.4" />
+    <plugin name="cordova-sqlite-storage" spec="https://github.com/litehelpers/Cordova-sqlite-storage.git#storage-master" />
+    <plugin name="cordova-android-support-gradle-release" spec="~2.0.1" />
+    <engine name="android" spec="^6.4.0" />
+    <plugin name="cordova-plugin-x-socialsharing" spec="^5.1.8" />
 </widget>
