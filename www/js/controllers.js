@@ -4293,25 +4293,14 @@ angular
   .controller("ProfileCtrl", function($scope,$ionicPopup,$ionicPopover,$cordovaSQLite) {
     // add logic for profile page to connect front-end to back-end database
 
-    $scope.insert = function(){
-      var query = "INSERT INTO example(name,age,weight,height) VALUES (?,?,?,?)";
+    $scope.save = function(){
+      var query = "INSERT INTO users_profile(name,age,weight,height) VALUES (?,?,?,?)";
       $cordovaSQLite.execute(db,query,[$scope.userName, $scope.userAge, $scope.userWeight, $scope.userHeight]);
       $scope.load();
     }
 
-    $scope.load = function(){
-      $scope.alldata = [];
-      $cordovaSQLite.execute(db,"SELECT name , age , weight , height FROM users_profile")
-      .then(
-          function(result){
-            if(result.rows.length){
-              for(var i=0; i<result.rows.length;i++){
-                $scope.alldata.push(result.rows.item(i));
-              }
-            }
-          }
-        );
-    }
+
+
 
 
 
