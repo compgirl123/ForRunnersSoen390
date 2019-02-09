@@ -4291,13 +4291,9 @@ angular
     $scope.logout = function(name){
       var query = "delete from loggedin2";
       // deletes all entries from loggedin2 table. Only uncomment if you want everything deleted
-      //var query = "delete from loggedin2";
     $cordovaSQLite.execute(db,query).then(
       function(result){
         //alert(result);
-          /*for(var i=0; i<result.rows.length;i++){
-            $scope.displayEmail = result.rows.item(i)["email"];
-          }*/
       }
     );
     };
@@ -4427,13 +4423,13 @@ angular
 
   .controller('ExampleDbCtrl', function($scope, $cordovaSQLite){
     $scope.insert = function(){
-      var query = "INSERT INTO example(first_name, last_name) VALUES (?,?)";
+      var query = "INSERT INTO users (email, password) VALUES (?,?)";
       $cordovaSQLite.execute(db,query,[$scope.first_name, $scope.last_name]);
       $scope.load();
     }
     $scope.load = function(){
       $scope.alldata = [];
-      $cordovaSQLite.execute(db,"SELECT first_name, last_name FROM example")
+      $cordovaSQLite.execute(db,"SELECT email, password FROM users")
       .then(
           function(result){
             if(result.rows.length){
@@ -4467,11 +4463,11 @@ angular
       return false;
     }
 
-    $scope.putUser = function(){
+    /*$scope.putUser = function(){
       var query = "INSERT INTO users (email, password) VALUES (?,?)";
       $cordovaSQLite.execute(db,query,[$scope.email, $scope.password]);
       $scope.returnValidator();
-    }
+    }*/
 
     $scope.returnValidator = function(){
       $scope.alldata2 = [];
