@@ -4294,13 +4294,18 @@ angular
     // add logic for profile page to connect front-end to back-end database
 
     $scope.save = function(){
-      var query = "INSERT INTO users_profile(name,age,weight,height) VALUES (?,?,?,?)";
-      $cordovaSQLite.execute(db,query,[$scope.userName, $scope.userAge, $scope.userWeight, $scope.userHeight]);
+      var inputData = [$scope.userAge,$scope.userWeight,$scope.userHeight,1]; //1 will be replac by email of last loggin user .
+
+      var query = "UPDATE  users SET age = ? , weight = ? , height = ? WHERE id =? "; //here id will be replace by last log in email address
+      //db.run("UPDATE  example SET age = ? WHERE id =?",inputData,function(err,rows){
+
+
+      $cordovaSQLite.execute(db,query,inputData);
       $scope.load();
     }
 
 
-
+// loading information will be done once sign in will be merge 
 
 
 
