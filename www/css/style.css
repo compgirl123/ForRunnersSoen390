@@ -236,42 +236,36 @@ small {
 .mid-bar h3 {
     font-size: 1.5em !important;
 }
-
 .signupbutton{
     padding-left: 30%;
     padding-right: 30%;
     border-radius: 25px;
 }
-
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type=email]
+ {
     border-radius: 20px;
-
 }
-
 .confirmpassword{
     padding-left: 0%;
     padding-bottom: 0%;
     padding-top: 0%;
 }
-
 h6{
     font-weight: bold;
     font-style: italic;
     text-align: center;
 }
-
 .signup-bckground-color {
-    background-image: url('../../img/background.png');
+    background-color:#80dfff;
 }
-
 .signup{
    height:auto;
     padding-left: 20%;
     padding-right: 20%;
     padding-top: 10%; 
 }
-
 .signin-bckground-color {
     background-color:#80dfff;
     
@@ -279,14 +273,12 @@ h6{
 .signinloginbutton{
     padding-right: 0%;
 }
-
 .login{
     height:auto;
     padding-left: 20%;
     padding-right: 20%;
     padding-top: 10%; 
 }
-
 .profile-picture {
   vertical-align: middle;
     margin-left: auto;
@@ -296,4 +288,11 @@ h6{
   width: 150px;
   height: 150px;
   border-radius: 50%;
+}
+input.form-control:hover,
+input.form-control:focus {
+    border: solid 2px gray;
+}
+input.ng-invalid.ng-touched{
+    border: solid 2px red;
 }
