@@ -1,7 +1,7 @@
 branches:
   only:
   - master
-  - travis_dev
+  - travis_ut_phantomjs
 matrix:
   include:
   - os: linux
