@@ -4286,8 +4286,48 @@ angular
     // add logic for sign up page to connect front-end to back-end database
   })
 
+  .controller("LogoutCtrl", function($scope, $cordovaSQLite) {
+    // add logic for logout page to connect front-end to back-end database
+    $scope.logout = function(name){
+      var query = "delete from loggedin2";
+      // deletes all entries from loggedin2 table. Only uncomment if you want everything deleted
+    $cordovaSQLite.execute(db,query).then(
+      function(result){
+        //alert(result);
+      }
+    );
+    };
+    
+  })
+
   .controller("ProfileCtrl", function($scope,$ionicPopup,$ionicPopover,$cordovaSQLite) {
     // add logic for profile page to connect front-end to back-end database
+    $scope.isLoggedIn = function(name){
+      var queryloggedin = "SELECT email FROM loggedin2 DESC LIMIT 1";
+      $cordovaSQLite.execute(db,query).then(
+        function(result){
+            for(var i=0; i<result.rows.length;i++){
+              alert("I")
+              //$scope.displayEmail = result.rows.item(i)["email"];
+            }
+        },
+        function (err) {
+          alert('ERROR: ' + err);
+        }
+      );
+    };
+    $scope.displayEmail = function(name) {
+      var query2 = "SELECT email FROM loggedin2 DESC LIMIT 1";
+      var query = "SELECT email FROM loggedin2 ORDER BY id DESC LIMIT 1";
+      $cordovaSQLite.execute(db,query).then(
+        function(result){
+            for(var i=0; i<result.rows.length;i++){
+              $scope.displayEmail = result.rows.item(i)["email"];
+            }
+        }
+      );
+      return $scope.displayEmail;
+    };
 
     $scope.editName = function() {
       if ($scope.userName== undefined) {
@@ -4304,7 +4344,7 @@ angular
       editPopup.then(function(res) {
         $scope.saveName(res);
       });
-    };
+  };
 
     $scope.saveName = function(name) {
       if (name === undefined) return;
@@ -4383,13 +4423,13 @@ angular
 
   .controller('ExampleDbCtrl', function($scope, $cordovaSQLite){
     $scope.insert = function(){
-      var query = "INSERT INTO example(first_name, last_name) VALUES (?,?)";
+      var query = "INSERT INTO users (email, password) VALUES (?,?)";
       $cordovaSQLite.execute(db,query,[$scope.first_name, $scope.last_name]);
       $scope.load();
     }
     $scope.load = function(){
       $scope.alldata = [];
-      $cordovaSQLite.execute(db,"SELECT first_name, last_name FROM example")
+      $cordovaSQLite.execute(db,"SELECT email, password FROM users")
       .then(
           function(result){
             if(result.rows.length){
@@ -4402,7 +4442,7 @@ angular
     }
   })
 
-  .controller("SignInCtrl", function($scope, $cordovaSQLite) {
+  .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$location) {
     $scope.search = function(){
       var columns = [id];
       var selection = email + " = ?" + " AND " + password + " = ?";
@@ -4423,29 +4463,42 @@ angular
       return false;
     }
 
-    $scope.putUser = function(){
+    /*$scope.putUser = function(){
       var query = "INSERT INTO users (email, password) VALUES (?,?)";
       $cordovaSQLite.execute(db,query,[$scope.email, $scope.password]);
       $scope.returnValidator();
-    }
+    }*/
 
     $scope.returnValidator = function(){
       $scope.alldata2 = [];
       var query = "SELECT email, password FROM users WHERE email="+"'"+$scope.email+"'"+"AND password='"+$scope.password+"'";
-      //alert(query);
       $cordovaSQLite.execute(db,query)
       .then(
           function(result){
             errmessage = document.getElementById("error");
             errmessage.innerHTML = "";
             try{
+              
               if(result.rows.length){
                 for(var i=0; i<result.rows.length;i++){
                   $scope.alldata2.push(result.rows.item(i));
-                  alert(result.rows.item(i)["email"]);
-                  alert("Both email and password are correct. Welcome!");
                 }
                 
+                 var query = "INSERT INTO loggedin2 (email,password) VALUES (?,?)";
+                 $cordovaSQLite.execute(db,query,[$scope.email,$scope.password]).then(
+                   function (res) {
+                       //alert('INSERTED ID: ' + res);
+                   },
+                   function (err) {
+                       //alert('ERROR: ' + err);
+                   }
+                 );
+                  // alert("Both email and password are correct. Welcome!");
+                  // test alert if both email and password are validated
+                  // redirects to profile page on successful login
+                  $state.go("app.profile");
+                  
+  
               }
               else{
                 throw "";
@@ -4453,15 +4506,19 @@ angular
 
             }
             catch(err){
+              //alert(err);
               errmessage.innerHTML = "<p class=\"errorMessage\"><i class=\"fas fa-exclamation-triangle\"></i> The email and/or the password is/are not correct. Please try again.</p> ";
             }
-          }
+            
+          },
+          function (err) {
+            //alert('ERROR: ' + err);
+        }
         );
     }
   })
 
   
-
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
     "use strict";
     $scope.help_cur = 1;
