@@ -4282,8 +4282,40 @@ angular
 
   })
 
-  .controller("SignUpCtrl", function($scope) {
+  .controller("SignUpCtrl", function($scope,$cordovaSQLite,$state,$ionicPopup) {
     // add logic for sign up page to connect front-end to back-end database
+    //$scope.count = 0;
+    $scope.submit = function () {
+      var queryVerify = "SELECT email FROM User WHERE email = '" + $scope.user.email + "'"; 
+      $cordovaSQLite.execute(db, queryVerify).then(function(res) {
+        if (res.rows.length == 1) {
+         // $scope.count++;
+          var invalidRegistrationPopup = $ionicPopup.alert({
+            title: "A user already exists with the specified email address"
+          });          
+          //console.log(result.rows.length);
+          //console.log(result);
+        } else {
+          //$scope.count++;
+          //console.log($scope.user.email);
+          //console.log(result);
+          $scope.verify();
+        }
+      });
+    }
+           
+    $scope.verify= function() {
+      var query = "INSERT INTO User(username, email, password) VALUES (?,?,?)";
+      $cordovaSQLite.execute(db,query,[$scope.user.Username, $scope.user.email, $scope.user.password])
+        .then(
+            function(res){
+              $state.go("app.signin");
+            } 
+           );
+           var registeredPopup= $ionicPopup.alert({
+            title: "Successfully Registered"
+          });  
+  };
   })
 
   .controller("SignInCtrl", function($scope) {

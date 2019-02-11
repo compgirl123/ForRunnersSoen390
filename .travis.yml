@@ -1,7 +1,7 @@
 branches:
   only:
   - master
-  - travis_dev
+  - /.*/
 matrix:
   include:
   - os: linux
@@ -61,3 +61,4 @@ script:
 - ionic cordova platform add android@6
 - npm i -D -E @ionic/v1-toolkit
 - ionic cordova build android
+- node_modules/karma/bin/karma start karma.conf.js --browsers PhantomJS --single-run
