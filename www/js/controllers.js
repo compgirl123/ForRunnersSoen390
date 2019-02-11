@@ -4500,7 +4500,7 @@ angular
     }
   })
 
-  .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$location,$ionicHistory) {
+  .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$ionicHistory) {
     $scope.search = function(){
       var columns = [id];
       var selection = email + " = ?" + " AND " + password + " = ?";
@@ -4543,14 +4543,7 @@ angular
                 }
                 
                  var query = "INSERT INTO isloggedin (email,password) VALUES (?,?)";
-                 $cordovaSQLite.execute(db,query,[$scope.email,$scope.password]).then(
-                   function (res) {
-                       //alert('INSERTED ID: ' + res);
-                   },
-                   function (err) {
-                       //alert('ERROR: ' + err);
-                   }
-                 );
+                 $cordovaSQLite.execute(db,query,[$scope.email,$scope.password]);
                   // alert("Both email and password are correct. Welcome!");
                   // test alert if both email and password are validated
                   // redirects to profile page on successful login
