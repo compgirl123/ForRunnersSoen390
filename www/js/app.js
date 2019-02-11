@@ -77,6 +77,7 @@ angular
       $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email VARCHAR UNIQUE, password VARCHAR)");
       $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS example(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT)");
       $cordovaSQLite.execute(db,"CREATE TABLE loggedin2(id INTEGER PRIMARY KEY AUTOINCREMENT, email VARCHAR UNIQUE, password VARCHAR )");
+      $cordovaSQLite.execute(db,"CREATE TABLE isloggedin(id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR UNIQUE ,email VARCHAR UNIQUE, password VARCHAR )");
     });
   })
 

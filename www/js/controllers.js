@@ -4360,6 +4360,20 @@ angular
         }
       );
     };
+
+    $scope.displayUsername = function(name) {
+      var query2 = "SELECT email FROM loggedin2 DESC LIMIT 1";
+      var query = "SELECT email FROM loggedin2 ORDER BY id DESC LIMIT 1";
+      $cordovaSQLite.execute(db,query).then(
+        function(result){
+            for(var i=0; i<result.rows.length;i++){
+              $scope.displayEmail = result.rows.item(i)["email"];
+            }
+        }
+      );
+      return $scope.displayEmail;
+    };
+
     $scope.displayEmail = function(name) {
       var query2 = "SELECT email FROM loggedin2 DESC LIMIT 1";
       var query = "SELECT email FROM loggedin2 ORDER BY id DESC LIMIT 1";
@@ -4486,7 +4500,7 @@ angular
     }
   })
 
-  .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$location) {
+  .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$location,$ionicHistory) {
     $scope.search = function(){
       var columns = [id];
       var selection = email + " = ?" + " AND " + password + " = ?";
@@ -4528,7 +4542,7 @@ angular
                   $scope.alldata2.push(result.rows.item(i));
                 }
                 
-                 var query = "INSERT INTO loggedin2 (email,password) VALUES (?,?)";
+                 var query = "INSERT INTO isloggedin (email,password) VALUES (?,?)";
                  $cordovaSQLite.execute(db,query,[$scope.email,$scope.password]).then(
                    function (res) {
                        //alert('INSERTED ID: ' + res);
@@ -4540,8 +4554,11 @@ angular
                   // alert("Both email and password are correct. Welcome!");
                   // test alert if both email and password are validated
                   // redirects to profile page on successful login
+                  //$state.go("app");
+                  $ionicHistory.nextViewOptions({
+                    historyRoot: true
+                });
                   $state.go("app.profile");
-                  
   
               }
               else{
