@@ -73,11 +73,14 @@ angular
         console.log(window.device);
       }
       db=window.openDatabase("ForRunners.db", "1.0", "ForRunners", "2000");
-      $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT, email VARCHAR UNIQUE, password VARCHAR)");
+      //$cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT, email VARCHAR UNIQUE, password VARCHAR)");
       $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email VARCHAR UNIQUE, password VARCHAR)");
-      $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS example(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT)");
-      $cordovaSQLite.execute(db,"CREATE TABLE loggedin2(id INTEGER PRIMARY KEY AUTOINCREMENT, email VARCHAR UNIQUE, password VARCHAR )");
-      $cordovaSQLite.execute(db,"CREATE TABLE isloggedin(id INTEGER PRIMARY KEY AUTOINCREMENT,email VARCHAR UNIQUE, password VARCHAR )");
+      $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS loggedin(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email VARCHAR UNIQUE , password VARCHAR, isloggedin BOOLEAN DEFAULT 0)");
+      //FOREIGN KEY(email) REFERENCES User(email)
+      // FOREIGN KEY(password) REFERENCES User(password)
+      //$cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS example(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT)");
+      //$cordovaSQLite.execute(db,"CREATE TABLE loggedin2(id INTEGER PRIMARY KEY AUTOINCREMENT, email VARCHAR UNIQUE, password VARCHAR )");
+      //$cordovaSQLite.execute(db,"CREATE TABLE isloggedin(id INTEGER PRIMARY KEY AUTOINCREMENT,email VARCHAR UNIQUE, password VARCHAR )");
     });
   })
 

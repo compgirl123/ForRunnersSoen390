@@ -4333,7 +4333,8 @@ angular
   .controller("LogoutCtrl", function($scope, $cordovaSQLite) {
     // add logic for logout page to connect front-end to back-end database
     $scope.logout = function(name){
-      var query = "delete from isloggedin";
+      //var query = "delete from isloggedin";
+      //var query = "drop table loggedin";
       // deletes all entries from loggedin2 table. Only uncomment if you want everything deleted
     $cordovaSQLite.execute(db,query).then(
       function(result){
@@ -4536,9 +4537,9 @@ angular
                 for(var i=0; i<result.rows.length;i++){
                   $scope.alldata2.push(result.rows.item(i));
                 }
-                
-                 var query = "INSERT INTO isloggedin (email,password) VALUES (?,?)";
-                 $cordovaSQLite.execute(db,query,[$scope.email,$scope.password]);
+                 var query = "INSERT INTO loggedin (email,password,isloggedin) VALUES (?,?,?)";
+                 alert(query);
+                 $cordovaSQLite.execute(db,query,[$scope.email,$scope.password,1]);
       
                   $ionicHistory.nextViewOptions({
                     historyRoot: true
