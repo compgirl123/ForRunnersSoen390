@@ -74,6 +74,7 @@ angular
       }
       db=window.openDatabase("ForRunners.db", "1.0", "ForRunners", "2000");
       $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT, email VARCHAR UNIQUE, password VARCHAR)");
+      $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email VARCHAR UNIQUE, password VARCHAR)");
       $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS example(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT)");
     });
   })
