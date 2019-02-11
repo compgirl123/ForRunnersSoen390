@@ -4333,7 +4333,7 @@ angular
   .controller("LogoutCtrl", function($scope, $cordovaSQLite) {
     // add logic for logout page to connect front-end to back-end database
     $scope.logout = function(name){
-      var query = "delete from loggedin2";
+      var query = "delete from isloggedin";
       // deletes all entries from loggedin2 table. Only uncomment if you want everything deleted
     $cordovaSQLite.execute(db,query).then(
       function(result){
@@ -4347,7 +4347,7 @@ angular
   .controller("ProfileCtrl", function($scope,$ionicPopup,$ionicPopover,$cordovaSQLite) {
     // add logic for profile page to connect front-end to back-end database
     $scope.isLoggedIn = function(name){
-      var queryloggedin = "SELECT email FROM loggedin2 DESC LIMIT 1";
+      var queryloggedin = "SELECT email FROM isloggedin DESC LIMIT 1";
       $cordovaSQLite.execute(db,query).then(
         function(result){
             for(var i=0; i<result.rows.length;i++){
@@ -4361,7 +4361,7 @@ angular
       );
     };
 
-    $scope.displayUsername = function(name) {
+    /*$scope.displayUsername = function(name) {
       var query2 = "SELECT email FROM loggedin2 DESC LIMIT 1";
       var query = "SELECT email FROM loggedin2 ORDER BY id DESC LIMIT 1";
       $cordovaSQLite.execute(db,query).then(
@@ -4372,11 +4372,12 @@ angular
         }
       );
       return $scope.displayEmail;
-    };
+    };*/
+    // To work on: Query to find the username
 
     $scope.displayEmail = function(name) {
       var query2 = "SELECT email FROM loggedin2 DESC LIMIT 1";
-      var query = "SELECT email FROM loggedin2 ORDER BY id DESC LIMIT 1";
+      var query = "SELECT email FROM isloggedin ORDER BY id DESC LIMIT 1";
       $cordovaSQLite.execute(db,query).then(
         function(result){
             for(var i=0; i<result.rows.length;i++){
@@ -4521,12 +4522,6 @@ angular
       return false;
     }
 
-    /*$scope.putUser = function(){
-      var query = "INSERT INTO users (email, password) VALUES (?,?)";
-      $cordovaSQLite.execute(db,query,[$scope.email, $scope.password]);
-      $scope.returnValidator();
-    }*/
-
     $scope.returnValidator = function(){
       $scope.alldata2 = [];
       var query = "SELECT email, password FROM User WHERE email="+"'"+$scope.email+"'"+"AND password='"+$scope.password+"'";
@@ -4544,14 +4539,14 @@ angular
                 
                  var query = "INSERT INTO isloggedin (email,password) VALUES (?,?)";
                  $cordovaSQLite.execute(db,query,[$scope.email,$scope.password]);
-                  // alert("Both email and password are correct. Welcome!");
-                  // test alert if both email and password are validated
-                  // redirects to profile page on successful login
-                  //$state.go("app");
+      
                   $ionicHistory.nextViewOptions({
                     historyRoot: true
-                });
+                  });
+                  // ensures that when the user logs in, they are redirected to profile page and side menu
+                  // can be accessed without going back to login page.
                   $state.go("app.profile");
+                  // redirects to profile page on successful login
   
               }
               else{
