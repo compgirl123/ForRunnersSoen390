@@ -82,6 +82,7 @@ angular
       }
     };
   })
+
   .controller('PasswordController', function PasswordController($scope) {
     $scope.password = '';
     $scope.grade = function() {
@@ -95,6 +96,7 @@ angular
       }
     };
   })
+
   .controller("AppCtrl", function(
     $state,
     $scope,
@@ -295,7 +297,6 @@ angular
     };
 
     $scope.computeSessionSimplifyAndFixElevation = function(asession, doSave) {
-      //var encpath = '';
       var gpx_path = [];
       var gpxPoints = [];
 
@@ -862,7 +863,7 @@ angular
         bezierCurve: true,
         pointDot: false,
         responsive: true,
-        legendTemplate: "" //'<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
+        legendTemplate: ""
       };
       session.chart4_options = {
         animation: false,
@@ -872,7 +873,7 @@ angular
         bezierCurve: true,
         pointDot: false,
         responsive: true,
-        legendTemplate: "" //'<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
+        legendTemplate: ""
       };
       session.chart3_labels = [
         $scope.translateFilter("_hr_zone0") + " < 60%",
@@ -972,8 +973,8 @@ angular
         averageValue: session.avg_hr
       };
 
-      eleUp = 0; //parseFloat(elePoints[0][3]);
-      eleDown = 0; //parseFloat(elePoints[0][3]);
+      eleUp = 0;
+      eleDown = 0;
       for (p = 0; p < gpxPoints.length; p++) {
         curEle = gpxPoints[p].ele;
         if (p > 0) {
@@ -1534,7 +1535,7 @@ angular
                 console.error(e);
                 console.error(writer.error);
               };
-              writer.fileName = filename; //moment(session.recclicked).format('YYYYMMDD_hhmm') + '.gpx';
+              writer.fileName = filename;
               gpxSubHead = "<name>" + session.date + "</name>\n";
 
               var gpxPoints = "";
@@ -2019,7 +2020,6 @@ angular
       $scope.resume.bestdistance = $scope.resume.bestdistance;
 
       try {
-        //$scope.writeResumeToFile($scope.resume);
         $scope.storageSetObj("resume", $scope.resume);
       } catch (err) {
         console.warn(err);
@@ -2289,7 +2289,6 @@ angular
 
     $scope.heartRateOnData = function(buffer) {
       var data = new DataView(buffer);
-      // https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
       if (data.getUint8(0) === 0x1000) {
         $scope.session.beatsPerMinute = data.getUint16(1);
       } else {
@@ -2313,7 +2312,6 @@ angular
     };
 
     $scope.powerOnData = function(buffer) {
-      //https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.cycling_power_measurement.xml
       var data = new DataView(buffer);
       $scope.session.instantPower = data.getInt16(2, true);
     };
@@ -2327,7 +2325,6 @@ angular
     };
 
     $scope.heartRateScan = function() {
-      // https://developer.bluetooth.org/gatt/services/Pages/ServiceViewer.aspx?u=org.bluetooth.service.heart_rate.xml
       if (
         Object.keys($scope.prefs.registeredBLE).length > 0 &&
         $scope.session.beatsPerMinute === null
@@ -2340,7 +2337,6 @@ angular
             console.debug("Found " + JSON.stringify(peripheral));
 
             if (peripheral.id in $scope.prefs.registeredBLE) {
-              //foundHeartRateMonitor = true;
               ble.connect(
                 peripheral.id,
                 $scope.heartRateOnConnect,
@@ -2370,7 +2366,6 @@ angular
             console.debug("Session recording stopped");
           } catch (exception2) {console.error(exception2);}
         }
-        //backgroundGeoLocation.stop();
         $interval.cancel($scope.runningTimeInterval);
 
         try {
@@ -2402,7 +2397,6 @@ angular
           delete $scope.session.timeslowvocalinterval;
           delete $scope.session.lastfastvocalannounce;
           delete $scope.session.kalmanDist;
-          //delete $scope.session.types;
           $scope.session.fixedElevation = undefined;
 
           //Set default equipments
@@ -2667,7 +2661,6 @@ angular
           ) {
             $scope.session.gpsGoodSignalToggle = true;
             if ($scope.prefs.gpslostannounce) {
-              //$scope.speakText($scope.translateFilter('_gps_got'));
               $scope.gpslostlastannounce = timenew;
             }
           }
@@ -2742,7 +2735,6 @@ angular
                       $scope.activityErrorCallback
                     );
                   } catch (err) {
-                    //console.warn('Plugin ActivityRecognition probably not available');
                   }
 
                  //Distances
@@ -2802,12 +2794,6 @@ angular
                     $scope.session.avspeed = elapsed / $scope.session.equirect;
                   }
 
-                  //Calulate Instant speed average on last 5 points
-                  //$scope.session.speeds.push(dspeed);
-                  //$scope.session.speeds.slice(-5);
-                  //$scope.session.speed = average($scope.session.speeds, 1).toFixed(1);
-                  //$scope.session.speed = pos.coords.speed * 3.6;
-                  //
                   //Workarround for some device not aving cor speed
                   var gpsspeed;
                   if (pos.coords.speed === null) {
@@ -2909,11 +2895,10 @@ angular
               $scope.prefs.minrecordinggap &&
             pos.coords.accuracy <= $scope.prefs.minrecordingaccuracy
           ) {
-            //console.log('Should record');
             var pointData = [
               pos.coords.latitude.toFixed(6),
               pos.coords.longitude.toFixed(6),
-              new Date(timenew).toISOString() //.replace(/\.\d\d\d/, '')
+              new Date(timenew).toISOString()
             ];
 
             if (typeof pos.coords.altitude === "number") {
@@ -3363,7 +3348,6 @@ angular
     };
 
     $scope.checkPrefs = function() {
-      //console.log(prefs.useVocalAnnounce);
       if ($scope.prefs.useVocalAnnounce !== true) {
         $scope.prefs.distvocalinterval = 0;
         $scope.prefs.timevocalinterval = 0;
@@ -3417,7 +3401,6 @@ angular
     };
   })
 
-  //.controller('SessionsCtrl', function($scope, $timeout, ionicMaterialInk, ionicMaterialMotion, $state) {
   .controller("SessionsCtrl", function(
     $scope,
     $timeout,
@@ -3433,12 +3416,6 @@ angular
       .then(function(popover) {
         $scope.popover = popover;
       });
-
-    /*$ionicPopover.fromTemplateUrl('templates/edittype_popover.html', {
-        scope: $scope,
-    }).then(function(popover) {
-        $scope.edittype_popover = popover;
-    });*/
 
     $scope.openPopover = function($event) {
       $scope.popover.show($event);
@@ -3492,7 +3469,6 @@ angular
     }
 
     $scope.fakeGuid = function() {
-      /*jslint bitwise: true*/
       return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(
         c
       ) {
@@ -3500,7 +3476,6 @@ angular
           v = c === "x" ? r : (r & 0x3) | 0x8;
         return v.toString(16);
       });
-      /*jslint bitwise: false*/
     };
 
     $scope.saveEquipments = function() {
@@ -3725,9 +3700,6 @@ angular
           );
         }
       }
-
-      //console.log($scope.records);
-      //$scope.total_kms = $scope.total_kms;
     };
 
     $scope.computeRecords();
@@ -4197,7 +4169,7 @@ angular
         $scope.session.duration.getUTCMinutes() * 60 +
         $scope.session.duration.getUTCSeconds();
       $scope.session.speed = $scope.session.distance / (elapsed / 3600);
-      $scope.session.pace = new Date(60 / $scope.session.speed * 60000); //Math.floor(60 / $scope.session.speed) + ':' + ('0' + Math.floor(((60 / $scope.session.speed)) % 1 * 60)).slice(-2);
+      $scope.session.pace = new Date(60 / $scope.session.speed * 60000);
       $scope.saveSessionModifications($scope.session);
     };
 
@@ -4225,7 +4197,7 @@ angular
         $scope.session.duration.getUTCMinutes() * 60 +
         $scope.session.duration.getUTCSeconds();
       $scope.session.speed = $scope.session.distance / (elapsed / 3600);
-      $scope.session.pace = new Date(60 / $scope.session.speed * 60000); // Math.floor(60 / $scope.session.speed) + ':' + ('0' + Math.floor(((60 / $scope.session.speed)) % 1 * 60)).slice(-2);
+      $scope.session.pace = new Date(60 / $scope.session.speed * 60000);
       $scope.saveSessionModifications($scope.session);
     };
   })
@@ -4281,7 +4253,6 @@ angular
 
   .controller("SettingsCtrl", function($scope) {
     "use strict";
-
     //$scope.promptForRating = function() {
     //AppRate.preferences.storeAppURL.android = 'market://details?id=net.khertan.forrunners';
     //AppRate.preferences.promptAgainForEachNewVersion = false;
@@ -4291,25 +4262,24 @@ angular
     //if ($scope.sessions.length > 8) {
     //    $scope.promptForRating();
     //}
-
   })
 
   .controller("SignUpCtrl", function($scope,$cordovaSQLite,$state,$ionicPopup,$rootScope) {
     // add logic for sign up page to connect front-end to back-end database
-    //$scope.count = 0;
+    $scope.count = 0;
 
     $scope.submit = function () {
       var queryVerify = "SELECT email FROM User WHERE email = '" + $scope.user.email + "'";
       $cordovaSQLite.execute(db, queryVerify).then(function(res) {
         if (res.rows.length == 1) {
-         // $scope.count++;
+         $scope.count=1;
           var invalidRegistrationPopup = $ionicPopup.alert({
             title: "A user already exists with the specified email address"
           });
           //console.log(result.rows.length);
           //console.log(result);
         } else {
-          //$scope.count++;
+          $scope.count=2;
           //console.log($scope.user.email);
           //console.log(result);
           $scope.verify();
@@ -4323,7 +4293,8 @@ angular
         .then(
             function(res){
               $state.go("app.signin");
-            }
+              $scope.count=3;
+            } 
            );
 
            var registeredPopup= $ionicPopup.alert({
@@ -4338,17 +4309,10 @@ angular
 
       sessionStorage.removeItem('currentUser');
       $state.go("app.signin");
-
-
-      //var query = "delete from isloggedin";
-      //var query = "drop table loggedin";
-      // deletes all entries from loggedin2 table. Only uncomment if you want everything deleted
     };
-
   })
 
   .controller("ProfileCtrl", function($scope,$ionicPopup,$cordovaSQLite,$rootScope) {
-
 
     if(sessionStorage.getItem('currentUser')!=null){
       $scope.user=JSON.parse(sessionStorage.getItem('currentUser')).pop();
@@ -4367,22 +4331,6 @@ angular
       $cordovaSQLite.execute(db,query,[$scope.userName, $scope.userAge, $scope.userWeight, $scope.userHeight,$scope.userEmail]);
       $scope.load();
     }
-
-    /*$scope.isLoggedIn = function(name){
-
-      var queryloggedin = "SELECT email FROM loggedin WHERE email = '" + $scope.email + "' AND isloggedin = 1";
-      $cordovaSQLite.execute(db,query).then(
-        function(result){
-            for(var i=0; i<result.rows.length;i++){
-              //$scope.displayEmail = result.rows.item(i)["email"];
-            }
-        },
-        function (err) {
-          alert('ERROR: ' + err);
-        }
-      );
-    };*/
-
 
     $scope.editName = function() {
       if ($scope.userName== undefined) {
@@ -4492,30 +4440,6 @@ angular
       value = JSON.stringify(value);
       sessionStorage.setItem(key, value);
     };
-
-
-
-  })
-
-  .controller('ExampleDbCtrl', function($scope, $cordovaSQLite){
-    $scope.insert = function(){
-      var query = "INSERT INTO users (email, password) VALUES (?,?)";
-      $cordovaSQLite.execute(db,query,[$scope.first_name, $scope.last_name]);
-      $scope.load();
-    }
-    $scope.load = function(){
-      $scope.alldata = [];
-      $cordovaSQLite.execute(db,"SELECT email, password FROM users")
-      .then(
-          function(result){
-            if(result.rows.length){
-              for(var i=0; i<result.rows.length;i++){
-                $scope.alldata.push(result.rows.item(i));
-              }
-            }
-          }
-        );
-    }
   })
 
   .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$ionicHistory,$rootScope) {
@@ -4548,8 +4472,6 @@ angular
     $scope.returnValidator = function(){
       $scope.alldata2 = [];
       var query = "SELECT email, password, username, age, weight, height FROM User WHERE email="+"'"+$scope.email+"'"+"AND password='"+$scope.password+"'";
-      //alert("AFTER");
-      //alert($scope.email);
       $rootScope.email = $scope.email;
 
       $cordovaSQLite.execute(db,query)
@@ -4568,7 +4490,6 @@ angular
                 console.log($scope.user);
 
                  var query = "INSERT INTO loggedin (email,password,isloggedin) VALUES (?,?,?)";
-                 //alert(query);
                  $cordovaSQLite.execute(db,query,[$scope.email,$scope.password,1]);
 
                   $ionicHistory.nextViewOptions({
@@ -4592,7 +4513,6 @@ angular
 
             }
             catch(err){
-              //alert(err);
               errmessage.innerHTML = "<p class=\"errorMessage\"><i class=\"fas fa-exclamation-triangle\"></i> The email and/or the password is/are not correct. Please try again.</p> ";
             }
 
@@ -4603,7 +4523,6 @@ angular
         );
     }
   })
-
 
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
     "use strict";

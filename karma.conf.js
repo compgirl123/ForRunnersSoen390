@@ -15,12 +15,14 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './www/js/controller.spec.js','./www/js/controllers.js',
-      'test/*.js',
-      'www/lib/angular/angular.js',
-      'node_modules/angular-cookies/angular-cookies.js',
-      'node_modules/angular-mocks/angular-mocks.js',
-    ],
+    './www/js/controller.spec.js','./www/js/controllers.js',
+    'test/*.js',
+    'www/lib/angular/angular.js',
+    'node_modules/angular-cookies/angular-cookies.js',
+    'node_modules/angular-mocks/angular-mocks.js',
+    'scripts/*.js',
+     ],
+
 
 
 
