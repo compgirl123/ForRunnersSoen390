@@ -4294,9 +4294,10 @@ angular
 
   })
 
-  .controller("SignUpCtrl", function($scope,$cordovaSQLite,$state,$ionicPopup) {
+  .controller("SignUpCtrl", function($scope,$cordovaSQLite,$state,$ionicPopup,$rootScope) {
     // add logic for sign up page to connect front-end to back-end database
     //$scope.count = 0;
+    $rootScope.username = $scope.user.Username;
     $scope.submit = function () {
       var queryVerify = "SELECT email FROM User WHERE email = '" + $scope.user.email + "'"; 
       $cordovaSQLite.execute(db, queryVerify).then(function(res) {
@@ -4345,14 +4346,16 @@ angular
     
   })
 
-  .controller("ProfileCtrl", function($scope,$ionicPopup,$ionicPopover,$cordovaSQLite) {
+  .controller("ProfileCtrl", function($scope,$ionicPopup,$cordovaSQLite,$rootScope) {
     // add logic for profile page to connect front-end to back-end database
-    $scope.isLoggedIn = function(name){
-      var queryloggedin = "SELECT email FROM isloggedin DESC LIMIT 1";
+    $scope.email = $rootScope.email;
+    $scope.username = $rootScope.username;
+    /*$scope.isLoggedIn = function(name){
+
+      var queryloggedin = "SELECT email FROM loggedin WHERE email = '" + $scope.email + "' AND isloggedin = 1"; 
       $cordovaSQLite.execute(db,query).then(
         function(result){
             for(var i=0; i<result.rows.length;i++){
-              alert("I")
               //$scope.displayEmail = result.rows.item(i)["email"];
             }
         },
@@ -4360,26 +4363,16 @@ angular
           alert('ERROR: ' + err);
         }
       );
-    };
-
-    /*$scope.displayUsername = function(name) {
-      var query2 = "SELECT email FROM loggedin2 DESC LIMIT 1";
-      var query = "SELECT email FROM loggedin2 ORDER BY id DESC LIMIT 1";
-      $cordovaSQLite.execute(db,query).then(
-        function(result){
-            for(var i=0; i<result.rows.length;i++){
-              $scope.displayEmail = result.rows.item(i)["email"];
-            }
-        }
-      );
-      return $scope.displayEmail;
     };*/
+
+    $scope.displayUsername = function(name) {
+    };
     // To work on: Query to find the username
 
     $scope.displayEmail = function(name) {
-      var query2 = "SELECT email FROM loggedin2 DESC LIMIT 1";
-      var query = "SELECT email FROM isloggedin ORDER BY id DESC LIMIT 1";
-      $cordovaSQLite.execute(db,query).then(
+      var queryloggedin = "SELECT email FROM loggedin WHERE email = '" + $scope.email + "' AND isloggedin = 1"; 
+      
+      $cordovaSQLite.execute(db,queryloggedin).then(
         function(result){
             for(var i=0; i<result.rows.length;i++){
               $scope.displayEmail = result.rows.item(i)["email"];
@@ -4502,11 +4495,13 @@ angular
     }
   })
 
-  .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$ionicHistory) {
+  .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$ionicHistory,$rootScope) {
+   
     $scope.search = function(){
       var columns = [id];
       var selection = email + " = ?" + " AND " + password + " = ?";
       var selectionArgs = [$scope.email, $scope.password];
+     
 
       var query = db.query(TABLE_USER, columns, selection, selectionArgs, null, null, null).then(
         function(result){
@@ -4526,6 +4521,9 @@ angular
     $scope.returnValidator = function(){
       $scope.alldata2 = [];
       var query = "SELECT email, password FROM User WHERE email="+"'"+$scope.email+"'"+"AND password='"+$scope.password+"'";
+      //alert("AFTER");
+      //alert($scope.email);
+      $rootScope.email = $scope.email;
       $cordovaSQLite.execute(db,query)
       .then(
           function(result){
@@ -4538,7 +4536,7 @@ angular
                   $scope.alldata2.push(result.rows.item(i));
                 }
                  var query = "INSERT INTO loggedin (email,password,isloggedin) VALUES (?,?,?)";
-                 alert(query);
+                 //alert(query);
                  $cordovaSQLite.execute(db,query,[$scope.email,$scope.password,1]);
       
                   $ionicHistory.nextViewOptions({
