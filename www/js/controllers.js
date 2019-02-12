@@ -4519,7 +4519,8 @@ angular
   })
 
   .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$ionicHistory,$rootScope) {
-
+   
+    $scope.count = 0;
     $scope.search = function(){
       var columns = [id];
       var selection = email + " = ?" + " AND " + password + " = ?";
@@ -4531,8 +4532,11 @@ angular
           $scope.result=false;
           if (result.length > 0) {
             $scope.result=true;
+            $scope.count = 1;
+
             return true;
-          }
+          }    
+          $scope.count = 2;
           return false;
         });
       if(query()==true){
