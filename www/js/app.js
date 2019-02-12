@@ -5,7 +5,7 @@ angular
     "app.services",
     "app.controllers",
     "chart.js",
-    "pascalprecht.translate", //'ionic-material', 'ionMdInput',
+    "pascalprecht.translate",
     "leaflet-directive",
     "ionic-modal-select",
     "iosDblclick",
@@ -36,51 +36,12 @@ angular
       };
       window.initialLogs = [];
 
-      /*if (window.cordova) {
-            console.log = function () {
-                var argsArr = Array.prototype.slice.call(arguments);
-            window.oldConsole.log.apply(this, argsArr);
-            window.initialLogs.push(argsArr);
-            };
-
-            console.error = function() {
-                    var argsArr = Array.prototype.slice.call(arguments);
-            window.oldConsole.error.apply(this, argsArr);
-            window.initialLogs.push(argsArr);
-            };
-
-            console.info = function () {
-                    var argsArr = Array.prototype.slice.call(arguments);
-            window.oldConsole.info.apply(this, argsArr);
-            window.initialLogs.push(argsArr);
-            };
-
-            console.warn = function ()  {
-            var argsArr = Array.prototype.slice.call(arguments);
-            window.oldConsole.warn.apply(this, argsArr);
-            window.initialLogs.push(argsArr);
-            };
-
-            window.onerror = function() {
-                // route errors to console.error for now
-                var argsArr = Array.prototype.slice.call(arguments);
-            window.oldConsole.error.apply(this, argsArr);
-            window.initialLogs.push(argsArr);
-            };
-        }*/
-
       if (window.device) {
         console.log(window.device);
       }
       db=window.openDatabase("ForRunners.db", "1.0", "ForRunners", "2000");
-      //$cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT, email VARCHAR UNIQUE, password VARCHAR)");
       $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email VARCHAR UNIQUE, password VARCHAR,age INTEGER, weight FLOAT , height FLOAT)");
       $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS loggedin(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email VARCHAR UNIQUE , password VARCHAR, isloggedin BOOLEAN DEFAULT 0)");
-      //FOREIGN KEY(email) REFERENCES User(email)
-      // FOREIGN KEY(password) REFERENCES User(password)
-      //$cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS example(id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT)");
-      //$cordovaSQLite.execute(db,"CREATE TABLE loggedin2(id INTEGER PRIMARY KEY AUTOINCREMENT, email VARCHAR UNIQUE, password VARCHAR )");
-      //$cordovaSQLite.execute(db,"CREATE TABLE isloggedin(id INTEGER PRIMARY KEY AUTOINCREMENT,email VARCHAR UNIQUE, password VARCHAR )");
     });
   })
 
@@ -95,7 +56,6 @@ angular
     "use strict";
 
     $ionicConfigProvider.scrolling.jsScrolling(false);
-    //$ionicConfigProvider.views.maxCache(0);
     $logProvider.debugEnabled(false);
     $compileProvider.debugInfoEnabled(false);
     try {
@@ -113,7 +73,6 @@ angular
 
       .state("app", {
         url: "/app",
-        //abstract: true,
         templateUrl: "templates/menu.html",
         controller: "AppCtrl"
       })
@@ -144,8 +103,6 @@ angular
           }
         }
       })
-
-
 
       .state("app.about", {
         url: "/about",
