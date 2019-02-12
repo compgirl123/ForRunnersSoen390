@@ -4375,11 +4375,10 @@ angular
       $cordovaSQLite.execute(db,queryloggedin).then(
         function(result){
             for(var i=0; i<result.rows.length;i++){
-              $scope.displayEmail = result.rows.item(i)["email"];
+              $scope.email = result.rows.item(i)["email"];
             }
         }
       );
-      return $scope.displayEmail;
     };
 
     $scope.editName = function() {
