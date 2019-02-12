@@ -4296,20 +4296,20 @@ angular
 
   .controller("SignUpCtrl", function($scope,$cordovaSQLite,$state,$ionicPopup,$rootScope) {
     // add logic for sign up page to connect front-end to back-end database
-    //$scope.count = 0;
+    $scope.count = 0;
 
     $scope.submit = function () {
       var queryVerify = "SELECT email FROM User WHERE email = '" + $scope.user.email + "'"; 
       $cordovaSQLite.execute(db, queryVerify).then(function(res) {
         if (res.rows.length == 1) {
-         // $scope.count++;
+         $scope.count=1;
           var invalidRegistrationPopup = $ionicPopup.alert({
             title: "A user already exists with the specified email address"
           });          
           //console.log(result.rows.length);
           //console.log(result);
         } else {
-          //$scope.count++;
+          $scope.count=2;
           //console.log($scope.user.email);
           //console.log(result);
           $scope.verify();
@@ -4323,6 +4323,7 @@ angular
         .then(
             function(res){
               $state.go("app.signin");
+              $scope.count=3;
             } 
            );
 
