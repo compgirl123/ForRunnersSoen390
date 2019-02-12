@@ -2372,7 +2372,7 @@ angular
         }
         //backgroundGeoLocation.stop();
         $interval.cancel($scope.runningTimeInterval);
-        
+
         try {
           delete $scope.session.firsttime;
         } catch (exception) {}
@@ -2683,8 +2683,8 @@ angular
               $scope.prefs.gpslostannounce &&
               timenew - 30 > $scope.gpslostlastannounce
             ) {
-          
-            
+
+
               $scope.speakText($scope.translateFilter("_gps_lost"));
               $scope.gpslostlastannounce = timenew;
             }
@@ -2787,7 +2787,7 @@ angular
                     if (altnew < $scope.session.minalt) {
                       $scope.session.minalt = altnew;
                       $scope.session.elevation =
-                  
+
                         $scope.session.maxalt - $scope.session.minalt;
                     }
                   }
@@ -4299,13 +4299,13 @@ angular
     //$scope.count = 0;
 
     $scope.submit = function () {
-      var queryVerify = "SELECT email FROM User WHERE email = '" + $scope.user.email + "'"; 
+      var queryVerify = "SELECT email FROM User WHERE email = '" + $scope.user.email + "'";
       $cordovaSQLite.execute(db, queryVerify).then(function(res) {
         if (res.rows.length == 1) {
          // $scope.count++;
           var invalidRegistrationPopup = $ionicPopup.alert({
             title: "A user already exists with the specified email address"
-          });          
+          });
           //console.log(result.rows.length);
           //console.log(result);
         } else {
@@ -4316,45 +4316,61 @@ angular
         }
       });
     }
-           
+
     $scope.verify= function() {
       var query = "INSERT INTO User(username, email, password) VALUES (?,?,?)";
       $cordovaSQLite.execute(db,query,[$scope.user.Username, $scope.user.email, $scope.user.password])
         .then(
             function(res){
               $state.go("app.signin");
-            } 
+            }
            );
 
            var registeredPopup= $ionicPopup.alert({
             title: "Successfully Registered"
-          });  
+          });
   };
   })
 
-  .controller("LogoutCtrl", function($scope, $cordovaSQLite) {
+  .controller("LogoutCtrl", function($scope, $cordovaSQLite,$state) {
     // add logic for logout page to connect front-end to back-end database
-    $scope.logout = function(name){
+    $scope.logout = function(){
+
+      sessionStorage.removeItem('currentUser');
+      $state.go("app.signin");
+
+
       //var query = "delete from isloggedin";
       //var query = "drop table loggedin";
       // deletes all entries from loggedin2 table. Only uncomment if you want everything deleted
-    $cordovaSQLite.execute(db,query).then(
-      function(result){
-        //alert(result);
-      }
-    );
     };
-    
+
   })
 
   .controller("ProfileCtrl", function($scope,$ionicPopup,$cordovaSQLite,$rootScope) {
-    // add logic for profile page to connect front-end to back-end database
-    $scope.email = $rootScope.email;
-    $scope.username = $rootScope.username;
-  
+
+
+    if(sessionStorage.getItem('currentUser')!=null){
+      $scope.user=JSON.parse(sessionStorage.getItem('currentUser')).pop();
+
+      $scope.userName=$scope.user.username;
+
+      $scope.userAge=$scope.user.age;
+      $scope.userEmail=$scope.user.email;
+      $scope.userWeight=$scope.user.weight;
+      $scope.userHeight=$scope.user.height;
+
+    }
+
+    $scope.save = function(){
+      var query = "UPDATE User SET  username =? , age =? , weight = ? , height = ? WHERE email = ?";
+      $cordovaSQLite.execute(db,query,[$scope.userName, $scope.userAge, $scope.userWeight, $scope.userHeight,$scope.userEmail]);
+      $scope.load();
+    }
+
     /*$scope.isLoggedIn = function(name){
 
-      var queryloggedin = "SELECT email FROM loggedin WHERE email = '" + $scope.email + "' AND isloggedin = 1"; 
+      var queryloggedin = "SELECT email FROM loggedin WHERE email = '" + $scope.email + "' AND isloggedin = 1";
       $cordovaSQLite.execute(db,query).then(
         function(result){
             for(var i=0; i<result.rows.length;i++){
@@ -4367,21 +4383,6 @@ angular
       );
     };*/
 
-    $scope.displayUsername = function(name) {
-    };
-    // To work on: Query to find the username
-
-    $scope.displayEmail = function(name) {
-      var queryloggedin = "SELECT email FROM loggedin WHERE email = '" + $scope.email + "' AND isloggedin = 1"; 
-      
-      $cordovaSQLite.execute(db,queryloggedin).then(
-        function(result){
-            for(var i=0; i<result.rows.length;i++){
-              $scope.email = result.rows.item(i)["email"];
-            }
-        }
-      );
-    };
 
     $scope.editName = function() {
       if ($scope.userName== undefined) {
@@ -4400,9 +4401,14 @@ angular
       });
   };
 
-    $scope.saveName = function(name) {
-      if (name === undefined) return;
-      $scope.userName = name;
+    $scope.saveName = function(username) {
+      if (username === undefined) return;
+      $scope.userName = username;
+    $scope.user.username=$scope.userName;
+    let key = 'currentUser';
+    let value = [$scope.user];
+    value = JSON.stringify(value);
+    sessionStorage.setItem(key, value);
     };
 
     $scope.editAge = function() {
@@ -4425,6 +4431,12 @@ angular
     $scope.saveAge = function(age) {
       if (age === undefined) return;
       $scope.userAge = age;
+      $scope.user.age=age;
+      let key = 'currentUser';
+      let value = [$scope.user];
+      value = JSON.stringify(value);
+      sessionStorage.setItem(key, value);
+
     };
 
     $scope.editWeight = function() {
@@ -4447,6 +4459,11 @@ angular
     $scope.saveWeight = function(weight) {
       if (weight === undefined) return;
       $scope.userWeight = weight + " Kg";
+      $scope.user.weight= $scope.userWeight;
+      let key = 'currentUser';
+      let value = [$scope.user];
+      value = JSON.stringify(value);
+      sessionStorage.setItem(key, value);
     };
 
     $scope.editHeight = function() {
@@ -4469,6 +4486,11 @@ angular
     $scope.saveHeight = function(height) {
       if (height === undefined) return;
       $scope.userHeight = height + " m";
+      $scope.user.height= $scope.userHeight;
+      let key = 'currentUser';
+      let value = [$scope.user];
+      value = JSON.stringify(value);
+      sessionStorage.setItem(key, value);
     };
 
 
@@ -4497,12 +4519,12 @@ angular
   })
 
   .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$ionicHistory,$rootScope) {
-   
+
     $scope.search = function(){
       var columns = [id];
       var selection = email + " = ?" + " AND " + password + " = ?";
       var selectionArgs = [$scope.email, $scope.password];
-     
+
 
       var query = db.query(TABLE_USER, columns, selection, selectionArgs, null, null, null).then(
         function(result){
@@ -4510,9 +4532,9 @@ angular
           if (result.length > 0) {
             $scope.result=true;
             return true;
-          }    
+          }
           return false;
-        });              
+        });
       if(query()==true){
         return true;
       }
@@ -4521,7 +4543,7 @@ angular
 
     $scope.returnValidator = function(){
       $scope.alldata2 = [];
-      var query = "SELECT email, password FROM User WHERE email="+"'"+$scope.email+"'"+"AND password='"+$scope.password+"'";
+      var query = "SELECT email, password, username, age, weight, height FROM User WHERE email="+"'"+$scope.email+"'"+"AND password='"+$scope.password+"'";
       //alert("AFTER");
       //alert($scope.email);
       $rootScope.email = $scope.email;
@@ -4532,15 +4554,19 @@ angular
             errmessage = document.getElementById("error");
             errmessage.innerHTML = "";
             try{
-              
+
               if(result.rows.length){
                 for(var i=0; i<result.rows.length;i++){
                   $scope.alldata2.push(result.rows.item(i));
                 }
+                $scope.user=$scope.alldata2.pop();
+
+                console.log($scope.user);
+
                  var query = "INSERT INTO loggedin (email,password,isloggedin) VALUES (?,?,?)";
                  //alert(query);
                  $cordovaSQLite.execute(db,query,[$scope.email,$scope.password,1]);
-      
+
                   $ionicHistory.nextViewOptions({
                     historyRoot: true
                   });
@@ -4548,10 +4574,16 @@ angular
                   // can be accessed without going back to login page.
                   $state.go("app.profile");
                   // redirects to profile page on successful login
-  
+
+                  let key = 'currentUser';
+                  let value = [{'username':$scope.user.username,'email':$scope.email,'age':$scope.user.age,'age':$scope.user.age,
+                                  'weight':$scope.user.weight, 'height':$scope.user.height}];
+                  value = JSON.stringify(value);
+                  sessionStorage.setItem(key, value);
+
               }
               else{
-                throw "";
+                throw "Error";
               }
 
             }
@@ -4559,7 +4591,7 @@ angular
               //alert(err);
               errmessage.innerHTML = "<p class=\"errorMessage\"><i class=\"fas fa-exclamation-triangle\"></i> The email and/or the password is/are not correct. Please try again.</p> ";
             }
-            
+
           },
           function (err) {
             //alert('ERROR: ' + err);
@@ -4568,7 +4600,7 @@ angular
     }
   })
 
-  
+
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
     "use strict";
     $scope.help_cur = 1;
