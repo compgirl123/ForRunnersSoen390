@@ -4297,7 +4297,7 @@ angular
   .controller("SignUpCtrl", function($scope,$cordovaSQLite,$state,$ionicPopup,$rootScope) {
     // add logic for sign up page to connect front-end to back-end database
     //$scope.count = 0;
-    $rootScope.username = $scope.user.Username;
+
     $scope.submit = function () {
       var queryVerify = "SELECT email FROM User WHERE email = '" + $scope.user.email + "'"; 
       $cordovaSQLite.execute(db, queryVerify).then(function(res) {
@@ -4325,6 +4325,7 @@ angular
               $state.go("app.signin");
             } 
            );
+
            var registeredPopup= $ionicPopup.alert({
             title: "Successfully Registered"
           });  
@@ -4350,6 +4351,7 @@ angular
     // add logic for profile page to connect front-end to back-end database
     $scope.email = $rootScope.email;
     $scope.username = $rootScope.username;
+  
     /*$scope.isLoggedIn = function(name){
 
       var queryloggedin = "SELECT email FROM loggedin WHERE email = '" + $scope.email + "' AND isloggedin = 1"; 
@@ -4523,6 +4525,7 @@ angular
       //alert("AFTER");
       //alert($scope.email);
       $rootScope.email = $scope.email;
+
       $cordovaSQLite.execute(db,query)
       .then(
           function(result){
