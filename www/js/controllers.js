@@ -4402,7 +4402,7 @@ angular
   };
 
     $scope.saveName = function(username) {
-      if (name === undefined) return;
+      if (username === undefined) return;
       $scope.userName = username;
     $scope.user.username=$scope.userName;
     let key = 'currentUser';
