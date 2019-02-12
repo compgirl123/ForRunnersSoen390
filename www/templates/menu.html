@@ -32,8 +32,11 @@
         <ion-item menu-close href="#/app/signup">
           {{ "_sign_up" | translate }}
         </ion-item>
+        <ion-item menu-close ng-hide="true" href="#/app/signup">
+          {{ "_sign_up" | translate }}
+        </ion-item>
         <div ng-controller="LogoutCtrl">
-          <div *ngIf="d() == sdfa">
+          <div *ng-hide="false">
             <ion-item menu-close href="#/app/logout">
               {{ "_logout" | translate }}
             </ion-item>
