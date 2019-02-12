@@ -95,15 +95,6 @@ angular
         }
       })
 
-      .state("app.database_example", {
-        url: "/database_example",
-        views: {
-          menuContent: {
-            templateUrl: "templates/database_example.html"
-          }
-        }
-      })
-
       .state("app.about", {
         url: "/about",
         views: {
