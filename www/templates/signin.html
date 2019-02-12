@@ -1,49 +1,47 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 <ion-view view-title="Sign In">
-   <ion-content class= "signin-bckground-color">
-           <div class="hero no-header flat" style="background: url(img/icon.png) center; height:150px;">
-           </div>
-       <div class="login">
-               <ion-label fixed>Email</ion-label>
-               <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated">
-               <div class="form-group">
-                       <input type="text" class="form-control" id="usr">
-                     </div>
-                   </ion-input>
-           <!--<ion-label fixed>Email</ion-label>
-           <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated">
-               <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus">
-                   <input class="native-input sc-ion-input-ios" aria-labelledby="ion-input-1-lbl" autocapitalize="off" autocomplete="off" autocorrect="off" name="ion-input-1" placeholder="email" required="" type="text">
-               </ion-input>
-           -->
-           <ion-label fixed>Password</ion-label>
-           <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus"></ion-input>
-           <div class="form-group">
-                   <!--<label for="pwd">Password:</label>-->
-                   <input type="password" class="form-control" id="pwd">
-                 </div>
-               </ion-input>
+        <ion-content class="signin-bckground-color" padding="0" ng-controller="SignInCtrl">
+                <div class="hero no-header flat" style="background: url(img/icon.png) center; height:150px;">
+                </div>
+                <form>
+                <div class="list login">
+                        <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated">
+                                <ion-label fixed class="black"> Email</ion-label>
+                                <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Email" ng-model="email" id="usr">
+                                </div>
+                        </ion-input>
+                
+                
+                        <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus">
+                                <ion-label fixed class="black">Password</ion-label> 
+                                <div class="form-group">
+                                        <input type="password" placeholder="Password" class="form-control " id="pwd" ng-model="password">
+                                </div>
+                                <div id="error">
 
-           <!--<ion-label fixed>Password</ion-label>
-               <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus">
-                   <input class="native-input sc-ion-input-ios" aria-labelledby="ion-input-1-lbl" autocapitalize="off" autocomplete="off" autocorrect="off" name="ion-input-1" placeholder="password" required="" type="password">
-               </ion-input>
-               -->
-
-               <div class="signinloginbutton">
-                       <button class="button button-block button-positive" ng-click="" >
-                               Sign In
-                       </button>
-               </div>
-
-               <!--<ion-button type="submit" class="sc-ion-button-ios-h button button-block button-solid ion-activatable ion-focusable hydrated activated" expand="block">
-                   <button type="submit" class="button-native sc-ion-button-ios">
-                       <span class="button-inner sc-ion-button-ios sc-ion-button-ios-s">Create Account</span>
-                   </button>
-                   <button type="button" class="btn btn-primary">Primary</button>
-               </ion-button>-->
-           </div>
-   </ion-content>
+                                </div>
+                                
+                        </ion-input>
+                
+                        <div class="signinloginbutton">
+                                <button class="button button-full button-dark" ng-click="returnValidator()" >
+                                        Sign In
+                                </button>
+                        </div> 
+                        <!--<div class="signinloginbutton">
+                                <button class="button button-block button-positive" ng-click="putUser()" >
+                                        add
+                                </button>  
+                                
+                        </div> 
+                        -->
+                        
+                         
+                </div>
+            </form>
+        </ion-content>
 </ion-view>
