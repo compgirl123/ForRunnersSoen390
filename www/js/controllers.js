@@ -4401,9 +4401,14 @@ angular
       });
   };
 
-    $scope.saveName = function(name) {
+    $scope.saveName = function(username) {
       if (name === undefined) return;
-      $scope.userName = name;
+      $scope.userName = username;
+    $scope.user.username=$scope.userName;
+    let key = 'currentUser';
+    let value = [$scope.user];
+    value = JSON.stringify(value);
+    sessionStorage.setItem(key, value);
     };
 
     $scope.editAge = function() {
@@ -4426,7 +4431,7 @@ angular
     $scope.saveAge = function(age) {
       if (age === undefined) return;
       $scope.userAge = age;
-      $scope.user.age=age;      
+      $scope.user.age=age;
       let key = 'currentUser';
       let value = [$scope.user];
       value = JSON.stringify(value);
@@ -4481,7 +4486,7 @@ angular
     $scope.saveHeight = function(height) {
       if (height === undefined) return;
       $scope.userHeight = height + " m";
-      $scope.user.height= $scope.userHeight;      
+      $scope.user.height= $scope.userHeight;
       let key = 'currentUser';
       let value = [$scope.user];
       value = JSON.stringify(value);
