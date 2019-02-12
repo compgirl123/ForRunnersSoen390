@@ -2372,7 +2372,7 @@ angular
         }
         //backgroundGeoLocation.stop();
         $interval.cancel($scope.runningTimeInterval);
-        
+
         try {
           delete $scope.session.firsttime;
         } catch (exception) {}
@@ -2683,8 +2683,8 @@ angular
               $scope.prefs.gpslostannounce &&
               timenew - 30 > $scope.gpslostlastannounce
             ) {
-          
-            
+
+
               $scope.speakText($scope.translateFilter("_gps_lost"));
               $scope.gpslostlastannounce = timenew;
             }
@@ -2787,7 +2787,7 @@ angular
                     if (altnew < $scope.session.minalt) {
                       $scope.session.minalt = altnew;
                       $scope.session.elevation =
-                  
+
                         $scope.session.maxalt - $scope.session.minalt;
                     }
                   }
@@ -4299,13 +4299,13 @@ angular
     //$scope.count = 0;
 
     $scope.submit = function () {
-      var queryVerify = "SELECT email FROM User WHERE email = '" + $scope.user.email + "'"; 
+      var queryVerify = "SELECT email FROM User WHERE email = '" + $scope.user.email + "'";
       $cordovaSQLite.execute(db, queryVerify).then(function(res) {
         if (res.rows.length == 1) {
          // $scope.count++;
           var invalidRegistrationPopup = $ionicPopup.alert({
             title: "A user already exists with the specified email address"
-          });          
+          });
           //console.log(result.rows.length);
           //console.log(result);
         } else {
@@ -4316,19 +4316,19 @@ angular
         }
       });
     }
-           
+
     $scope.verify= function() {
       var query = "INSERT INTO User(username, email, password) VALUES (?,?,?)";
       $cordovaSQLite.execute(db,query,[$scope.user.Username, $scope.user.email, $scope.user.password])
         .then(
             function(res){
               $state.go("app.signin");
-            } 
+            }
            );
 
            var registeredPopup= $ionicPopup.alert({
             title: "Successfully Registered"
-          });  
+          });
   };
   })
 
@@ -4344,17 +4344,23 @@ angular
       }
     );
     };
-    
+
   })
 
   .controller("ProfileCtrl", function($scope,$ionicPopup,$cordovaSQLite,$rootScope) {
     // add logic for profile page to connect front-end to back-end database
     $scope.email = $rootScope.email;
     $scope.username = $rootScope.username;
-  
+
+    $scope.save = function(){
+      var query = "UPDATE  User SET username=?, age =?, weight =?, height=? WHERE email=?";
+      $cordovaSQLite.execute(db,query,[$scope.userName,$scope.userAge, $scope.userWeight, $scope.userHeight,$scope.email]);
+      $scope.load();
+    }
+
     /*$scope.isLoggedIn = function(name){
 
-      var queryloggedin = "SELECT email FROM loggedin WHERE email = '" + $scope.email + "' AND isloggedin = 1"; 
+      var queryloggedin = "SELECT email FROM loggedin WHERE email = '" + $scope.email + "' AND isloggedin = 1";
       $cordovaSQLite.execute(db,query).then(
         function(result){
             for(var i=0; i<result.rows.length;i++){
@@ -4372,12 +4378,27 @@ angular
     // To work on: Query to find the username
 
     $scope.displayEmail = function(name) {
-      var queryloggedin = "SELECT email FROM loggedin WHERE email = '" + $scope.email + "' AND isloggedin = 1"; 
-      
+      var queryloggedin = "SELECT email FROM loggedin WHERE email = '" + $scope.email + "' AND isloggedin = 1";
+
       $cordovaSQLite.execute(db,queryloggedin).then(
         function(result){
             for(var i=0; i<result.rows.length;i++){
               $scope.email = result.rows.item(i)["email"];
+
+            }
+        }
+      );
+    };
+
+    $scope.displayUsername= function(name) {
+      var query = "SELECT * FROM User WHERE email = ?";
+
+
+      $cordovaSQLite.execute(db,query,[$scope.email]).then(
+        function(result){
+            for(var i=0; i<result.rows.length;i++){
+              $scope.userName = result.rows.item(i).username;
+
             }
         }
       );
@@ -4387,6 +4408,8 @@ angular
       if ($scope.userName== undefined) {
         $scope.userName = "";
       }
+
+
 
       var editPopup = $ionicPopup.prompt({
         template: "User name",
@@ -4497,12 +4520,12 @@ angular
   })
 
   .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$ionicHistory,$rootScope) {
-   
+
     $scope.search = function(){
       var columns = [id];
       var selection = email + " = ?" + " AND " + password + " = ?";
       var selectionArgs = [$scope.email, $scope.password];
-     
+
 
       var query = db.query(TABLE_USER, columns, selection, selectionArgs, null, null, null).then(
         function(result){
@@ -4510,9 +4533,9 @@ angular
           if (result.length > 0) {
             $scope.result=true;
             return true;
-          }    
+          }
           return false;
-        });              
+        });
       if(query()==true){
         return true;
       }
@@ -4532,7 +4555,7 @@ angular
             errmessage = document.getElementById("error");
             errmessage.innerHTML = "";
             try{
-              
+
               if(result.rows.length){
                 for(var i=0; i<result.rows.length;i++){
                   $scope.alldata2.push(result.rows.item(i));
@@ -4540,7 +4563,7 @@ angular
                  var query = "INSERT INTO loggedin (email,password,isloggedin) VALUES (?,?,?)";
                  //alert(query);
                  $cordovaSQLite.execute(db,query,[$scope.email,$scope.password,1]);
-      
+
                   $ionicHistory.nextViewOptions({
                     historyRoot: true
                   });
@@ -4548,7 +4571,7 @@ angular
                   // can be accessed without going back to login page.
                   $state.go("app.profile");
                   // redirects to profile page on successful login
-  
+
               }
               else{
                 throw "";
@@ -4559,7 +4582,7 @@ angular
               //alert(err);
               errmessage.innerHTML = "<p class=\"errorMessage\"><i class=\"fas fa-exclamation-triangle\"></i> The email and/or the password is/are not correct. Please try again.</p> ";
             }
-            
+
           },
           function (err) {
             //alert('ERROR: ' + err);
@@ -4568,7 +4591,7 @@ angular
     }
   })
 
-  
+
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
     "use strict";
     $scope.help_cur = 1;
