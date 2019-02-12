@@ -4349,11 +4349,13 @@ angular
 
   .controller("ProfileCtrl", function($scope,$ionicPopup,$cordovaSQLite,$rootScope) {
 
+
     if(sessionStorage.getItem('currentUser')!=null){
       $scope.user=JSON.parse(sessionStorage.getItem('currentUser')).pop();
 
       $scope.userName=$scope.user.username;
 
+      $scope.userAge=$scope.user.age;
       $scope.userEmail=$scope.user.email;
       $scope.userWeight=$scope.user.weight;
       $scope.userHeight=$scope.user.height;
@@ -4424,6 +4426,12 @@ angular
     $scope.saveAge = function(age) {
       if (age === undefined) return;
       $scope.userAge = age;
+      $scope.user.age=age;      
+      let key = 'currentUser';
+      let value = [$scope.user];
+      value = JSON.stringify(value);
+      sessionStorage.setItem(key, value);
+
     };
 
     $scope.editWeight = function() {
@@ -4446,6 +4454,11 @@ angular
     $scope.saveWeight = function(weight) {
       if (weight === undefined) return;
       $scope.userWeight = weight + " Kg";
+      $scope.user.weight= $scope.userWeight;
+      let key = 'currentUser';
+      let value = [$scope.user];
+      value = JSON.stringify(value);
+      sessionStorage.setItem(key, value);
     };
 
     $scope.editHeight = function() {
@@ -4468,6 +4481,11 @@ angular
     $scope.saveHeight = function(height) {
       if (height === undefined) return;
       $scope.userHeight = height + " m";
+      $scope.user.height= $scope.userHeight;      
+      let key = 'currentUser';
+      let value = [$scope.user];
+      value = JSON.stringify(value);
+      sessionStorage.setItem(key, value);
     };
 
 
@@ -4520,7 +4538,7 @@ angular
 
     $scope.returnValidator = function(){
       $scope.alldata2 = [];
-      var query = "SELECT email, password, username FROM User WHERE email="+"'"+$scope.email+"'"+"AND password='"+$scope.password+"'";
+      var query = "SELECT email, password, username, age, weight, height FROM User WHERE email="+"'"+$scope.email+"'"+"AND password='"+$scope.password+"'";
       //alert("AFTER");
       //alert($scope.email);
       $rootScope.email = $scope.email;
@@ -4538,6 +4556,8 @@ angular
                 }
                 $scope.user=$scope.alldata2.pop();
 
+                console.log($scope.user);
+
                  var query = "INSERT INTO loggedin (email,password,isloggedin) VALUES (?,?,?)";
                  //alert(query);
                  $cordovaSQLite.execute(db,query,[$scope.email,$scope.password,1]);
@@ -4551,13 +4571,14 @@ angular
                   // redirects to profile page on successful login
 
                   let key = 'currentUser';
-                  let value = [{'username':$scope.user.username,'email':$scope.email}];
+                  let value = [{'username':$scope.user.username,'email':$scope.email,'age':$scope.user.age,'age':$scope.user.age,
+                                  'weight':$scope.user.weight, 'height':$scope.user.height}];
                   value = JSON.stringify(value);
                   sessionStorage.setItem(key, value);
 
               }
               else{
-                throw "";
+                throw "Error";
               }
 
             }
