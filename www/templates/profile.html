@@ -1,11 +1,14 @@
 <ion-view view-title="{{ '_profile' | translate }}">
-    <ion-content>
+    <ion-content hideBackButton="true">
     		<img ng-click="setPhoto($index)" src="img/profile-picture.png" class="profile-picture">
     		<div class="list">
-    			<div class="item item-divider" ng-click="editName();">
-            		Name : {{userName}}
+    			<div class="item item-divider" ng-click="editName()">
+					Username : {{userName}}
+				</div>
+				<div class="item item-divider">
+            		Email : {{email}}
         		</div>
-        		<div class="item item-divider" ng-click="editAge();">
+        		<div class="item item-divider" ng-click="editAge()">
             		Age : {{userAge}}
             	</div>
             	<div class="item item-divider" ng-click="editWeight()">

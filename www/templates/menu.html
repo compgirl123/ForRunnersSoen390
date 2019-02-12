@@ -26,20 +26,26 @@
         <ion-item menu-close href="#/app/equipments">
           {{ "_equipments" | translate }}
         </ion-item>
+        <ion-item menu-close href="#/app/signin">
+          {{ "_sign_in" | translate }}
+        </ion-item>
         <ion-item menu-close href="#/app/signup">
           {{ "_sign_up" | translate }}
+        </ion-item>
+        <div ng-controller="LogoutCtrl">
+          <div *ngIf="d() == sdfa">
+            <ion-item menu-close href="#/app/logout">
+              {{ "_logout" | translate }}
+            </ion-item>
+          </div>
+        <ion-item menu-close href="#/app/profile">
+          {{ "_profile" | translate }}
         </ion-item>
         <ion-item menu-close href="#/app/settings">
           {{ "_settings" | translate }}
         </ion-item>
         <ion-item menu-close href="#/app/about">
           {{ "_about" | translate }}
-        </ion-item>
-        <ion-item menu-close href="#/app/signin">
-          {{ "_login" | translate }}
-        </ion-item>
-        <ion-item menu-close href="#/app/profile">
-          {{ "_profile" | translate }}
         </ion-item>
         <ion-item menu-close href="#/app/help">
           {{ "_help" | translate }}
