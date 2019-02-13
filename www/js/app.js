@@ -155,18 +155,7 @@ angular
             controller: "SignInCtrl"
           }
         }
-      })
-
-      .state("app.logout", {
-        url: "/logout",
-        cache: false,
-        views: {
-          menuContent: {
-            templateUrl: "templates/logout.html",
-            controller: "LogoutCtrl"
-          }
-        }
-      })
+      })      
 
       .state("app.profile", {
         url: "/profile",
