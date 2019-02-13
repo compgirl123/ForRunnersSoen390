@@ -115,6 +115,7 @@ angular
     leafletBoundsHelpers,
     FileFactory,
     SessionFactory,
+    $window,
     $q,
     $nominatim
   ) {
@@ -218,6 +219,18 @@ angular
     $scope.bluetooth_scanning = false;
 
     $scope.equipments = [];
+
+    if(sessionStorage.getItem('currentUser')!=null){
+        $scope.isLogged=true;        
+      }else{
+        $scope.isLogged=false;        
+      }
+
+    $scope.logout = function(){
+      sessionStorage.removeItem('currentUser');
+      $window.location.reload();
+      $state.go("app.signin");
+    };  
 
     $scope.dateTimeReviver = function(key, value) {
       if (key === "duration" || key === "pace") {
@@ -4302,15 +4315,7 @@ angular
           });
   };
   })
-
-  .controller("LogoutCtrl", function($scope, $cordovaSQLite,$state) {
-    // add logic for logout page to connect front-end to back-end database
-    $scope.logout = function(){
-
-      sessionStorage.removeItem('currentUser');
-      $state.go("app.signin");
-    };
-  })
+  
 
   .controller("ProfileCtrl", function($scope,$ionicPopup,$cordovaSQLite,$rootScope) {
 
@@ -4442,7 +4447,7 @@ angular
     };
   })
 
-  .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$ionicHistory,$rootScope) {
+  .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$ionicHistory,$rootScope,$window) {
    
     $scope.count = 0;
     $scope.search = function(){
@@ -4497,6 +4502,7 @@ angular
                   });
                   // ensures that when the user logs in, they are redirected to profile page and side menu
                   // can be accessed without going back to login page.
+                  $window.location.reload();
                   $state.go("app.profile");
                   // redirects to profile page on successful login
 
