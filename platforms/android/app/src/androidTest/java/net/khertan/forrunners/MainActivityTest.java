@@ -47,8 +47,8 @@ import static androidx.test.espresso.web.webdriver.DriverAtoms.findElement;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
-    private static final String MACCHIATO = "Macchiato";
-    private static final String DOPPIO = "Doppio";
+    private static final String MACCHIATO = "claudia.f.feochari@hotmail.com";
+    private static final String DOPPIO = "test12345";
 
     /**
      * A JUnit {@link Rule @Rule} to launch your activity under test. This is a replacement
@@ -87,8 +87,17 @@ public class MainActivityTest {
                 // Clear previous input
                 .perform(clearElement())
                 // Enter text into the input element
-                .perform(DriverAtoms.webKeys(MACCHIATO));
+                .perform(DriverAtoms.webKeys(MACCHIATO))
                 // Find the submit button
+                //.withElement(findElement(Locator.ID, "signin"))
+                //.perform(clearElement())
+                .withElement(findElement(Locator.ID, "pwd"))
+                .perform(DriverAtoms.webKeys(DOPPIO));
+               //.check(getText(), containsString(MACCHIATO));
+
+
+                // Simulate a click via javascript
+                 //.perform(webClick());
                 /*.withElement(findElement(Locator.ID, "submitBtn"))
                 // Simulate a click via javascript
                 .perform(webClick());*/
