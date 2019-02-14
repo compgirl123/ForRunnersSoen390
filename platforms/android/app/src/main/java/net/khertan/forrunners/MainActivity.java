@@ -40,7 +40,8 @@ public class MainActivity extends CordovaActivity
 
     @VisibleForTesting
     //protected static final String WEB_FORM_URL = "file:///android_asset/web_form.html";
-    protected static final String WEB_FORM_URL = "file:///android_asset/www/templates/signin.html";
+    protected static final String WEB_FORM_URL = "http://10.0.2.2:8100/#/app/signin";
+    //"file:///android_asset/www/templates/signin.html";
     //"javascript:document.getElementById('usr').value = 'test@sf.com’;";
     //"file:///android_asset/www/templates/signin.html";
 
