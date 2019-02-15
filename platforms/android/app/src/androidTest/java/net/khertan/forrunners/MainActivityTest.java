@@ -92,13 +92,14 @@ public class MainActivityTest {
                 //.withElement(findElement(Locator.ID, "signin"))
                 //.perform(clearElement())
                 .withElement(findElement(Locator.ID, "pwd"))
-                .perform(DriverAtoms.webKeys(DOPPIO));
+                .perform(DriverAtoms.webKeys(DOPPIO))
                //.check(getText(), containsString(MACCHIATO));
                 // Simulate a click via javascript
                  //.perform(webClick());
-                /*.withElement(findElement(Locator.ID, "submitBtn"))
+                .withElement(findElement(Locator.ID, "submitBtn"))
+                .perform(DriverAtoms.webKeys(DOPPIO));
                 // Simulate a click via javascript
-                .perform(webClick());*/
+                //.perform(webClick());
                 // Find the response element by ID
                 /*.withElement(findElement(Locator.ID, "response"))
                 // Verify that the response page contains the entered text
