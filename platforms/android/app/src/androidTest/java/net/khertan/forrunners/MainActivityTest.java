@@ -89,15 +89,14 @@ public class MainActivityTest {
                 // Enter text into the input element
                 .perform(DriverAtoms.webKeys(MACCHIATO))
                 // Find the submit button
-                //.withElement(findElement(Locator.ID, "signin"))
+                .withElement(findElement(Locator.ID, "signin"))
+                .perform(DriverAtoms.webClick())
                 //.perform(clearElement())
                 .withElement(findElement(Locator.ID, "pwd"))
-                .perform(DriverAtoms.webKeys(DOPPIO))
+                .perform(DriverAtoms.webKeys(DOPPIO));
                //.check(getText(), containsString(MACCHIATO));
                 // Simulate a click via javascript
-                 //.perform(webClick());
-                .withElement(findElement(Locator.ID, "submitBtn"))
-                .perform(DriverAtoms.webKeys(DOPPIO));
+
                 // Simulate a click via javascript
                 //.perform(webClick());
                 // Find the response element by ID
