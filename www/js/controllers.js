@@ -4377,7 +4377,14 @@ angular
       });
 
       editPopup.then(function(res) {
-        $scope.saveAge(res);
+        var age = parseInt(res);
+        if( res.indexOf('.')==-1 && !isNaN(age) && angular.isNumber(age) && age>=3  && age<=110){
+          $scope.saveAge(age);
+        }else{
+           $ionicPopup.alert({
+            title: "Invalid input!"
+          });
+        }
       });
     };
 
@@ -4405,13 +4412,20 @@ angular
       });
 
       editPopup.then(function(res) {
-        $scope.saveWeight(res);
+        var weigth = parseFloat(res);
+        if(!isNaN(weigth) && angular.isNumber(weigth) && weigth>=3 && weigth<6000){
+          $scope.saveWeight(weigth);
+        }else{
+           $ionicPopup.alert({
+            title: "Invalid input!"
+          });
+        }
       });
     };
 
     $scope.saveWeight = function(weight) {
       if (weight === undefined) return;
-      $scope.userWeight = weight + " Kg";
+      $scope.userWeight = weight;
       $scope.user.weight= $scope.userWeight;
       let key = 'currentUser';
       let value = [$scope.user];
@@ -4432,13 +4446,20 @@ angular
       });
 
       editPopup.then(function(res) {
-        $scope.saveHeight(res);
+        var heigth = parseFloat(res);
+        if(!isNaN(heigth) && angular.isNumber(heigth) && heigth>=0.5){
+          $scope.saveHeight(heigth);
+        }else{
+           $ionicPopup.alert({
+            title: "Invalid input!"
+          });
+        }
       });
     };
 
     $scope.saveHeight = function(height) {
       if (height === undefined) return;
-      $scope.userHeight = height + " m";
+      $scope.userHeight = height;
       $scope.user.height= $scope.userHeight;
       let key = 'currentUser';
       let value = [$scope.user];
