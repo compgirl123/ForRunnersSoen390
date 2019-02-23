@@ -9,7 +9,7 @@ angular.module('app.services', [])
         var deferred = $q.defer();
 
         if ((coords.latitude === undefined) || (coords.longitude === undefined)) {
-          deferred.reject('Undefined coords');          
+          deferred.reject('Undefined coords');
         }
 
         $http.jsonp(API_ROOT + '/reverse?format=json&lat='+coords.latitude+'&lon='+coords.longitude+'&zoom=10&addressdetails=1&json_callback=JSON_CALLBACK').then(function(response) {
@@ -26,6 +26,31 @@ angular.module('app.services', [])
     };
     return this;
 })
+
+.service('CommonProp', ['$state', '$firebaseAuth', function($state, $firebaseAuth){
+var user = "";
+var auth = $firebaseAuth();
+
+return {
+  getUser: function(){
+    if(user == ""){
+      user = localStorage.getItem("userEmail");
+    }
+    return user;
+  },
+  setUser: function(value){
+    localStorage.setItem("userEmail", value);
+    user = value;
+  },
+  logoutUser: function(){
+    auth.$signOut();
+    console.log("Logged Out Succesfully");
+    user = "";
+    localStorage.removeItem('userEmail');
+    $state.go("app.login");
+  }
+};
+}])
 
 
 // Service to communicate with OpenWeatherMap API.
@@ -131,7 +156,7 @@ angular.module('app.services', [])
               deferred.resolve();
             }, 1);
             return deferred.promise;
-          } 
+          }
 
           try {
               window.resolveLocalFileSystemURL(path, function(dirEntry) {

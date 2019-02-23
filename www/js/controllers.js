@@ -221,16 +221,16 @@ angular
     $scope.equipments = [];
 
     if(sessionStorage.getItem('currentUser')!=null){
-        $scope.isLogged=true;        
+        $scope.isLogged=true;
       }else{
-        $scope.isLogged=false;        
+        $scope.isLogged=false;
       }
 
     $scope.logout = function(){
       sessionStorage.removeItem('currentUser');
       $window.location.reload();
       $state.go("app.signin");
-    };  
+    };
 
     $scope.dateTimeReviver = function(key, value) {
       if (key === "duration" || key === "pace") {
@@ -4277,45 +4277,6 @@ angular
     //}
   })
 
-  .controller("SignUpCtrl", function($scope,$cordovaSQLite,$state,$ionicPopup,$rootScope) {
-    // add logic for sign up page to connect front-end to back-end database
-    $scope.count = 0;
-
-    $scope.submit = function () {
-      var queryVerify = "SELECT email FROM User WHERE email = '" + $scope.user.email + "'";
-      $cordovaSQLite.execute(db, queryVerify).then(function(res) {
-        if (res.rows.length == 1) {
-         $scope.count=1;
-          var invalidRegistrationPopup = $ionicPopup.alert({
-            title: "A user already exists with the specified email address"
-          });
-          //console.log(result.rows.length);
-          //console.log(result);
-        } else {
-          $scope.count=2;
-          //console.log($scope.user.email);
-          //console.log(result);
-          $scope.verify();
-        }
-      });
-    }
-
-    $scope.verify= function() {
-      var query = "INSERT INTO User(username, email, password) VALUES (?,?,?)";
-      $cordovaSQLite.execute(db,query,[$scope.user.Username, $scope.user.email, $scope.user.password])
-        .then(
-            function(res){
-              $state.go("app.signin");
-              $scope.count=3;
-            } 
-           );
-
-           var registeredPopup= $ionicPopup.alert({
-            title: "Successfully Registered"
-          });
-  };
-  })
-  
 
   .controller("ProfileCtrl", function($scope,$ionicPopup,$cordovaSQLite,$rootScope) {
 
@@ -4468,88 +4429,52 @@ angular
     };
   })
 
-  .controller("SignInCtrl", function($scope, $cordovaSQLite,$state,$ionicHistory,$rootScope,$window) {
-   
-    $scope.count = 0;
-    $scope.search = function(){
-      var columns = [id];
-      var selection = email + " = ?" + " AND " + password + " = ?";
-      var selectionArgs = [$scope.email, $scope.password];
+  .controller('LoginCtrl', ['$scope', '$firebaseAuth', '$state', 'CommonProp', '$window', function($scope, $firebaseAuth, $state, CommonProp, $window){
 
-
-      var query = db.query(TABLE_USER, columns, selection, selectionArgs, null, null, null).then(
-        function(result){
-          $scope.result=false;
-          if (result.length > 0) {
-            $scope.result=true;
-            $scope.count = 1;
-
-            return true;
-          }    
-          $scope.count = 2;
-          return false;
-        });
-      if(query()==true){
-        return true;
-      }
-      return false;
+  	$scope.username = CommonProp.getUser();
+  	if($scope.username){
+  		$state.go("app.profile");
+  	}
+    $scope.signout = function(){
+    CommonProp.logoutUser();
     }
+  	$scope.signIn = function(){
+  		var username = $scope.user.email;
+  		var password = $scope.user.password;
+  		var auth = $firebaseAuth();
 
-    $scope.returnValidator = function(){
-      $scope.alldata2 = [];
-      var query = "SELECT email, password, username, age, weight, height FROM User WHERE email="+"'"+$scope.email+"'"+"AND password='"+$scope.password+"'";
-      $rootScope.email = $scope.email;
+  		auth.$signInWithEmailAndPassword(username, password).then(function(){
+  			console.log("User Login Successful");
+  			CommonProp.setUser($scope.user.email);
+        $window.location.reload();
+  			$state.go("app.profile");
+  		}).catch(function(error){
+  			$scope.errMsg = true;
+  			$scope.errorMessage = error.message;
+  		});
+  	}
 
-      $cordovaSQLite.execute(db,query)
-      .then(
-          function(result){
-            errmessage = document.getElementById("error");
-            errmessage.innerHTML = "";
-            try{
+  }])
 
-              if(result.rows.length){
-                for(var i=0; i<result.rows.length;i++){
-                  $scope.alldata2.push(result.rows.item(i));
-                }
-                $scope.user=$scope.alldata2.pop();
+  .controller('RegisterCtrl', ['$scope', '$firebaseAuth', '$state', function($scope, $firebaseAuth, $state){
 
-                console.log($scope.user);
+  	$scope.signUp = function(){
+  		var username = $scope.user.email;
+  		var password = $scope.user.password;
 
-                 var query = "INSERT INTO loggedin (email,password,isloggedin) VALUES (?,?,?)";
-                 $cordovaSQLite.execute(db,query,[$scope.email,$scope.password,1]);
+  		if(username && password){
+  			var auth = $firebaseAuth();
+  			auth.$createUserWithEmailAndPassword(username, password).then(function(){
+  				console.log("User Successfully Created");
+  				$state.go("app.login");
+  			}).catch(function(error){
+  				$scope.errMsg = true;
+  				$scope.errorMessage = error.message;
+  			});
+  		}
+  	}
 
-                  $ionicHistory.nextViewOptions({
-                    historyRoot: true
-                  });
-                  // ensures that when the user logs in, they are redirected to profile page and side menu
-                  // can be accessed without going back to login page.
-                  $window.location.reload();
-                  $state.go("app.profile");
-                  // redirects to profile page on successful login
-
-                  let key = 'currentUser';
-                  let value = [{'username':$scope.user.username,'email':$scope.email,'age':$scope.user.age,'age':$scope.user.age,
-                                  'weight':$scope.user.weight, 'height':$scope.user.height}];
-                  value = JSON.stringify(value);
-                  sessionStorage.setItem(key, value);
-
-              }
-              else{
-                throw "Error";
-              }
-
-            }
-            catch(err){
-              errmessage.innerHTML = "<p class=\"errorMessage\"><i class=\"fas fa-exclamation-triangle\"></i> The email and/or the password is/are not correct. Please try again.</p> ";
-            }
-
-          },
-          function (err) {
-            //alert('ERROR: ' + err);
-        }
-        );
-    }
-  })
+  }])
 
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
     "use strict";
