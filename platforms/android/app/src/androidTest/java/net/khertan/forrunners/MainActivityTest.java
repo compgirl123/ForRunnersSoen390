@@ -84,6 +84,8 @@ public class MainActivityTest {
         onWebView()
                 // Find the input element by ID
                 .withElement(findElement(Locator.ID, "usr"))
+                // checks the input that is inputted and checks if it matches a string.
+                .check(webMatches(getText(),containsString("d")))
                 // Clear previous input
                 .perform(clearElement())
                 // Enter text into the input element
