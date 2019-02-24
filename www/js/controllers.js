@@ -4582,4 +4582,13 @@ angular
       }
     };
     $scope.go();
+  })
+
+  .controller("FoodCtrl", function(
+    $scope,
+    $http
+  ) {
+    $http.get('js/food.json').success(function(data){
+      $scope.foods=data;
+    });
   });

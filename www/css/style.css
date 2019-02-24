@@ -317,3 +317,12 @@ input.form-control:focus {
 input.ng-invalid.ng-touched{
     border: solid 2px red;
 }
+
+.food_box{
+    display: flex;
+    align-items: center;
+}
+
+.list_header{
+    background-color: grey;
+}
