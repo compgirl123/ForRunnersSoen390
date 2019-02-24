@@ -4591,4 +4591,11 @@ angular
     $http.get('js/food.json').success(function(data){
       $scope.foods=data;
     });
+
+    $scope.calculate=function(){
+      //TODO
+    };
+    $scope.addFood=function(){
+      //TODO
+    };
   });
