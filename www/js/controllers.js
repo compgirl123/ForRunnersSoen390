@@ -116,6 +116,7 @@ angular
     FileFactory,
     SessionFactory,
     $window,
+    $firebaseAuth,
     $q,
     $nominatim
   ) {
@@ -220,17 +221,11 @@ angular
 
     $scope.equipments = [];
 
-    if(sessionStorage.getItem('currentUser')!=null){
+    if(localStorage.getItem("userId")!=null){
         $scope.isLogged=true;
       }else{
         $scope.isLogged=false;
       }
-
-    $scope.logout = function(){
-      sessionStorage.removeItem('currentUser');
-      $window.location.reload();
-      $state.go("app.signin");
-    };
 
     $scope.dateTimeReviver = function(key, value) {
       if (key === "duration" || key === "pace") {
@@ -4277,175 +4272,23 @@ angular
     //}
   })
 
-
-  .controller("ProfileCtrl", function($scope,$ionicPopup,$cordovaSQLite,$rootScope) {
-
-    if(sessionStorage.getItem('currentUser')!=null){
-      $scope.user=JSON.parse(sessionStorage.getItem('currentUser')).pop();
-
-      $scope.userName=$scope.user.username;
-
-      $scope.userAge=$scope.user.age;
-      $scope.userEmail=$scope.user.email;
-      $scope.userWeight=$scope.user.weight;
-      $scope.userHeight=$scope.user.height;
-
-    }
-
-    $scope.save = function(){
-      var query = "UPDATE User SET  username =? , age =? , weight = ? , height = ? WHERE email = ?";
-      $cordovaSQLite.execute(db,query,[$scope.userName, $scope.userAge, $scope.userWeight, $scope.userHeight,$scope.userEmail]);
-      $scope.load();
-    }
-
-    $scope.editName = function() {
-      if ($scope.userName== undefined) {
-        $scope.userName = "";
-      }
-
-      var editPopup = $ionicPopup.prompt({
-        template: "User name",
-        title: "Enter your name",
-        inputType: "text",
-        defaultText: $scope.userName.toString()
-      });
-
-      editPopup.then(function(res) {
-        $scope.saveName(res);
-      });
-  };
-
-    $scope.saveName = function(username) {
-      if (username === undefined) return;
-      $scope.userName = username;
-    $scope.user.username=$scope.userName;
-    let key = 'currentUser';
-    let value = [$scope.user];
-    value = JSON.stringify(value);
-    sessionStorage.setItem(key, value);
-    };
-
-    $scope.editAge = function() {
-      if ($scope.userAge== undefined) {
-        $scope.userAge = "";
-      }
-
-      var editPopup = $ionicPopup.prompt({
-        template: "User age",
-        title: "Enter your age",
-        inputType: "text",
-        defaultText: $scope.userAge.toString()
-      });
-
-      editPopup.then(function(res) {
-        var age = parseInt(res);
-        if( res.indexOf('.')==-1 && !isNaN(age) && angular.isNumber(age) && age>=3  && age<=110){
-          $scope.saveAge(age);
-        }else{
-           $ionicPopup.alert({
-            title: "Invalid input!"
-          });
-        }
-      });
-    };
-
-    $scope.saveAge = function(age) {
-      if (age === undefined) return;
-      $scope.userAge = age;
-      $scope.user.age=age;
-      let key = 'currentUser';
-      let value = [$scope.user];
-      value = JSON.stringify(value);
-      sessionStorage.setItem(key, value);
-
-    };
-
-    $scope.editWeight = function() {
-      if ($scope.userWeight== undefined) {
-        $scope.userWeight = "";
-      }
-
-      var editPopup = $ionicPopup.prompt({
-        template: "User weight",
-        title: "Enter your weight",
-        inputType: "text",
-        defaultText: $scope.userWeight.toString()
-      });
-
-      editPopup.then(function(res) {
-        var weigth = parseFloat(res);
-        if(!isNaN(weigth) && angular.isNumber(weigth) && weigth>=3 && weigth<6000){
-          $scope.saveWeight(weigth);
-        }else{
-           $ionicPopup.alert({
-            title: "Invalid input!"
-          });
-        }
-      });
-    };
-
-    $scope.saveWeight = function(weight) {
-      if (weight === undefined) return;
-      $scope.userWeight = weight;
-      $scope.user.weight= $scope.userWeight;
-      let key = 'currentUser';
-      let value = [$scope.user];
-      value = JSON.stringify(value);
-      sessionStorage.setItem(key, value);
-    };
-
-    $scope.editHeight = function() {
-      if ($scope.userHeight== undefined) {
-        $scope.userHeight = "";
-      }
-
-      var editPopup = $ionicPopup.prompt({
-        template: "User height",
-        title: "Enter your height",
-        inputType: "text",
-        defaultText: $scope.userHeight.toString()
-      });
-
-      editPopup.then(function(res) {
-        var heigth = parseFloat(res);
-        if(!isNaN(heigth) && angular.isNumber(heigth) && heigth>=0.5){
-          $scope.saveHeight(heigth);
-        }else{
-           $ionicPopup.alert({
-            title: "Invalid input!"
-          });
-        }
-      });
-    };
-
-    $scope.saveHeight = function(height) {
-      if (height === undefined) return;
-      $scope.userHeight = height;
-      $scope.user.height= $scope.userHeight;
-      let key = 'currentUser';
-      let value = [$scope.user];
-      value = JSON.stringify(value);
-      sessionStorage.setItem(key, value);
-    };
-  })
-
   .controller('LoginCtrl', ['$scope', '$firebaseAuth', '$state', 'CommonProp', '$window', function($scope, $firebaseAuth, $state, CommonProp, $window){
 
-  	$scope.username = CommonProp.getUser();
-  	if($scope.username){
-  		$state.go("app.profile");
-  	}
+  	$scope.userId = CommonProp.getUserId();
+
     $scope.signout = function(){
     CommonProp.logoutUser();
+    $window.location.reload();
     }
+
   	$scope.signIn = function(){
-  		var username = $scope.user.email;
+  		var email = $scope.user.email;
   		var password = $scope.user.password;
   		var auth = $firebaseAuth();
 
-  		auth.$signInWithEmailAndPassword(username, password).then(function(){
-  			console.log("User Login Successful");
-  			CommonProp.setUser($scope.user.email);
+  		auth.$signInWithEmailAndPassword(email, password).then(function(){
+  			CommonProp.setUserId(firebase.auth().currentUser.uid);
+        $scope.showMenu=true;
         $window.location.reload();
   			$state.go("app.profile");
   		}).catch(function(error){
@@ -4456,17 +4299,20 @@ angular
 
   }])
 
-  .controller('RegisterCtrl', ['$scope', '$firebaseAuth', '$state', function($scope, $firebaseAuth, $state){
+  .controller('RegisterCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseArray','$ionicPopup', function($scope, $firebaseAuth, $state, $firebaseArray, $ionicPopup){
 
   	$scope.signUp = function(){
-  		var username = $scope.user.email;
+  		var email = $scope.user.email;
   		var password = $scope.user.password;
 
-  		if(username && password){
-  			var auth = $firebaseAuth();
-  			auth.$createUserWithEmailAndPassword(username, password).then(function(){
-  				console.log("User Successfully Created");
-  				$state.go("app.login");
+  		if(email && password){
+  			firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
+        var id = firebase.auth().currentUser.uid;
+        var ref = firebase.database().ref("Users/"+id).set({email: email, password: password});
+  			$state.go("app.login");
+        var registeredPopup= $ionicPopup.alert({
+           title: "Successfully Registered"
+         });
   			}).catch(function(error){
   				$scope.errMsg = true;
   				$scope.errorMessage = error.message;
@@ -4474,6 +4320,35 @@ angular
   		}
   	}
 
+  }])
+
+  .controller('ProfileCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseArray','CommonProp','$firebaseObject','$window', function($scope, $firebaseAuth, $state, $firebaseArray, CommonProp, $firebaseObject, $window){
+    var userId = CommonProp.getUserId();
+    if(userId!=null){
+    var ref = firebase.database().ref("Users");
+    $scope.data = $firebaseObject(ref.child(userId));
+    }
+
+    $scope.save = function(user){
+      var id = firebase.auth().currentUser.uid;
+      var ref = firebase.database().ref("Users/"+id);
+      ref.update({
+        age: $scope.user.age,
+        weight: $scope.user.weight,
+        height: $scope.user.height
+      })
+      .then(
+        function(ref){
+          $scope.user.age="";
+          $scope.user.weight="";
+          $scope.user.height="";
+        },
+        function(error){
+          console.log(error);
+        }
+      );
+      $state.go("app.profile");
+    }
   }])
 
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {

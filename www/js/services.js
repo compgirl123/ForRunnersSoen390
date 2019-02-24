@@ -27,27 +27,29 @@ angular.module('app.services', [])
     return this;
 })
 
-.service('CommonProp', ['$state', '$firebaseAuth', function($state, $firebaseAuth){
+.service('CommonProp', ['$state', '$firebaseAuth','$ionicPopup', function($state, $firebaseAuth,$ionicPopup){
 var user = "";
 var auth = $firebaseAuth();
 
 return {
-  getUser: function(){
+  getUserId: function(){
     if(user == ""){
-      user = localStorage.getItem("userEmail");
+      user = localStorage.getItem("userId");
     }
     return user;
   },
-  setUser: function(value){
-    localStorage.setItem("userEmail", value);
+  setUserId: function(value){
+    localStorage.setItem("userId", value);
     user = value;
   },
   logoutUser: function(){
     auth.$signOut();
-    console.log("Logged Out Succesfully");
     user = "";
-    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userId');
     $state.go("app.login");
+    var registeredPopup= $ionicPopup.alert({
+       title: "Logged-out Successfully"
+     });
   }
 };
 }])

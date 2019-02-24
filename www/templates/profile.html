@@ -1,26 +1,26 @@
 <ion-view view-title="{{ '_profile' | translate }}">
     <ion-content hideBackButton="true">
+      <form ng-controller="ProfileCtrl" ng-submit="save(user)">
     		<img ng-click="setPhoto($index)" src="img/profile-picture.png" class="profile-picture">
     		<div class="list">
-    			<div class="item item-divider" ng-click="editName()" >
-					Username : {{userName}}
-				</div>
-				<div class="item item-divider">
-            		Email : {{userEmail}}
-        		</div>
-
-        		<div class="item item-divider" ng-click="editAge()" >
-            		Age : {{userAge}}
-            	</div>
-            	<div class="item item-divider" ng-click="editWeight()">
-            		Weight (Kg) : {{userWeight}}
-            	</div>
-            	<div class="item item-divider" ng-click="editHeight()">
-            		Height (m) : {{userHeight}}
-            	</div>
-              <form>
-              <button class="button button-block" ng-click="save()">Save</button>
-              </form>
-            </div>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Email</span>
+          <input type="email" name="email" placeholder="Email" value={{data.email}} readonly>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Age</span>
+          <input type="number" name="age" placeholder="Age in years" ng-model="user.age" value={{data.age}} required>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Weight (Kg)</span>
+          <input type="number" name="weight" placeholder="Weight in Kg" ng-model="user.weight" value={{data.weight}} required>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Height (m)</span>
+          <input type="number" name="height" placeholder="Height in meters" ng-model="user.height" value={{data.height}} required>
+        </label>
+          <button type="submit" class="button button-block">Save</button>
+        </div>
+      </form>
     </ion-content>
 </ion-view>
