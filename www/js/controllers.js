@@ -221,7 +221,7 @@ angular
 
     $scope.equipments = [];
 
-    if(localStorage.getItem("userId")!=null){
+    if(sessionStorage.getItem("currentUser")!=null){
         $scope.isLogged=true;
       }else{
         $scope.isLogged=false;
@@ -4272,12 +4272,20 @@ angular
     //}
   })
 
-  .controller('LoginCtrl', ['$scope', '$firebaseAuth', '$state', 'CommonProp', '$window', function($scope, $firebaseAuth, $state, CommonProp, $window){
+  .controller('LoginCtrl', ['$scope', '$firebaseAuth', '$state', 'CommonProp', '$window','$firebaseObject', function(
+      $scope, 
+      $firebaseAuth, 
+      $state, 
+      CommonProp, 
+      $window,
+      $firebaseObject
+      ){
 
   	$scope.userId = CommonProp.getUserId();
 
     $scope.signout = function(){
     CommonProp.logoutUser();
+    sessionStorage.removeItem('currentUser');
     $window.location.reload();
     }
 
@@ -4286,16 +4294,37 @@ angular
   		var password = $scope.user.password;
   		var auth = $firebaseAuth();
 
-  		auth.$signInWithEmailAndPassword(email, password).then(function(){
-  			CommonProp.setUserId(firebase.auth().currentUser.uid);
-        $scope.showMenu=true;
-        $window.location.reload();
-  			$state.go("app.profile");
-  		}).catch(function(error){
-  			$scope.errMsg = true;
-  			$scope.errorMessage = error.message;
-  		});
+  		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+         // ...
+       });
+
+      firebase.auth().onAuthStateChanged(function(user) {        
+        firebase.database().ref('Users/' + user.uid).once('value').then(function(snapshot) {
+            var userInfo=snapshot.val();            
+
+            // ensures that when the user logs in, they are redirected to profile page and side menu
+            // can be accessed without going back to login page.
+            // redirects to profile page on successful login
+            $state.go("app.profile");
+            $state.reload();
+            $window.location.href="#/app/profile";
+            $window.location.reload();
+
+            let key = 'currentUser';
+            let value = {'username':userInfo.username,'email':userInfo.email,'age':userInfo.age,'age':userInfo.age,
+                                  'weight':userInfo.weight, 'height':userInfo.height};
+            value = JSON.stringify(value);
+            sessionStorage.setItem(key, value);
+
+            
+          });
+      });
+
   	}
+
 
   }])
 
@@ -4327,31 +4356,30 @@ angular
   }])
 
   .controller('ProfileCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseArray','CommonProp','$firebaseObject','$window', function($scope, $firebaseAuth, $state, $firebaseArray, CommonProp, $firebaseObject, $window){
-    var userId = CommonProp.getUserId();
-    if(userId!=null){
-      var id = firebase.auth().currentUser.uid;
-      var ref = firebase.database().ref("Users/"+id);
-      ref.on('value',function(snapshot){
-        $scope.user=snapshot.val();
-        $scope.user.email=snapshot.val().email;
-        $scope.user.username=snapshot.val().username;
-        $scope.user.age=snapshot.val().age;
-        
-        $scope.user.weight=snapshot.val().weight;
-        $scope.user.height=snapshot.val().height;
-      });
+    
+    if(sessionStorage.getItem('currentUser')!=null){
+      $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
     }
 
-    $scope.save = function(user){
+    //Updates user info without having to press a button "save"
+    $scope.change = function() {        
+      let key = 'currentUser';
+      let value = $scope.user;
+      value = JSON.stringify(value);
+      sessionStorage.setItem(key, value);
       var id = firebase.auth().currentUser.uid;
       var ref = firebase.database().ref("Users/"+id);
       ref.update({
-        age: $scope.user.age,
-        weight: $scope.user.weight,
+        age: $scope.user.age
+      });
+      ref.update({
+        weight: $scope.user.weight
+      });
+      ref.update({
         height: $scope.user.height
       });
-      $state.go("app.profile");
-    }
+    };
+    
   }])
 
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
