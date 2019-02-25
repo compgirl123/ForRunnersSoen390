@@ -8,7 +8,6 @@ angular
     "leaflet-directive",
     "ionic-modal-select",
     "iosDblclick",
-    "ngCordova",
     "firebase"
   ])
 
