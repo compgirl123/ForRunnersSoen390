@@ -4329,8 +4329,17 @@ angular
   .controller('ProfileCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseArray','CommonProp','$firebaseObject','$window', function($scope, $firebaseAuth, $state, $firebaseArray, CommonProp, $firebaseObject, $window){
     var userId = CommonProp.getUserId();
     if(userId!=null){
-    var ref = firebase.database().ref("Users");
-    $scope.data = $firebaseObject(ref.child(userId));
+      var id = firebase.auth().currentUser.uid;
+      var ref = firebase.database().ref("Users/"+id);
+      ref.on('value',function(snapshot){
+        $scope.user=snapshot.val();
+        $scope.user.email=snapshot.val().email;
+        $scope.user.username=snapshot.val().username;
+        $scope.user.age=snapshot.val().age;
+        
+        $scope.user.weight=snapshot.val().weight;
+        $scope.user.height=snapshot.val().height;
+      });
     }
 
     $scope.save = function(user){
@@ -4340,17 +4349,7 @@ angular
         age: $scope.user.age,
         weight: $scope.user.weight,
         height: $scope.user.height
-      })
-      .then(
-        function(ref){
-          $scope.user.age="";
-          $scope.user.weight="";
-          $scope.user.height="";
-        },
-        function(error){
-          console.log(error);
-        }
-      );
+      });
       $state.go("app.profile");
     }
   }])

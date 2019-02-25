@@ -5,23 +5,23 @@
     		<div class="list">
         <label class="item item-input item-stacked-label">
           <span class="input-label">Email</span>
-          <input type="email" name="email" placeholder="Email" value={{data.email}} readonly>
+          <input type="email" name="email" placeholder="Email" ng-model="user.email" readonly>
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Username</span>
-          <input type="text" name="username" placeholder="Username" value={{data.username}} readonly>
+          <input type="text" name="username" placeholder="Username" ng-model="user.username" readonly>
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Age</span>
-          <input type="number" name="age" placeholder="Age in years" ng-model="user.age" value={{data.age}} required min="3" max="110" required>
+          <input type="number" name="age" placeholder="Age in years" ng-model="user.age" required min="3" max="110" required>
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Weight (Kg)</span>
-          <input type="number" name="weight" placeholder="Weight in Kg" ng-model="user.weight" value={{data.weight}} min="3" max="1000" step="0.1" required>
+          <input type="number" name="weight" placeholder="Weight in Kg" ng-model="user.weight"  min="3" max="1000" step="0.1" required>
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Height (m)</span>
-          <input type="number" name="height" placeholder="Height in meters" ng-model="user.height" value={{data.height}} min="0.5" step="0.01" max="2.6" required>
+          <input type="number" name="height" placeholder="Height in meters" ng-model="user.height" min="0.5" step="0.01" max="2.6" required>
         </label>
           <button type="submit" class="button button-block">Save</button>
         </div>
