@@ -4302,18 +4302,22 @@ angular
   .controller('RegisterCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseArray','$ionicPopup', function($scope, $firebaseAuth, $state, $firebaseArray, $ionicPopup){
 
   	$scope.signUp = function(){
-  		var email = $scope.user.email;
+      var username = $scope.user.Username;
+      var email = $scope.user.email;
   		var password = $scope.user.password;
 
   		if(email && password){
   			firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
         var id = firebase.auth().currentUser.uid;
-        var ref = firebase.database().ref("Users/"+id).set({email: email, password: password});
+        var ref = firebase.database().ref("Users/"+id).set({email: email, password: password, username: username});
   			$state.go("app.login");
         var registeredPopup= $ionicPopup.alert({
            title: "Successfully Registered"
          });
   			}).catch(function(error){
+          var invalidRegistrationPopup = $ionicPopup.alert({
+            title: "A user already exists with the specified email address"
+          });
   				$scope.errMsg = true;
   				$scope.errorMessage = error.message;
   			});
