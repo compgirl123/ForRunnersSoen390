@@ -1,4 +1,3 @@
-var db=null;
 angular
   .module("app", [
     "ionic",
@@ -9,10 +8,10 @@ angular
     "leaflet-directive",
     "ionic-modal-select",
     "iosDblclick",
-    "ngCordova"
+    "firebase"
   ])
 
-  .run(function($ionicPlatform, $cordovaSQLite) {
+  .run(function($ionicPlatform) {
     "use strict";
 
     $ionicPlatform.ready(function() {
@@ -39,9 +38,6 @@ angular
       if (window.device) {
         console.log(window.device);
       }
-      db=window.openDatabase("ForRunners.db", "1.0", "ForRunners", "2000");
-      $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email VARCHAR UNIQUE, password VARCHAR,age INTEGER, weight FLOAT , height FLOAT)");
-      $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS loggedin(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email VARCHAR UNIQUE , password VARCHAR, isloggedin BOOLEAN DEFAULT 0)");
     });
   })
 
@@ -135,27 +131,25 @@ angular
         }
       })
 
-      .state("app.signup", {
-        url: "/signup",
-        cache: false,
+      .state("app.login", {
+        url: "/login",
         views: {
           menuContent: {
-            templateUrl: "templates/signup.html",
-            controller: "SignUpCtrl"
+            templateUrl: "templates/login.html",
+            controller: "LoginCtrl"
           }
         }
       })
 
-      .state("app.signin", {
-        url: "/signin",
-        cache: false,
+      .state("app.register", {
+        url: "/register",
         views: {
           menuContent: {
-            templateUrl: "templates/signin.html",
-            controller: "SignInCtrl"
+            templateUrl: "templates/register.html",
+            controller: "RegisterCtrl"
           }
         }
-      })      
+      })
 
       .state("app.profile", {
         url: "/profile",
