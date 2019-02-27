@@ -317,3 +317,36 @@ input.form-control:focus {
 input.ng-invalid.ng-touched{
     border: solid 2px red;
 }
+
+.food_box{
+    display: flex;
+    align-items: center;
+}
+
+.list_header{
+    background-color: grey;
+}
+
+input[type=text], input[type=number], select {
+  width: 100%;
+  padding: 12px 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 95%;
+  background-color: #387ef5;
+  color: white;
+  padding: 14px 10px;
+  margin: 8px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #3F51B5;
+}

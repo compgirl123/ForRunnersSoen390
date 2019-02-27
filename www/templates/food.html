@@ -1,0 +1,29 @@
+<ion-view view-title="{{ '_food' | translate }}">
+
+	<ion-header-bar class="bar bar-subheader">
+	   	<input type="search"
+	           placeholder="Search food"
+	           ng-model="search"
+	           ng-focus="searchFocused = true"
+	           ng-blur="searchFocused = false"
+	           ng-change="scrollTop()"
+	           class="full-width">	    
+ 	 </ion-header-bar>
+ 	 <ion-content hideBackButton="true"> 	 	
+ 	 	<ion-list>
+ 	 	  <ion-list-header class="row list_header">
+ 	 		<ion-label class="col col-50" style="color:white">Food</ion-label>
+	      	<ion-label class="col" style="color:white">(100 grams)</ion-label> 
+	      </ion-list-header>
+	      <ion-item class="food_box row" ng-repeat="food in foods | filter : search">
+	      	<ion-label class="col col-50">{{food.name}}</ion-label>
+	      	<ion-label class="col">{{food.calories}} cal</ion-label>       	
+	      	<ion-checkbox class ="item-checkbox-right" slot="end"></ion-checkbox>
+	      </ion-item>
+	      <button ng-click="calculate()" class="button button-full">Calculate</button>
+	      <button ng-click="addFood()" class="button button-full">Add new food</button>
+	    </ion-list>      
+ 	 </ion-content>
+
+	      
+</ion-view>

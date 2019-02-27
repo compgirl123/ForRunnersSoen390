@@ -4413,4 +4413,40 @@ angular
       }
     };
     $scope.go();
+  })
+
+  .controller("FoodCtrl", function(
+    $scope,
+    $state,
+    $window
+  ) {
+        
+    var rootRef = firebase.database().ref("Foods").orderByKey();;
+    rootRef.on("value",function(snapshot) {
+        $scope.foods=[]; 
+        snapshot.forEach(function(childSnapshot) {
+        var childData = childSnapshot.val();
+        $scope.foods.push(childData); 
+      });
+    });
+
+    $scope.calculate=function(){
+      //TODO
+    };
+    $scope.addFood=function(){
+      $state.go("app.newFood");
+    };
+
+    $scope.save= function(){
+      
+      var rootRef = firebase.database().ref("Foods");
+      var lastId;
+      rootRef.once("value")
+        .then(function(snapshot) {
+        lastId = snapshot.numChildren();
+        lastId++ ;
+        firebase.database().ref("Foods/"+lastId).set({'name':$scope.foodName,'calories':$scope.calories});
+      });
+      $state.go("app.food");
+    }
   });
