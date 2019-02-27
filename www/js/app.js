@@ -219,6 +219,15 @@ angular
             controller: "FoodCtrl"
           }
         }
+      })
+      .state("app.newFood", {
+        url: "/newFood",
+        views: {
+          menuContent: {
+            templateUrl: "templates/newFood.html",
+            controller: "FoodCtrl"
+          }
+        }
       });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise("/app/sessions");
@@ -401,7 +410,8 @@ angular
       _sign_up: "Sign up",
       _sign_in: "Sign In",
       _logout: "Logout",
-      _food: "Food"
+      _food: "Food",
+      _new_food: "New Food"
     });
 
     $translateProvider.translations("fr-FR", {
@@ -583,7 +593,8 @@ angular
       _editable: "Toucher pour modifier",
       _session_name: "Nom de la session",
       _session_type: "Type de la session",
-      _food: "Aliments"
+      _food: "Aliments",
+      _new_food: "Nouvelle Aliment"
     });
 
     $translateProvider.translations("de-DE", {
@@ -759,7 +770,8 @@ angular
       _editable: "Berühren Sie, um zu ändern",
       _session_name: "_session_name",
       _session_type: "_session_type",
-      _food: "Essen"
+      _food: "Essen",
+      _new_food: "Neues Essen"
     });
 
     $translateProvider.translations("de-AT", {
@@ -935,7 +947,8 @@ angular
       _editable: "Berühren Sie, um zu ändern",
       _session_name: "_session_name",
       _session_type: "_session_type",
-      _food: "Essen"
+      _food: "Essen",
+      _new_food: "Neues Essen"
     });
 
     $translateProvider.translations("pt-pt", {
@@ -1108,7 +1121,8 @@ angular
         "O seu batimento cardiaco maximo num sprint de 4 minutos após um aquecimento de 20 minutos.",
       _session_name: "_session_name",
       _session_type: "_session_type",
-      _food: "Comida"
+      _food: "Comida",
+      _new_food: "Comida Nova"
     });
 
     $translateProvider.preferredLanguage("en-US");

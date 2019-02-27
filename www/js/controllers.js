@@ -4417,16 +4417,36 @@ angular
 
   .controller("FoodCtrl", function(
     $scope,
-    $http
+    $state,
+    $window
   ) {
-    $http.get('js/food.json').success(function(data){
-      $scope.foods=data;
+        
+    var rootRef = firebase.database().ref("Foods").orderByKey();;
+    rootRef.on("value",function(snapshot) {
+        $scope.foods=[]; 
+        snapshot.forEach(function(childSnapshot) {
+        var childData = childSnapshot.val();
+        $scope.foods.push(childData); 
+      });
     });
 
     $scope.calculate=function(){
       //TODO
     };
     $scope.addFood=function(){
-      //TODO
+      $state.go("app.newFood");
     };
+
+    $scope.save= function(){
+      
+      var rootRef = firebase.database().ref("Foods");
+      var lastId;
+      rootRef.once("value")
+        .then(function(snapshot) {
+        lastId = snapshot.numChildren();
+        lastId++ ;
+        firebase.database().ref("Foods/"+lastId).set({'name':$scope.foodName,'calories':$scope.calories});
+      });
+      $state.go("app.food");
+    }
   });
