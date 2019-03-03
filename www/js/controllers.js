@@ -4461,6 +4461,7 @@ angular
       $rootScope.distance = 3; //km
       $rootScope.time = 25; //min
       $rootScope.source = 'img/'+$rootScope.distance+'k.png';
+      $rootScope.src = 'img/about-bg.jpg';
       $rootScope.message = 'A Great Place To Start';
       $state.go("app.challenge");
     };
@@ -4469,6 +4470,7 @@ angular
       $rootScope.distance = 5; //km
       $rootScope.time = 35; //min
       $rootScope.source = 'img/'+$rootScope.distance+'k.png';
+      $rootScope.src = 'img/'+$rootScope.distance+'k.jpg';
       $rootScope.message = 'The Next Step';
       $state.go("app.challenge");
     };
@@ -4477,6 +4479,7 @@ angular
       $rootScope.distance = 10; //km
       $rootScope.time = 50; //min
       $rootScope.source = 'img/'+$rootScope.distance+'k.png';
+      $rootScope.src = 'img/'+$rootScope.distance+'k.jpg';
       $rootScope.message = 'A Serious Goal';
       $state.go("app.challenge");
     };
