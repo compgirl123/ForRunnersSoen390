@@ -4450,11 +4450,35 @@ angular
       $state.go("app.food");
     }
   })
-  
+
   .controller("ChallengesCtrl", function(
     $scope,
     $state,
-    $window
+    $window,
+    $rootScope
   ) {
-      //TODO
+    $scope.threeKm=function(){
+      $rootScope.distance = 3; //km
+      $rootScope.time = 25; //min
+      $rootScope.source = 'img/'+$rootScope.distance+'k.png';
+      $rootScope.message = 'A Great Place To Start';
+      $state.go("app.challenge");
+    };
+
+    $scope.fiveKm=function(){
+      $rootScope.distance = 5; //km
+      $rootScope.time = 35; //min
+      $rootScope.source = 'img/'+$rootScope.distance+'k.png';
+      $rootScope.message = 'The Next Step';
+      $state.go("app.challenge");
+    };
+
+    $scope.tenKm=function(){
+      $rootScope.distance = 10; //km
+      $rootScope.time = 50; //min
+      $rootScope.source = 'img/'+$rootScope.distance+'k.png';
+      $rootScope.message = 'A Serious Goal';
+      $state.go("app.challenge");
+    };
+
   });
