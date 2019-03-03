@@ -4273,10 +4273,10 @@ angular
   })
 
   .controller('LoginCtrl', ['$scope', '$firebaseAuth', '$state', 'CommonProp', '$window','$firebaseObject', function(
-      $scope, 
-      $firebaseAuth, 
-      $state, 
-      CommonProp, 
+      $scope,
+      $firebaseAuth,
+      $state,
+      CommonProp,
       $window,
       $firebaseObject
       ){
@@ -4301,9 +4301,9 @@ angular
          // ...
        });
 
-      firebase.auth().onAuthStateChanged(function(user) {        
+      firebase.auth().onAuthStateChanged(function(user) {
         firebase.database().ref('Users/' + user.uid).once('value').then(function(snapshot) {
-            var userInfo=snapshot.val();            
+            var userInfo=snapshot.val();
 
             // ensures that when the user logs in, they are redirected to profile page and side menu
             // can be accessed without going back to login page.
@@ -4319,7 +4319,7 @@ angular
             value = JSON.stringify(value);
             sessionStorage.setItem(key, value);
 
-            
+
           });
       });
 
@@ -4356,13 +4356,13 @@ angular
   }])
 
   .controller('ProfileCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseArray','CommonProp','$firebaseObject','$window', function($scope, $firebaseAuth, $state, $firebaseArray, CommonProp, $firebaseObject, $window){
-    
+
     if(sessionStorage.getItem('currentUser')!=null){
       $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
     }
 
     //Updates user info without having to press a button "save"
-    $scope.change = function() {        
+    $scope.change = function() {
       let key = 'currentUser';
       let value = $scope.user;
       value = JSON.stringify(value);
@@ -4379,7 +4379,7 @@ angular
         height: $scope.user.height
       });
     };
-    
+
   }])
 
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
@@ -4420,13 +4420,13 @@ angular
     $state,
     $window
   ) {
-        
+
     var rootRef = firebase.database().ref("Foods").orderByKey();;
     rootRef.on("value",function(snapshot) {
-        $scope.foods=[]; 
+        $scope.foods=[];
         snapshot.forEach(function(childSnapshot) {
         var childData = childSnapshot.val();
-        $scope.foods.push(childData); 
+        $scope.foods.push(childData);
       });
     });
 
@@ -4438,7 +4438,7 @@ angular
     };
 
     $scope.save= function(){
-      
+
       var rootRef = firebase.database().ref("Foods");
       var lastId;
       rootRef.once("value")
@@ -4449,4 +4449,39 @@ angular
       });
       $state.go("app.food");
     }
+  })
+
+  .controller("ChallengesCtrl", function(
+    $scope,
+    $state,
+    $window,
+    $rootScope
+  ) {
+    $scope.threeKm=function(){
+      $rootScope.distance = 3; //km
+      $rootScope.time = 25; //min
+      $rootScope.source = 'img/'+$rootScope.distance+'k.png';
+      $rootScope.src = 'img/about-bg.jpg';
+      $rootScope.message = 'A Great Place To Start';
+      $state.go("app.challenge");
+    };
+
+    $scope.fiveKm=function(){
+      $rootScope.distance = 5; //km
+      $rootScope.time = 35; //min
+      $rootScope.source = 'img/'+$rootScope.distance+'k.png';
+      $rootScope.src = 'img/'+$rootScope.distance+'k.jpg';
+      $rootScope.message = 'The Next Step';
+      $state.go("app.challenge");
+    };
+
+    $scope.tenKm=function(){
+      $rootScope.distance = 10; //km
+      $rootScope.time = 50; //min
+      $rootScope.source = 'img/'+$rootScope.distance+'k.png';
+      $rootScope.src = 'img/'+$rootScope.distance+'k.jpg';
+      $rootScope.message = 'A Serious Goal';
+      $state.go("app.challenge");
+    };
+
   });
