@@ -2644,6 +2644,7 @@ angular
 
     $scope.recordPosition = function(pos) {
       console.log(pos);
+      console.log(pos.timestamp);
       if ($scope.mustdelay === false) {
         var latnew = pos.coords.latitude;
         var lonnew = pos.coords.longitude;
@@ -2694,6 +2695,7 @@ angular
           if ($scope.session.firsttime !== 0) {
             //Elapsed time
             elapsed = timenew - $scope.session.firsttime;
+            
             var hour = Math.floor(elapsed / 3600000);
             var minute = (
               "0" +
@@ -3021,6 +3023,9 @@ angular
         altold: "x",
 
         time: "00:00:00",
+        challenge3k : "25:00",
+        challenge5k : "35:00",
+        challenge10k : "50:00",
         dist: 0,
         kalmanDist: new KalmanFilter(0.2, 3, 10),
         equirect: 0,
