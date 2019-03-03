@@ -237,6 +237,15 @@ angular
             controller: "ChallengesCtrl"
           }
         }
+      })
+      .state("app.challenge", {
+        url: "/challenge",
+        views: {
+          menuContent: {
+            templateUrl: "templates/challenge.html",
+            controller: "ChallengesCtrl"
+          }
+        }
       });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise("/app/sessions");
@@ -421,7 +430,8 @@ angular
       _logout: "Logout",
       _food: "Food",
       _new_food: "New Food",
-      _challenges: "Challenges"
+      _challenges: "Challenges",
+      _challenge: "Challenge"
     });
 
     $translateProvider.translations("fr-FR", {
