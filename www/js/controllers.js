@@ -2649,6 +2649,7 @@ angular
         var latnew = pos.coords.latitude;
         var lonnew = pos.coords.longitude;
         var timenew = pos.timestamp;
+        // timenew => gets current time in a number form
         var altnew = "x";
         var elapsed = 0;
         var tinc;
@@ -2691,7 +2692,6 @@ angular
               $scope.gpslostlastannounce = timenew;
             }
           }
-
           if ($scope.session.firsttime !== 0) {
             //Elapsed time
             elapsed = timenew - $scope.session.firsttime;
@@ -3023,9 +3023,9 @@ angular
         altold: "x",
 
         time: "00:00:00",
-        challenge3k : "25:00",
-        challenge5k : "35:00",
         challenge10k : "50:00",
+        challenge5k : "35:00",
+        challenge3k : "25:00",
         dist: 0,
         kalmanDist: new KalmanFilter(0.2, 3, 10),
         equirect: 0,
