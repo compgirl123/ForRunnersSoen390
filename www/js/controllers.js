@@ -2645,11 +2645,12 @@ angular
 
     $scope.recordPosition = function(pos) {
       console.log(pos);
-      console.log(pos.timestamp);
+      console.log("HI" + pos.timestamp);
       if ($scope.mustdelay === false) {
         var latnew = pos.coords.latitude;
         var lonnew = pos.coords.longitude;
         var timenew = pos.timestamp;
+        //var timenew = "";
         // timenew => gets current time in a number form
         var altnew = "x";
         var elapsed = 0;
@@ -3322,6 +3323,20 @@ angular
         $scope.mustdelay = false;
         $scope.speakText($scope.translateFilter("go"));
         $scope.session.time = "00:00:00";
+        
+        if ($scope.session.distcovered == 3){
+          $scope.session.time = "25:00";
+        }
+        else if ($scope.session.distcovered == 5){
+          $scope.session.time = "35:00";
+        }
+        else if ($scope.session.distcovered == 10){
+          $scope.session.time = "50:00";
+        }
+        else{ 
+          $scope.session.time = "00:00:00";
+        }
+
         clearInterval($scope.mustdelayintervalid);
         $scope.$apply();
       }
