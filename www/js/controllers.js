@@ -2891,6 +2891,39 @@ angular
             $scope.session.latold = latnew;
             $scope.session.lonold = lonnew;
             $scope.session.time = "00:00:00";
+            // claudia
+            var elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
+            var hour = Math.floor(elapsed / 3600000);
+            var minute = ("0" + (Math.floor(elapsed / 60000) - hour * 60)).slice(
+              -2
+            );
+            /* for the time function, get the variable from the rootscope 
+            to get the appropriate time countdown*/
+            var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
+            $scope.session.time = hour + ":" + minute + ":" + second;
+            $scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+            $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+            $scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+            $scope.session.distcovered = $rootScope.distance;
+
+            if ($scope.session.distcovered == 3){
+              $scope.session.time = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+              $scope.session.time = "25:00";
+            }
+            else if ($scope.session.distcovered == 5){
+              $scope.session.time = $scope.session.challenge5k;
+              $scope.session.time = "35:00";
+            }
+            else if ($scope.session.distcovered == 10){
+              $scope.session.time = $scope.session.challenge10k;
+              $scope.session.time = "50:00";
+            }
+            else{
+              $rootScope.distance=0;
+              $scope.session.time = hour + ":" + minute + ":" + second;
+              $scope.session.time = "00:00:00";
+            }
+            // claudia
             $scope.session.maxspeed = 0;
             $scope.session.speed = 0;
             $scope.session.avspeed = 0;
