@@ -2891,7 +2891,7 @@ angular
             $scope.session.lastfastvocalannounce = -1;
             $scope.session.latold = latnew;
             $scope.session.lonold = lonnew;
-            $scope.session.time = "00:00:00";
+            //$scope.session.time = "00:00:00";
             // claudia
             var elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
             var hour = Math.floor(elapsed / 3600000);
@@ -3283,17 +3283,19 @@ angular
           /* for the time function, get the variable from the rootscope 
           to get the appropriate time countdown*/
           var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
-          $scope.session.time = hour + ":" + minute + ":" + second;
+          //$scope.session.time = hour + ":" + minute + ":" + second;
           $scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
           $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
           $scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
           $scope.session.distcovered = $rootScope.distance;
 
           if ($scope.session.distcovered == 3){
-            $scope.session.time = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+            $scope.session.time = $scope.session.challenge3k;
           }
           else if ($scope.session.distcovered == 5){
             $scope.session.time = $scope.session.challenge5k;
+            //console.log(typeof($scope.session.time));
+            
           }
           else if ($scope.session.distcovered == 10){
             $scope.session.time = $scope.session.challenge10k;
@@ -3301,6 +3303,16 @@ angular
           else{
             $rootScope.distance=0;
             $scope.session.time = hour + ":" + minute + ":" + second;
+          }
+          console.log(($scope.session.time).split(":"));
+          var time_hours_minutes = ($scope.session.time).split(":");
+
+          // Boilerplate for ending session after a certain time
+          
+          for(var x=0; x < 2; x++){
+            if(time_hours_minutes[x] == "0"){
+              console.log("Stop, end session, click button");
+            }
           }
           
           $scope.session.elapsed = elapsed;
@@ -3322,7 +3334,7 @@ angular
       } else {
         $scope.mustdelay = false;
         $scope.speakText($scope.translateFilter("go"));
-        $scope.session.time = "00:00:00";
+        //$scope.session.time = "00:00:00";
         
         if ($scope.session.distcovered == 3){
           $scope.session.time = "25:00";
