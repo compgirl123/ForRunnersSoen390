@@ -3235,6 +3235,7 @@ angular
       //Timer to update time
       $scope.runningTimeInterval = $interval(function() {
         if ($scope.session.firsttime > 0) {
+          // firsttime : refers to the time one starts the timer.  
           console.debug($scope.session.firsttime);
           var elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
           var hour = Math.floor(elapsed / 3600000);
@@ -3243,6 +3244,9 @@ angular
           );
           var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
           $scope.session.time = hour + ":" + minute + ":" + second;
+          $scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (60 - second)).slice(-2);
+          $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (60 - second)).slice(-2);
+          $scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (60 - second)).slice(-2);
           $scope.session.elapsed = elapsed;
         }
       }, 2000);
