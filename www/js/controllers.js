@@ -3236,7 +3236,9 @@ angular
 
       //Timer to update time
       $scope.runningTimeInterval = $interval(function() {
+        
         if ($scope.session.firsttime > 0) {
+          //$rootScope.distance = 0;
           // firsttime : refers to the time one starts the timer.  
           console.debug($scope.session.firsttime);
           var elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
@@ -3263,12 +3265,15 @@ angular
             $scope.session.time = $scope.session.challenge10k;
           }
           else{
+            $rootScope.distance=0;
             $scope.session.time = hour + ":" + minute + ":" + second;
           }
-
+          
           $scope.session.elapsed = elapsed;
         }
       }, 2000);
+      $scope.session.distcovered = 0;
+      
 
       $scope.openModal();
     };
@@ -4511,5 +4516,10 @@ angular
       $rootScope.message = 'A Serious Goal';
       $state.go("app.challenge");
     };
+
+    $scope.default=function(){
+      $rootScope.distance = 0; //km
+    };
+
 
   });

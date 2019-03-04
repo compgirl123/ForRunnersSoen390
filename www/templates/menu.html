@@ -17,7 +17,7 @@
     </ion-header-bar>
     <ion-content class="has-expanded-header stable-bg ">
       <ion-list>
-        <ion-item menu-close href="#/app/sessions">
+        <ion-item menu-close href="#/app/sessions" ng-controller="ChallengesCtrl" ng-click="default()">
           {{ "_sessions" | translate }}
         </ion-item>
         <ion-item menu-close href="#/app/records" ng-if="isLogged">
