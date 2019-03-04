@@ -2649,9 +2649,17 @@ angular
       if ($scope.mustdelay === false) {
         var latnew = pos.coords.latitude;
         var lonnew = pos.coords.longitude;
-        var timenew = pos.timestamp;
-        //var timenew = "";
+
         // timenew => gets current time in a number form
+        if($scope.session.distcovered == 0){
+          var timenew = pos.timestamp;
+        }
+        else{
+          //var timenew = pos.timestamp;
+          // Problem lies here : figure out what we need to do to fix problem with changing position 
+          // Make it count down  
+        }
+
         var altnew = "x";
         var elapsed = 0;
         var tinc;
@@ -3294,8 +3302,6 @@ angular
           }
           else if ($scope.session.distcovered == 5){
             $scope.session.time = $scope.session.challenge5k;
-            //console.log(typeof($scope.session.time));
-            
           }
           else if ($scope.session.distcovered == 10){
             $scope.session.time = $scope.session.challenge10k;
@@ -3308,7 +3314,7 @@ angular
           var time_hours_minutes = ($scope.session.time).split(":");
 
           // Boilerplate for ending session after a certain time
-          
+          // Work on this here to stop session
           for(var x=0; x < 2; x++){
             if(time_hours_minutes[x] == "0"){
               console.log("Stop, end session, click button");
