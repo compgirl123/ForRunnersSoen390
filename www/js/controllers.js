@@ -100,6 +100,7 @@ angular
   .controller("AppCtrl", function(
     $state,
     $scope,
+    $rootScope,
     $ionicModal,
     $ionicPopup,
     $timeout,
@@ -3027,6 +3028,7 @@ angular
         challenge5k : "35:00",
         challenge3k : "25:00",
         dist: 0,
+        distcovered: 0,
         kalmanDist: new KalmanFilter(0.2, 3, 10),
         equirect: 0,
         elevation: 0,
@@ -3242,11 +3244,28 @@ angular
           var minute = ("0" + (Math.floor(elapsed / 60000) - hour * 60)).slice(
             -2
           );
+          /* for the time function, get the variable from the rootscope 
+          to get the appropriate time countdown*/
           var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
           $scope.session.time = hour + ":" + minute + ":" + second;
-          $scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (60 - second)).slice(-2);
-          $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (60 - second)).slice(-2);
-          $scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (60 - second)).slice(-2);
+          $scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+          $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+          $scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+          $scope.session.distcovered = $rootScope.distance;
+
+          if ($scope.session.distcovered == 3){
+            $scope.session.time = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+          }
+          else if ($scope.session.distcovered == 5){
+            $scope.session.time = $scope.session.challenge5k;
+          }
+          else if ($scope.session.distcovered == 10){
+            $scope.session.time = $scope.session.challenge10k;
+          }
+          else{
+            $scope.session.time = hour + ":" + minute + ":" + second;
+          }
+
           $scope.session.elapsed = elapsed;
         }
       }, 2000);
