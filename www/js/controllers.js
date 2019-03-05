@@ -4579,7 +4579,7 @@ angular
   ) {
     $scope.threeKm=function(){
       $rootScope.distance = 3; //km
-      $rootScope.time = 1; //min
+      $rootScope.time = 25; //min
       $rootScope.source = 'img/'+$rootScope.distance+'k.png';
       $rootScope.src = 'img/about-bg.jpg';
       $rootScope.message = 'A Great Place To Start';
