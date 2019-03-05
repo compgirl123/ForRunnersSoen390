@@ -56,6 +56,7 @@
     "jasmine-core": "^2.99.0",
     "jasmine-node": "^1.16.2",
     "jest-cli": "^24.1.0",
+    "htmlhint": "^0.11.0",
     "karma": "^4.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.2",
