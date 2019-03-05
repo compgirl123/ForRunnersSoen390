@@ -2916,21 +2916,21 @@ angular
             $scope.session.distcovered = $rootScope.distance;
 
             if ($scope.session.distcovered == 3){
-              $scope.session.time = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-              $scope.session.time = "25:00";
+              //$scope.session.time = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+              $scope.session.time2 = "25:00";
             }
             else if ($scope.session.distcovered == 5){
-              $scope.session.time = $scope.session.challenge5k;
-              $scope.session.time = "35:00";
+              //$scope.session.time = $scope.session.challenge5k;
+              $scope.session.time2 = "35:00";
             }
             else if ($scope.session.distcovered == 10){
-              $scope.session.time = $scope.session.challenge10k;
-              $scope.session.time = "50:00";
+              //$scope.session.time = $scope.session.challenge10k;
+              $scope.session.time2 = "50:00";
             }
             else{
               $rootScope.distance=0;
-              $scope.session.time = hour + ":" + minute + ":" + second;
-              $scope.session.time = "00:00:00";
+              //$scope.session.time = hour + ":" + minute + ":" + second;
+              $scope.session.time2 = "00:00:00";
             }
             // claudia
             $scope.session.maxspeed = 0;
@@ -3066,6 +3066,7 @@ angular
         altold: "x",
 
         time: "00:00:00",
+        time2: "00:00:00",
         challenge10k : "50:00",
         challenge5k : "35:00",
         challenge3k : "25:00",
@@ -3298,17 +3299,21 @@ angular
           $scope.session.distcovered = $rootScope.distance;
 
           if ($scope.session.distcovered == 3){
+            $scope.session.time2 = $scope.session.challenge3k;
             $scope.session.time = $scope.session.challenge3k;
           }
           else if ($scope.session.distcovered == 5){
-            $scope.session.time = $scope.session.challenge5k;
+            $scope.session.time2 = $scope.session.challenge5k;
+            $scope.session.time = $scope.session.challenge3k;
           }
           else if ($scope.session.distcovered == 10){
-            $scope.session.time = $scope.session.challenge10k;
+            $scope.session.time2 = $scope.session.challenge10k;
+            $scope.session.time = $scope.session.challenge3k;
           }
           else{
             $rootScope.distance=0;
-            $scope.session.time = hour + ":" + minute + ":" + second;
+            $scope.session.time2 = hour + ":" + minute + ":" + second;
+            $scope.session.time = $scope.session.challenge3k;
           }
           console.log(($scope.session.time).split(":"));
           var time_hours_minutes = ($scope.session.time).split(":");
