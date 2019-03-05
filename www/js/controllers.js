@@ -2918,6 +2918,12 @@ angular
             if ($scope.session.distcovered == 3){
               //$scope.session.time = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
               $scope.session.time2 = "25:00";
+             // if($scope.session.challenge3k == "00:00"){
+               // console.log("HELLO");
+                //console.log($scope.session.challenge3k);
+
+               // $scope.stopSession();
+              //}
             }
             else if ($scope.session.distcovered == 5){
               //$scope.session.time = $scope.session.challenge5k;
@@ -2932,6 +2938,7 @@ angular
               //$scope.session.time = hour + ":" + minute + ":" + second;
               $scope.session.time2 = "00:00:00";
             }
+            
             // claudia
             $scope.session.maxspeed = 0;
             $scope.session.speed = 0;
@@ -3301,14 +3308,23 @@ angular
           if ($scope.session.distcovered == 3){
             $scope.session.time2 = $scope.session.challenge3k;
             $scope.session.time = $scope.session.challenge3k;
+            if($scope.session.challenge3k == "00:00"){
+              $scope.stopSession();
+            }
           }
           else if ($scope.session.distcovered == 5){
             $scope.session.time2 = $scope.session.challenge5k;
             $scope.session.time = $scope.session.challenge3k;
+            if($scope.session.challenge3k == "00:00"){
+              $scope.stopSession();
+            }
           }
           else if ($scope.session.distcovered == 10){
             $scope.session.time2 = $scope.session.challenge10k;
             $scope.session.time = $scope.session.challenge3k;
+            if($scope.session.challenge3k == "00:00"){
+              $scope.stopSession();
+            }
           }
           else{
             $rootScope.distance=0;
@@ -4563,7 +4579,7 @@ angular
   ) {
     $scope.threeKm=function(){
       $rootScope.distance = 3; //km
-      $rootScope.time = 25; //min
+      $rootScope.time = 1; //min
       $rootScope.source = 'img/'+$rootScope.distance+'k.png';
       $rootScope.src = 'img/about-bg.jpg';
       $rootScope.message = 'A Great Place To Start';
