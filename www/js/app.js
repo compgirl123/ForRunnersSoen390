@@ -1,4 +1,3 @@
-var db=null;
 angular
   .module("app", [
     "ionic",
@@ -9,10 +8,10 @@ angular
     "leaflet-directive",
     "ionic-modal-select",
     "iosDblclick",
-    "ngCordova"
+    "firebase"
   ])
 
-  .run(function($ionicPlatform, $cordovaSQLite) {
+  .run(function($ionicPlatform) {
     "use strict";
 
     $ionicPlatform.ready(function() {
@@ -39,9 +38,6 @@ angular
       if (window.device) {
         console.log(window.device);
       }
-      db=window.openDatabase("ForRunners.db", "1.0", "ForRunners", "2000");
-      $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email VARCHAR UNIQUE, password VARCHAR,age INTEGER, weight FLOAT , height FLOAT)");
-      $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS loggedin(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email VARCHAR UNIQUE , password VARCHAR, isloggedin BOOLEAN DEFAULT 0)");
     });
   })
 
@@ -135,27 +131,25 @@ angular
         }
       })
 
-      .state("app.signup", {
-        url: "/signup",
-        cache: false,
+      .state("app.login", {
+        url: "/login",
         views: {
           menuContent: {
-            templateUrl: "templates/signup.html",
-            controller: "SignUpCtrl"
+            templateUrl: "templates/login.html",
+            controller: "LoginCtrl"
           }
         }
       })
 
-      .state("app.signin", {
-        url: "/signin",
-        cache: false,
+      .state("app.register", {
+        url: "/register",
         views: {
           menuContent: {
-            templateUrl: "templates/signin.html",
-            controller: "SignInCtrl"
+            templateUrl: "templates/register.html",
+            controller: "RegisterCtrl"
           }
         }
-      })      
+      })
 
       .state("app.profile", {
         url: "/profile",
@@ -213,6 +207,43 @@ angular
           menuContent: {
             templateUrl: "templates/help.html",
             controller: "HelpCtrl"
+          }
+        }
+      })
+
+      .state("app.food", {
+        url: "/food",
+        views: {
+          menuContent: {
+            templateUrl: "templates/food.html",
+            controller: "FoodCtrl"
+          }
+        }
+      })
+      .state("app.newFood", {
+        url: "/newFood",
+        views: {
+          menuContent: {
+            templateUrl: "templates/newFood.html",
+            controller: "FoodCtrl"
+          }
+        }
+      })
+      .state("app.challenges", {
+        url: "/challenges",
+        views: {
+          menuContent: {
+            templateUrl: "templates/challenges.html",
+            controller: "ChallengesCtrl"
+          }
+        }
+      })
+      .state("app.challenge", {
+        url: "/challenge",
+        views: {
+          menuContent: {
+            templateUrl: "templates/challenge.html",
+            controller: "ChallengesCtrl"
           }
         }
       });
@@ -396,7 +427,11 @@ angular
       _session_type: "Session Type",
       _sign_up: "Sign up",
       _sign_in: "Sign In",
-      _logout: "Logout"
+      _logout: "Logout",
+      _food: "Food",
+      _new_food: "New Food",
+      _challenges: "Challenges",
+      _challenge: "Challenge"
     });
 
     $translateProvider.translations("fr-FR", {
@@ -578,6 +613,8 @@ angular
       _editable: "Toucher pour modifier",
       _session_name: "Nom de la session",
       _session_type: "Type de la session",
+      _food: "Aliments",
+      _new_food: "Nouvelle Aliment"
     });
 
     $translateProvider.translations("de-DE", {
@@ -752,7 +789,9 @@ angular
       _edit_session: "Ausgabe",
       _editable: "Berühren Sie, um zu ändern",
       _session_name: "_session_name",
-      _session_type: "_session_type"
+      _session_type: "_session_type",
+      _food: "Essen",
+      _new_food: "Neues Essen"
     });
 
     $translateProvider.translations("de-AT", {
@@ -927,7 +966,9 @@ angular
       _edit_session: "Ausgabe",
       _editable: "Berühren Sie, um zu ändern",
       _session_name: "_session_name",
-      _session_type: "_session_type"
+      _session_type: "_session_type",
+      _food: "Essen",
+      _new_food: "Neues Essen"
     });
 
     $translateProvider.translations("pt-pt", {
@@ -1099,7 +1140,9 @@ angular
       _heartrate_max_detail:
         "O seu batimento cardiaco maximo num sprint de 4 minutos após um aquecimento de 20 minutos.",
       _session_name: "_session_name",
-      _session_type: "_session_type"
+      _session_type: "_session_type",
+      _food: "Comida",
+      _new_food: "Comida Nova"
     });
 
     $translateProvider.preferredLanguage("en-US");

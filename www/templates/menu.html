@@ -20,20 +20,26 @@
         <ion-item menu-close href="#/app/sessions">
           {{ "_sessions" | translate }}
         </ion-item>
-        <ion-item menu-close href="#/app/records">
+        <ion-item menu-close href="#/app/records" ng-if="isLogged">
           {{ "_records" | translate }}
         </ion-item>
-        <ion-item menu-close href="#/app/equipments">
+        <ion-item menu-close href="#/app/equipments" ng-if="isLogged">
           {{ "_equipments" | translate }}
         </ion-item>
-        <ion-item menu-close href="#/app/signin" ng-if="!isLogged">
-          {{ "_sign_in" | translate }}
+        <ion-item menu-close href="#/app/login" ng-if="!isLogged">
+          {{ "Sign In" | translate }}
         </ion-item>
-        <ion-item menu-close href="#/app/signup" ng-if="!isLogged">
-          {{ "_sign_up" | translate }}
-        </ion-item>        
-        <ion-item menu-close href="#/app/profile"  ng-if="isLogged">
+        <ion-item menu-close href="#/app/register" ng-if="!isLogged">
+          {{ "Sign up" | translate }}
+        </ion-item>
+        <ion-item menu-close href="#/app/profile" ng-if="isLogged">
           {{ "_profile" | translate }}
+        </ion-item>
+        <ion-item menu-close href="#/app/food"  ng-if="isLogged">
+          {{ "_food" | translate }}
+        </ion-item>
+        <ion-item menu-close href="#/app/challenges"  ng-if="isLogged">
+          {{ "_challenges" | translate }}
         </ion-item>
         <ion-item menu-close href="#/app/settings">
           {{ "_settings" | translate }}
@@ -44,9 +50,11 @@
         <ion-item menu-close href="#/app/help">
           {{ "_help" | translate }}
         </ion-item>
-        <button  class="button button-full  button-dark" ng-if="isLogged" ng-click="logout()">
-          {{ "_logout" | translate }}
+        <ion-item ng-controller="LoginCtrl">
+        <button class="button button-full  button-dark" ng-click="signout()" ng-if="isLogged">
+          {{ "Logout" | translate }}
         </button>
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>
