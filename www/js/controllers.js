@@ -3082,10 +3082,10 @@ $scope.stopChallengeSession = function() {
             /* for the time function, get the variable from the rootscope
             to get the appropriate time countdown*/
             var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
-          //  $scope.session.time = hour + ":" + minute + ":" + second;
-            //$scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-            //$scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-            //$scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (0 - second)).slice(-2);
+           $scope.session.time = hour + ":" + minute + ":" + second;
+            $scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+            $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+            $scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (0 - second)).slice(-2);
             $scope.session.distcovered = $rootScope.distance;
 
             if ($scope.session.distcovered == 3){
@@ -3250,7 +3250,7 @@ $scope.stopChallengeSession = function() {
         time2: "00:00:00",
         challenge10k : "50:00",
         challenge5k : "35:00",
-        challenge3k : "1:00",
+        challenge3k : "25:00",
         dist: 0,
         distcovered: 0,
 
@@ -3481,11 +3481,13 @@ $scope.stopChallengeSession = function() {
           $scope.session.distcovered = $rootScope.distance;
 
 
+
           if ($scope.session.distcovered == 3){
             $scope.session.time2 = $scope.session.challenge3k;
             $scope.session.time = $scope.session.challenge3k;
 
-            if($scope.session.challenge3k == "00:00"){
+
+            if($scope.session.challenge3k <= "00:00"){
 
               $scope.stopChallengeSession();
 
@@ -3495,7 +3497,7 @@ $scope.stopChallengeSession = function() {
           else if ($scope.session.distcovered == 5){
             $scope.session.time2 = $scope.session.challenge5k;
             $scope.session.time = $scope.session.challenge3k;
-            if($scope.session.challenge3k == "00:00"){
+            if($scope.session.challenge3k <= "00:00"){
 
                 $scope.stopChallengeSession();
             }
@@ -3503,7 +3505,7 @@ $scope.stopChallengeSession = function() {
           else if ($scope.session.distcovered == 10){
             $scope.session.time2 = $scope.session.challenge10k;
             $scope.session.time = $scope.session.challenge3k;
-            if($scope.session.challenge3k == "00:00"){
+            if($scope.session.challenge3k <= "00:00"){
                 $scope.stopChallengeSession();
             }
           }
@@ -4576,15 +4578,32 @@ $scope.stopChallengeSession = function() {
   .controller("DashboardCtrl", function($scope,$state,
   $window,
   $rootScope) {
-      $rootScope.progress = 100;
+
+      console.log($rootScope.distance);
+
 
       if($rootScope.distance == 3)
-          $rootScope.targetDistance = "3 Kilometer";
+          {$rootScope.targetDistance = "3 Kilometer";
+
+          console.log($scope.session.distance);
+          $rootScope.actualdis = $scope.session.distance + "km"
+          $rootScope.progress =($scope.session.distance/$rootScope.distance)*100;//progress wil always be 0 cause distance cover is 0.0 km
+
+        }
       else if ($rootScope.distance == 5)
-          $rootScope.targetDistance = "5 Kilometer";
+        { $rootScope.targetDistance = "5 Kilometer";
+          console.log($scope.session.distance);
+          $rootScope.actualdis = $scope.session.distance + "km"
+          $rootScope.progress =($scope.session.distance/$rootScope.distance)*100;
+        }
       else if ($rootScope.targetDistance == 10)
-          $rootScope.targetDistance = "10 Kilometer";
-          else $rootScope.targetDistance = "15 Kilometer"; //null garbage value collector
+          {$rootScope.targetDistance = "10 Kilometer";
+          console.log($scope.session.distance);
+          $rootScope.actualdis = $scope.session.distance + "km"
+          $rootScope.progress =($scope.session.distance/$rootScope.distance)*100;
+        }
+
+          else $rootScope.targetDistance = "15 Kilometer"; //this value is just to check if 3 of the challenge fail to be active cause of any bug it will show 15 kilometer .
 
 
 
