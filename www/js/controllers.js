@@ -2185,6 +2185,9 @@ angular
     $scope.closeModal = function() {
       $state.go("app.sessions");
     };
+    $scope.gotodashboard = function() {
+      $state.go("app.Dashboard");
+    };
 
     $scope.registerBluetoothDevice = function(id) {
       if (id in $scope.prefs.registeredBLE) {
@@ -2362,7 +2365,177 @@ angular
         );
       }
     };
+//mywork
+$scope.stopChallengeSession = function() {
+  $scope.session.saving = true;
+  $timeout(function() {
+    try {
+      GPSLocation.clearWatch($scope.session.watchId);
+      console.debug("Session recording stopped");
+    } catch (exception) {
+      try {
+        navigator.geolocation.clearWatch($scope.session.watchId);
+        console.debug("Session recording stopped");
+      } catch (exception2) {console.error(exception2);}
+    }
+    $interval.cancel($scope.runningTimeInterval);
 
+    try {
+      delete $scope.session.firsttime;
+    } catch (exception) {}
+
+    if ($scope.session.gpxData.length > 0) {
+      //Session cleaning
+      delete $scope.session.accuracy;
+      delete $scope.session.elapsed;
+      delete $scope.session.firsttime;
+      delete $scope.session.elevation;
+      delete $scope.session.time;
+      delete $scope.session.pace;
+      delete $scope.session.speed;
+      delete $scope.session.maxspeed;
+      delete $scope.session.equirect;
+      delete $scope.session.altold;
+      delete $scope.session.latold;
+      delete $scope.session.lonold;
+      delete $scope.session.latold;
+      delete $scope.session.lastdisptime;
+      delete $scope.session.maxalt;
+      delete $scope.session.minalt;
+      delete $scope.session.avpace;
+      delete $scope.session.avspeed;
+      delete $scope.session.lastdistvocalannounce;
+      delete $scope.session.lasttimevocalannounce;
+      delete $scope.session.timeslowvocalinterval;
+      delete $scope.session.lastfastvocalannounce;
+      delete $scope.session.kalmanDist;
+      $scope.session.fixedElevation = undefined;
+
+      //Set default equipments
+      if (!$scope.session.equipments && $scope.equipments) {
+        $scope.session.equipments = $scope.equipments
+          .map(function(eq) {
+            if (eq.isDefault === true) {
+              return eq;
+            }
+            return undefined;
+          })
+          .filter(function(eq) {
+            if (eq !== undefined) return eq;
+          });
+      }
+      $scope.saveSession($scope.session);
+    }
+    $scope.running = false;
+    try {
+      cordova.plugins.backgroundMode.disable();
+    } catch (exception) {
+      console.debug("ERROR: cordova.plugins.backgroundMode disable");
+    }
+    try {
+      window.plugins.insomnia.allowSleepAgain();
+    } catch (exception) {
+      console.debug("ERROR: cordova.plugins.insomnia allowSleepAgain");
+    }
+
+    try {
+      window.powerManagement.release(
+        function() {
+          console.log("Wakelock released");
+        },
+        function() {
+          console.log("Failed to release wakelock");
+        }
+      );
+    } catch (exception) {}
+
+    try {
+      cordova.plugins.ActivityRecognition.StopActivityUpdates(
+        function(msg) {
+          cordova.plugins.ActivityRecognition.Dissconnect(
+            function(msg) {},
+            function(msg) {}
+          );
+        },
+        function(msg) {}
+      );
+    } catch (exception) {
+      console.debug("ERROR: window.ActivityRecognition not enabled");
+    }
+
+    try {
+      clearInterval($scope.btscanintervalid);
+    } catch (exception) {}
+
+    if ($scope.platform === "firefoxos") {
+      try {
+        $scope.screen_lock.unlock();
+      } catch (exception) {}
+      try {
+        $scope.gps_lock.unlock();
+      } catch (exception) {}
+    }
+
+    try {
+      if ($scope.session.connectedBLE !== null) {
+        ble.stopNotification(
+          $scope.session.connectedBLE,
+          $scope.glbs.heartRate.service,
+          $scope.glbs.heartRate.measurement,
+          function() {
+            console.debug("Diconnected HR Notification");
+            $scope.session.beatsPerMinute = null;
+          },
+          function(err) {
+            console.error("BLE HR error :" + err);
+            $scope.session.beatsPerMinute = null;
+          }
+        );
+
+        //CADENCE
+        ble.stopNotification(
+          $scope.session.connectedBLE,
+          $scope.glbs.cadence.service,
+          $scope.glbs.cadence.measurement,
+          function() {
+            console.debug("Diconnected Cadence Notification");
+            $scope.session.beatsPerMinute = null;
+          },
+          function(err) {
+            console.error("BLE Cadence error :" + err);
+            $scope.session.instantCadence = null;
+          }
+        );
+
+        //POWER
+        ble.stopNotification(
+          $scope.session.connectedBLE,
+          $scope.glbs.power.service,
+          $scope.glbs.power.measurement,
+          function() {
+            console.debug("Diconnected Power Notification");
+            $scope.session.beatsPerMinute = null;
+          },
+          function(err) {
+            console.error("BLE Power error :" + err);
+            $scope.session.instantPower = null;
+            $scope.session.intantStride = null;
+          }
+        );
+
+        ble.disconnect($scope.session.connectedBLE);
+      }
+    } catch (exception) {
+      console.warn(exception);
+    }
+
+    $scope.gotodashboard();
+    $scope.session.saving = false;
+    console.debug('Saving session ended');
+  }, 10);
+};
+
+    //my work
     $scope.stopSession = function() {
       $scope.session.saving = true;
       $timeout(function() {
@@ -2656,8 +2829,8 @@ angular
         }
         else{
           //var timenew = pos.timestamp;
-          // Problem lies here : figure out what we need to do to fix problem with changing position 
-          // Make it count down  
+          // Problem lies here : figure out what we need to do to fix problem with changing position
+          // Make it count down
         }
 
         var altnew = "x";
@@ -2705,7 +2878,7 @@ angular
           if ($scope.session.firsttime !== 0) {
             //Elapsed time
             elapsed = timenew - $scope.session.firsttime;
-            
+
             var hour = Math.floor(elapsed / 3600000);
             var minute = (
               "0" +
@@ -2906,13 +3079,13 @@ angular
             var minute = ("0" + (Math.floor(elapsed / 60000) - hour * 60)).slice(
               -2
             );
-            /* for the time function, get the variable from the rootscope 
+            /* for the time function, get the variable from the rootscope
             to get the appropriate time countdown*/
             var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
-            $scope.session.time = hour + ":" + minute + ":" + second;
-            $scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-            $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-            $scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+          //  $scope.session.time = hour + ":" + minute + ":" + second;
+            //$scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+            //$scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+            //$scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (0 - second)).slice(-2);
             $scope.session.distcovered = $rootScope.distance;
 
             if ($scope.session.distcovered == 3){
@@ -2938,7 +3111,7 @@ angular
               //$scope.session.time = hour + ":" + minute + ":" + second;
               $scope.session.time2 = "00:00:00";
             }
-            
+
             // claudia
             $scope.session.maxspeed = 0;
             $scope.session.speed = 0;
@@ -3076,7 +3249,7 @@ angular
         time2: "00:00:00",
         challenge10k : "50:00",
         challenge5k : "35:00",
-        challenge3k : "25:00",
+        challenge3k : "1:00",
         dist: 0,
         distcovered: 0,
         kalmanDist: new KalmanFilter(0.2, 3, 10),
@@ -3286,30 +3459,35 @@ angular
 
       //Timer to update time
       $scope.runningTimeInterval = $interval(function() {
-        
+
         if ($scope.session.firsttime > 0) {
           //$rootScope.distance = 0;
-          // firsttime : refers to the time one starts the timer.  
+          // firsttime : refers to the time one starts the timer.
           console.debug($scope.session.firsttime);
           var elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
           var hour = Math.floor(elapsed / 3600000);
           var minute = ("0" + (Math.floor(elapsed / 60000) - hour * 60)).slice(
             -2
           );
-          /* for the time function, get the variable from the rootscope 
+          /* for the time function, get the variable from the rootscope
           to get the appropriate time countdown*/
           var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
           //$scope.session.time = hour + ":" + minute + ":" + second;
           $scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
           $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-          $scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+          $scope.session.challenge3k = ("0" + (1-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
           $scope.session.distcovered = $rootScope.distance;
 
           if ($scope.session.distcovered == 3){
             $scope.session.time2 = $scope.session.challenge3k;
             $scope.session.time = $scope.session.challenge3k;
             if($scope.session.challenge3k == "00:00"){
-              $scope.stopSession();
+
+
+
+              $scope.stopChallengeSession();
+
+
             }
           }
           else if ($scope.session.distcovered == 5){
@@ -3341,12 +3519,12 @@ angular
               console.log("Stop, end session, click button");
             }
           }
-          
+
           $scope.session.elapsed = elapsed;
         }
       }, 2000);
       $scope.session.distcovered = 0;
-      
+
 
       $scope.openModal();
     };
@@ -3362,7 +3540,7 @@ angular
         $scope.mustdelay = false;
         $scope.speakText($scope.translateFilter("go"));
         //$scope.session.time = "00:00:00";
-        
+
         if ($scope.session.distcovered == 3){
           $scope.session.time = "25:00";
         }
@@ -3372,7 +3550,7 @@ angular
         else if ($scope.session.distcovered == 10){
           $scope.session.time = "50:00";
         }
-        else{ 
+        else{
           $scope.session.time = "00:00:00";
         }
 
@@ -4380,6 +4558,21 @@ angular
   })
 
   .controller("SettingsCtrl", function($scope) {
+    "use strict";
+    //$scope.promptForRating = function() {
+    //AppRate.preferences.storeAppURL.android = 'market://details?id=net.khertan.forrunners';
+    //AppRate.preferences.promptAgainForEachNewVersion = false;
+    //AppRate.promptForRating();
+    //};
+
+    //if ($scope.sessions.length > 8) {
+    //    $scope.promptForRating();
+    //}
+  })
+//bilal
+  .controller("DashboardCtrl", function($scope,$state,
+  $window,
+  $rootScope) {
     "use strict";
     //$scope.promptForRating = function() {
     //AppRate.preferences.storeAppURL.android = 'market://details?id=net.khertan.forrunners';
