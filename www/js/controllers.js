@@ -3477,7 +3477,7 @@ $scope.stopChallengeSession = function() {
           //$scope.session.time = hour + ":" + minute + ":" + second;
           $scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
           $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-          $scope.session.challenge3k = ("0" + (1-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+          $scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
           $scope.session.distcovered = $rootScope.distance;
 
 
