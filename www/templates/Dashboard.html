@@ -1,0 +1,16 @@
+<ion-view view-title="{{ '_dashboard' | translate }}">
+ 	 <ion-content hideBackButton="true">
+     <div ng-controller="DashboardCtrl">
+        <div>
+      Downloading progress:
+       <progress value="{{progress}}" max="100">
+       </progress>
+       </div>
+       <div>
+       <p> Target Distance : {{targetDistance}} </p>
+       <p> Actual Distance : {{actualdis}} </p>
+
+       </div>
+     </div>
+ 	 </ion-content>
+</ion-view>
