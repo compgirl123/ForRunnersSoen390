@@ -3091,6 +3091,7 @@ $scope.stopChallengeSession = function() {
             if ($scope.session.distcovered == 3){
               //$scope.session.time = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
               $scope.session.time2 = "25:00";
+              //$rootScope.actualdist = $scope.session.distance;
              // if($scope.session.challenge3k == "00:00"){
                // console.log("HELLO");
                 //console.log($scope.session.challenge3k);
@@ -3252,6 +3253,7 @@ $scope.stopChallengeSession = function() {
         challenge3k : "1:00",
         dist: 0,
         distcovered: 0,
+
         kalmanDist: new KalmanFilter(0.2, 3, 10),
         equirect: 0,
         elevation: 0,
@@ -3478,12 +3480,12 @@ $scope.stopChallengeSession = function() {
           $scope.session.challenge3k = ("0" + (1-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
           $scope.session.distcovered = $rootScope.distance;
 
+
           if ($scope.session.distcovered == 3){
             $scope.session.time2 = $scope.session.challenge3k;
             $scope.session.time = $scope.session.challenge3k;
+
             if($scope.session.challenge3k == "00:00"){
-
-
 
               $scope.stopChallengeSession();
 
@@ -3494,14 +3496,15 @@ $scope.stopChallengeSession = function() {
             $scope.session.time2 = $scope.session.challenge5k;
             $scope.session.time = $scope.session.challenge3k;
             if($scope.session.challenge3k == "00:00"){
-              $scope.stopSession();
+
+                $scope.stopChallengeSession();
             }
           }
           else if ($scope.session.distcovered == 10){
             $scope.session.time2 = $scope.session.challenge10k;
             $scope.session.time = $scope.session.challenge3k;
             if($scope.session.challenge3k == "00:00"){
-              $scope.stopSession();
+                $scope.stopChallengeSession();
             }
           }
           else{
@@ -4573,7 +4576,24 @@ $scope.stopChallengeSession = function() {
   .controller("DashboardCtrl", function($scope,$state,
   $window,
   $rootScope) {
-      $rootScope.bitch = 100;
+      $rootScope.progress = 100;
+
+      if($rootScope.distance == 3)
+          $rootScope.targetDistance = "3 Kilometer";
+      else if ($rootScope.distance == 5)
+          $rootScope.targetDistance = "5 Kilometer";
+      else if ($rootScope.targetDistance == 10)
+          $rootScope.targetDistance = "10 Kilometer";
+          else $rootScope.targetDistance = "15 Kilometer"; //null garbage value collector
+
+
+
+
+
+
+
+
+
 
   })
   //bilal
