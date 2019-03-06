@@ -4573,17 +4573,10 @@ $scope.stopChallengeSession = function() {
   .controller("DashboardCtrl", function($scope,$state,
   $window,
   $rootScope) {
-    "use strict";
-    //$scope.promptForRating = function() {
-    //AppRate.preferences.storeAppURL.android = 'market://details?id=net.khertan.forrunners';
-    //AppRate.preferences.promptAgainForEachNewVersion = false;
-    //AppRate.promptForRating();
-    //};
+      $rootScope.bitch = 100;
 
-    //if ($scope.sessions.length > 8) {
-    //    $scope.promptForRating();
-    //}
   })
+  //bilal
 
   .controller('LoginCtrl', ['$scope', '$firebaseAuth', '$state', 'CommonProp', '$window','$firebaseObject', function(
       $scope,

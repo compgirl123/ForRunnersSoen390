@@ -446,7 +446,7 @@ angular
       _new_food: "New Food",
       _challenges: "Challenges",
       _challenge: "Challenge",
-      _dashboard: "Dashboard"
+      _dashboard: "Progress"
     });
 
     $translateProvider.translations("fr-FR", {
