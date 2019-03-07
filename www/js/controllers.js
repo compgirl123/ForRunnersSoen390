@@ -4580,6 +4580,8 @@ $scope.stopChallengeSession = function() {
   $rootScope) {
 
       console.log($rootScope.distance);
+        if($scope.session.distance === undefined)
+           $scope.session.distance = 0 ;
 
 
       if($rootScope.distance == 3)
@@ -4596,7 +4598,7 @@ $scope.stopChallengeSession = function() {
           $rootScope.actualdis = $scope.session.distance + "km"
           $rootScope.progress =($scope.session.distance/$rootScope.distance)*100;
         }
-      else if ($rootScope.targetDistance == 10)
+      else if ($rootScope.distance == 10)
           {$rootScope.targetDistance = "10 Kilometer";
           console.log($scope.session.distance);
           $rootScope.actualdis = $scope.session.distance + "km"
