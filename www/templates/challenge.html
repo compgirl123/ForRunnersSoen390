@@ -1,6 +1,7 @@
 <ion-view view-title="{{ '_challenge' | translate }}">
  	 <ion-content hideBackButton="true">
      <div ng-controller="ChallengesCtrl">
+       <div ng-controller="DashboardCtrl">
        <div class="list card">
          <div class="item item-avatar">
            <img src="{{source}}">
@@ -12,11 +13,12 @@
            <p>
              In this challenge, you are expected to run for {{time}} minutes. Are you ready to run for {{distance}} kilometres?
            </p>
-           <a class="item item-icon-left assertive" href="#">
+           <a class="item item-icon-left assertive" ng-click="startChallenge()">
            <i class="icon ion-play"></i>
            Start Running
           </a>
        </div>
+    </div>
     </div>
  	 </ion-content>
 </ion-view>

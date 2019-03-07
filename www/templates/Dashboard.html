@@ -1,14 +1,15 @@
-<ion-view view-title="{{ '_dashboard' | translate }}">
- 	 <ion-content hideBackButton="true">
+<ion-view  hide-back-button=true =true view-title="{{ '_dashboard' | translate }}">
+ 	 <ion-content >
      <div ng-controller="DashboardCtrl">
         <div>
-      Downloading progress:
+       Progress :
        <progress value="{{progress}}" max="100">
        </progress>
        </div>
        <div>
-       <p> Target Distance : {{targetDistance}} </p>
-       <p> Actual Distance : {{actualdis}} </p>
+       <p> Target Distance : {{target_distance}} km </p>
+       <p> Actual Distance : {{actual_distance}} km </p>
+       <button ng-click = "gotoapp()"> ok </button>
 
        </div>
      </div>
