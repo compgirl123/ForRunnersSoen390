@@ -2185,8 +2185,11 @@ angular
     $scope.closeModal = function() {
       $state.go("app.sessions");
     };
+    $scope.gotoapp = function() {
+      window.location="../index.html";
+    };
     $scope.gotodashboard = function() {
-      $state.go("app.Dashboard");
+      $state.go("app.dashboard");
     };
 
     $scope.registerBluetoothDevice = function(id) {
@@ -2529,10 +2532,15 @@ $scope.stopChallengeSession = function() {
       console.warn(exception);
     }
 
-    $scope.gotodashboard();
+     //$scope.gotodashboard();
     $scope.session.saving = false;
     console.debug('Saving session ended');
   }, 10);
+  if($rootScope.challengeStarted){
+
+        $rootScope.getvalues();
+
+      }
 };
 
     //my work
@@ -2844,344 +2852,603 @@ $scope.stopChallengeSession = function() {
         }
 
         $scope.$apply(function() {
+
           $scope.session.accuracy = pos.coords.accuracy;
 
-          if (
-            pos.coords.accuracy <= $scope.prefs.minrecordingaccuracy &&
-            timenew > $scope.session.recclicked &&
-            $scope.session.latold !== "x" &&
-            $scope.session.lonold !== "x"
-          ) {
-            $scope.session.gpsGoodSignalToggle = true;
-            if ($scope.prefs.gpslostannounce) {
-              $scope.gpslostlastannounce = timenew;
-            }
-          }
+
 
           if (
-            pos.coords.accuracy >= $scope.prefs.minrecordingaccuracy &&
-            $scope.session.gpsGoodSignalToggle === true &&
-            timenew > $scope.session.recclicked
+
+            pos.coords.accuracy <= $scope.prefs.minrecordingaccuracy &&
+
+            timenew > $scope.session.recclicked &&
+
+            $scope.session.latold !== "x" &&
+
+            $scope.session.lonold !== "x"
+
           ) {
+
+            $scope.session.gpsGoodSignalToggle = true;
+
+            if ($scope.prefs.gpslostannounce) {
+
+              $scope.gpslostlastannounce = timenew;
+
+            }
+
+          }
+
+
+
+          if (
+
+            pos.coords.accuracy >= $scope.prefs.minrecordingaccuracy &&
+
+            $scope.session.gpsGoodSignalToggle === true &&
+
+            timenew > $scope.session.recclicked
+
+          ) {
+
             // In case we lost gps we should announce it
+
             $scope.session.gpsGoodSignalToggle = false;
+
             if (
+
               $scope.prefs.gpslostannounce &&
+
               timenew - 30 > $scope.gpslostlastannounce
+
             ) {
 
 
+
+
+
               $scope.speakText($scope.translateFilter("_gps_lost"));
+
               $scope.gpslostlastannounce = timenew;
+
             }
+
           }
+
+
+
           if ($scope.session.firsttime !== 0) {
+
             //Elapsed time
+
             elapsed = timenew - $scope.session.firsttime;
 
             var hour = Math.floor(elapsed / 3600000);
+
             var minute = (
+
               "0" +
+
               (Math.floor(elapsed / 60000) - hour * 60)
+
             ).slice(-2);
+
             var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
+
             $scope.session.time = hour + ":" + minute + ":" + second;
+
             $scope.session.elapsed = elapsed;
 
+
+
             if (pos.coords.accuracy <= $scope.prefs.minrecordingaccuracy) {
+
               // Not first point
+
               if (
+
                 $scope.session.latold !== "x" &&
+
                 $scope.session.lonold !== "x"
+
               ) {
+
               //Limit ok
+
                 if (
+
                   timenew - $scope.session.lastdisptime >=
+
                   $scope.prefs.minrecordinggap
+
                 ) {
+
                   $scope.session.lastdisptime = timenew;
 
+
+
                   // Filter new position with a KalmanFilter
+
                   var accuracy = pos.coords.accuracy;
+
                   if (accuracy < 1) {
+
                     accuracy = 1;
+
                   }
+
                   if ($scope.session.variance < 0) {
+
                     $scope.session.variance = accuracy * accuracy;
+
                   } else {
+
                     tinc = new Date(timenew) - new Date($scope.session.timeold);
+
                     if (tinc > 0) {
+
                       $scope.session.variance += tinc * Q * Q / 1000;
+
                     }
+
                     K =
+
                       $scope.session.variance /
+
                       ($scope.session.variance + accuracy * accuracy);
+
                     latnew = $scope.session.latold + (K * (latnew - $scope.session.latold));
+
                     lonnew = $scope.session.lonold + (K * (lonnew - $scope.session.lonold));
+
                     $scope.session.variance = (1 - K) * $scope.session.variance;
+
                   }
+
+
 
                   //FIXME GetActivity
+
                   try {
+
                     cordova.plugins.ActivityRecognition.GetActivity(
+
                       $scope.activityCallback,
+
                       $scope.activityErrorCallback
+
                     );
+
                   } catch (err) {
+
                   }
 
+
+
                  //Distances
+
                   var dLat;
+
                   var dLon;
+
                   var dLat1;
+
                   var dLat2;
+
                   var a, d;
+
                   var dtd;
+
                   var dspeed;
 
+
+
                   dLat = (latnew - $scope.session.latold) * Math.PI / 180;
+
                   dLon = (lonnew - $scope.session.lonold) * Math.PI / 180;
+
                   dLat1 = $scope.session.latold * Math.PI / 180;
+
                   dLat2 = latnew * Math.PI / 180;
+
                   a =
+
                     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+
                     Math.cos(dLat1) *
+
                       Math.cos(dLat1) *
+
                       Math.sin(dLon / 2) *
+
                       Math.sin(dLon / 2);
+
                   d = (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))) * 6371;
 
+
+
                   //Speed between this and previous point
+
                   dtd = new Date(timenew) - new Date($scope.session.timeold);
+
                   dspeed = d / (dtd / 1000 / 60 / 60);
+
+
 
                   elapsed = timenew - $scope.session.firsttime;
 
+
+
                   if (dspeed > 0.001) {
+
                     $scope.session.equirect += d;
+
+                    $rootScope.distance_travelled += d;
+
                   }
+
+
 
                   //Elevation?
+
                   if ($scope.session.altold !== "x") {
+
                     $scope.session.altold = altnew;
+
                     if (altnew > $scope.session.maxalt) {
+
                       $scope.session.maxalt = altnew;
-                      $scope.session.elevation =
-                        $scope.session.maxalt - $scope.session.minalt;
-                    }
-                    if (altnew < $scope.session.minalt) {
-                      $scope.session.minalt = altnew;
+
                       $scope.session.elevation =
 
                         $scope.session.maxalt - $scope.session.minalt;
+
                     }
+
+                    if (altnew < $scope.session.minalt) {
+
+                      $scope.session.minalt = altnew;
+
+                      $scope.session.elevation =
+
+
+
+                        $scope.session.maxalt - $scope.session.minalt;
+
+                    }
+
                   }
+
                   $scope.session.distk = $scope.session.equirect.toFixed(0);
+
                   if ($scope.session.equirect > 0) {
+
                     var averagePace =
+
                       elapsed / ($scope.session.equirect * 60000);
+
                     $scope.session.avpace =
+
                       Math.floor(averagePace) +
+
                       ":" +
+
                       ("0" + Math.floor((averagePace % 1) * 60)).slice(-2);
+
                     $scope.session.avspeed = elapsed / $scope.session.equirect;
+
                   }
+
+
 
                   //Workarround for some device not aving cor speed
+
                   var gpsspeed;
+
                   if (pos.coords.speed === null) {
+
                     gpsspeed = dspeed;
+
                   } else {
+
                     gpsspeed = pos.coords.speed;
+
                   }
+
                   if (!isNaN(gpsspeed)) $scope.session.speeds.push(gpsspeed);
+
                   $scope.session.speeds = $scope.session.speeds.slice(-5);
+
                   $scope.session.speed = average($scope.session.speeds, 1);
 
+
+
                   var currentPace =
+
                     $scope.glbs.pace[$scope.prefs.unit] / $scope.session.speed;
+
                   $scope.session.pace =
+
                     Math.floor(currentPace) +
+
                     ":" +
+
                     ("0" + Math.floor((currentPace % 1) * 60)).slice(-2);
+
                   if ($scope.session.maxspeed < $scope.session.speed) {
+
                     $scope.session.maxspeed = $scope.session.speed;
+
                   }
+
+
 
                   $scope.session.latold = latnew;
+
                   $scope.session.lonold = lonnew;
+
                   $scope.session.altold = altnew;
+
                   $scope.session.timeold = timenew;
 
+
+
                   //Alert and Vocal Announce
+
                   if (parseInt($scope.prefs.distvocalinterval) > 0) {
+
                     $scope.session.lastdistvocalannounce = 0;
+
                     if (
+
                       $scope.session.equirect -
+
                         $scope.session.lastdistvocalannounce >
+
                       $scope.prefs.distvocalinterval * 1000
+
                     ) {
+
                       $scope.session.lastdistvocalannounce =
+
                         $scope.session.equirect;
+
                       $scope.runSpeak();
+
                     }
+
                   }
+
+
 
                   if (parseInt($scope.prefs.timevocalinterval) > 0) {
+
                     if (
+
                       timenew - $scope.session.lasttimevocalannounce >
+
                       $scope.prefs.timevocalinterval * 60000
+
                     ) {
+
                       /*fixme*/ $scope.session.lasttimevocalannounce = timenew;
+
                       $scope.runSpeak();
+
                     }
+
                   }
+
+
 
                   if (parseInt($scope.prefs.timeslowvocalinterval) > 0) {
+
                     if (
+
                       $scope.session.lastslowvocalannounce !== -1 &&
+
                       timenew - $scope.session.lastslowvocalannounce >
+
                         $scope.prefs.timeslowvocalinterval * 60000
+
                     ) {
+
                       /*fixme*/ $scope.session.lastslowvocalannounce = -1;
+
                       $scope.session.lastfastvocalannounce = timenew;
+
                       $scope.speakText($scope.translateFilter("_run_fast"));
+
                     }
+
                   }
+
                   if (parseInt($scope.prefs.timefastvocalinterval) > 0) {
+
                     if (
+
                       $scope.session.lastfastvocalannounce !== -1 &&
+
                       timenew - $scope.session.lastfastvocalannounce >
+
                         $scope.prefs.timefastvocalinterval * 60000
+
                     ) {
+
                       /*fixme*/ $scope.session.lastslowvocalannounce = timenew;
+
                       $scope.session.lastfastvocalannounce = -1;
+
                       $scope.speakText($scope.translateFilter("_run_slow"));
+
                     }
+
                   }
+
                 }
+
               }
+
             }
+
           } else {
+
             $scope.session.firsttime = timenew;
+
             $scope.session.deltagpstime = Date.now() - timenew;
+
             $scope.session.lastdisptime = timenew;
+
             $scope.session.lastdistvocalannounce = 0;
+
             $scope.session.lasttimevocalannounce = timenew;
+
             $scope.session.lastslowvocalannounce = timenew;
+
             $scope.session.lastfastvocalannounce = -1;
+
             $scope.session.latold = latnew;
+
             $scope.session.lonold = lonnew;
-            //$scope.session.time = "00:00:00";
-            // claudia
-            var elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
-            var hour = Math.floor(elapsed / 3600000);
-            var minute = ("0" + (Math.floor(elapsed / 60000) - hour * 60)).slice(
-              -2
-            );
-            /* for the time function, get the variable from the rootscope
-            to get the appropriate time countdown*/
-            var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
-           $scope.session.time = hour + ":" + minute + ":" + second;
-            $scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-            $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-            $scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (0 - second)).slice(-2);
-            $scope.session.distcovered = $rootScope.distance;
 
-            if ($scope.session.distcovered == 3){
-              //$scope.session.time = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-              $scope.session.time2 = "25:00";
-              //$rootScope.actualdist = $scope.session.distance;
-             // if($scope.session.challenge3k == "00:00"){
-               // console.log("HELLO");
-                //console.log($scope.session.challenge3k);
+            $scope.session.time = "00:00:00";
 
-               // $scope.stopSession();
-              //}
-            }
-            else if ($scope.session.distcovered == 5){
-              //$scope.session.time = $scope.session.challenge5k;
-              $scope.session.time2 = "35:00";
-            }
-            else if ($scope.session.distcovered == 10){
-              //$scope.session.time = $scope.session.challenge10k;
-              $scope.session.time2 = "50:00";
-            }
-            else{
-              $rootScope.distance=0;
-              //$scope.session.time = hour + ":" + minute + ":" + second;
-              $scope.session.time2 = "00:00:00";
-            }
-
-            // claudia
             $scope.session.maxspeed = 0;
+
             $scope.session.speed = 0;
+
             $scope.session.avspeed = 0;
+
             $scope.session.elapsed = 0;
+
             $scope.session.minalt = 99999;
+
             $scope.session.maxalt = 0;
+
             $scope.session.elevation = 0;
+
             $scope.session.speeds = [];
+
             $scope.session.variance = -1;
+
           }
+
           if (
+
             timenew - $scope.session.lastrecordtime >=
+
               $scope.prefs.minrecordinggap &&
+
             pos.coords.accuracy <= $scope.prefs.minrecordingaccuracy
+
           ) {
+
             var pointData = [
+
               pos.coords.latitude.toFixed(6),
+
               pos.coords.longitude.toFixed(6),
+
               new Date(timenew).toISOString()
+
             ];
 
+
+
             if (typeof pos.coords.altitude === "number") {
+
               pointData.push(pos.coords.altitude);
+
             } else {
+
               pointData.push("x");
+
             }
 
+
+
             if ($scope.session.beatsPerMinute) {
+
               pointData.push($scope.session.beatsPerMinute);
+
             } else {
+
               pointData.push("x");
+
             }
+
+
 
             pointData.push(pos.coords.accuracy);
 
+
+
             if ($scope.session.instantCadence) {
+
               pointData.push($scope.session.instantCadence);
+
             } else {
+
               pointData.push("x");
+
             }
+
+
 
             if ($scope.session.instantPower) {
+
               pointData.push($scope.session.instantPower);
+
             } else {
+
               pointData.push("x");
+
             }
+
+
 
             if ($scope.session.instantStride) {
+
               pointData.push($scope.session.instantStride);
+
             } else {
+
               pointData.push("x");
+
             }
+
+
 
             $scope.session.gpxData.push(pointData);
+
             $scope.session.lastrecordtime = timenew;
 
+
+
             // Record Weather
+
             if ($scope.session.weather === "") {
+
               $scope.weather
+
                 .byLocation({
+
                   latitude: latnew,
+
                   longitude: lonnew
+
                 })
+
                 .then(function(weather) {
+
                   $scope.session.weather = weather;
+
                 });
+
             }
+
           }
+
         });
       }
     };
@@ -3463,76 +3730,70 @@ $scope.stopChallengeSession = function() {
       $scope.runningTimeInterval = $interval(function() {
 
         if ($scope.session.firsttime > 0) {
-          //$rootScope.distance = 0;
-          // firsttime : refers to the time one starts the timer.
+
           console.debug($scope.session.firsttime);
+
           var elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
+
           var hour = Math.floor(elapsed / 3600000);
+
           var minute = ("0" + (Math.floor(elapsed / 60000) - hour * 60)).slice(
+
             -2
+
           );
-          /* for the time function, get the variable from the rootscope
-          to get the appropriate time countdown*/
+
           var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
-          //$scope.session.time = hour + ":" + minute + ":" + second;
-          $scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-          $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-          $scope.session.challenge3k = ("0" + (24-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
-          $scope.session.distcovered = $rootScope.distance;
 
+          $scope.session.time = hour + ":" + minute + ":" + second;
 
+          $rootScope.time_travelled = hour + ":" + minute + ":" + second;
 
-          if ($scope.session.distcovered == 3){
-            $scope.session.time2 = $scope.session.challenge3k;
-            $scope.session.time = $scope.session.challenge3k;
+          $scope.time_travelled_in_minutes = minute;
 
+          $scope.session.elapsed = elapsed;
 
-            if($scope.session.challenge3k <= "00:00"){
+          if($rootScope.challengeStarted){
+
+            if($scope.time_travelled_in_minutes>=$rootScope.time){
 
               $scope.stopChallengeSession();
 
+            }
 
-            }
-          }
-          else if ($scope.session.distcovered == 5){
-            $scope.session.time2 = $scope.session.challenge5k;
-            $scope.session.time = $scope.session.challenge3k;
-            if($scope.session.challenge3k <= "00:00"){
-
-                $scope.stopChallengeSession();
-            }
-          }
-          else if ($scope.session.distcovered == 10){
-            $scope.session.time2 = $scope.session.challenge10k;
-            $scope.session.time = $scope.session.challenge3k;
-            if($scope.session.challenge3k <= "00:00"){
-                $scope.stopChallengeSession();
-            }
-          }
-          else{
-            $rootScope.distance=0;
-            $scope.session.time2 = hour + ":" + minute + ":" + second;
-            $scope.session.time = $scope.session.challenge3k;
-          }
-          console.log(($scope.session.time).split(":"));
-          var time_hours_minutes = ($scope.session.time).split(":");
-
-          // Boilerplate for ending session after a certain time
-          // Work on this here to stop session
-          for(var x=0; x < 2; x++){
-            if(time_hours_minutes[x] == "0"){
-              console.log("Stop, end session, click button");
-            }
           }
 
-          $scope.session.elapsed = elapsed;
         }
+
       }, 2000);
-      $scope.session.distcovered = 0;
+
 
 
       $scope.openModal();
+
     };
+
+
+
+          /* for the time function, get the variable from the rootscope
+          to get the appropriate time countdown*/
+
+          /*$scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+          $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+          $scope.session.challenge3k = ("0" + (0-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2); */
+        //  $scope.session.distcovered = $rootScope.distance;
+
+
+
+
+
+
+
+
+
+
+
+
 
     $scope.delayCheck = function() {
       if (new Date().getTime() - $scope.mustdelaytime < $scope.prefs.delay) {
@@ -4579,35 +4840,47 @@ $scope.stopChallengeSession = function() {
   $window,
   $rootScope) {
 
-      console.log($rootScope.distance);
-        if($scope.session.distance === undefined)
-           $scope.session.distance = 0 ;
+
+          $scope.startChallenge = function() {
+                $rootScope.challengeStarted = true;
+                $scope.startSession();
+                };
 
 
-      if($rootScope.distance == 3)
-          {$rootScope.targetDistance = "3 Kilometer";
-
-          console.log($scope.session.distance);
-          $rootScope.actualdis = $scope.session.distance + "km"
-          $rootScope.progress =($scope.session.distance/$rootScope.distance)*100;//progress wil always be 0 cause distance cover is 0.0 km
-
-        }
-      else if ($rootScope.distance == 5)
-        { $rootScope.targetDistance = "5 Kilometer";
-          console.log($scope.session.distance);
-          $rootScope.actualdis = $scope.session.distance + "km"
-          $rootScope.progress =($scope.session.distance/$rootScope.distance)*100;
-        }
-      else if ($rootScope.distance == 10)
-          {$rootScope.targetDistance = "10 Kilometer";
-          console.log($scope.session.distance);
-          $rootScope.actualdis = $scope.session.distance + "km"
-          $rootScope.progress =($scope.session.distance/$rootScope.distance)*100;
-        }
-
-          else $rootScope.targetDistance = "15 Kilometer"; //this value is just to check if 3 of the challenge fail to be active cause of any bug it will show 15 kilometer .
+          $rootScope.getvalues = function() {
+            $rootScope.challengeStarted = false;
 
 
+              $rootScope.actual_time = $scope.getActualTime();
+              console.log($rootScope.actual_time);
+              $rootScope.target_time = $rootScope.time;
+              console.log($rootScope.target_time);
+              $rootScope.target_distance = $rootScope.distance;
+              console.log($rootScope.target_distance);
+              $rootScope.actual_distance = $scope.getActualDistance();
+              console.log($rootScope.actual_distance);
+              $rootScope.progress =($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
+                console.log($rootScope.progress);
+              $scope.gotodashboard();
+              };
+
+              $scope.getActualDistance=function(){
+            if($rootScope.distance_travelled==undefined || $rootScope.distance_travelled==NaN){
+               return 0;
+      }
+      else {
+        return $rootScope.distance_travelled;
+      }
+    };
+
+    $scope.getActualTime=function(){
+      if($rootScope.time_travelled==undefined){
+        return "0:00:00";
+      }
+      else {
+        return $rootScope.time_travelled;
+      }
+    };
 
 
 
@@ -4806,7 +5079,7 @@ $scope.stopChallengeSession = function() {
   ) {
     $scope.threeKm=function(){
       $rootScope.distance = 3; //km
-      $rootScope.time = 25; //min
+      $rootScope.time = 20; //min
       $rootScope.source = 'img/'+$rootScope.distance+'k.png';
       $rootScope.src = 'img/about-bg.jpg';
       $rootScope.message = 'A Great Place To Start';

@@ -238,15 +238,17 @@ angular
           }
         }
       })
-     .state("app.Dashboard", {
-        url: "/Dashboard",
-        views: {
-          menuContent: {
-            templateUrl: "templates/Dashboard.html",
-            controller: "DashboardCtrl"
-          }
-        }
-      })
+
+      .state("app.dashboard", {
+         url: "/Dashboard",
+         views: {
+           menuContent: {
+             templateUrl: "templates/Dashboard.html",
+             controller: "DashboardCtrl"
+           }
+         }
+       })
+
       .state("app.challenge", {
         url: "/challenge",
         views: {
@@ -255,12 +257,7 @@ angular
             controller: "ChallengesCtrl"
           }
         }
-
-
-
       });
-
-
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise("/app/sessions");
 
@@ -341,6 +338,7 @@ angular
       _elevationDown: "Down",
       _sessions: "Sessions",
       _about: "About",
+      _dashboard:"Progres Report",
       _speed_maximum: "Maximum",
       _speed_average: "Average",
       _up: "Up",
@@ -445,8 +443,7 @@ angular
       _food: "Food",
       _new_food: "New Food",
       _challenges: "Challenges",
-      _challenge: "Challenge",
-      _dashboard: "Progress"
+      _challenge: "Challenge"
     });
 
     $translateProvider.translations("fr-FR", {
