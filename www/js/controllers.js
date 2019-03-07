@@ -4286,6 +4286,7 @@ angular
     $scope.signout = function(){
     CommonProp.logoutUser();
     sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentFood');
     $window.location.reload();
     }
 
@@ -4430,6 +4431,14 @@ angular
       });
     });
 
+    $scope.foodDetails= function(food){
+      let key = 'currentFood';
+      let value = food;
+          value = JSON.stringify(value);
+          sessionStorage.setItem(key, value);
+      $state.go("app.foodInfo");
+    }
+
     $scope.calculate=function(){
       //TODO
     };
@@ -4445,10 +4454,26 @@ angular
         .then(function(snapshot) {
         lastId = snapshot.numChildren();
         lastId++ ;
-        firebase.database().ref("Foods/"+lastId).set({'name':$scope.foodName,'calories':$scope.calories});
+        firebase.database().ref("Foods/"+lastId).set({
+          'name':$scope.foodName,
+          'calories':$scope.calories,
+          'amount':$scope.amount,
+          'unit': $scope.unit});
       });
       $state.go("app.food");
     }
+  })
+
+  .controller("FoodInfoCtrl",function(
+    $scope,
+    $state,
+    $stateParams,
+    $window
+  ){
+    if(sessionStorage.getItem('currentFood')!=null){
+      $scope.food=JSON.parse(sessionStorage.getItem('currentFood'));
+    }
+
   })
 
   .controller("ChallengesCtrl", function(

@@ -323,6 +323,10 @@ input.ng-invalid.ng-touched{
     align-items: center;
 }
 
+ion-item.food_box:hover {
+  background-color: #F5F5F5;
+}
+
 .list_header{
     background-color: grey;
 }

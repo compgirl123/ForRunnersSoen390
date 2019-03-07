@@ -9,8 +9,18 @@
         	</label>
 
         	<label class="item item-input item-stacked-label">
-          		<span class="input-label">Calories for 100g: </span>
-          		<input type="number" placeholder="Calories in cal" min="1"  ng-model="calories">
+          		<span class="input-label">Amount:</span>
+          		<input type="number" placeholder="1" min="1"  ng-model="amount">
+        	</label>
+
+        	<label class="item item-input item-stacked-label">
+          		<span class="input-label">Unit :</span>
+          		<input type="text" placeholder="i.e : g, cup, liter, slice, oz" min="1"  ng-model="unit">
+        	</label>
+
+        	<label class="item item-input item-stacked-label">
+          		<span class="input-label">Calories: </span>
+          		<input type="number" placeholder="Calories in cal"  ng-model="calories">
         	</label>
 
         	<input type="submit" value="Save new food">

@@ -1,0 +1,19 @@
+<ion-view view-title="{{ '_foodInfo' | translate }}">
+
+	 <ion-content hideBackButton="true">
+	 	<div class="list">
+	 		<h1 align="center">{{food.name}}</h1>
+
+	 		<label class="item item-input item-stacked-label">
+          		<span class="input-label">Calories : {{food.calories}} cals</span>
+        	</label>
+        	<label class="item item-input item-stacked-label">
+          		<span class="input-label">Amount : {{food.amount}} </span>
+        	</label>
+        	<label class="item item-input item-stacked-label">
+          		<span class="input-label">Unit : {{food.unit}}</span>
+        	</label>
+	 	</div>
+	 </ion-content>
+
+</ion-view>
