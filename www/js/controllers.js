@@ -2706,8 +2706,14 @@ $scope.stopChallengeSession = function() {
         } catch (exception) {
           console.warn(exception);
         }
+        if ($rootScope.challengeStarted) {
+            $rootScope.getvalues();
 
-        $scope.closeModal();
+
+        }
+        else {
+
+        $scope.closeModal();}
         $scope.session.saving = false;
         console.debug('Saving session ended');
       }, 10);
