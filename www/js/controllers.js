@@ -4446,11 +4446,22 @@ angular
       $state.go("app.newFood");
     };
 
+    $scope.change = function() {
+      $scope.errorMessage=false;
+       for (food in  $scope.foods){
+        if($scope.foods[food].name.toLowerCase() == $scope.foodName.toLowerCase()){
+          $scope.errorMessage=true;
+        }
+      }
+    }
+
     $scope.save= function(){
 
       var rootRef = firebase.database().ref("Foods");
       var lastId;
-      rootRef.once("value")
+
+      if(!$scope.errorMessage){
+        rootRef.once("value")
         .then(function(snapshot) {
         lastId = snapshot.numChildren();
         lastId++ ;
@@ -4459,8 +4470,10 @@ angular
           'calories':$scope.calories,
           'amount':$scope.amount,
           'unit': $scope.unit});
-      });
-      $state.go("app.food");
+        });
+        $state.go("app.food");
+      }
+      
     }
   })
 
@@ -4472,6 +4485,12 @@ angular
   ){
     if(sessionStorage.getItem('currentFood')!=null){
       $scope.food=JSON.parse(sessionStorage.getItem('currentFood'));
+      $scope.localAmount=$scope.food.amount;
+      $scope.localCalories=$scope.food.calories;
+    }
+
+    $scope.change = function() {
+      $scope.food.calories=($scope.food.amount/$scope.localAmount)*$scope.localCalories;
     }
 
   })

@@ -339,6 +339,9 @@ input[type=text], input[type=number], select {
   border-radius: 20px;
   box-sizing: border-box;
 }
+input[type=number]{
+  text-align:right;
+}
 
 input[type=submit] {
   width: 95%;
@@ -353,4 +356,8 @@ input[type=submit] {
 
 input[type=submit]:hover {
   background-color: #3F51B5;
+}
+.errorDuplicate {
+  padding: 0 16px;
+  color: red;
 }
