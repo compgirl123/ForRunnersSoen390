@@ -4287,6 +4287,7 @@ angular
     CommonProp.logoutUser();
     sessionStorage.removeItem('currentUser');
     sessionStorage.removeItem('currentFood');
+    sessionStorage.removeItem('totalCalories');
     $window.location.reload();
     }
 
@@ -4316,7 +4317,7 @@ angular
 
             let key = 'currentUser';
             let value = {'username':userInfo.username,'email':userInfo.email,'age':userInfo.age,'age':userInfo.age,
-                                  'weight':userInfo.weight, 'height':userInfo.height};
+                                  'weight':userInfo.weight, 'height':userInfo.height, 'gender': userInfo.gender, 'activity': userInfo.activity};
             value = JSON.stringify(value);
             sessionStorage.setItem(key, value);
 
@@ -4362,6 +4363,9 @@ angular
       $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
     }
 
+    $scope.genders=["Male","Female"];
+    $scope.activity=["Little/ no exercise","Moderately active","Very active"];
+
     //Updates user info without having to press a button "save"
     $scope.change = function() {
       let key = 'currentUser';
@@ -4378,6 +4382,12 @@ angular
       });
       ref.update({
         height: $scope.user.height
+      });
+      ref.update({
+        gender: $scope.user.gender
+      });
+      ref.update({
+        activity: $scope.user.activity
       });
     };
 
@@ -4440,7 +4450,12 @@ angular
     }
 
     $scope.calculate=function(){
-      //TODO
+      let value=parseInt(sessionStorage.getItem('totalCalories'));
+
+      console.log("You must run "+value/100+" miles.");
+
+
+      sessionStorage.removeItem('totalCalories');
     };
     $scope.addFood=function(){
       $state.go("app.newFood");
@@ -4491,6 +4506,21 @@ angular
 
     $scope.change = function() {
       $scope.food.calories=($scope.food.amount/$scope.localAmount)*$scope.localCalories;
+    }
+
+    $scope.addToList= function(){
+
+      if(sessionStorage.getItem('totalCalories')==null){
+        let key = 'totalCalories';
+        let value = $scope.food.calories;
+        sessionStorage.setItem(key, value);
+        $state.go("app.food");
+      }else{
+        let key = 'totalCalories';
+        let value=parseInt(sessionStorage.getItem('totalCalories')) + $scope.food.calories;
+        sessionStorage.setItem(key, value);
+        $state.go("app.food");
+      }      
     }
 
   })

@@ -361,3 +361,8 @@ input[type=submit]:hover {
   padding: 0 16px;
   color: red;
 }
+
+.profile-input {
+  padding: 12px 10px;
+  text-align:right;
+}

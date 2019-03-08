@@ -1,6 +1,7 @@
 <ion-view view-title="{{ '_foodInfo' | translate }}">
 
 	 <ion-content hideBackButton="true">
+	 	<form ng-controller="FoodInfoCtrl" ng-submit="addToList()">
 	 	<div class="list">
 	 		<h1 align="center">{{food.name}}</h1>
 
@@ -14,7 +15,11 @@
         	<label class="item item-input item-stacked-label">
           		<span class="input-label">Unit : {{food.unit}}</span>
         	</label>
+
+        	<input type="submit" value="Add food to list">
+
 	 	</div>
+	 	</form>
 	 </ion-content>
 
 </ion-view>
