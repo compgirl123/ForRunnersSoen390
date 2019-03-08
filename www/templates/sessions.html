@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <ion-view view-title="Sessions">
   <button ng-click="startSession()" class="button button-fab button-fab-bottom-right button-assertive icon ion-play waves-effect waves-button waves-light"></button>
   <!--button ng-click="startSessionWithoutGPS()" class="button button-fab
@@ -92,6 +95,25 @@
             {{session.distance | number:1}} Km - {{session.duration | date:"HH:mm:ss":"UTC"}} - {{session.pace | date:"m.ss"}} min/km<br>
             {{session.speed | number:1}} Km/h - {{ session.eleUp | number:0 }} m up / {{ session.eleDown | number:0 }} m down
          </p>
+         <div class="progress" style="margin-top:15px;" ng-show="session.bar == 1">
+          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{session.progress}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : (session.progress + '%' ) }" >
+            <span style="color: black; font-weight: bold">&nbsp 3K Challenge: {{session.progress}} % Complete
+            </span>
+        </div>
+
+        </div>
+        <div class="progress" style="margin-top:15px;" ng-show="session.bar == 2 ">
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{session.progress}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : (session.progress + '%' ) }">
+            <span style="color: black; font-weight: bold">&nbsp 5K Challenge: {{session.progress}} % Complete
+            </span>
+          </div>
+        </div>
+        <div class="progress" style="margin-top:15px;" ng-if="session.bar == 3">
+          <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{session.progress}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : (session.progress + '%' ) }" >
+            <span style="color: black; font-weight: bold">&nbsp 10K Challenge: {{session.progress}} % Complete
+            </span>
+          </div>
+        </div>
         </a>
 
     </ion-list>
