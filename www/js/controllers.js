@@ -1044,8 +1044,6 @@ angular
       session.gpxMinHeight = Math.round(minHeight);
       session.distance = Math.round(dTotal * 100) / 100;
       session.pace = gpxpace;
-      session.bar = 0;
-      session.progress = 0;
       session.speed = gpxspeed;
       session.speedinmvt = gpxspeedwithoutpause;
       session.paceinmvt = gpxpacewithoutpause;
@@ -1777,8 +1775,6 @@ angular
         overnote: session.overnote,
         start: session.start,
         distk: session.distk,
-        bar: session.bar,
-        progress: session.progress,
         distance: session.distance,
         duration: session.duration,
         pace: session.pace,
@@ -2712,6 +2708,8 @@ $scope.stopChallengeSession = function() {
         }
         if ($rootScope.challengeStarted) {
             $rootScope.getvalues();
+
+
         }
         else {
 
@@ -4844,8 +4842,6 @@ $scope.stopChallengeSession = function() {
     //}
   })
 //bilal
-
-
   .controller("DashboardCtrl", function($scope,$state,
   $window,
   $rootScope) {
@@ -4855,6 +4851,7 @@ $scope.stopChallengeSession = function() {
                 $rootScope.challengeStarted = true;
                 $scope.startSession();
                 };
+
 
           $rootScope.getvalues = function() {
             $rootScope.challengeStarted = false;
@@ -4868,30 +4865,8 @@ $scope.stopChallengeSession = function() {
               console.log($rootScope.target_distance);
               $rootScope.actual_distance = $scope.getActualDistance();
               console.log($rootScope.actual_distance);
-              $rootScope.progress = ($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
-              //$rootScope.progress = 50;  
-              console.log($rootScope.progress);
-
-              if($rootScope.distance == 3)
-                {
-                $scope.session.bar = 1;
-                $scope.session.progress = $rootScope.progress;
-                //$scope.session.progress = 20;
-                $scope.saveSession($scope.session);
-                }
-                else if ($rootScope.distance == 5)
-                { 
-                $scope.session.bar = 2;
-                $scope.session.progress = $rootScope.progress;
-                //$scope.session.progress = 40;
-                $scope.saveSession($scope.session);
-                }
-                else if ($rootScope.distance == 10)
-                {
-                $scope.session.bar = 3;
-                $scope.session.progress = $rootScope.progress;
-                $scope.saveSession($scope.session);
-                }
+              $rootScope.progress =($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
+                console.log($rootScope.progress);
               $scope.gotodashboard();
               };
 
@@ -4912,6 +4887,13 @@ $scope.stopChallengeSession = function() {
         return $rootScope.time_travelled;
       }
     };
+
+
+
+
+
+
+
 
   })
   //bilal
