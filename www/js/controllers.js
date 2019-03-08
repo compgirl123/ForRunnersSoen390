@@ -3755,7 +3755,7 @@ $scope.stopChallengeSession = function() {
 
           $rootScope.time_travelled = hour + ":" + minute + ":" + second;
 
-          $scope.time_travelled_in_minutes = second;
+          $scope.time_travelled_in_minutes = minute;
 
           $scope.session.elapsed = elapsed;
 
@@ -5112,6 +5112,17 @@ $scope.stopChallengeSession = function() {
 
     $scope.default=function(){
       $rootScope.distance = 0; //km
+    };
+
+    $scope.customGoal=function(){
+      $rootScope.distance = $scope.goal.distance; //km
+      console.log($rootScope.distance);
+      $rootScope.time = $scope.goal.time; //min
+      console.log($rootScope.time);
+      $rootScope.source = 'img/gear-a.png';
+      $rootScope.src = 'img/custom-goal-man-tying-shoes.jpeg';
+      $rootScope.message = 'Custom Goal';
+      $state.go("app.challenge");
     };
 
 
