@@ -4450,12 +4450,14 @@ angular
     }
 
     $scope.calculate=function(){
-      let value=parseInt(sessionStorage.getItem('totalCalories'));
 
-      console.log("You must run "+value/100+" miles.");
-
-
-      sessionStorage.removeItem('totalCalories');
+      if(sessionStorage.getItem('totalCalories')!=null){
+        $state.go("app.calculation");
+        $scope.errorTotalCalories=false;
+      }else{
+        $scope.errorTotalCalories=true;
+      }  
+      
     };
     $scope.addFood=function(){
       $state.go("app.newFood");
@@ -4505,7 +4507,7 @@ angular
     }
 
     $scope.change = function() {
-      $scope.food.calories=($scope.food.amount/$scope.localAmount)*$scope.localCalories;
+      $scope.food.calories=Math.round(($scope.food.amount/$scope.localAmount)*$scope.localCalories);
     }
 
     $scope.addToList= function(){
@@ -4514,6 +4516,7 @@ angular
         let key = 'totalCalories';
         let value = $scope.food.calories;
         sessionStorage.setItem(key, value);
+        $scope.errorTotalCalories=false;
         $state.go("app.food");
       }else{
         let key = 'totalCalories';
@@ -4522,8 +4525,79 @@ angular
         $state.go("app.food");
       }      
     }
-
   })
+
+  .controller("CalculationCtrl",function(
+    $scope,
+    $state,
+    $stateParams,
+    $window
+  ){
+
+    if(sessionStorage.getItem('currentUser')!=null && 
+        sessionStorage.getItem('totalCalories')!=null){
+
+      $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
+      $scope.consumedCalories=parseInt(sessionStorage.getItem('totalCalories'));
+
+      if ($scope.user.gender == "Male"){
+        switch (true) {
+            case ($scope.user.age>=1 && $scope.user.age<=18 ):
+                $scope.RMR= ($scope.user.weight*12.2)+ 746;
+                break;
+            case ($scope.user.age>=19 && $scope.user.age<=30 ):
+                $scope.RMR= ($scope.user.weight*14.7)+ 496;
+                break;
+            case ($scope.user.age>=31):
+                $scope.RMR= ($scope.user.weight*8.7)+ 829;
+                break;
+            default:
+                console.log("Please enter your age in profile page.");
+            }
+      }else{
+        switch (true) {
+            case ($scope.user.age>=1 && $scope.user.age<=18 ):
+                $scope.RMR= Math.round(($scope.user.weight*17.5)+ 651);          
+                break;
+            case ($scope.user.age>=19 && $scope.user.age<=30 ):
+                $scope.RMR= Math.round(($scope.user.weight*15.3)+ 679);                
+                break;
+            case ($scope.user.age>=31):
+                $scope.RMR= Math.round(($scope.user.weight*11.6)+ 879);                
+                break;
+            default:
+                console.log("Please enter your age in profile page."); 
+          }
+      }
+      switch (true) {
+            case ($scope.user.activity == "Little/ no exercise"):
+                $scope.expenditure= Math.round($scope.RMR*1.4);                
+                break;
+            case ($scope.user.activity == "Moderately active"):
+                $scope.expenditure= Math.round($scope.RMR*1.7);                
+                break;
+            case ($scope.user.activity == "Very active"):
+                $scope.expenditure= Math.round($scope.RMR*2.0);                
+                break;
+            default:
+                console.log("Please enter your level of activity in profile page."); 
+          }
+
+          $scope.caloriesToBurn=$scope.consumedCalories-$scope.expenditure;
+          
+          if($scope.caloriesToBurn<0){
+            $scope.negativeMessage=true;
+          }else{
+            $scope.distanceToRun=($scope.caloriesToBurn)/100;
+          }
+    }
+
+    $scope.ok= function(){
+      sessionStorage.removeItem('totalCalories');
+      $state.go("app.food");
+    }      
+  })
+
 
   .controller("ChallengesCtrl", function(
     $scope,

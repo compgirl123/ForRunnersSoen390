@@ -360,6 +360,7 @@ input[type=submit]:hover {
 .errorDuplicate {
   padding: 0 16px;
   color: red;
+  width: 100%;
 }
 
 .profile-input {

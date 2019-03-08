@@ -1,0 +1,23 @@
+<ion-view view-title="{{ '_calculationInfo' | translate }}">
+
+	 <ion-content hideBackButton="true">
+	 	 <div class="list">
+      <label class="item item-input item-stacked-label item-text-wrap">
+              <span>Your current resting metabolic rate is {{RMR}} </span>
+      </label>
+      <label class="item item-input item-stacked-label item-text-wrap">
+              <span>Since your activity level is {{user.activity}} your daily expenditure is {{expenditure}} </span>
+      </label>
+
+      <label ng-show="!negativeMessage"class="item item-input item-stacked-label item-text-wrap">
+              <span>You should run {{distanceToRun}} miles to burn {{caloriesToBurn}} kcal</span>
+      </label>
+      <label ng-show="negativeMessage" class="item item-input item-stacked-label item-text-wrap">
+              <span>You have not consumed enough calories to burn when running.</span>
+      </label>
+
+      <input type="submit" ng-click=ok() value="Ok">
+     </div>
+	 </ion-content>
+
+</ion-view>

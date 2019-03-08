@@ -238,6 +238,15 @@ angular
           }
         }
       })
+      .state("app.calculation", {
+        url: "/calculation",
+        views: {
+          menuContent: {
+            templateUrl: "templates/calculation.html",
+            controller: "CalculationCtrl"
+          }
+        }
+      })
       .state("app.challenges", {
         url: "/challenges",
         views: {
@@ -440,6 +449,7 @@ angular
       _food: "Food",
       _new_food: "New Food",
       _foodInfo:"Food Information",
+      _calculationInfo: "Calculation Information",
       _challenges: "Challenges",
       _challenge: "Challenge"
     });
