@@ -4847,7 +4847,12 @@ $scope.stopChallengeSession = function() {
   $rootScope) {
 
 
-        $rootScope.status = "Failed"
+        $rootScope.status = "Failed";
+
+
+
+
+
 
           $scope.startChallenge = function() {
                 $rootScope.challengeStarted = true;
@@ -4869,10 +4874,25 @@ $scope.stopChallengeSession = function() {
               console.log($rootScope.actual_distance);
               $rootScope.progress =($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
                 console.log($rootScope.progress);
-                
+                //$rootScope.progress = 50;  uncoooment it to check the progress circle animate
+                $rootScope.calculator =(($rootScope.progress)/100)*360;
+
                 if($scope.actual_distance>= $rootScope.distance){
-                  $rootScope.status = "Passsed"
+                  $rootScope.status = "Passsed";
                 }
+
+                if($rootScope.calculator <= 180 ){
+                  $rootScope.degree_right = $rootScope.calculator;
+                  $rootScope.degree_left = 0;
+
+                }
+                if($rootScope.calculator > 180 ){
+                  $rootScope.degree_right = 180;
+                  $rootScope.degree_left =  $rootScope.calculator - 180 ;
+                }
+
+
+
               $scope.gotodashboard();
               };
 
