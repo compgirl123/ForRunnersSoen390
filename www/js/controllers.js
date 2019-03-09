@@ -4862,10 +4862,7 @@ $scope.stopChallengeSession = function() {
 
           $rootScope.getvalues = function() {
             $rootScope.challengeStarted = false;
-            $scope.style = {
-              'background-image': 'url("../../img/confetti.png")'
-            }
-
+            
               $rootScope.actual_time = $scope.getActualTime();
               console.log($rootScope.actual_time);
               $rootScope.target_time = $rootScope.time;
