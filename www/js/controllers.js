@@ -4847,6 +4847,8 @@ $scope.stopChallengeSession = function() {
   $rootScope) {
 
 
+        $rootScope.status = "Failed"
+
           $scope.startChallenge = function() {
                 $rootScope.challengeStarted = true;
                 $scope.startSession();
@@ -4867,6 +4869,10 @@ $scope.stopChallengeSession = function() {
               console.log($rootScope.actual_distance);
               $rootScope.progress =($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
                 console.log($rootScope.progress);
+                
+                if($scope.actual_distance>= $rootScope.distance){
+                  $rootScope.status = "Passsed"
+                }
               $scope.gotodashboard();
               };
 

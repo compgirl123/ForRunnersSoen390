@@ -1,18 +1,26 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 <ion-view  hide-back-button=true =true view-title="{{ '_dashboard' | translate }}">
  	 <ion-content >
      <div ng-controller="DashboardCtrl">
 
-       Progress :
-       <progress value="{{progress}}" max="100">
-       </progress>
-       <ion-progress-bar color="primary" value="{{progress}}" max = "100"></ion-progress-bar>
-       </div>
+
+       Progress:
+       <div class="progress">
+  <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%">
+ {{progress}} % completed
+  </div>
+</div>
+
        <div class="card">
        <div class="item item-text-wrap">
        <p> Target Distance : {{target_distance}} km </p>
        <p> Actual Distance : {{actual_distance}} km </p>
        <p> Target Time     : {{target_time}} time </p>
        <p> Stop Time       : {{actual_time}} time </p>
+       <p> Status          : {{status}}  </p>
        </div>
        </div>
        <div align = "center">
@@ -20,6 +28,10 @@
         OK
        </button>
        </div>
+
+
+       </div>
+
 
 
 
