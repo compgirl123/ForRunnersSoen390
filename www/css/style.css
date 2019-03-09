@@ -329,6 +329,7 @@ ion-item.food_box:hover {
 
 .list_header{
     background-color: grey;
+    text-align:center;
 }
 
 input[type=text], input[type=number], select {
@@ -366,4 +367,7 @@ input[type=submit]:hover {
 .profile-input {
   padding: 12px 10px;
   text-align:right;
+}
+h4{
+  padding: 0 10px;
 }

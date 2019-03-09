@@ -9,13 +9,13 @@
  	 <ion-content hideBackButton="true"> 	 	
  	 	<ion-list>
  	 	  <ion-list-header class="row list_header">
- 	 		<ion-label class="col col-75" style="color:white">Food</ion-label>
+ 	 		<ion-label class="col col-90" style="color:white">Food</ion-label>
 	      </ion-list-header>
 	      <ion-item class="food_box row" ng-repeat="food in foods | filter : search">
 	      	<ion-label class="col col-90 item-text-wrap" ng-click="foodDetails(food)" >{{food.name}}</ion-label>
 	      </ion-item>
 	      <button ng-click="calculate()" class="button button-full">Calculate</button>
-	      <p class="errorDuplicate" ng-show="errorTotalCalories">You have not added any food to calculate.</p>
+	      <p class="errorDuplicate" ng-show="errorFoodList">You have not added any food to calculate.</p>
 	      <button ng-click="addFood()" class="button button-full">Add new food</button>
 	    </ion-list>      
  	 </ion-content>

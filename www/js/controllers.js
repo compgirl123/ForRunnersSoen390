@@ -4287,7 +4287,7 @@ angular
     CommonProp.logoutUser();
     sessionStorage.removeItem('currentUser');
     sessionStorage.removeItem('currentFood');
-    sessionStorage.removeItem('totalCalories');
+    sessionStorage.removeItem('foodList');
     $window.location.reload();
     }
 
@@ -4430,7 +4430,7 @@ angular
     $scope,
     $state,
     $window
-  ) {
+  ) {   
 
     var rootRef = firebase.database().ref("Foods").orderByKey();;
     rootRef.on("value",function(snapshot) {
@@ -4442,6 +4442,7 @@ angular
     });
 
     $scope.foodDetails= function(food){
+
       let key = 'currentFood';
       let value = food;
           value = JSON.stringify(value);
@@ -4451,11 +4452,11 @@ angular
 
     $scope.calculate=function(){
 
-      if(sessionStorage.getItem('totalCalories')!=null){
+      if(sessionStorage.getItem('foodList')!=null){
         $state.go("app.calculation");
-        $scope.errorTotalCalories=false;
+        $scope.errorFoodList=false;
       }else{
-        $scope.errorTotalCalories=true;
+        $scope.errorFoodList=true;
       }  
       
     };
@@ -4512,16 +4513,27 @@ angular
 
     $scope.addToList= function(){
 
-      if(sessionStorage.getItem('totalCalories')==null){
-        let key = 'totalCalories';
-        let value = $scope.food.calories;
-        sessionStorage.setItem(key, value);
-        $scope.errorTotalCalories=false;
+      if(sessionStorage.getItem('foodList')==null){
+        //This is the first element of the list
+        let key = 'foodList';
+        let foodArray = [];
+        let firstItem={'name':$scope.food.name,'calories':$scope.food.calories,'amount':$scope.food.amount,'unit':$scope.food.unit};
+            foodArray.push(firstItem);
+        let value ={'currentCalories':$scope.food.calories,'list':foodArray};    
+        sessionStorage.setItem(key, JSON.stringify(value) );        
         $state.go("app.food");
       }else{
-        let key = 'totalCalories';
-        let value=parseInt(sessionStorage.getItem('totalCalories')) + $scope.food.calories;
-        sessionStorage.setItem(key, value);
+        //This to add other foods to list
+
+        let key = 'foodList';
+        let foodList=JSON.parse(sessionStorage.getItem('foodList'));       
+
+        let calories=foodList.currentCalories + $scope.food.calories;
+        let item = {'name':$scope.food.name,'calories':$scope.food.calories,'amount':$scope.food.amount,'unit':$scope.food.unit};
+        let foodArray=foodList.list;
+            foodArray.push(item);
+        let value ={'currentCalories':calories,'list':foodArray};     
+        sessionStorage.setItem(key, JSON.stringify(value));
         $state.go("app.food");
       }      
     }
@@ -4535,11 +4547,13 @@ angular
   ){
 
     if(sessionStorage.getItem('currentUser')!=null && 
-        sessionStorage.getItem('totalCalories')!=null){
+        sessionStorage.getItem('foodList')!=null){
 
       $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
-      $scope.consumedCalories=parseInt(sessionStorage.getItem('totalCalories'));
+      $scope.consumedFood = JSON.parse(sessionStorage.getItem('foodList'));
+      $scope.consumedCalories=$scope.consumedFood.currentCalories;
 
+      //using formula from https://www.runnersworld.com/uk/health/weight-loss/a766022/calculate-your-calorie-needs/
       if ($scope.user.gender == "Male"){
         switch (true) {
             case ($scope.user.age>=1 && $scope.user.age<=18 ):
@@ -4585,6 +4599,7 @@ angular
 
           $scope.caloriesToBurn=$scope.consumedCalories-$scope.expenditure;
           
+          //If user consume less calories than he/she needs another message is given
           if($scope.caloriesToBurn<0){
             $scope.negativeMessage=true;
           }else{
@@ -4593,7 +4608,7 @@ angular
     }
 
     $scope.ok= function(){
-      sessionStorage.removeItem('totalCalories');
+      sessionStorage.removeItem('foodList');
       $state.go("app.food");
     }      
   })
