@@ -1045,6 +1045,8 @@ angular
       session.distance = Math.round(dTotal * 100) / 100;
       session.pace = gpxpace;
       session.speed = gpxspeed;
+      session.bar = 0;
+      session.progress = 0;
       session.speedinmvt = gpxspeedwithoutpause;
       session.paceinmvt = gpxpacewithoutpause;
       session.eleUp = Math.round(eleUp);
@@ -1779,6 +1781,8 @@ angular
         duration: session.duration,
         pace: session.pace,
         speed: session.speed,
+        bar: session.bar,
+        progress: session.progress,
         eleUp: session.eleUp,
         eleDown: session.eleDown,
         type: session.type,
@@ -2190,6 +2194,9 @@ angular
     };
     $scope.gotodashboard = function() {
       $state.go("app.dashboard");
+    };
+    $scope.gotocongratulations = function() {
+      $state.go("app.congratulations");
     };
 
     $scope.registerBluetoothDevice = function(id) {
@@ -4855,7 +4862,9 @@ $scope.stopChallengeSession = function() {
 
           $rootScope.getvalues = function() {
             $rootScope.challengeStarted = false;
-
+            $scope.style = {
+              'background-image': 'url("../../img/confetti.png")'
+            }
 
               $rootScope.actual_time = $scope.getActualTime();
               console.log($rootScope.actual_time);
@@ -4865,9 +4874,38 @@ $scope.stopChallengeSession = function() {
               console.log($rootScope.target_distance);
               $rootScope.actual_distance = $scope.getActualDistance();
               console.log($rootScope.actual_distance);
-              $rootScope.progress =($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
-                console.log($rootScope.progress);
+              console.log($rootScope.distance);
+
+              $rootScope.progress = ($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
+              //$rootScope.progress = 100;  
+              console.log($rootScope.progress);
+
+              if($rootScope.distance == 3)
+                {
+                $scope.session.bar = 1;
+                $scope.session.progress = $rootScope.progress;
+                //$scope.session.progress = 20;
+                $scope.saveSession($scope.session);
+                }
+                else if ($rootScope.distance == 5)
+                { 
+                $scope.session.bar = 2;
+                $scope.session.progress = $rootScope.progress;
+                //$scope.session.progress = 40;
+                $scope.saveSession($scope.session);
+                }
+                else if ($rootScope.distance == 10)
+                {
+                $scope.session.bar = 3;
+                $scope.session.progress = $rootScope.progress;
+                $scope.saveSession($scope.session);
+                }
+              if($rootScope.progress == 100){
+                $scope.gotocongratulations();
+              }  
+              else{
               $scope.gotodashboard();
+              }
               };
 
               $scope.getActualDistance=function(){

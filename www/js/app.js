@@ -243,11 +243,21 @@ angular
          url: "/Dashboard",
          views: {
            menuContent: {
-             templateUrl: "templates/Dashboard.html",
+             templateUrl: "templates/congratulations.html",
              controller: "DashboardCtrl"
            }
          }
        })
+
+       .state("app.congratulations", {
+        url: "/congratulations",
+        views: {
+          menuContent: {
+            templateUrl: "templates/congratulations.html",
+            controller: "DashboardCtrl"
+          }
+        }
+      })
 
       .state("app.challenge", {
         url: "/challenge",

@@ -350,3 +350,64 @@ input[type=submit] {
 input[type=submit]:hover {
   background-color: #3F51B5;
 }
+
+
+.congratulations {
+    background-image: url('../../img/confetti.png');
+    background-repeat: no-repeat;
+}
+
+.square {
+    display: inline-block;
+    position: fixed;
+    top: 20%;
+    left: 15%;
+    right: 15%;
+    width: 70%;
+    height: 40%;
+    border-radius: 20px;
+    background-color:#80dfff;   
+    overflow: hidden;
+}
+
+.rs{
+    display: inline-block;
+    position: fixed;
+    margin-top: 10px;
+    left: 37.5%;
+    width:25%;
+    height:17%;
+}
+
+.write{
+    display: inline-block;
+    position: fixed;
+    top: 40%;
+    font-size:20px;
+    font-family: 'Lato',verdana, sans-serif;
+    font-weight: bold;
+    color:white;
+    text-align: center;
+    width: 70%;
+    left:15%;
+
+}
+.writes1{
+    display: inline-block;
+    position: fixed;
+    top: 46%;
+    font-size:14px;
+    font-family: 'Lato',verdana, sans-serif;
+    color:white;
+    text-align: center;
+    width: 60%;
+    left:20%;
+}
+
+#cntbtn{
+    display: inline-block;
+    position: fixed;
+    top: 70%;
+    width:70%;
+    left:15%;
+}
