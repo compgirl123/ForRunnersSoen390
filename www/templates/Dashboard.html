@@ -1,17 +1,31 @@
 <ion-view  hide-back-button=true =true view-title="{{ '_dashboard' | translate }}">
  	 <ion-content >
      <div ng-controller="DashboardCtrl">
-        <div>
+
        Progress :
        <progress value="{{progress}}" max="100">
        </progress>
+       <ion-progress-bar color="primary" value="{{progress}}" max = "100"></ion-progress-bar>
        </div>
-       <div>
+       <div class="card">
+       <div class="item item-text-wrap">
        <p> Target Distance : {{target_distance}} km </p>
        <p> Actual Distance : {{actual_distance}} km </p>
-       <button ng-click = "gotoapp()"> ok </button>
-
+       <p> Target Time     : {{target_time}} time </p>
+       <p> Stop Time       : {{actual_time}} time </p>
        </div>
-     </div>
+       </div>
+       <div align = "center">
+         <button class="button button-full button-positive" ng-click = "gotoapp()" >
+        OK
+       </button>
+       </div>
+
+
+
+
+
+
+
  	 </ion-content>
 </ion-view>
