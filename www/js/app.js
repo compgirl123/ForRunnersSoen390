@@ -243,7 +243,7 @@ angular
          url: "/Dashboard",
          views: {
            menuContent: {
-             templateUrl: "templates/dashboard.html",
+             templateUrl: "templates/Dashboard.html",
              controller: "DashboardCtrl"
            }
          }
