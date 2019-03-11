@@ -15,16 +15,12 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-    './www/js/controller.spec.js','./www/js/controllers.js',
-    'test/*.js',
-    'www/lib/angular/angular.js',
-    'node_modules/angular-cookies/angular-cookies.js',
+    'node_modules/angular/angular.min.js',
     'node_modules/angular-mocks/angular-mocks.js',
-    'scripts/*.js',
+    'www/js/controllers.js', 
+    'www/js/app.js',
+    'test/*.js'
      ],
-
-
-
 
     // list of files / patterns to exclude
     exclude: [
@@ -34,13 +30,20 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'www/js/controllers.js' : 'coverage'
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    plugins: [
+      'karma-jasmine',
+      'karma-chrome-launcher',
+      'karma-phantomjs-launcher',
+      'karma-coverage'
+    ],
+    reporters: ['progress', 'coverage'],
 
 
     // web server port
@@ -62,7 +65,15 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['Chrome', 'ChromeHeadless', 'MyHeadlessChrome'],
+    customLaunchers: {
+      MyHeadlessChrome: {
+        base: 'ChromeHeadless',
+        flags: ['--disable-translate', '--disable-extensions',
+                '--no-first-run', '--disable-background-networking',
+                '--remote-debugging-port=9223']
+      }
+    },
 
 
     // Continuous Integration mode
@@ -71,6 +82,15 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity
+    concurrency: Infinity,
+    coverageReporter: {
+      includeAllSources: true,
+      dir: 'coverage/',
+      reporters: [
+          { type: "html", subdir: "html" },
+          { type: 'text-summary' }
+      ]
+  }
+    
   })
 }
