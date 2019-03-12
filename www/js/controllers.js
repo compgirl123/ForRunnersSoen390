@@ -4357,7 +4357,13 @@ angular
 
   }])
 
-  .controller('ProfileCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseArray','CommonProp','$firebaseObject','$window', function($scope, $firebaseAuth, $state, $firebaseArray, CommonProp, $firebaseObject, $window){
+  .controller('ProfileCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseObject','$window', function(
+    $scope, 
+    $firebaseAuth, 
+    $state, 
+    $firebaseObject, 
+    $window
+    ){
 
     if(sessionStorage.getItem('currentUser')!=null){
       $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
