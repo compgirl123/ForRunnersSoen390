@@ -4853,7 +4853,6 @@ $scope.stopChallengeSession = function() {
   $window,
   $rootScope) {
 
-
           $scope.startChallenge = function() {
                 $rootScope.challengeStarted = true;
                 $scope.startSession();
@@ -4872,10 +4871,28 @@ $scope.stopChallengeSession = function() {
               $rootScope.actual_distance = $scope.getActualDistance();
               console.log($rootScope.actual_distance);
               console.log($rootScope.distance);
-
               $rootScope.progress = ($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
               //$rootScope.progress = 100;  
               console.log($rootScope.progress);
+
+              $rootScope.calculator =(($rootScope.progress)/100)*360;
+              
+              if($scope.actual_distance >= $rootScope.distance){
+                $rootScope.status = "Passed";
+              }
+              else{
+                $rootScope.status = "Failed";
+
+              }
+              if($rootScope.calculator <= 180 ){
+                $rootScope.degree_right = $rootScope.calculator;
+                $rootScope.degree_left = 0;
+
+              }
+              if($rootScope.calculator > 180 ){
+                $rootScope.degree_right = 180;
+                $rootScope.degree_left =  $rootScope.calculator - 180 ;
+              }
 
               if($rootScope.distance == 3)
                 {
@@ -4897,7 +4914,7 @@ $scope.stopChallengeSession = function() {
                 $scope.session.progress = $rootScope.progress;
                 $scope.saveSession($scope.session);
                 }
-              if($rootScope.progress == 100){
+              if($rootScope.progress >= 100){
                 $scope.gotocongratulations();
               }  
               else{
@@ -5147,6 +5164,17 @@ $scope.stopChallengeSession = function() {
 
     $scope.default=function(){
       $rootScope.distance = 0; //km
+    };
+
+    $scope.customGoal=function(){
+      $rootScope.distance = $scope.goal.distance; //km
+      console.log($rootScope.distance);
+      $rootScope.time = $scope.goal.time; //min
+      console.log($rootScope.time);
+      $rootScope.source = 'img/gear-a.png';
+      $rootScope.src = 'img/custom-goal-man-tying-shoes.jpeg';
+      $rootScope.message = 'Custom Goal';
+      $state.go("app.challenge");
     };
 
 
