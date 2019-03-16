@@ -32,6 +32,8 @@ matrix:
         - jq
         - gradle
         - google-chrome-stable
+        - npm
+        - nodejs
     licenses:
     - android-sdk-license-.+
   allow_failures:
