@@ -220,12 +220,30 @@ angular
           }
         }
       })
+      .state("app.foodInfo", {
+        url: "/foodInfo",
+        views: {
+          menuContent: {
+            templateUrl: "templates/foodInfo.html",
+            controller: "FoodInfoCtrl"
+          }
+        }
+      })
       .state("app.newFood", {
         url: "/newFood",
         views: {
           menuContent: {
             templateUrl: "templates/newFood.html",
             controller: "FoodCtrl"
+          }
+        }
+      })
+      .state("app.calculation", {
+        url: "/calculation",
+        views: {
+          menuContent: {
+            templateUrl: "templates/calculation.html",
+            controller: "CalculationCtrl"
           }
         }
       })
@@ -430,6 +448,8 @@ angular
       _logout: "Logout",
       _food: "Food",
       _new_food: "New Food",
+      _foodInfo:"Food Information",
+      _calculationInfo: "Calculation Information",
       _challenges: "Challenges",
       _challenge: "Challenge"
     });

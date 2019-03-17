@@ -4286,6 +4286,8 @@ angular
     $scope.signout = function(){
     CommonProp.logoutUser();
     sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentFood');
+    sessionStorage.removeItem('foodList');
     $window.location.reload();
     }
 
@@ -4315,7 +4317,7 @@ angular
 
             let key = 'currentUser';
             let value = {'username':userInfo.username,'email':userInfo.email,'age':userInfo.age,'age':userInfo.age,
-                                  'weight':userInfo.weight, 'height':userInfo.height};
+                                  'weight':userInfo.weight, 'height':userInfo.height, 'gender': userInfo.gender, 'activity': userInfo.activity};
             value = JSON.stringify(value);
             sessionStorage.setItem(key, value);
 
@@ -4355,11 +4357,20 @@ angular
 
   }])
 
-  .controller('ProfileCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseArray','CommonProp','$firebaseObject','$window', function($scope, $firebaseAuth, $state, $firebaseArray, CommonProp, $firebaseObject, $window){
+  .controller('ProfileCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseObject','$window', function(
+    $scope, 
+    $firebaseAuth, 
+    $state, 
+    $firebaseObject, 
+    $window
+    ){
 
     if(sessionStorage.getItem('currentUser')!=null){
       $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
     }
+
+    $scope.genders=["Male","Female"];
+    $scope.activity=["Little/ no exercise","Moderately active","Very active"];
 
     //Updates user info without having to press a button "save"
     $scope.change = function() {
@@ -4377,6 +4388,12 @@ angular
       });
       ref.update({
         height: $scope.user.height
+      });
+      ref.update({
+        gender: $scope.user.gender
+      });
+      ref.update({
+        activity: $scope.user.activity
       });
     };
 
@@ -4419,7 +4436,7 @@ angular
     $scope,
     $state,
     $window
-  ) {
+  ) {   
 
     var rootRef = firebase.database().ref("Foods").orderByKey();;
     rootRef.on("value",function(snapshot) {
@@ -4430,26 +4447,178 @@ angular
       });
     });
 
+    $scope.foodDetails= function(food){
+
+      let key = 'currentFood';
+      let value = food;
+          value = JSON.stringify(value);
+          sessionStorage.setItem(key, value);
+      $state.go("app.foodInfo");
+    }
+
     $scope.calculate=function(){
-      //TODO
+
+      if(sessionStorage.getItem('foodList')!=null){
+        $state.go("app.calculation");
+        $scope.errorFoodList=false;
+      }else{
+        $scope.errorFoodList=true;
+      }  
+      
     };
     $scope.addFood=function(){
       $state.go("app.newFood");
     };
 
+    $scope.change = function() {
+      $scope.errorMessage=false;
+       for (food in  $scope.foods){
+        if($scope.foods[food].name.toLowerCase() == $scope.foodName.toLowerCase()){
+          $scope.errorMessage=true;
+        }
+      }
+    }
+
     $scope.save= function(){
 
       var rootRef = firebase.database().ref("Foods");
       var lastId;
-      rootRef.once("value")
+
+      if(!$scope.errorMessage){
+        rootRef.once("value")
         .then(function(snapshot) {
         lastId = snapshot.numChildren();
         lastId++ ;
-        firebase.database().ref("Foods/"+lastId).set({'name':$scope.foodName,'calories':$scope.calories});
-      });
-      $state.go("app.food");
+        firebase.database().ref("Foods/"+lastId).set({
+          'name':$scope.foodName,
+          'calories':$scope.calories,
+          'amount':$scope.amount,
+          'unit': $scope.unit});
+        });
+        $state.go("app.food");
+      }
+      
     }
   })
+
+  .controller("FoodInfoCtrl",function(
+    $scope,
+    $state,
+    $stateParams,
+    $window
+  ){
+    if(sessionStorage.getItem('currentFood')!=null){
+      $scope.food=JSON.parse(sessionStorage.getItem('currentFood'));
+      $scope.localAmount=$scope.food.amount;
+      $scope.localCalories=$scope.food.calories;
+    }
+
+    $scope.change = function() {
+      $scope.food.calories=Math.round(($scope.food.amount/$scope.localAmount)*$scope.localCalories);
+    }
+
+    $scope.addToList= function(){
+
+      if(sessionStorage.getItem('foodList')==null){
+        //This is the first element of the list
+        let key = 'foodList';
+        let foodArray = [];
+        let firstItem={'name':$scope.food.name,'calories':$scope.food.calories,'amount':$scope.food.amount,'unit':$scope.food.unit};
+            foodArray.push(firstItem);
+        let value ={'currentCalories':$scope.food.calories,'list':foodArray};    
+        sessionStorage.setItem(key, JSON.stringify(value) );        
+        $state.go("app.food");
+      }else{
+        //This to add other foods to list
+
+        let key = 'foodList';
+        let foodList=JSON.parse(sessionStorage.getItem('foodList'));       
+
+        let calories=foodList.currentCalories + $scope.food.calories;
+        let item = {'name':$scope.food.name,'calories':$scope.food.calories,'amount':$scope.food.amount,'unit':$scope.food.unit};
+        let foodArray=foodList.list;
+            foodArray.push(item);
+        let value ={'currentCalories':calories,'list':foodArray};     
+        sessionStorage.setItem(key, JSON.stringify(value));
+        $state.go("app.food");
+      }      
+    }
+  })
+
+  .controller("CalculationCtrl",function(
+    $scope,
+    $state,
+    $stateParams,
+    $window
+  ){
+
+    if(sessionStorage.getItem('currentUser')!=null && 
+        sessionStorage.getItem('foodList')!=null){
+
+      $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
+      $scope.consumedFood = JSON.parse(sessionStorage.getItem('foodList'));
+      $scope.consumedCalories=$scope.consumedFood.currentCalories;
+
+      //using formula from https://www.runnersworld.com/uk/health/weight-loss/a766022/calculate-your-calorie-needs/
+      if ($scope.user.gender == "Male"){
+        switch (true) {
+            case ($scope.user.age>=1 && $scope.user.age<=18 ):
+                $scope.RMR= ($scope.user.weight*12.2)+ 746;
+                break;
+            case ($scope.user.age>=19 && $scope.user.age<=30 ):
+                $scope.RMR= ($scope.user.weight*14.7)+ 496;
+                break;
+            case ($scope.user.age>=31):
+                $scope.RMR= ($scope.user.weight*8.7)+ 829;
+                break;
+            default:
+                console.log("Please enter your age in profile page.");
+            }
+      }else{
+        switch (true) {
+            case ($scope.user.age>=1 && $scope.user.age<=18 ):
+                $scope.RMR= Math.round(($scope.user.weight*17.5)+ 651);          
+                break;
+            case ($scope.user.age>=19 && $scope.user.age<=30 ):
+                $scope.RMR= Math.round(($scope.user.weight*15.3)+ 679);                
+                break;
+            case ($scope.user.age>=31):
+                $scope.RMR= Math.round(($scope.user.weight*11.6)+ 879);                
+                break;
+            default:
+                console.log("Please enter your age in profile page."); 
+          }
+      }
+      switch (true) {
+            case ($scope.user.activity == "Little/ no exercise"):
+                $scope.expenditure= Math.round($scope.RMR*1.4);                
+                break;
+            case ($scope.user.activity == "Moderately active"):
+                $scope.expenditure= Math.round($scope.RMR*1.7);                
+                break;
+            case ($scope.user.activity == "Very active"):
+                $scope.expenditure= Math.round($scope.RMR*2.0);                
+                break;
+            default:
+                console.log("Please enter your level of activity in profile page."); 
+          }
+
+          $scope.caloriesToBurn=$scope.consumedCalories-$scope.expenditure;
+          
+          //If user consume less calories than he/she needs another message is given
+          if($scope.caloriesToBurn<0){
+            $scope.negativeMessage=true;
+          }else{
+            $scope.distanceToRun=($scope.caloriesToBurn)/100;
+          }
+    }
+
+    $scope.ok= function(){
+      sessionStorage.removeItem('foodList');
+      $state.go("app.food");
+    }      
+  })
+
 
   .controller("ChallengesCtrl", function(
     $scope,

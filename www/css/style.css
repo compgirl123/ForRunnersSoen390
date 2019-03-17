@@ -323,8 +323,13 @@ input.ng-invalid.ng-touched{
     align-items: center;
 }
 
+ion-item.food_box:hover {
+  background-color: #F5F5F5;
+}
+
 .list_header{
     background-color: grey;
+    text-align:center;
 }
 
 input[type=text], input[type=number], select {
@@ -334,6 +339,9 @@ input[type=text], input[type=number], select {
   border: 1px solid #ccc;
   border-radius: 20px;
   box-sizing: border-box;
+}
+input[type=number]{
+  text-align:right;
 }
 
 input[type=submit] {
@@ -349,4 +357,17 @@ input[type=submit] {
 
 input[type=submit]:hover {
   background-color: #3F51B5;
+}
+.errorDuplicate {
+  padding: 0 16px;
+  color: red;
+  width: 100%;
+}
+
+.profile-input {
+  padding: 12px 10px;
+  text-align:right;
+}
+h4{
+  padding: 0 10px;
 }
