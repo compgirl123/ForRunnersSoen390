@@ -43,6 +43,11 @@ matrix:
 before_cache:
 cache: npm
 before_install:
+  - export LANG=en_US.UTF-8
+  - export CHROME_BIN=google-chrome
+  - export TRAVIS_TAG=$(git tag --points-at HEAD)
+  - nvm install 8
+  - npm install -g ionic cordova
   - npm install htmlhint eslint --save-dev
   - pip install --user codecov
 after_success:
@@ -56,13 +61,6 @@ jobs:
       script: ./node_modules/.bin/htmlhint --conf htmlconf.json www/index.html
       script: ./node_modules/.bin/htmlhint --conf htmlconf.json www/templates/*
       script: ./node_modules/.bin/eslint www/js/controllers.js
-      node_js: '6'
-    - stage: pre-installs
-      script: export LANG=en_US.UTF-8
-      script: export CHROME_BIN=google-chrome
-      script: export TRAVIS_TAG=$(git tag --points-at HEAD)
-      script: nvm install 8
-      script: npm install -g ionic cordova
       node_js: '6'
     - stage: building
       script:   
