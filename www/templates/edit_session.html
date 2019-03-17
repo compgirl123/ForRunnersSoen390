@@ -22,7 +22,7 @@
         <div class="item" style="text-align: center">
           <h2 style="text-align: center">{{session.name}}</h2>
           <p  style="text-align: center">{{ "_session_name" | translate }}
-            <br><small  style="text-align: center">{{ "_editable" | translate }}</small>
+            <br/><small  style="text-align: center">{{ "_editable" | translate }}</small>
           </p>
         </div>
       </div>
@@ -36,14 +36,14 @@
                 ng-model="session.type" 
                 options="types" 
                 hide-reset="true" 
-                modal-title='{{ "_select_an_session_type" | translate }}'>
+                modal-title="{{ '_select_an_session_type' | translate }}">
            {{ session.type }}
            <div class="option">
               <div class="item">{{option}}</div>
            </div>
         </button>
         <p  style="text-align: center">{{ "_session_type" | translate }}
-           <br><small  style="text-align: center">{{ "_editable" | translate }}</small>
+           <br/><small  style="text-align: center">{{ "_editable" | translate }}</small>
         </p>
       </div>
     </div>
@@ -72,7 +72,7 @@
         <div class="item" style="text-align: center">
           <h2 style="text-align: center">{{session.distance | number:2}} Km</h2>
           <p  style="text-align: center">{{ "_distance" | translate }}
-            <br><small  style="text-align: center">{{ "_editable" | translate }}</small>
+            <br/><small  style="text-align: center">{{ "_editable" | translate }}</small>
           </p>
         </div>
       </div>
@@ -83,7 +83,7 @@
         <div class="item" style="text-align: center">
           <h2  style="text-align: center">{{ session.duration | date:"HH:mm:ss":"UTC" }}</h2>
           <p  style="text-align: center">{{ "_time" | translate }}
-            <br><small  style="text-align: center">{{ "_editable" | translate }}</small>
+            <br/><small  style="text-align: center">{{ "_editable" | translate }}</small>
           </p>
         </div>
       </div>
@@ -93,7 +93,7 @@
       <div class="col col-right" ng-click="editEleUp();">
         <div class="item" style="text-align: center">
           <h2 style="text-align: center">{{session.eleUp | number:2}} m</h2>
-          <p  style="text-align: center">{{ "_up" | translate }}<br><small  style="text-align: center">{{ "_editable" | translate }}</small></p>
+          <p  style="text-align: center">{{ "_up" | translate }}<br/><small  style="text-align: center">{{ "_editable" | translate }}</small></p>
         </div>
       </div>
       <div class="col col-10 col-center"  style="text-align: center">
@@ -103,7 +103,7 @@
       <div class="col col-left" ng-click="editEleDown();">
         <div class="item" style="text-align: center">
           <h2  style="text-align: center">{{ session.eleDown | number:2 }} m</h2>
-          <p  style="text-align: center">{{ "_down" | translate }}<br><small  style="text-align: center">{{ "_editable" | translate }}</small></p>
+          <p  style="text-align: center">{{ "_down" | translate }}<br/><small  style="text-align: center">{{ "_editable" | translate }}</small></p>
         </div>
       </div>
     </div>
@@ -112,7 +112,7 @@
       <div class="col col-right" ng-click="editPower();">
         <div class="item" style="text-align: center">
           <h2 style="text-align: center">{{session.avg_power | number:2}} Watt</h2>
-          <p  style="text-align: center">{{ "_power" | translate }}<br><small  style="text-align: center">{{ "_editable" | translate }}</small></p>
+          <p  style="text-align: center">{{ "_power" | translate }}<br/><small  style="text-align: center">{{ "_editable" | translate }}</small></p>
         </div>
       </div>
       <div class="col col-10 col-center" style="text-align: center">
@@ -122,7 +122,7 @@
         <div class="item" style="text-align: center">
           <h2  style="text-align: center">{{ session.avg_cadence | number:2}} </h2>
           <p  style="text-align: center">{{ "_cadence" | translate }}
-          <br><small  style="text-align: center">{{ "_editable" | translate }}</small></p>
+          <br/><small  style="text-align: center">{{ "_editable" | translate }}</small></p>
         </div>
       </div>
     </div>

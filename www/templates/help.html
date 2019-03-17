@@ -2,8 +2,10 @@
   <ion-content>
 
     <div class="list padding">
-            <p class=="padding" style="text-align:justify;white-space:normal;margin-bottom:15px;"><b>{{ help_subtitle }}</b></p>
-            <center><img src="{{ help_path }}" class="img-help"></center>
+            <p class="padding" style="text-align:justify;white-space:normal;margin-bottom:15px;">
+               <b>{{ help_subtitle }}</b>
+            </p>
+            <center><img src="{{ help_path }}" class="img-help"/></center>
             <p class="padding" style="text-align:justify;white-space:normal;" ng-bind-html="help_desc | unsafe" ></p>
     </div>
 

@@ -11,7 +11,7 @@ It can be extended with a huge amount of [plugins][],
 has a beautiful, easy to use and [well-documented][] API
 and a simple, readable [source code][] that is a joy to [contribute][] to.
 
-For more info, docs and tutorials, check out the [official website][].<br>
+For more info, docs and tutorials, check out the [official website][].<br/>
 For **Leaflet downloads** (including the built master version), check out the [download page][].
 
 We're happy to meet new contributors.

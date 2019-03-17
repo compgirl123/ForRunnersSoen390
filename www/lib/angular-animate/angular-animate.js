@@ -3394,11 +3394,11 @@ var $$AnimationProvider = ['$animateProvider', function($animateProvider) {
  *
  * <!-- home.html -->
  * <a href="#/banner-page">
- *   <img src="./banner.jpg" class="banner" ng-animate-ref="banner">
+ *   <img src="./banner.jpg" class="banner" ng-animate-ref="banner"/>
  * </a>
  *
  * <!-- banner-page.html -->
- * <img src="./banner.jpg" class="banner" ng-animate-ref="banner">
+ * <img src="./banner.jpg" class="banner" ng-animate-ref="banner"/>
  * ```
  *
  * Now, when the view changes (once the link is clicked), ngAnimate will examine the

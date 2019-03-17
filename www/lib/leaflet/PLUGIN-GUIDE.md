@@ -102,12 +102,12 @@ and putting a space after the `function` keyword.
 
 ### Plugin API
 
-Never expose global variables in your plugin.<br>
-If you have a new class, put it directly in the `L` namespace (`L.MyPlugin`).<br>
-If you inherit one of the existing classes, make it a sub-property (`L.TileLayer.Banana`).<br>
+Never expose global variables in your plugin.<br/>
+If you have a new class, put it directly in the `L` namespace (`L.MyPlugin`).<br/>
+If you inherit one of the existing classes, make it a sub-property (`L.TileLayer.Banana`).<br/>
 If you want to add new methods to existing Leaflet classes, you can do it like this: `L.Marker.include({myPlugin: …})`.
 
-Function, method and property names should be in `camelCase`.<br>
+Function, method and property names should be in `camelCase`.<br/>
 Class names should be in `CapitalizedCamelCase`.
 
 If you have a lot of arguments in your function, consider accepting an options object instead

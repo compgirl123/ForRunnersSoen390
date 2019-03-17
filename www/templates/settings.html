@@ -40,21 +40,21 @@
   <div class="item item-no-border">
     <div class="input">
       {{ "_duration_interval" | translate }} : {{ prefs.timevocalinterval }} {{ "_minutes" | translate}}
-      <br><small>{{ "_duration_interval_detail" | translate }}</small>
+      <br/><small>{{ "_duration_interval_detail" | translate }}</small>
     </div>
     <div class="range range-positive">
       <input type="range" ng-model="prefs.timevocalinterval" name="timevocalinterval" min="0" max="30"
-             ng-change="savePrefs();">
+             ng-change="savePrefs();"/>
     </div>
   </div>
   <div class="item item-no-border">
     <div class="input">
       {{ "_distance_interval" | translate }} : {{ prefs.distvocalinterval }} km
-      <br><small>{{ "_distance_interval_detail" | translate }}</small>
+      <br/><small>{{ "_distance_interval_detail" | translate }}</small>
     </div>
     <div class="range range-positive">
       <input type="range" ng-model="prefs.distvocalinterval" name="distvocalinterval" min="0" max="30"
-             ng-change="savePrefs();">
+             ng-change="savePrefs();"/>
     </div>
   </div>
 
@@ -103,19 +103,19 @@
     <div class="item item-no-border">
         <div class="input">
             {{ "_heartrate_max" | translate }} : {{ prefs.heartratemax }} {{ "_heartrate_label" | translate}}
-            <br><small>{{ "_heartrate_max_detail" | translate }}</small>
+            <br/><small>{{ "_heartrate_max_detail" | translate }}</small>
         </div>
        <div class="range range-positive">
-             <input type="range" ng-model="prefs.heartratemax" name="heartratemax" min="50" max="220" ng-change="savePrefs()">
+             <input type="range" ng-model="prefs.heartratemax" name="heartratemax" min="50" max="220" ng-change="savePrefs()"/>
        </div>
     </div>
     <div class="item item-no-border">
         <div class="input">
             {{ "_heartrate_min" | translate }} : {{ prefs.heartratemin }} {{ "_heartrate_label" | translate}}
-            <br><small>{{ "_heartrate_min_detail" | translate }}</small>
+            <br/><small>{{ "_heartrate_min_detail" | translate }}</small>
         </div>
         <div class="range range-positive">
-             <input type="range" ng-model="prefs.heartratemin" name="heartratemin" min="50" max="220" ng-change="savePrefs()">
+             <input type="range" ng-model="prefs.heartratemin" name="heartratemin" min="50" max="220" ng-change="savePrefs()"/>
         </div>
     </div>
 </div>
@@ -127,14 +127,14 @@
                  <label class="checkbox">
                                <input type="checkbox"
                                       ng-change="registerBluetoothDevice(device.id)"
-                                      ng-model="device.registered">
+                                      ng-model="device.registered"/>
                  </label>
                  {{ device.name }} : {{ device.id }}
         </li>
     </div>
 
     <div class="item" ng-if="bluetooth_scanning">
-        <ion-spinner icon="line"></ion-spinner></div>
+        <ion-spinner icon="line"></ion-spinner>
     </div>
 
     <div class="item">
@@ -151,7 +151,7 @@
       {{ "_duration_slow_interval" | translate }} : {{ prefs.timeslowvocalinterval }} {{ "_minutes" | translate}}
     </div>
     <div class="range range-positive">
-      <input type="range" ng-model="prefs.timeslowvocalinterval" name="timevocalinterval" min="0" max="30" ng-change="savePrefs()">
+      <input type="range" ng-model="prefs.timeslowvocalinterval" name="timevocalinterval" min="0" max="30" ng-change="savePrefs()"/>
     </div>
   </div>
   <div class="item item-no-border">
@@ -159,7 +159,7 @@
       {{ "_duration_fast_interval" | translate }} : {{ prefs.timefastvocalinterval }} {{ "_minutes" | translate}}
     </div>
     <div class="range range-positive">
-      <input type="range" ng-model="prefs.timefastvocalinterval" name="timevocalinterval" min="0" max="30" ng-change="savePrefs()">
+      <input type="range" ng-model="prefs.timefastvocalinterval" name="timevocalinterval" min="0" max="30" ng-change="savePrefs()"/>
     </div>
   </div>
 </div>
@@ -196,10 +196,10 @@
   <button ng-click="doFileChooser();" class="button icon-left ion-pin button-positive button-block">
       {{ "_import_files" | translate }}
   <input type="file"  multiple="multiple" name="gpxFile"
-  class="button icon-left ion-pin button-positive button-block"
-  id="gpxFile" class="form-control"
+  class="button icon-left ion-pin button-positive button-block form-control"
+  id="gpxFile"
   onchange="angular.element(this).scope().importFiles(this)"
-  style="display: none;">
+  style="display: none;"/>
   </button>
 
 <!--<div class="content double-padding">
@@ -209,7 +209,7 @@
   ng-checked="prefs.debug"
   ng-change="savePrefs()"
   toggle-class="toggle-positive">
-  {{ "_debug_mode" | translate }}<br><small>{{ "_debug_warning" | translate }}</small>
+  {{ "_debug_mode" | translate }}<br/><small>{{ "_debug_warning" | translate }}</small>
   </ion-toggle>-->
   <!--<button ng-click="sendLogs();" class="button button-royal button-block">{{"_sendlogs" | translate }}</button>-->
   <!--<button ng-click="recomputeEverythings();" class="button button-royal button-block">DEBUG: Recompute Everythings</button>-->

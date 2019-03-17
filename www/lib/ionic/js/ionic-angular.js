@@ -8705,7 +8705,7 @@ IonicModule
     template:
       '<label class="item item-checkbox">' +
         '<div class="checkbox checkbox-input-hidden disable-pointer-events">' +
-          '<input type="checkbox">' +
+          '<input type="checkbox"/>' +
           '<i class="checkbox-icon"></i>' +
         '</div>' +
         '<div class="item-content disable-pointer-events" ng-transclude></div>' +
@@ -10597,12 +10597,12 @@ IonicModule
 * ```html
 * <ion-list>
 *   <ion-input>
-*     <input type="text" placeholder="First Name">
+*     <input type="text" placeholder="First Name"/>
 *   </ion-input>
 *
 *   <ion-input>
 *     <ion-label>Username</ion-label>
-*     <input type="text">
+*     <input type="text"/>
 *   </ion-input>
 * </ion-list>
 * ```
@@ -10649,7 +10649,7 @@ IonicModule
 * <ion-list>
 *   <ion-input>
 *     <ion-label>Username</ion-label>
-*     <input type="text">
+*     <input type="text"/>
 *   </ion-input>
 * </ion-list>
 * ```
@@ -12243,7 +12243,7 @@ IonicModule
     transclude: true,
     template:
       '<label class="item item-radio">' +
-        '<input type="radio" name="radio-group">' +
+        '<input type="radio" name="radio-group"/>' +
         '<div class="radio-content">' +
           '<div class="item-content disable-pointer-events" ng-transclude></div>' +
           '<i class="radio-icon disable-pointer-events icon ion-checkmark"></i>' +
@@ -14069,7 +14069,7 @@ function($timeout, $ionicConfig) {
       '<div class="item item-toggle">' +
         '<div ng-transclude></div>' +
         '<label class="toggle">' +
-          '<input type="checkbox">' +
+          '<input type="checkbox"/>' +
           '<div class="track">' +
             '<div class="handle"></div>' +
           '</div>' +

@@ -4,7 +4,7 @@
     <div class="content has-header">
              <div class="list">
                  <a class="item item-avatar item-icon-right" ng-repeat="equipment in equipments track by $index">
-                    <img ng-click="setPhoto($index);" src="{{equipment.photo}}" class="no-padding">
+                    <img ng-click="setPhoto($index);" src="{{equipment.photo}}" class="no-padding"/>
                     <h2 ng-click="setName($index);">{{equipment.name}}</h2>
                     <p>{{equipment.distance}} Km
                     <div class="icon">

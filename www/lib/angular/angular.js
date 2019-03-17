@@ -9927,7 +9927,7 @@ function $HttpProvider() {
       <option>JSONP</option>
     </select>
     <input type="text" ng-model="url" size="80" aria-label="URL" />
-    <button id="fetchbtn" ng-click="fetch()">fetch</button><br>
+    <button id="fetchbtn" ng-click="fetch()">fetch</button><br/>
     <button id="samplegetbtn" ng-click="updateModel('GET', 'http-hello.html')">Sample GET</button>
     <button id="samplejsonpbtn"
       ng-click="updateModel('JSONP',
@@ -16846,7 +16846,7 @@ function $SceDelegateProvider() {
  * | `$sce.HTML`         | For HTML that's safe to source into the application.  The {@link ng.directive:ngBindHtml ngBindHtml} directive uses this context for bindings. If an unsafe value is encountered and the {@link ngSanitize $sanitize} module is present this will sanitize the value instead of throwing an error. |
  * | `$sce.CSS`          | For CSS that's safe to source into the application.  Currently unused.  Feel free to use it in your own directives. |
  * | `$sce.URL`          | For URLs that are safe to follow as links.  Currently unused (`<a href=` and `<img src=` sanitize their urls and don't constitute an SCE context. |
- * | `$sce.RESOURCE_URL` | For URLs that are not only safe to follow as links, but whose contents are also safe to include in your application.  Examples include `ng-include`, `src` / `ngSrc` bindings for tags other than `IMG` (e.g. `IFRAME`, `OBJECT`, etc.)  <br><br>Note that `$sce.RESOURCE_URL` makes a stronger statement about the URL than `$sce.URL` does and therefore contexts requiring values trusted for `$sce.RESOURCE_URL` can be used anywhere that values trusted for `$sce.URL` are required. |
+ * | `$sce.RESOURCE_URL` | For URLs that are not only safe to follow as links, but whose contents are also safe to include in your application.  Examples include `ng-include`, `src` / `ngSrc` bindings for tags other than `IMG` (e.g. `IFRAME`, `OBJECT`, etc.)  <br/><br/>Note that `$sce.RESOURCE_URL` makes a stronger statement about the URL than `$sce.URL` does and therefore contexts requiring values trusted for `$sce.RESOURCE_URL` can be used anywhere that values trusted for `$sce.URL` are required. |
  * | `$sce.JS`           | For JavaScript that is safe to execute in your application's context.  Currently unused.  Feel free to use it in your own directives. |
  *
  * ## Format of items in {@link ng.$sceDelegateProvider#resourceUrlWhitelist resourceUrlWhitelist}/{@link ng.$sceDelegateProvider#resourceUrlBlacklist Blacklist} <a name="resourceUrlPatternItem"></a>
@@ -16901,8 +16901,8 @@ function $SceDelegateProvider() {
  * <example module="mySceApp" deps="angular-sanitize.js">
  * <file name="index.html">
  *   <div ng-controller="AppController as myCtrl">
- *     <i ng-bind-html="myCtrl.explicitlyTrustedHtml" id="explicitlyTrustedHtml"></i><br><br>
- *     <b>User comments</b><br>
+ *     <i ng-bind-html="myCtrl.explicitlyTrustedHtml" id="explicitlyTrustedHtml"></i><br/><br/>
+ *     <b>User comments</b><br/>
  *     By default, HTML that isn't explicitly trusted (e.g. Alice's comment) is sanitized when
  *     $sanitize is available.  If $sanitize isn't available, this results in an error instead of an
  *     exploit.
@@ -16910,7 +16910,7 @@ function $SceDelegateProvider() {
  *       <div ng-repeat="userComment in myCtrl.userComments">
  *         <b>{{userComment.name}}</b>:
  *         <span ng-bind-html="userComment.htmlComment" class="htmlComment"></span>
- *         <br>
+ *         <br/>
  *       </div>
  *     </div>
  *   </div>
@@ -18193,10 +18193,10 @@ function $FilterProvider($provide) {
          </tr>
        </table>
        <hr>
-       <label>Any: <input ng-model="search.$"></label> <br>
-       <label>Name only <input ng-model="search.name"></label><br>
-       <label>Phone only <input ng-model="search.phone"></label><br>
-       <label>Equality <input type="checkbox" ng-model="strict"></label><br>
+       <label>Any: <input ng-model="search.$"></label> <br/>
+       <label>Name only <input ng-model="search.name"></label><br/>
+       <label>Phone only <input ng-model="search.phone"></label><br/>
+       <label>Equality <input type="checkbox" ng-model="strict"></label><br/>
        <table id="searchObjResults">
          <tr><th>Name</th><th>Phone</th></tr>
          <tr ng-repeat="friendObj in friends | filter:search:strict">
@@ -18395,8 +18395,8 @@ function getTypeForFilter(val) {
            }]);
        </script>
        <div ng-controller="ExampleController">
-         <input type="number" ng-model="amount" aria-label="amount"> <br>
-         default currency symbol ($): <span id="currency-default">{{amount | currency}}</span><br>
+         <input type="number" ng-model="amount" aria-label="amount"> <br/>
+         default currency symbol ($): <span id="currency-default">{{amount | currency}}</span><br/>
          custom currency identifier (USD$): <span id="currency-custom">{{amount | currency:"USD$"}}</span>
          no fractions (0): <span id="currency-no-fractions">{{amount | currency:"USD$":0}}</span>
        </div>
@@ -18471,9 +18471,9 @@ function currencyFilter($locale) {
            }]);
        </script>
        <div ng-controller="ExampleController">
-         <label>Enter number: <input ng-model='val'></label><br>
-         Default formatting: <span id='number-default'>{{val | number}}</span><br>
-         No fractions: <span>{{val | number:0}}</span><br>
+         <label>Enter number: <input ng-model='val'></label><br/>
+         Default formatting: <span id='number-default'>{{val | number}}</span><br/>
+         No fractions: <span>{{val | number:0}}</span><br/>
          Negative number: <span>{{-val | number:4}}</span>
        </div>
      </file>
@@ -18788,13 +18788,13 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEwG']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|
    <example>
      <file name="index.html">
        <span ng-non-bindable>{{1288323623006 | date:'medium'}}</span>:
-           <span>{{1288323623006 | date:'medium'}}</span><br>
+           <span>{{1288323623006 | date:'medium'}}</span><br/>
        <span ng-non-bindable>{{1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>:
-          <span>{{1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'}}</span><br>
+          <span>{{1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'}}</span><br/>
        <span ng-non-bindable>{{1288323623006 | date:'MM/dd/yyyy @ h:mma'}}</span>:
-          <span>{{'1288323623006' | date:'MM/dd/yyyy @ h:mma'}}</span><br>
+          <span>{{'1288323623006' | date:'MM/dd/yyyy @ h:mma'}}</span><br/>
        <span ng-non-bindable>{{1288323623006 | date:"MM/dd/yyyy 'at' h:mma"}}</span>:
-          <span>{{'1288323623006' | date:"MM/dd/yyyy 'at' h:mma"}}</span><br>
+          <span>{{'1288323623006' | date:"MM/dd/yyyy 'at' h:mma"}}</span><br/>
      </file>
      <file name="protractor.js" type="protractor">
        it('should format date', function() {
@@ -20267,12 +20267,12 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
        </style>
        <form name="myForm" ng-controller="FormController" class="my-form">
          userType: <input name="input" ng-model="userType" required>
-         <span class="error" ng-show="myForm.input.$error.required">Required!</span><br>
-         <code>userType = {{userType}}</code><br>
-         <code>myForm.input.$valid = {{myForm.input.$valid}}</code><br>
-         <code>myForm.input.$error = {{myForm.input.$error}}</code><br>
-         <code>myForm.$valid = {{myForm.$valid}}</code><br>
-         <code>myForm.$error.required = {{!!myForm.$error.required}}</code><br>
+         <span class="error" ng-show="myForm.input.$error.required">Required!</span><br/>
+         <code>userType = {{userType}}</code><br/>
+         <code>myForm.input.$valid = {{myForm.input.$valid}}</code><br/>
+         <code>myForm.input.$error = {{myForm.input.$error}}</code><br/>
+         <code>myForm.$valid = {{myForm.$valid}}</code><br/>
+         <code>myForm.$error.required = {{!!myForm.$error.required}}</code><br/>
         </form>
       </file>
       <file name="protractor.js" type="protractor">
@@ -22124,7 +22124,7 @@ var ngValueDirective = function() {
            }]);
        </script>
        <div ng-controller="ExampleController">
-         <label>Enter name: <input type="text" ng-model="name"></label><br>
+         <label>Enter name: <input type="text" ng-model="name"></label><br/>
          Hello <span ng-bind="name"></span>!
        </div>
      </file>
@@ -22185,8 +22185,8 @@ var ngBindDirective = ['$compile', function($compile) {
            }]);
        </script>
        <div ng-controller="ExampleController">
-        <label>Salutation: <input type="text" ng-model="salutation"></label><br>
-        <label>Name: <input type="text" ng-model="name"></label><br>
+        <label>Salutation: <input type="text" ng-model="salutation"></label><br/>
+        <label>Name: <input type="text" ng-model="name"></label><br/>
         <pre ng-bind-template="{{salutation}} {{name}}!"></pre>
        </div>
      </file>
@@ -22538,11 +22538,11 @@ function classDirective(name, selector) {
        <label>
           <input type="checkbox" ng-model="deleted">
           deleted (apply "strike" class)
-       </label><br>
+       </label><br/>
        <label>
           <input type="checkbox" ng-model="important">
           important (apply "bold" class)
-       </label><br>
+       </label><br/>
        <label>
           <input type="checkbox" ng-model="error">
           error (apply "has-error" class)
@@ -22554,14 +22554,14 @@ function classDirective(name, selector) {
        <hr>
        <p ng-class="[style1, style2, style3]">Using Array Syntax</p>
        <input ng-model="style1"
-              placeholder="Type: bold, strike or red" aria-label="Type: bold, strike or red"><br>
+              placeholder="Type: bold, strike or red" aria-label="Type: bold, strike or red"><br/>
        <input ng-model="style2"
-              placeholder="Type: bold, strike or red" aria-label="Type: bold, strike or red 2"><br>
+              placeholder="Type: bold, strike or red" aria-label="Type: bold, strike or red 2"><br/>
        <input ng-model="style3"
-              placeholder="Type: bold, strike or red" aria-label="Type: bold, strike or red 3"><br>
+              placeholder="Type: bold, strike or red" aria-label="Type: bold, strike or red 3"><br/>
        <hr>
        <p ng-class="[style4, {orange: warning}]">Using Array and Map Syntax</p>
-       <input ng-model="style4" placeholder="Type: bold, strike" aria-label="Type: bold, strike"><br>
+       <input ng-model="style4" placeholder="Type: bold, strike" aria-label="Type: bold, strike"><br/>
        <label><input type="checkbox" ng-model="warning"> warning (apply "orange" class)</label>
      </file>
      <file name="style.css">
@@ -22629,7 +22629,7 @@ function classDirective(name, selector) {
      <file name="index.html">
       <input id="setbtn" type="button" value="set" ng-click="myVar='my-class'">
       <input id="clearbtn" type="button" value="clear" ng-click="myVar=''">
-      <br>
+      <br/>
       <span class="base-class" ng-class="myVar">Sample Text</span>
      </file>
      <file name="style.css">
@@ -24238,7 +24238,7 @@ var ngInitDirective = ngDirective({
  *        <span class="error" ng-show="myForm.namesInput.$error.required">
  *        Required!</span>
  *      </span>
- *      <br>
+ *      <br/>
  *      <tt>names = {{names}}</tt><br/>
  *      <tt>myForm.namesInput.$valid = {{myForm.namesInput.$valid}}</tt><br/>
  *      <tt>myForm.namesInput.$error = {{myForm.namesInput.$error}}</tt><br/>
@@ -24505,9 +24505,9 @@ is set to `true`. The parse error is stored in `ngModel.$error.parse`.
               // Write data to the model
               function read() {
                 var html = element.html();
-                // When we clear the content editable the browser leaves a <br> behind
+                // When we clear the content editable the browser leaves a <br/> behind
                 // If strip-br attribute is provided then we strip this out
-                if ( attrs.stripBr && html == '<br>' ) {
+                if ( attrs.stripBr && html == '<br/>' ) {
                   html = '';
                 }
                 ngModel.$setViewValue(html);
@@ -26560,7 +26560,7 @@ var ngOptionsDirective = ['$compile', '$parse', function($compile, $parse) {
                         when="{'0': 'Nobody is viewing.',
                                'one': '1 person is viewing.',
                                'other': '{} people are viewing.'}">
-          </ng-pluralize><br>
+          </ng-pluralize><br/>
 
           <!--- Example with offset --->
           With Offset(2):

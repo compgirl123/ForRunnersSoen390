@@ -1,4 +1,4 @@
-<ion-view view-title={{session.type}} {{session.cityname}}>
+<ion-view view-title="{{session.type}} {{session.cityname}}">
 <ion-nav-buttons side="right">
 <!--<button class="button button-icon button-clear ion-android-share-alt"
 ng-click="sharePieceOfDOM()"></button>
@@ -40,7 +40,7 @@ ng-click="deleteSessionRecID(session.recclicked)"></button>-->
   markers="session.map.markers" ></leaflet>
 </div>
 <div class="mid-bar dark-bg z1 padding">
-  <h3>{{ session.start | ldate }} <span ng-if='session.name'>: {{ session.name }}</span></h3>
+  <h3>{{ session.start | ldate }} <span ng-if="session.name">: {{ session.name }}</span></h3>
   <p>
     <i class="icon ion-star"></i> {{session.overnote}} -
     <i class="icon ion-clock"></i> {{session.duration | date:"HH:mm:ss":"UTC"}} -
@@ -154,12 +154,11 @@ ng-click="deleteSessionRecID(session.recclicked)"></button>-->
 <div class="row row-center" ng-if="session.weather.main.temp">
   <div class="col col-center" ng-if="session.weather.main.temp">
     <div class="item weatherinfo" ng-if="session.weather.main.temp">
-      <img ng-if="session.weather.main.temp != ''" src="http://openweathermap.org/img/w/{{session.weather.weather[0].icon}}.png"/><br>
+      <img ng-if="session.weather.main.temp != ''" src="http://openweathermap.org/img/w/{{session.weather.weather[0].icon}}.png"/><br/>
       <p class="weatherinfo" ng-if="session.weather.main.temp">{{session.weather.main.temp}} °C</p>
       <h2 class="weatherinfo" ng-if="session.weather.main.temp">{{session.weather.weather[0].description}}</h2>
     </div>
   </div>
-</div>
 </div>
 
 <div class="content double-padding">
@@ -168,7 +167,7 @@ ng-click="deleteSessionRecID(session.recclicked)"></button>-->
 <div>
             <div class="list">
                  <a class="item item-avatar item-icon-right" ng-repeat="equipment in session.equipments track by $index">
-                   <img class="equipment-avatar" src="{{equipment.photo}}">
+                   <img class="equipment-avatar" src="{{equipment.photo}}"/>
                     <b>{{equipment.name}}</b>
                     <i ng-click="removeEquipment($index);" class="icon ion-trash-a muted"></i>
                 </a>
@@ -183,7 +182,7 @@ ng-click="deleteSessionRecID(session.recclicked)"></button>-->
                             modal-title="Select an equipment">
                             {{ "_add_equipment" | translate }}
                             <div class="option">
-                                <div class="item item-avatar item-avatar-left"><img class="equipment-avatar" src="{{option.photo}}"> {{option.name}}</div>
+                                <div class="item item-avatar item-avatar-left"><img class="equipment-avatar" src="{{option.photo}}"/> {{option.name}}</div>
                             </div>
                     </button>
                     </div>
