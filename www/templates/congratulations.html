@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<ion-view  hide-back-button=true view-title="{{ '_dashboard' | translate }}">
+<ion-content class = "congratulations" ng-controller="DashboardCtrl">
+
+        <div class="square">
+            <img class="rs" src="../../img/trophy.png"/>
+        </div>
+             <button type="submit" class="btn btn-lg btn-primary btn-block" id="cntbtn" ng-click = "gotodashboard()">Continue</button>
+             <div class = "write">Congratulations</div>
+             <div class = "writes1">You have successfully completed the {{target_distance}}K Challenge</div>
+</ion-content>
+
+
