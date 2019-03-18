@@ -32,8 +32,6 @@ matrix:
         - jq
         - gradle
         - google-chrome-stable
-        - npm
-        - nodejs
     licenses:
     - android-sdk-license-.+
   allow_failures:
@@ -54,9 +52,6 @@ after_success:
   - codecov --file coverage/lcov.info --disable search
 jobs:
   include:
-    - stage: prepare cache
-      script: true
-      node_js: '6'
     - stage: linting
       script: ./node_modules/.bin/htmlhint --config htmlconf.json www/index.html
       script: ./node_modules/.bin/htmlhint --config htmlconf.json www/templates/*
@@ -64,6 +59,7 @@ jobs:
       node_js: '6'
     - stage: building
       script:   
+        - npm install
         - ionic cordova platform add android@6
         - npm i -D -E @ionic/v1-toolkit
         - ionic cordova build android
