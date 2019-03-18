@@ -3762,7 +3762,7 @@ $scope.stopChallengeSession = function() {
 
           $rootScope.time_travelled = hour + ":" + minute + ":" + second;
 
-          $scope.time_travelled_in_minutes = second;
+          $scope.time_travelled_in_minutes = minute;
 
           $scope.session.elapsed = elapsed;
 
@@ -4861,7 +4861,7 @@ $scope.stopChallengeSession = function() {
 
           $rootScope.getvalues = function() {
             $rootScope.challengeStarted = false;
-            
+
               $rootScope.actual_time = $scope.getActualTime();
               console.log($rootScope.actual_time);
               $rootScope.target_time = $rootScope.time;
@@ -4872,11 +4872,11 @@ $scope.stopChallengeSession = function() {
               console.log($rootScope.actual_distance);
               console.log($rootScope.distance);
               $rootScope.progress = ($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
-              //$rootScope.progress = 100;  
+              //$rootScope.progress = 100;
               console.log($rootScope.progress);
 
               $rootScope.calculator =(($rootScope.progress)/100)*360;
-              
+
               if($scope.actual_distance >= $rootScope.distance){
                 $rootScope.status = "Passed";
               }
@@ -4902,7 +4902,7 @@ $scope.stopChallengeSession = function() {
                 $scope.saveSession($scope.session);
                 }
                 else if ($rootScope.distance == 5)
-                { 
+                {
                 $scope.session.bar = 2;
                 $scope.session.progress = $rootScope.progress;
                 //$scope.session.progress = 40;
@@ -4916,7 +4916,7 @@ $scope.stopChallengeSession = function() {
                 }
               if($rootScope.progress >= 100){
                 $scope.gotocongratulations();
-              }  
+              }
               else{
               $scope.gotodashboard();
               }
