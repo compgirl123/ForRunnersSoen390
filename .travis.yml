@@ -39,6 +39,10 @@ matrix:
     language: objective-c
     osx_image: xcode8.3
 before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -f  $HOME/.gradle/caches/transforms-1/transforms-1.lock
+  - rm -rf $HOME/.gradle/caches/3.5/fileHashes/
+  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 cache: npm
 before_install:
   - export LANG=en_US.UTF-8
@@ -58,11 +62,7 @@ jobs:
       script: ./node_modules/.bin/eslint www/js/controllers.js
       node_js: '6'
     - stage: building
-      script:   
-        - npm install
-        - ionic cordova platform add android@6
-        - npm i -D -E @ionic/v1-toolkit
-        - ionic cordova build android
+      script:  true
       node_js: '6'
     - stage: test
       script: node_modules/karma/bin/karma start karma.conf.js --browsers PhantomJS --single-run
