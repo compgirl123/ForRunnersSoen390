@@ -53,7 +53,7 @@
     "gulp-closure-compiler": "^0.3.0",
     "gulp-util": "^2.2.14",
     "istanbul": "^0.4.5",
-    "jasmine-core": "^2.99.0",
+    "jasmine-core": "^2.99.1",
     "jasmine-node": "^1.16.2",
     "jest-cli": "^24.1.0",
     "karma": "^4.0.0",
