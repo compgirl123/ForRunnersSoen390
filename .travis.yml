@@ -58,8 +58,8 @@ jobs:
       script: true
       node_js: '6'
     - stage: linting
-      script: ./node_modules/.bin/htmlhint --conf htmlconf.json www/index.html
-      script: ./node_modules/.bin/htmlhint --conf htmlconf.json www/templates/*
+      script: ./node_modules/.bin/htmlhint --config htmlconf.json www/index.html
+      script: ./node_modules/.bin/htmlhint --config htmlconf.json www/templates/*
       script: ./node_modules/.bin/eslint www/js/controllers.js
       node_js: '6'
     - stage: building

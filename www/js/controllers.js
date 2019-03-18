@@ -5006,7 +5006,7 @@ $scope.stopChallengeSession = function() {
             $window.location.reload();
 
             let key = 'currentUser';
-            let value = {'username':userInfo.username,'email':userInfo.email,'age':userInfo.age,'age':userInfo.age,
+            let value = {'username':userInfo.username,'email':userInfo.email,'age':userInfo.age,
                                   'weight':userInfo.weight, 'height':userInfo.height, 'gender': userInfo.gender, 'activity': userInfo.activity};
             value = JSON.stringify(value);
             sessionStorage.setItem(key, value);
@@ -5144,7 +5144,7 @@ $scope.stopChallengeSession = function() {
           value = JSON.stringify(value);
           sessionStorage.setItem(key, value);
       $state.go("app.foodInfo");
-    }
+    };
 
     $scope.calculate=function(){
 
@@ -5167,7 +5167,7 @@ $scope.stopChallengeSession = function() {
           $scope.errorMessage=true;
         }
       }
-    }
+    };
 
     $scope.save= function(){
 
@@ -5188,7 +5188,7 @@ $scope.stopChallengeSession = function() {
         $state.go("app.food");
       }
       
-    }
+    };
   })
 
   .controller("FoodInfoCtrl",function(
@@ -5205,7 +5205,7 @@ $scope.stopChallengeSession = function() {
 
     $scope.change = function() {
       $scope.food.calories=Math.round(($scope.food.amount/$scope.localAmount)*$scope.localCalories);
-    }
+    };
 
     $scope.addToList= function(){
 
@@ -5232,7 +5232,7 @@ $scope.stopChallengeSession = function() {
         sessionStorage.setItem(key, JSON.stringify(value));
         $state.go("app.food");
       }      
-    }
+    };
   })
 
   .controller("CalculationCtrl",function(
@@ -5306,7 +5306,7 @@ $scope.stopChallengeSession = function() {
     $scope.ok= function(){
       sessionStorage.removeItem('foodList');
       $state.go("app.food");
-    }      
+    };      
   })
 
 
