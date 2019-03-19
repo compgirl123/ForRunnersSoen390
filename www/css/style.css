@@ -358,7 +358,19 @@ input[type=submit] {
 input[type=submit]:hover {
   background-color: #3F51B5;
 }
+.errorDuplicate {
+  padding: 0 16px;
+  color: red;
+  width: 100%;
+}
 
+.profile-input {
+  padding: 12px 10px;
+  text-align:right;
+}
+h4{
+  padding: 0 10px;
+}
 .congratulations {
     background-image: url('../../img/confetti.png');
     background-repeat: no-repeat;
