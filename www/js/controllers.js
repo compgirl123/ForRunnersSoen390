@@ -5134,6 +5134,7 @@ $scope.stopChallengeSession = function() {
   .controller("FoodCtrl", function(
     $scope,
     $state,
+    $ionicPopup,
     $window
   ) {
 
@@ -5155,13 +5156,33 @@ $scope.stopChallengeSession = function() {
       $state.go("app.foodInfo");
     };
 
-    $scope.calculate=function(){
 
-      if(sessionStorage.getItem('foodList')!=null){
+    $scope.calculate=function(){
+      if(sessionStorage.getItem('currentUser')!=null){
+        $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
+      }
+      //If all requirements are met user can go to calculation page
+      if(sessionStorage.getItem('foodList')!=null &&
+        $scope.user.age!=null     &&
+        $scope.user.weight!=null  &&
+        $scope.user.gender!=null  &&
+        $scope.user.activity!= null){
         $state.go("app.calculation");
         $scope.errorFoodList=false;
       }else{
-        $scope.errorFoodList=true;
+        //If a user info is missing
+        if( $scope.user.age==null     ||
+            $scope.user.weight==null  ||
+            $scope.user.gender==null  ||
+            $scope.user.activity== null){
+              $state.go("app.profile");
+              var profilePopup= $ionicPopup.alert({
+                 title: "Please fill all fields of Profile page!"
+               });
+            }else{
+              //if list of food is empty
+              $scope.errorFoodList=true;
+            }
       }
 
     };
