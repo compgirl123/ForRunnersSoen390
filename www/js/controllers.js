@@ -1131,7 +1131,9 @@ angular
                 localStorage.getItem("sessions"),
                 $scope.dateTimeReviver
               );
-            } catch (err) {}
+            } catch (err) {
+              console.warn(err.message);
+            }
             $scope.fullyLoaded = true;
           }, 100);
         }
@@ -1518,7 +1520,7 @@ angular
       gpxHead +=
         '<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="ForRunners" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">';
       gpxHead += "<metadata>\n";
-      gpxHead += '<link href="http://www.khertan.net">\n';
+      gpxHead += '<link href="http://www.khertan.net"/>\n';
       gpxHead += "<text>Khertan Software</text>\n";
       gpxHead += "</link>\n";
       gpxHead += "<time>" + moment().format() + "</time>\n";
@@ -1846,7 +1848,7 @@ angular
         window.resolveLocalFileSystemURL(
           path,
           function(fileEntry) {
-            if (typeof fileEntry === "promise") {
+            if (typeof fileEntry === ' promise ') {
               console.log("its a promise");
             }
             fileEntry.file(function(file) {
@@ -2031,8 +2033,8 @@ angular
         );
       }
 
-      $scope.resume.bestspeed = $scope.resume.bestspeed;
-      $scope.resume.bestdistance = $scope.resume.bestdistance;
+      // $scope.resume.bestspeed = $scope.resume.bestspeed;
+      // $scope.resume.bestdistance = $scope.resume.bestdistance;
 
       try {
         $scope.storageSetObj("resume", $scope.resume);
@@ -2569,7 +2571,9 @@ $scope.stopChallengeSession = function() {
 
         try {
           delete $scope.session.firsttime;
-        } catch (exception) {}
+        } catch (exception) {
+          console.warn(exception.message);
+        }
 
         if ($scope.session.gpxData.length > 0) {
           //Session cleaning
@@ -2634,7 +2638,9 @@ $scope.stopChallengeSession = function() {
               console.log("Failed to release wakelock");
             }
           );
-        } catch (exception) {}
+        } catch (exception) {
+          console.warn(exception.message);
+        }
 
         try {
           cordova.plugins.ActivityRecognition.StopActivityUpdates(
@@ -2652,15 +2658,21 @@ $scope.stopChallengeSession = function() {
 
         try {
           clearInterval($scope.btscanintervalid);
-        } catch (exception) {}
+        } catch (exception) {
+          console.warn(exception.message);
+        }
 
         if ($scope.platform === "firefoxos") {
           try {
             $scope.screen_lock.unlock();
-          } catch (exception) {}
+          } catch (exception) {
+            console.warn(exception.message);
+          }
           try {
             $scope.gps_lock.unlock();
-          } catch (exception) {}
+          } catch (exception) {
+            console.warn(exception.message);
+          }
         }
 
         try {
@@ -3035,7 +3047,7 @@ $scope.stopChallengeSession = function() {
                     );
 
                   } catch (err) {
-
+                    console.warn(err.message);
                   }
 
 
@@ -4975,7 +4987,7 @@ $scope.stopChallengeSession = function() {
     sessionStorage.removeItem('currentFood');
     sessionStorage.removeItem('foodList');
     $window.location.reload();
-    }
+    };
 
   	$scope.signIn = function(){
   		var email = $scope.user.email;
@@ -5002,7 +5014,7 @@ $scope.stopChallengeSession = function() {
             $window.location.reload();
 
             let key = 'currentUser';
-            let value = {'username':userInfo.username,'email':userInfo.email,'age':userInfo.age,'age':userInfo.age,
+            let value = {'username':userInfo.username,'email':userInfo.email,'age':userInfo.age,
                                   'weight':userInfo.weight, 'height':userInfo.height, 'gender': userInfo.gender, 'activity': userInfo.activity};
             value = JSON.stringify(value);
             sessionStorage.setItem(key, value);
@@ -5011,7 +5023,7 @@ $scope.stopChallengeSession = function() {
           });
       });
 
-  	}
+  	};
 
 
   }])
@@ -5039,7 +5051,7 @@ $scope.stopChallengeSession = function() {
   				$scope.errorMessage = error.message;
   			});
   		}
-  	}
+  	};
 
   }])
 
@@ -5124,7 +5136,7 @@ $scope.stopChallengeSession = function() {
     $window
   ) {   
 
-    var rootRef = firebase.database().ref("Foods").orderByKey();;
+    var rootRef = firebase.database().ref("Foods").orderByKey();
     rootRef.on("value",function(snapshot) {
         $scope.foods=[];
         snapshot.forEach(function(childSnapshot) {
@@ -5140,7 +5152,7 @@ $scope.stopChallengeSession = function() {
           value = JSON.stringify(value);
           sessionStorage.setItem(key, value);
       $state.go("app.foodInfo");
-    }
+    };
 
     $scope.calculate=function(){
 
@@ -5163,7 +5175,7 @@ $scope.stopChallengeSession = function() {
           $scope.errorMessage=true;
         }
       }
-    }
+    };
 
     $scope.save= function(){
 
@@ -5184,7 +5196,7 @@ $scope.stopChallengeSession = function() {
         $state.go("app.food");
       }
       
-    }
+    };
   })
 
   .controller("FoodInfoCtrl",function(
@@ -5201,7 +5213,7 @@ $scope.stopChallengeSession = function() {
 
     $scope.change = function() {
       $scope.food.calories=Math.round(($scope.food.amount/$scope.localAmount)*$scope.localCalories);
-    }
+    };
 
     $scope.addToList= function(){
 
@@ -5228,7 +5240,7 @@ $scope.stopChallengeSession = function() {
         sessionStorage.setItem(key, JSON.stringify(value));
         $state.go("app.food");
       }      
-    }
+    };
   })
 
   .controller("CalculationCtrl",function(
@@ -5302,7 +5314,7 @@ $scope.stopChallengeSession = function() {
     $scope.ok= function(){
       sessionStorage.removeItem('foodList');
       $state.go("app.food");
-    }      
+    };      
   })
 
 
