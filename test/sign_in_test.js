@@ -18,6 +18,7 @@ describe("Sign In Tests", function(){
 
 
   describe('LoginCtrl', function() {
+    // Added positive test with properly formatted elements
     it('Testing the query() function', function() {
       var $scope = $rootScope;
       var $cordovaSQLite = $rootScope;
@@ -26,6 +27,33 @@ describe("Sign In Tests", function(){
       var $rootScope = $rootScope;
       var controller = $controller('LoginCtrl', { $scope: $scope, $cordovaSQLite: $cordovaSQLite,$state: $state,$ionicPopup: $ionicPopup,$rootScope: $rootScope});
       $scope.username = 'gintoki@gintama.com'
+      $scope.password = 'referencesEverywhere';
+      $scope.query();
+      // create a variable 
+      //sessionStorage = spyOn(sessionStorage, 'setItem').and.callFake((arg) => {return "key:currentUser"})
+      //expect(sessionStorage).toHaveBeenCalledWith(['currentUser', {"key": "currentUser"}])
+      //expect($scope.count).toEqual(1);
+
+      spyOn(window.sessionStorage, 'setItem');
+      var value = {'username': $scope.username,'email': $scope.email,'age': '','age': '', 'weight': '', 'height': ''}
+      window.sessionStorage.setItem('currentUser', value);
+      
+      expect(window.sessionStorage.setItem).toHaveBeenCalledWith('currentUser', value);
+
+    });
+
+     // Added negative test with non properly formatted elements
+     it('Testing the query() function', function() {
+      var $scope = $rootScope.$new();
+      $scope.query = () => {}
+      var controller = $controller('LoginCtrl', { $scope: $scope,
+        $firebaseAuth: $firebaseAuth,
+        $state: $state,
+        CommonProp: CommonProp,
+        $window: $window,
+        $firebaseObject: $firebaseObject});
+      
+        $scope.username = 'gintoki@gintama.com'
       $scope.password = 'referencesEverywhere';
       $scope.query();
       // create a variable 
