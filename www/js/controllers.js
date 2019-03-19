@@ -4873,8 +4873,8 @@ $scope.stopChallengeSession = function() {
               $rootScope.actual_distance = $scope.getActualDistance();
               console.log($rootScope.actual_distance);
               console.log($rootScope.distance);
-              //$rootScope.progress = ($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
-              $rootScope.progress = 40;
+              $rootScope.progress = ($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
+              //$rootScope.progress = 40;
               console.log($rootScope.progress);
 
               $rootScope.calculator =(($rootScope.progress)/100)*360;
