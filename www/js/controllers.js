@@ -100,6 +100,7 @@ angular
   .controller("AppCtrl", function(
     $state,
     $scope,
+    $rootScope,
     $ionicModal,
     $ionicPopup,
     $timeout,
@@ -1044,6 +1045,8 @@ angular
       session.distance = Math.round(dTotal * 100) / 100;
       session.pace = gpxpace;
       session.speed = gpxspeed;
+      session.bar = 0;
+      session.progress = 0;
       session.speedinmvt = gpxspeedwithoutpause;
       session.paceinmvt = gpxpacewithoutpause;
       session.eleUp = Math.round(eleUp);
@@ -1778,6 +1781,8 @@ angular
         duration: session.duration,
         pace: session.pace,
         speed: session.speed,
+        bar: session.bar,
+        progress: session.progress,
         eleUp: session.eleUp,
         eleDown: session.eleDown,
         type: session.type,
@@ -2184,6 +2189,15 @@ angular
     $scope.closeModal = function() {
       $state.go("app.sessions");
     };
+    $scope.gotoapp = function() {
+      window.location="../index.html";
+    };
+    $scope.gotodashboard = function() {
+      $state.go("app.dashboard");
+    };
+    $scope.gotocongratulations = function() {
+      $state.go("app.congratulations");
+    };
 
     $scope.registerBluetoothDevice = function(id) {
       if (id in $scope.prefs.registeredBLE) {
@@ -2361,7 +2375,182 @@ angular
         );
       }
     };
+//mywork
+$scope.stopChallengeSession = function() {
+  $scope.session.saving = true;
+  $timeout(function() {
+    try {
+      GPSLocation.clearWatch($scope.session.watchId);
+      console.debug("Session recording stopped");
+    } catch (exception) {
+      try {
+        navigator.geolocation.clearWatch($scope.session.watchId);
+        console.debug("Session recording stopped");
+      } catch (exception2) {console.error(exception2);}
+    }
+    $interval.cancel($scope.runningTimeInterval);
 
+    try {
+      delete $scope.session.firsttime;
+    } catch (exception) {}
+
+    if ($scope.session.gpxData.length > 0) {
+      //Session cleaning
+      delete $scope.session.accuracy;
+      delete $scope.session.elapsed;
+      delete $scope.session.firsttime;
+      delete $scope.session.elevation;
+      delete $scope.session.time;
+      delete $scope.session.pace;
+      delete $scope.session.speed;
+      delete $scope.session.maxspeed;
+      delete $scope.session.equirect;
+      delete $scope.session.altold;
+      delete $scope.session.latold;
+      delete $scope.session.lonold;
+      delete $scope.session.latold;
+      delete $scope.session.lastdisptime;
+      delete $scope.session.maxalt;
+      delete $scope.session.minalt;
+      delete $scope.session.avpace;
+      delete $scope.session.avspeed;
+      delete $scope.session.lastdistvocalannounce;
+      delete $scope.session.lasttimevocalannounce;
+      delete $scope.session.timeslowvocalinterval;
+      delete $scope.session.lastfastvocalannounce;
+      delete $scope.session.kalmanDist;
+      $scope.session.fixedElevation = undefined;
+
+      //Set default equipments
+      if (!$scope.session.equipments && $scope.equipments) {
+        $scope.session.equipments = $scope.equipments
+          .map(function(eq) {
+            if (eq.isDefault === true) {
+              return eq;
+            }
+            return undefined;
+          })
+          .filter(function(eq) {
+            if (eq !== undefined) return eq;
+          });
+      }
+      $scope.saveSession($scope.session);
+    }
+    $scope.running = false;
+    try {
+      cordova.plugins.backgroundMode.disable();
+    } catch (exception) {
+      console.debug("ERROR: cordova.plugins.backgroundMode disable");
+    }
+    try {
+      window.plugins.insomnia.allowSleepAgain();
+    } catch (exception) {
+      console.debug("ERROR: cordova.plugins.insomnia allowSleepAgain");
+    }
+
+    try {
+      window.powerManagement.release(
+        function() {
+          console.log("Wakelock released");
+        },
+        function() {
+          console.log("Failed to release wakelock");
+        }
+      );
+    } catch (exception) {}
+
+    try {
+      cordova.plugins.ActivityRecognition.StopActivityUpdates(
+        function(msg) {
+          cordova.plugins.ActivityRecognition.Dissconnect(
+            function(msg) {},
+            function(msg) {}
+          );
+        },
+        function(msg) {}
+      );
+    } catch (exception) {
+      console.debug("ERROR: window.ActivityRecognition not enabled");
+    }
+
+    try {
+      clearInterval($scope.btscanintervalid);
+    } catch (exception) {}
+
+    if ($scope.platform === "firefoxos") {
+      try {
+        $scope.screen_lock.unlock();
+      } catch (exception) {}
+      try {
+        $scope.gps_lock.unlock();
+      } catch (exception) {}
+    }
+
+    try {
+      if ($scope.session.connectedBLE !== null) {
+        ble.stopNotification(
+          $scope.session.connectedBLE,
+          $scope.glbs.heartRate.service,
+          $scope.glbs.heartRate.measurement,
+          function() {
+            console.debug("Diconnected HR Notification");
+            $scope.session.beatsPerMinute = null;
+          },
+          function(err) {
+            console.error("BLE HR error :" + err);
+            $scope.session.beatsPerMinute = null;
+          }
+        );
+
+        //CADENCE
+        ble.stopNotification(
+          $scope.session.connectedBLE,
+          $scope.glbs.cadence.service,
+          $scope.glbs.cadence.measurement,
+          function() {
+            console.debug("Diconnected Cadence Notification");
+            $scope.session.beatsPerMinute = null;
+          },
+          function(err) {
+            console.error("BLE Cadence error :" + err);
+            $scope.session.instantCadence = null;
+          }
+        );
+
+        //POWER
+        ble.stopNotification(
+          $scope.session.connectedBLE,
+          $scope.glbs.power.service,
+          $scope.glbs.power.measurement,
+          function() {
+            console.debug("Diconnected Power Notification");
+            $scope.session.beatsPerMinute = null;
+          },
+          function(err) {
+            console.error("BLE Power error :" + err);
+            $scope.session.instantPower = null;
+            $scope.session.intantStride = null;
+          }
+        );
+
+        ble.disconnect($scope.session.connectedBLE);
+      }
+    } catch (exception) {
+      console.warn(exception);
+    }
+
+     //$scope.gotodashboard();
+    $scope.session.saving = false;
+    console.debug('Saving session ended');
+  }, 10);
+  if($rootScope.challengeStarted){
+
+        $rootScope.getvalues();
+
+      }
+};
+
+    //my work
     $scope.stopSession = function() {
       $scope.session.saving = true;
       $timeout(function() {
@@ -2524,8 +2713,14 @@ angular
         } catch (exception) {
           console.warn(exception);
         }
+        if ($rootScope.challengeStarted) {
+            $rootScope.getvalues();
 
-        $scope.closeModal();
+
+        }
+        else {
+
+        $scope.closeModal();}
         $scope.session.saving = false;
         console.debug('Saving session ended');
       }, 10);
@@ -2644,10 +2839,21 @@ angular
 
     $scope.recordPosition = function(pos) {
       console.log(pos);
+      console.log("HI" + pos.timestamp);
       if ($scope.mustdelay === false) {
         var latnew = pos.coords.latitude;
         var lonnew = pos.coords.longitude;
-        var timenew = pos.timestamp;
+
+        // timenew => gets current time in a number form
+        if($scope.session.distcovered == 0){
+          var timenew = pos.timestamp;
+        }
+        else{
+          //var timenew = pos.timestamp;
+          // Problem lies here : figure out what we need to do to fix problem with changing position
+          // Make it count down
+        }
+
         var altnew = "x";
         var elapsed = 0;
         var tinc;
@@ -2659,303 +2865,603 @@ angular
         }
 
         $scope.$apply(function() {
+
           $scope.session.accuracy = pos.coords.accuracy;
 
-          if (
-            pos.coords.accuracy <= $scope.prefs.minrecordingaccuracy &&
-            timenew > $scope.session.recclicked &&
-            $scope.session.latold !== "x" &&
-            $scope.session.lonold !== "x"
-          ) {
-            $scope.session.gpsGoodSignalToggle = true;
-            if ($scope.prefs.gpslostannounce) {
-              $scope.gpslostlastannounce = timenew;
-            }
-          }
+
 
           if (
-            pos.coords.accuracy >= $scope.prefs.minrecordingaccuracy &&
-            $scope.session.gpsGoodSignalToggle === true &&
-            timenew > $scope.session.recclicked
+
+            pos.coords.accuracy <= $scope.prefs.minrecordingaccuracy &&
+
+            timenew > $scope.session.recclicked &&
+
+            $scope.session.latold !== "x" &&
+
+            $scope.session.lonold !== "x"
+
           ) {
+
+            $scope.session.gpsGoodSignalToggle = true;
+
+            if ($scope.prefs.gpslostannounce) {
+
+              $scope.gpslostlastannounce = timenew;
+
+            }
+
+          }
+
+
+
+          if (
+
+            pos.coords.accuracy >= $scope.prefs.minrecordingaccuracy &&
+
+            $scope.session.gpsGoodSignalToggle === true &&
+
+            timenew > $scope.session.recclicked
+
+          ) {
+
             // In case we lost gps we should announce it
+
             $scope.session.gpsGoodSignalToggle = false;
+
             if (
+
               $scope.prefs.gpslostannounce &&
+
               timenew - 30 > $scope.gpslostlastannounce
+
             ) {
 
 
+
+
+
               $scope.speakText($scope.translateFilter("_gps_lost"));
+
               $scope.gpslostlastannounce = timenew;
+
             }
+
           }
 
+
+
           if ($scope.session.firsttime !== 0) {
+
             //Elapsed time
+
             elapsed = timenew - $scope.session.firsttime;
+
             var hour = Math.floor(elapsed / 3600000);
+
             var minute = (
+
               "0" +
+
               (Math.floor(elapsed / 60000) - hour * 60)
+
             ).slice(-2);
+
             var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
+
             $scope.session.time = hour + ":" + minute + ":" + second;
+
             $scope.session.elapsed = elapsed;
 
+
+
             if (pos.coords.accuracy <= $scope.prefs.minrecordingaccuracy) {
+
               // Not first point
+
               if (
+
                 $scope.session.latold !== "x" &&
+
                 $scope.session.lonold !== "x"
+
               ) {
+
               //Limit ok
+
                 if (
+
                   timenew - $scope.session.lastdisptime >=
+
                   $scope.prefs.minrecordinggap
+
                 ) {
+
                   $scope.session.lastdisptime = timenew;
 
+
+
                   // Filter new position with a KalmanFilter
+
                   var accuracy = pos.coords.accuracy;
+
                   if (accuracy < 1) {
+
                     accuracy = 1;
+
                   }
+
                   if ($scope.session.variance < 0) {
+
                     $scope.session.variance = accuracy * accuracy;
+
                   } else {
+
                     tinc = new Date(timenew) - new Date($scope.session.timeold);
+
                     if (tinc > 0) {
+
                       $scope.session.variance += tinc * Q * Q / 1000;
+
                     }
+
                     K =
+
                       $scope.session.variance /
+
                       ($scope.session.variance + accuracy * accuracy);
+
                     latnew = $scope.session.latold + (K * (latnew - $scope.session.latold));
+
                     lonnew = $scope.session.lonold + (K * (lonnew - $scope.session.lonold));
+
                     $scope.session.variance = (1 - K) * $scope.session.variance;
+
                   }
+
+
 
                   //FIXME GetActivity
+
                   try {
+
                     cordova.plugins.ActivityRecognition.GetActivity(
+
                       $scope.activityCallback,
+
                       $scope.activityErrorCallback
+
                     );
+
                   } catch (err) {
+
                   }
 
+
+
                  //Distances
+
                   var dLat;
+
                   var dLon;
+
                   var dLat1;
+
                   var dLat2;
+
                   var a, d;
+
                   var dtd;
+
                   var dspeed;
 
+
+
                   dLat = (latnew - $scope.session.latold) * Math.PI / 180;
+
                   dLon = (lonnew - $scope.session.lonold) * Math.PI / 180;
+
                   dLat1 = $scope.session.latold * Math.PI / 180;
+
                   dLat2 = latnew * Math.PI / 180;
+
                   a =
+
                     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+
                     Math.cos(dLat1) *
+
                       Math.cos(dLat1) *
+
                       Math.sin(dLon / 2) *
+
                       Math.sin(dLon / 2);
+
                   d = (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))) * 6371;
 
+
+
                   //Speed between this and previous point
+
                   dtd = new Date(timenew) - new Date($scope.session.timeold);
+
                   dspeed = d / (dtd / 1000 / 60 / 60);
+
+
 
                   elapsed = timenew - $scope.session.firsttime;
 
+
+
                   if (dspeed > 0.001) {
+
                     $scope.session.equirect += d;
+
+                    $rootScope.distance_travelled += d;
+
                   }
+
+
 
                   //Elevation?
+
                   if ($scope.session.altold !== "x") {
+
                     $scope.session.altold = altnew;
+
                     if (altnew > $scope.session.maxalt) {
+
                       $scope.session.maxalt = altnew;
-                      $scope.session.elevation =
-                        $scope.session.maxalt - $scope.session.minalt;
-                    }
-                    if (altnew < $scope.session.minalt) {
-                      $scope.session.minalt = altnew;
+
                       $scope.session.elevation =
 
                         $scope.session.maxalt - $scope.session.minalt;
+
                     }
+
+                    if (altnew < $scope.session.minalt) {
+
+                      $scope.session.minalt = altnew;
+
+                      $scope.session.elevation =
+
+
+
+                        $scope.session.maxalt - $scope.session.minalt;
+
+                    }
+
                   }
+
                   $scope.session.distk = $scope.session.equirect.toFixed(0);
+
                   if ($scope.session.equirect > 0) {
+
                     var averagePace =
+
                       elapsed / ($scope.session.equirect * 60000);
+
                     $scope.session.avpace =
+
                       Math.floor(averagePace) +
+
                       ":" +
+
                       ("0" + Math.floor((averagePace % 1) * 60)).slice(-2);
+
                     $scope.session.avspeed = elapsed / $scope.session.equirect;
+
                   }
+
+
 
                   //Workarround for some device not aving cor speed
+
                   var gpsspeed;
+
                   if (pos.coords.speed === null) {
+
                     gpsspeed = dspeed;
+
                   } else {
+
                     gpsspeed = pos.coords.speed;
+
                   }
+
                   if (!isNaN(gpsspeed)) $scope.session.speeds.push(gpsspeed);
+
                   $scope.session.speeds = $scope.session.speeds.slice(-5);
+
                   $scope.session.speed = average($scope.session.speeds, 1);
 
+
+
                   var currentPace =
+
                     $scope.glbs.pace[$scope.prefs.unit] / $scope.session.speed;
+
                   $scope.session.pace =
+
                     Math.floor(currentPace) +
+
                     ":" +
+
                     ("0" + Math.floor((currentPace % 1) * 60)).slice(-2);
+
                   if ($scope.session.maxspeed < $scope.session.speed) {
+
                     $scope.session.maxspeed = $scope.session.speed;
+
                   }
+
+
 
                   $scope.session.latold = latnew;
+
                   $scope.session.lonold = lonnew;
+
                   $scope.session.altold = altnew;
+
                   $scope.session.timeold = timenew;
 
+
+
                   //Alert and Vocal Announce
+
                   if (parseInt($scope.prefs.distvocalinterval) > 0) {
+
                     $scope.session.lastdistvocalannounce = 0;
+
                     if (
+
                       $scope.session.equirect -
+
                         $scope.session.lastdistvocalannounce >
+
                       $scope.prefs.distvocalinterval * 1000
+
                     ) {
+
                       $scope.session.lastdistvocalannounce =
+
                         $scope.session.equirect;
+
                       $scope.runSpeak();
+
                     }
+
                   }
+
+
 
                   if (parseInt($scope.prefs.timevocalinterval) > 0) {
+
                     if (
+
                       timenew - $scope.session.lasttimevocalannounce >
+
                       $scope.prefs.timevocalinterval * 60000
+
                     ) {
+
                       /*fixme*/ $scope.session.lasttimevocalannounce = timenew;
+
                       $scope.runSpeak();
+
                     }
+
                   }
+
+
 
                   if (parseInt($scope.prefs.timeslowvocalinterval) > 0) {
+
                     if (
+
                       $scope.session.lastslowvocalannounce !== -1 &&
+
                       timenew - $scope.session.lastslowvocalannounce >
+
                         $scope.prefs.timeslowvocalinterval * 60000
+
                     ) {
+
                       /*fixme*/ $scope.session.lastslowvocalannounce = -1;
+
                       $scope.session.lastfastvocalannounce = timenew;
+
                       $scope.speakText($scope.translateFilter("_run_fast"));
+
                     }
+
                   }
+
                   if (parseInt($scope.prefs.timefastvocalinterval) > 0) {
+
                     if (
+
                       $scope.session.lastfastvocalannounce !== -1 &&
+
                       timenew - $scope.session.lastfastvocalannounce >
+
                         $scope.prefs.timefastvocalinterval * 60000
+
                     ) {
+
                       /*fixme*/ $scope.session.lastslowvocalannounce = timenew;
+
                       $scope.session.lastfastvocalannounce = -1;
+
                       $scope.speakText($scope.translateFilter("_run_slow"));
+
                     }
+
                   }
+
                 }
+
               }
+
             }
+
           } else {
+
             $scope.session.firsttime = timenew;
+
             $scope.session.deltagpstime = Date.now() - timenew;
+
             $scope.session.lastdisptime = timenew;
+
             $scope.session.lastdistvocalannounce = 0;
+
             $scope.session.lasttimevocalannounce = timenew;
+
             $scope.session.lastslowvocalannounce = timenew;
+
             $scope.session.lastfastvocalannounce = -1;
+
             $scope.session.latold = latnew;
+
             $scope.session.lonold = lonnew;
+
             $scope.session.time = "00:00:00";
+
             $scope.session.maxspeed = 0;
+
             $scope.session.speed = 0;
+
             $scope.session.avspeed = 0;
+
             $scope.session.elapsed = 0;
+
             $scope.session.minalt = 99999;
+
             $scope.session.maxalt = 0;
+
             $scope.session.elevation = 0;
+
             $scope.session.speeds = [];
+
             $scope.session.variance = -1;
+
           }
+
           if (
+
             timenew - $scope.session.lastrecordtime >=
+
               $scope.prefs.minrecordinggap &&
+
             pos.coords.accuracy <= $scope.prefs.minrecordingaccuracy
+
           ) {
+
             var pointData = [
+
               pos.coords.latitude.toFixed(6),
+
               pos.coords.longitude.toFixed(6),
+
               new Date(timenew).toISOString()
+
             ];
 
+
+
             if (typeof pos.coords.altitude === "number") {
+
               pointData.push(pos.coords.altitude);
+
             } else {
+
               pointData.push("x");
+
             }
 
+
+
             if ($scope.session.beatsPerMinute) {
+
               pointData.push($scope.session.beatsPerMinute);
+
             } else {
+
               pointData.push("x");
+
             }
+
+
 
             pointData.push(pos.coords.accuracy);
 
+
+
             if ($scope.session.instantCadence) {
+
               pointData.push($scope.session.instantCadence);
+
             } else {
+
               pointData.push("x");
+
             }
+
+
 
             if ($scope.session.instantPower) {
+
               pointData.push($scope.session.instantPower);
+
             } else {
+
               pointData.push("x");
+
             }
+
+
 
             if ($scope.session.instantStride) {
+
               pointData.push($scope.session.instantStride);
+
             } else {
+
               pointData.push("x");
+
             }
+
+
 
             $scope.session.gpxData.push(pointData);
+
             $scope.session.lastrecordtime = timenew;
 
+
+
             // Record Weather
+
             if ($scope.session.weather === "") {
+
               $scope.weather
+
                 .byLocation({
+
                   latitude: latnew,
+
                   longitude: lonnew
+
                 })
+
                 .then(function(weather) {
+
                   $scope.session.weather = weather;
+
                 });
+
             }
+
           }
+
         });
       }
     };
@@ -3021,7 +3527,13 @@ angular
         altold: "x",
 
         time: "00:00:00",
+        time2: "00:00:00",
+        challenge10k : "50:00",
+        challenge5k : "35:00",
+        challenge3k : "25:00",
         dist: 0,
+        distcovered: 0,
+
         kalmanDist: new KalmanFilter(0.2, 3, 10),
         equirect: 0,
         elevation: 0,
@@ -3229,21 +3741,72 @@ angular
 
       //Timer to update time
       $scope.runningTimeInterval = $interval(function() {
+
         if ($scope.session.firsttime > 0) {
+
           console.debug($scope.session.firsttime);
+
           var elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
+
           var hour = Math.floor(elapsed / 3600000);
+
           var minute = ("0" + (Math.floor(elapsed / 60000) - hour * 60)).slice(
+
             -2
+
           );
+
           var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
+
           $scope.session.time = hour + ":" + minute + ":" + second;
+
+          $rootScope.time_travelled = hour + ":" + minute + ":" + second;
+
+          $scope.time_travelled_in_minutes = minute;
+
           $scope.session.elapsed = elapsed;
+
+          if($rootScope.challengeStarted){
+
+            if($scope.time_travelled_in_minutes>=$rootScope.time){
+
+              $scope.stopChallengeSession();
+
+            }
+
+          }
+
         }
+
       }, 2000);
 
+
+
       $scope.openModal();
+
     };
+
+
+
+          /* for the time function, get the variable from the rootscope
+          to get the appropriate time countdown*/
+
+          /*$scope.session.challenge10k = ("0" + (49-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+          $scope.session.challenge5k = ("0" + (34-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2);
+          $scope.session.challenge3k = ("0" + (0-minute)).slice(-2) + ":" + ( "0" + (59 - second)).slice(-2); */
+        //  $scope.session.distcovered = $rootScope.distance;
+
+
+
+
+
+
+
+
+
+
+
+
 
     $scope.delayCheck = function() {
       if (new Date().getTime() - $scope.mustdelaytime < $scope.prefs.delay) {
@@ -3255,7 +3818,21 @@ angular
       } else {
         $scope.mustdelay = false;
         $scope.speakText($scope.translateFilter("go"));
-        $scope.session.time = "00:00:00";
+        //$scope.session.time = "00:00:00";
+
+        if ($scope.session.distcovered == 3){
+          $scope.session.time = "25:00";
+        }
+        else if ($scope.session.distcovered == 5){
+          $scope.session.time = "35:00";
+        }
+        else if ($scope.session.distcovered == 10){
+          $scope.session.time = "50:00";
+        }
+        else{
+          $scope.session.time = "00:00:00";
+        }
+
         clearInterval($scope.mustdelayintervalid);
         $scope.$apply();
       }
@@ -4271,6 +4848,107 @@ angular
     //    $scope.promptForRating();
     //}
   })
+//bilal
+  .controller("DashboardCtrl", function($scope,$state,
+  $window,
+  $rootScope) {
+
+          $scope.startChallenge = function() {
+                $rootScope.challengeStarted = true;
+                $scope.startSession();
+                };
+
+
+          $rootScope.getvalues = function() {
+            $rootScope.challengeStarted = false;
+
+              $rootScope.actual_time = $scope.getActualTime();
+              console.log($rootScope.actual_time);
+              $rootScope.target_time = $rootScope.time;
+              console.log($rootScope.target_time);
+              $rootScope.target_distance = $rootScope.distance;
+              console.log($rootScope.target_distance);
+              $rootScope.actual_distance = $scope.getActualDistance();
+              console.log($rootScope.actual_distance);
+              console.log($rootScope.distance);
+              $rootScope.progress = ($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
+              //$rootScope.progress = 100;
+              console.log($rootScope.progress);
+
+              $rootScope.calculator =(($rootScope.progress)/100)*360;
+
+              if($scope.actual_distance >= $rootScope.distance){
+                $rootScope.status = "Passed";
+              }
+              else{
+                $rootScope.status = "Failed";
+
+              }
+              if($rootScope.calculator <= 180 ){
+                $rootScope.degree_right = $rootScope.calculator;
+                $rootScope.degree_left = 0;
+
+              }
+              if($rootScope.calculator > 180 ){
+                $rootScope.degree_right = 180;
+                $rootScope.degree_left =  $rootScope.calculator - 180 ;
+              }
+
+              if($rootScope.distance == 3)
+                {
+                $scope.session.bar = 1;
+                $scope.session.progress = $rootScope.progress;
+                //$scope.session.progress = 20;
+                $scope.saveSession($scope.session);
+                }
+                else if ($rootScope.distance == 5)
+                {
+                $scope.session.bar = 2;
+                $scope.session.progress = $rootScope.progress;
+                //$scope.session.progress = 40;
+                $scope.saveSession($scope.session);
+                }
+                else if ($rootScope.distance == 10)
+                {
+                $scope.session.bar = 3;
+                $scope.session.progress = $rootScope.progress;
+                $scope.saveSession($scope.session);
+                }
+              if($rootScope.progress >= 100){
+                $scope.gotocongratulations();
+              }
+              else{
+              $scope.gotodashboard();
+              }
+              };
+
+              $scope.getActualDistance=function(){
+            if($rootScope.distance_travelled==undefined || $rootScope.distance_travelled==NaN){
+               return 0;
+      }
+      else {
+        return $rootScope.distance_travelled;
+      }
+    };
+
+    $scope.getActualTime=function(){
+      if($rootScope.time_travelled==undefined){
+        return "0:00:00";
+      }
+      else {
+        return $rootScope.time_travelled;
+      }
+    };
+
+
+
+
+
+
+
+
+  })
+  //bilal
 
   .controller('LoginCtrl', ['$scope', '$firebaseAuth', '$state', 'CommonProp', '$window','$firebaseObject', function(
       $scope,
@@ -4628,7 +5306,7 @@ angular
   ) {
     $scope.threeKm=function(){
       $rootScope.distance = 3; //km
-      $rootScope.time = 25; //min
+      $rootScope.time = 20; //min
       $rootScope.source = 'img/'+$rootScope.distance+'k.png';
       $rootScope.src = 'img/about-bg.jpg';
       $rootScope.message = 'A Great Place To Start';
@@ -4652,5 +5330,21 @@ angular
       $rootScope.message = 'A Serious Goal';
       $state.go("app.challenge");
     };
+
+    $scope.default=function(){
+      $rootScope.distance = 0; //km
+    };
+
+    $scope.customGoal=function(){
+      $rootScope.distance = $scope.goal.distance; //km
+      console.log($rootScope.distance);
+      $rootScope.time = $scope.goal.time; //min
+      console.log($rootScope.time);
+      $rootScope.source = 'img/gear-a.png';
+      $rootScope.src = 'img/custom-goal-man-tying-shoes.jpeg';
+      $rootScope.message = 'Custom Goal';
+      $state.go("app.challenge");
+    };
+
 
   });

@@ -65,7 +65,7 @@
 }
 ul.circle {list-style-type: circle; padding-left: 30px;}
 .row-header {
-    background-color: #efefef;  
+    background-color: #efefef;
 }
 .col-sep {
   border-bottom: 1px solid lightgray;
@@ -80,7 +80,7 @@ ul.circle {list-style-type: circle; padding-left: 30px;}
     font-size: 10px;
     border: 2px solid white;
     border-radius: 10px;
-    width: 20px;  
+    width: 20px;
     height: 20px;
     line-height: 18px;
     text-align: center;
@@ -92,7 +92,7 @@ ul.circle {list-style-type: circle; padding-left: 30px;}
     font-size: 10px;
     border: 2px solid white;
     border-radius: 10px;
-    width: 20px;  
+    width: 20px;
     height: 20px;
     line-height: 18px;
     text-align: center;
@@ -104,7 +104,7 @@ ul.circle {list-style-type: circle; padding-left: 30px;}
     font-size: 10px;
     border: 2px solid white;
     border-radius: 10px;
-    width: 20px;  
+    width: 20px;
     height: 20px;
     line-height: 18px;
     text-align: center;
@@ -179,11 +179,11 @@ p {
     font-size:24px;
 }
 .miniicon {
-    padding-left:15px;  
+    padding-left:15px;
     /*padding-right:5px;  */
 }
 .wrap {
-    white-space: normal;    
+    white-space: normal;
 }
 .leftpad {
     margin-right: 10px;
@@ -264,11 +264,11 @@ h6{
    height:auto;
     padding-left: 20%;
     padding-right: 20%;
-    padding-top: 10%; 
+    padding-top: 10%;
 }
 .signin-bckground-color {
     background-color:#80dfff;
-    
+
 }
 .signinloginbutton{
     padding-right: 0%;
@@ -277,7 +277,7 @@ h6{
     height:auto;
     padding-left: 20%;
     padding-right: 20%;
-    padding-top: 10%; 
+    padding-top: 10%;
 }
 .profile-picture {
   vertical-align: middle;
@@ -295,7 +295,7 @@ h6{
 
 .signin-input-bckground-color {
     background-color:#fff;
-    
+
 }
 
 .errorMessage{
@@ -370,4 +370,63 @@ input[type=submit]:hover {
 }
 h4{
   padding: 0 10px;
+}
+.congratulations {
+    background-image: url('../../img/confetti.png');
+    background-repeat: no-repeat;
+}
+
+.square {
+    display: inline-block;
+    position: fixed;
+    top: 20%;
+    left: 15%;
+    right: 15%;
+    width: 70%;
+    height: 40%;
+    border-radius: 20px;
+    background-color:#80dfff;
+    overflow: hidden;
+}
+
+.rs{
+    display: inline-block;
+    position: fixed;
+    margin-top: 10px;
+    left: 37.5%;
+    width:25%;
+    height:17%;
+}
+
+.write{
+    display: inline-block;
+    position: fixed;
+    top: 40%;
+    font-size:20px;
+    font-family: 'Lato',verdana, sans-serif;
+    font-weight: bold;
+    color:white;
+    text-align: center;
+    width: 70%;
+    left:15%;
+
+}
+.writes1{
+    display: inline-block;
+    position: fixed;
+    top: 46%;
+    font-size:14px;
+    font-family: 'Lato',verdana, sans-serif;
+    color:white;
+    text-align: center;
+    width: 60%;
+    left:20%;
+}
+
+#cntbtn{
+    display: inline-block;
+    position: fixed;
+    top: 70%;
+    width:70%;
+    left:15%;
 }

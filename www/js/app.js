@@ -256,6 +256,27 @@ angular
           }
         }
       })
+
+      .state("app.dashboard", {
+         url: "/Dashboard",
+         views: {
+           menuContent: {
+             templateUrl: "templates/Dashboard.html",
+             controller: "DashboardCtrl"
+           }
+         }
+       })
+
+       .state("app.congratulations", {
+        url: "/congratulations",
+        views: {
+          menuContent: {
+            templateUrl: "templates/congratulations.html",
+            controller: "DashboardCtrl"
+          }
+        }
+      })
+
       .state("app.challenge", {
         url: "/challenge",
         views: {
@@ -345,6 +366,7 @@ angular
       _elevationDown: "Down",
       _sessions: "Sessions",
       _about: "About",
+      _dashboard:"Progres Report",
       _speed_maximum: "Maximum",
       _speed_average: "Average",
       _up: "Up",
