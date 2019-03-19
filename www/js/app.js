@@ -286,8 +286,16 @@ angular
           }
         }
       });
+
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise("/app/sessions");
+
+    //when user is logged
+    if(sessionStorage.getItem('currentUser')!=null){
+      $urlRouterProvider.otherwise("/app/sessions");
+    //when user is not logged
+    }else{
+      $urlRouterProvider.otherwise("/app/login");
+    }
 
     $translateProvider.translations("en-US", {
       _language: "Language",
