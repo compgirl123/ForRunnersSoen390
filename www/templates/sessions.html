@@ -96,20 +96,26 @@
          </p>
          <div class="progress" style="margin-top:15px;" ng-show="session.bar == 1">
           <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{session.progress}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : (session.progress + '%' ) }" >
-            <span style="color: black; font-weight: bold">&nbsp 3K Challenge: {{session.progress}} % Complete
+            <span style="color: black; font-weight: bold">&nbsp 3K Challenge: {{session.progress}}% Complete
             </span>
         </div>
 
         </div>
         <div class="progress" ng-controller="DashboardCtrl" style="margin-top:15px;" ng-show="session.bar == 2 ">
           <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{session.progress}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : (session.progress + '%' ) }">
-            <span style="color: black; font-weight: bold">&nbsp 5K Challenge: {{session.progress}} % Complete
+            <span style="color: black; font-weight: bold">&nbsp 5K Challenge: {{session.progress}}% Complete
             </span>
           </div>
         </div>
         <div class="progress" ng-controller="DashboardCtrl" style="margin-top:15px;" ng-if="session.bar == 3">
           <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{session.progress}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : (session.progress + '%' ) }" >
-            <span style="color: black; font-weight: bold">&nbsp 10K Challenge: {{session.progress}} % Complete
+            <span style="color: black; font-weight: bold">&nbsp 10K Challenge: {{session.progress}}% Complete
+            </span>
+          </div>
+        </div>
+        <div class="progress" ng-controller="DashboardCtrl" style="margin-top:15px;" ng-if="session.bar == 4">
+          <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{session.progress}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : (session.progress + '%' ) }" >
+            <span style="color: black; font-weight: bold">&nbsp {{session.customDistance}}K Challenge: {{session.progress}}% Complete
             </span>
           </div>
         </div>

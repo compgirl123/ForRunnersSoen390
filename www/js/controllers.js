@@ -1047,6 +1047,7 @@ angular
       session.speed = gpxspeed;
       session.bar = 0;
       session.progress = 0;
+      session.customDistance = 0;
       session.speedinmvt = gpxspeedwithoutpause;
       session.paceinmvt = gpxpacewithoutpause;
       session.eleUp = Math.round(eleUp);
@@ -1783,6 +1784,7 @@ angular
         speed: session.speed,
         bar: session.bar,
         progress: session.progress,
+        customDistance: session.customDistance,
         eleUp: session.eleUp,
         eleDown: session.eleDown,
         type: session.type,
@@ -4871,8 +4873,8 @@ $scope.stopChallengeSession = function() {
               $rootScope.actual_distance = $scope.getActualDistance();
               console.log($rootScope.actual_distance);
               console.log($rootScope.distance);
-              $rootScope.progress = ($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
-              //$rootScope.progress = 100;
+              //$rootScope.progress = ($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
+              $rootScope.progress = 40;
               console.log($rootScope.progress);
 
               $rootScope.calculator =(($rootScope.progress)/100)*360;
@@ -4912,6 +4914,12 @@ $scope.stopChallengeSession = function() {
                 {
                 $scope.session.bar = 3;
                 $scope.session.progress = $rootScope.progress;
+                $scope.saveSession($scope.session);
+                }
+                else{
+                $scope.session.bar = 4;
+                $scope.session.progress = $rootScope.progress;
+                $scope.session.customDistance = $rootScope.target_distance;
                 $scope.saveSession($scope.session);
                 }
               if($rootScope.progress >= 100){
