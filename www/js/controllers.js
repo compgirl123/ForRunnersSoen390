@@ -4999,7 +4999,8 @@ $scope.stopChallengeSession = function() {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-         // ...
+        $scope.errMsg = true;
+        $scope.errorMessage = error.message;
        });
 
       firebase.auth().onAuthStateChanged(function(user) {
