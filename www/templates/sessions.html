@@ -73,7 +73,7 @@
            </span>
            <span class="badge badge-left badge-balanced"
                 style="color:white !important; display: block; vertical-align: middle; text-align:center;">
-              {{ session.distk }} K<br>
+              {{ session.distk }} K<br/>
            </span>
           <span class="badge badge-lower"
             style="display: block; vertical-align: middle; text-align:center; font-size:11px; width: 30px; margin-left:5px;">
@@ -82,16 +82,16 @@
 
           <h2>
             <span ng-if="session.name">
-              {{ session.name }} <span ng-if='!session.cityname'><br/></span>
+              {{ session.name }} <span ng-if="!session.cityname"><br/></span>
             </span>
             <span ng-if="session.cityname">
-              <span ng-if='session.name'> - </span>{{ session.cityname }}<br/>
+              <span ng-if="session.name"> - </span>{{ session.cityname }}<br/>
             </span>
            {{ session.start | ldate }}
           </h2>
 
           <p>
-            {{session.distance | number:1}} Km - {{session.duration | date:"HH:mm:ss":"UTC"}} - {{session.pace | date:"m.ss"}} min/km<br>
+            {{session.distance | number:1}} Km - {{session.duration | date:"HH:mm:ss":"UTC"}} - {{session.pace | date:"m.ss"}} min/km<br/>
             {{session.speed | number:1}} Km/h - {{ session.eleUp | number:0 }} m up / {{ session.eleDown | number:0 }} m down
          </p>
          <div class="progress" style="margin-top:15px;" ng-show="session.bar == 1">

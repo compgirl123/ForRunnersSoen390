@@ -19,16 +19,13 @@ describe("Sign In Tests", function(){
 
   describe('LoginCtrl', function() {
     it('Testing the query() function', function() {
-      var $scope = $rootScope.$new();
-      $scope.query = () => {}
-      var controller = $controller('LoginCtrl', { $scope: $scope,
-        $firebaseAuth: $firebaseAuth,
-        $state: $state,
-        CommonProp: CommonProp,
-        $window: $window,
-        $firebaseObject: $firebaseObject});
-      
-        $scope.username = 'gintoki@gintama.com'
+      var $scope = $rootScope;
+      var $cordovaSQLite = $rootScope;
+      var $state = $rootScope;
+      var $ionicPopup = $rootScope;
+      var $rootScope = $rootScope;
+      var controller = $controller('SignInCtrl', { $scope: $scope, $cordovaSQLite: $cordovaSQLite,$state: $state,$ionicPopup: $ionicPopup,$rootScope: $rootScope});
+      $scope.username = 'gintoki@gintama.com'
       $scope.password = 'referencesEverywhere';
       $scope.query();
       // create a variable 
