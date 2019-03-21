@@ -52,10 +52,10 @@ before_install:
   - nvm install 8
   - npm install -g ionic cordova
   - npm install htmlhint eslint --save-dev
-  - pip install --user codecov
+  #- pip install --user codecov
 after_success:
-  - codecov --file coverage/lcov/lcov.info --disable search
-  - bash <(curl -s https://codecov.io/bash) -t
+  #- codecov --file coverage/lcov/lcov.info --disable search
+  - bash <(curl -s https://codecov.io/bash)
 jobs:
   include:
     - stage: Code coverage
