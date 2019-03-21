@@ -2396,7 +2396,9 @@ $scope.stopChallengeSession = function() {
 
     try {
       delete $scope.session.firsttime;
-    } catch (exception) {}
+    } catch (exception) {
+      console.warn(exception.message);
+    }
 
     if ($scope.session.gpxData.length > 0) {
       //Session cleaning
@@ -2461,7 +2463,9 @@ $scope.stopChallengeSession = function() {
           console.log("Failed to release wakelock");
         }
       );
-    } catch (exception) {}
+    } catch (exception) {
+      console.warn(exception.message);
+    }
 
     try {
       cordova.plugins.ActivityRecognition.StopActivityUpdates(
@@ -2479,15 +2483,21 @@ $scope.stopChallengeSession = function() {
 
     try {
       clearInterval($scope.btscanintervalid);
-    } catch (exception) {}
+    } catch (exception) {
+      console.warn(exception.message);
+    }
 
     if ($scope.platform === "firefoxos") {
       try {
         $scope.screen_lock.unlock();
-      } catch (exception) {}
+      } catch (exception) {
+        console.warn(exception.message);
+      }
       try {
         $scope.gps_lock.unlock();
-      } catch (exception) {}
+      } catch (exception) {
+        console.warn(exception.message);
+      }
     }
 
     try {
@@ -4943,7 +4953,7 @@ $scope.stopChallengeSession = function() {
               };
 
               $scope.getActualDistance=function(){
-            if($rootScope.distance_travelled==undefined || $rootScope.distance_travelled==NaN){
+            if($rootScope.distance_travelled==undefined || isNaN($rootScope.distance_travelled)){
                return 0;
       }
       else {

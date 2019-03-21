@@ -72,4 +72,3 @@ jobs:
     - stage: Building
       script:  true
       node_js: '6'
- 
