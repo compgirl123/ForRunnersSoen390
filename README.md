@@ -1,16 +1,5 @@
+[![codecov](https://codecov.io/gh/tanyamultani/ForRunnersSoen390/branch/test_coverage_setup/graph/badge.svg?token=tfG4K0KyGl)](https://codecov.io/gh/tanyamultani/ForRunnersSoen390)
+
 # ForRunners: A mobile application to improve your running
 
-
-This repository contains the original source code for the ForRunners Android application created by Benoit HERVIER. In addition, student developers in SOEN 390 have added extra features as part of the semester long project. 
-
-
-
-
-Rodrigo Cordova - 40029479
-Pierre Watine - 40027675
-Claudia Feochari - 40000060
-Beeri Nduwimana
-Muhammad Bilal Nasir-40015010
-Sajeel Shabir - 40004271
-Tanya Multani
-
+This repository contains the original source code for the ForRunners Android application created by Benoit HERVIER. In addition, student developers at Concordia Universit in the SOEN 390 course, have added extra features as part of the semester long project.

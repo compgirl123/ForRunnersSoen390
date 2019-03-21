@@ -54,7 +54,7 @@ before_install:
   - npm install htmlhint eslint --save-dev
   - pip install --user codecov
 after_success:
-  - codecov --file coverage/lcov.info --disable search
+  - codecov --file coverage/lcov/lcov.info --disable search
   - bash <(curl -s https://codecov.io/bash)
 jobs:
   include:
