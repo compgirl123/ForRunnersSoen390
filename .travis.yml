@@ -58,6 +58,8 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 jobs:
   include:
+    - stage: Code coverage
+      script: codecov
     - stage: Linting
       script: ./node_modules/.bin/htmlhint --config htmlconf.json www/index.html
       script: ./node_modules/.bin/htmlhint --config htmlconf.json www/templates/*
