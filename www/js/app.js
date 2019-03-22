@@ -256,6 +256,27 @@ angular
           }
         }
       })
+
+      .state("app.dashboard", {
+         url: "/Dashboard",
+         views: {
+           menuContent: {
+             templateUrl: "templates/Dashboard.html",
+             controller: "DashboardCtrl"
+           }
+         }
+       })
+
+       .state("app.congratulations", {
+        url: "/congratulations",
+        views: {
+          menuContent: {
+            templateUrl: "templates/congratulations.html",
+            controller: "DashboardCtrl"
+          }
+        }
+      })
+
       .state("app.challenge", {
         url: "/challenge",
         views: {
@@ -265,8 +286,16 @@ angular
           }
         }
       });
+
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise("/app/sessions");
+
+    //when user is logged
+    if(sessionStorage.getItem('currentUser')!=null){
+      $urlRouterProvider.otherwise("/app/sessions");
+    //when user is not logged
+    }else{
+      $urlRouterProvider.otherwise("/app/login");
+    }
 
     $translateProvider.translations("en-US", {
       _language: "Language",
@@ -345,6 +374,7 @@ angular
       _elevationDown: "Down",
       _sessions: "Sessions",
       _about: "About",
+      _dashboard:"Progres Report",
       _speed_maximum: "Maximum",
       _speed_average: "Average",
       _up: "Up",
@@ -396,13 +426,13 @@ angular
       _help_subtitle_1:
         "Welcome to ForRunners! This little guide will try to explain the main concept of ForRunners. Use the next and previous button below to navigate through this guide.",
       _help_desc_1:
-        "The main screen presents all your running sessions. <br><br><b>1-</b> This button start a new running session<br><br><b>2-</b> Average statistics calculated from all your sessions<br><br><b>3-</b> Your best running records<br><br><b>4-</b> Rounded length of the session<br><br><b>5-</b> A score representing difficulty of your run<br><br><b>6-</b> A graph showing the score evolution and duration evolution",
+        "The main screen presents all your running sessions. <br/><br/><b>1-</b> This button start a new running session<br/><br/><b>2-</b> Average statistics calculated from all your sessions<br/><br/><b>3-</b> Your best running records<br/><br/><b>4-</b> Rounded length of the session<br/><br/><b>5-</b> A score representing difficulty of your run<br/><br/><b>6-</b> A graph showing the score evolution and duration evolution",
       _help_subtitle_2:
         "These are the details of a session, showing your run on a map with detailed statistics and graphics.",
       _help_desc_2:
-        '<b>1-</b> The OpenStreetMap map, showing your run<br><br><b>2-</b> The blue markers are kilometer markers, while the green "S" marker is for "Start" and red "E" marker for "End"<br><br><b>3-</b> This icon is for sharing your run<br><br><b>4-</b> This icon is for deleting your session<br><br><b>5-</b> Date of your running session with resume values.',
+        '<b>1-</b> The OpenStreetMap map, showing your run<br/><br/><b>2-</b> The blue markers are kilometer markers, while the green "S" marker is for "Start" and red "E" marker for "End"<br/><br/><b>3-</b> This icon is for sharing your run<br/><br/><b>4-</b> This icon is for deleting your session<br/><br/><b>5-</b> Date of your running session with resume values.',
       _help_desc_3:
-        "<b>1-</b> Date<br><br><b>2-</b> Average speed<br><br><b>3-</b> Average pace<br><br><b>4-</b> Distance<br><br><b>5-</b> Duration hh:mm<br><br><b>6-</b> Total elevation in meters<br><br><b>7-</b> Total down in meter<br><br><b>8-</b> Weather at the date of the run<br><br><b>9-</b> Score, Duration, Distance, Pace<br><br>",
+        "<b>1-</b> Date<br/><br/><b>2-</b> Average speed<br/><br/><b>3-</b> Average pace<br/><br/><b>4-</b> Distance<br/><br/><b>5-</b> Duration hh:mm<br/><br/><b>6-</b> Total elevation in meters<br/><br/><b>7-</b> Total down in meter<br/><br/><b>8-</b> Weather at the date of the run<br/><br/><b>9-</b> Score, Duration, Distance, Pace<br/><br/>",
       _help_subtitle_3: " ",
       _help_subtitle_4: " ",
       _help_desc_4:
@@ -412,7 +442,7 @@ angular
         "The x-axis (2) represents distance in kilometers and the y-axis (3) shows altitude, while the colors (1) show heartrate zone (Requires a bluetooth 4.0 heartrate monitor and compatible smartphone)",
       _help_subtitle_6: " ",
       _help_desc_6:
-        "<b>1-</b> Average heart rate during your session<br><br><b>2-</b> Graphic showing duration in each heart rate zone<br><br><b>3- </b> Table with pace, speed and heartrate over each distance.<br><br>Now click next and start your first running session or import past sessions from preferences.",
+        "<b>1-</b> Average heart rate during your session<br/><br/><b>2-</b> Graphic showing duration in each heart rate zone<br/><br/><b>3- </b> Table with pace, speed and heartrate over each distance.<br/><br/>Now click next and start your first running session or import past sessions from preferences.",
       _previous: "Previous",
       _next: "Next",
       _gps_lost: "GPS Signal lost",
@@ -588,13 +618,13 @@ angular
       _help_subtitle_1:
         "Bienvenue sur ForRunners ! Cette aide va essayer de vous expliquer brievement le concept de base de l'interface de ForRunners. Utiliser les boutons suivant et précédant pour naviger dans cette aide.",
       _help_desc_1:
-        "L'écran principal présente la liste de vos courses.<br><br><b>1-</b> Ce bouton commence une nouvelle session<br><br><b>2-</b> Moyenne de toutes les sessions<br><br><b>3-</b> Les records de toutes les sessions<br><br><b>4-</b> Longueur arrondi d une session en kilometres<br><br><b>5-</b> Une note representant la difficulté.<br><br><b>6-</b> Un graphique montrant votre évolution",
+        "L'écran principal présente la liste de vos courses.<br/><br/><b>1-</b> Ce bouton commence une nouvelle session<br/><br/><b>2-</b> Moyenne de toutes les sessions<br/><br/><b>3-</b> Les records de toutes les sessions<br/><br/><b>4-</b> Longueur arrondi d une session en kilometres<br/><br/><b>5-</b> Une note representant la difficulté.<br/><br/><b>6-</b> Un graphique montrant votre évolution",
       _help_subtitle_2:
         "Ceci est la vue détaillée d'une course, avec graphiques et statistiques",
       _help_desc_2:
-        '<b>1-</b> La carte en provenance d\'OpenStreetMap map<br><br><b>2-</b> Les marqueurs bleu représentent chaque kilometres, tandis que le "S" vert montre le début et le "E" rouge la fin<br><br><b>3-</b> Une icon permettant de partager votre course sur twitter, par texto ou autre<br><br><b>4-</b> Cette icon permet d\'effacer une session<br><br><b>5-</b> Date de la session avec un resumé des principales informations.',
+        '<b>1-</b> La carte en provenance d\'OpenStreetMap map<br/><br/><b>2-</b> Les marqueurs bleu représentent chaque kilometres, tandis que le "S" vert montre le début et le "E" rouge la fin<br/><br/><b>3-</b> Une icon permettant de partager votre course sur twitter, par texto ou autre<br/><br/><b>4-</b> Cette icon permet d\'effacer une session<br/><br/><b>5-</b> Date de la session avec un resumé des principales informations.',
       _help_desc_3:
-        "<b>1-</b> Date<br><br><b>2-</b> Vitesse moyenne<br><br><b>3-</b> Allure moyenne<br><br><b>4-</b> Distance<br><br><b>5-</b> Durée hh:mm<br><br><b>6-</b> Monté en metres<br><br><b>7-</b> Descente en metres<br><br><b>8-</b> La météo au moment de la course<br><br><b>9-</b> Note, Durée, Distance, Allure<br><br>",
+        "<b>1-</b> Date<br/><br/><b>2-</b> Vitesse moyenne<br/><br/><b>3-</b> Allure moyenne<br/><br/><b>4-</b> Distance<br/><br/><b>5-</b> Durée hh:mm<br/><br/><b>6-</b> Monté en metres<br/><br/><b>7-</b> Descente en metres<br/><br/><b>8-</b> La météo au moment de la course<br/><br/><b>9-</b> Note, Durée, Distance, Allure<br/><br/>",
       _help_subtitle_3: " ",
       _help_subtitle_4: " ",
       _help_desc_4:
@@ -604,7 +634,7 @@ angular
         "L'axe des X (2) indique les kilometres, et l axe Y (1) montre l'altitude, tandis que les couleurs correspondent aux zone de fréquences cardiaque (1)(Nécéssite un capteur de fréquence cardiaque Bluetooth 4.0 et un téléphone compatible)",
       _help_subtitle_6: " ",
       _help_desc_6:
-        "<b>1-</b> Fréquence cardiaque moyenne<br><br><b>2-</b> Graphique montrant la durée dans chaque zone cardiaque.<br><br><b>3- </b> Un tableau montrant la vitesse, l'allure et la fréquence cardiaque par kilometres.<br><br>Cliquez sur le bouton next et effectué votre première session ou importez d'anciennes sessions.",
+        "<b>1-</b> Fréquence cardiaque moyenne<br/><br/><b>2-</b> Graphique montrant la durée dans chaque zone cardiaque.<br/><br/><b>3- </b> Un tableau montrant la vitesse, l'allure et la fréquence cardiaque par kilometres.<br/><br/>Cliquez sur le bouton next et effectué votre première session ou importez d'anciennes sessions.",
       _previous: "Precédent",
       _next: "Suivant",
       _gps_lost: "Signal GPS non disponible",
@@ -765,13 +795,13 @@ angular
       _help_subtitle_1:
         "Willkommen bei ForRunners ! Diese kleine Übersicht beschreibt das Konzept von ForRunners. Benutze die Vor und Zurück Schaltflächen um in der Hilfe zu blättern.",
       _help_desc_1:
-        "Der Hauptbildschirm zeigt alle erzeugten Läufe. <br><br><b>1-</b> Dieser Knopf startet einen neuen Lauf<br><br><b>2-</b> Durchschnitt aller Läufe<br><br><b>3-</b> Deine Laufrekorde<br><br><b>4-</b> Gerundete Strecken aller Läufe<br><br><b>5-</b> Eine Punktzahl über den Schwierigkeitsgrad des Laufs<br><br><b>6-</b> Ein Diagramm, welches die Entwicklung der Ergebnisse und der Dauer anzeigt",
+        "Der Hauptbildschirm zeigt alle erzeugten Läufe. <br/><br/><b>1-</b> Dieser Knopf startet einen neuen Lauf<br/><br/><b>2-</b> Durchschnitt aller Läufe<br/><br/><b>3-</b> Deine Laufrekorde<br/><br/><b>4-</b> Gerundete Strecken aller Läufe<br/><br/><b>5-</b> Eine Punktzahl über den Schwierigkeitsgrad des Laufs<br/><br/><b>6-</b> Ein Diagramm, welches die Entwicklung der Ergebnisse und der Dauer anzeigt",
       _help_subtitle_2:
         "Das ist die Detailansicht einer Aufzeichnung, sie zeigt den Lauf auf einer Karte inklusive Statistiken und Grafiken an.",
       _help_desc_2:
-        "<b>1-</b> Die OpenStreetMap Karte zeigt deinen Lauf<br><br><b>2-</b> Die blauen Markierungen zeigen die Kilometer an, die grüne Markierung ist der Startpunkt und die rote Markierung ist der Zielpunkt<br><br><b>3-</b> Mit diesem Icon teilst du deinen Lauf<br><br><b>4-</b> Dieses Icon löscht den aktuellen Lauf<br><br><b>5-</b> Datum und Uhrzeit des Laufs.",
+        "<b>1-</b> Die OpenStreetMap Karte zeigt deinen Lauf<br/><br/><b>2-</b> Die blauen Markierungen zeigen die Kilometer an, die grüne Markierung ist der Startpunkt und die rote Markierung ist der Zielpunkt<br/><br/><b>3-</b> Mit diesem Icon teilst du deinen Lauf<br/><br/><b>4-</b> Dieses Icon löscht den aktuellen Lauf<br/><br/><b>5-</b> Datum und Uhrzeit des Laufs.",
       _help_desc_3:
-        "<b>1-</b> Datum und Uhrzeit des Laufs<br><br><b>2-</b> Höchstes Tempo<br><br><b>3-</b> Durchschnittsgeschwindigkeit<br><br><b>4-</b> Distanz<br><br><b>5-</b> Gesamtzeit hh:mm<br><br><b>6-</b> Höhenunterschied Aufwärts in Meter<br><br><b>7-</b> Höhenunterschied Abwärts in Meter<br><br><b>8-</b> Wetterbedingungen beim Lauf<br><br><b>9-</b> Ergebnis, Zeit, Distanz, Tempo<br><br>",
+        "<b>1-</b> Datum und Uhrzeit des Laufs<br/><br/><b>2-</b> Höchstes Tempo<br/><br/><b>3-</b> Durchschnittsgeschwindigkeit<br/><br/><b>4-</b> Distanz<br/><br/><b>5-</b> Gesamtzeit hh:mm<br/><br/><b>6-</b> Höhenunterschied Aufwärts in Meter<br/><br/><b>7-</b> Höhenunterschied Abwärts in Meter<br/><br/><b>8-</b> Wetterbedingungen beim Lauf<br/><br/><b>9-</b> Ergebnis, Zeit, Distanz, Tempo<br/><br/>",
       _help_subtitle_3: " ",
       _help_subtitle_4: " ",
       _help_desc_4:
@@ -781,7 +811,7 @@ angular
         "Die X-Achse (2) zeigt die Kilometer, die Y-Achse (3) zeigt die Höhenmeter, und die Farben (1) zeigen die Herzfrequenz-Zonen (benötigt einen kompatiblen Bluetooth-Herzfrequenz-Messer)",
       _help_subtitle_6: " ",
       _help_desc_6:
-        "<b>1-</b> Durchschnittliche Herzfrequenz des Laufs <br><br><b>2-</b> Tabelle mit Distanz, Ergebnis, Geschwindigkeit und Herzfrequenz.<br><br><b>3- </b> Die Grafik zeigt die Dauer der Herzfrequenz-Zonen des Laufs.<br><br>Und jetzt drücke Start für deinen ersten Lauf oder Importiere ältere Läufe in den -Einstellungen-",
+        "<b>1-</b> Durchschnittliche Herzfrequenz des Laufs <br/><br/><b>2-</b> Tabelle mit Distanz, Ergebnis, Geschwindigkeit und Herzfrequenz.<br/><br/><b>3- </b> Die Grafik zeigt die Dauer der Herzfrequenz-Zonen des Laufs.<br/><br/>Und jetzt drücke Start für deinen ersten Lauf oder Importiere ältere Läufe in den -Einstellungen-",
       _previous: "Zurück",
       _next: "Vor",
       _gps_lost: "GPS Signal verloren",
@@ -942,13 +972,13 @@ angular
       _help_subtitle_1:
         "Willkommen bei ForRunners ! Diese kleine Übersicht beschreibt das Konzept von ForRunners. Benutze die Vor und Zurück Schaltflächen um in der Hilfe zu blättern.",
       _help_desc_1:
-        "Der Hauptbildschirm zeigt alle erzeugten Läufe. <br><br><b>1-</b> Dieser Knopf startet einen neuen Lauf<br><br><b>2-</b> Durchschnitt aller Läufe<br><br><b>3-</b> Deine Laufrekorde<br><br><b>4-</b> Gerundete Strecken aller Läufe<br><br><b>5-</b> Eine Punktzahl über den Schwierigkeitsgrad des Laufs<br><br><b>6-</b> Ein Diagramm, welches die Entwicklung der Ergebnisse und der Dauer anzeigt",
+        "Der Hauptbildschirm zeigt alle erzeugten Läufe. <br/><br/><b>1-</b> Dieser Knopf startet einen neuen Lauf<br/><br/><b>2-</b> Durchschnitt aller Läufe<br/><br/><b>3-</b> Deine Laufrekorde<br/><br/><b>4-</b> Gerundete Strecken aller Läufe<br/><br/><b>5-</b> Eine Punktzahl über den Schwierigkeitsgrad des Laufs<br/><br/><b>6-</b> Ein Diagramm, welches die Entwicklung der Ergebnisse und der Dauer anzeigt",
       _help_subtitle_2:
         "Das ist die Detailansicht einer Aufzeichnung, sie zeigt den Lauf auf einer Karte inklusive Statistiken und Grafiken an.",
       _help_desc_2:
-        "<b>1-</b> Die OpenStreetMap Karte zeigt deinen Lauf<br><br><b>2-</b> Die blauen Markierungen zeigen die Kilometer an, die grüne Markierung ist der Startpunkt und die rote Markierung ist der Zielpunkt<br><br><b>3-</b> Mit diesem Icon teilst du deinen Lauf<br><br><b>4-</b> Dieses Icon löscht den aktuellen Lauf<br><br><b>5-</b> Datum und Uhrzeit des Laufs.",
+        "<b>1-</b> Die OpenStreetMap Karte zeigt deinen Lauf<br/><br/><b>2-</b> Die blauen Markierungen zeigen die Kilometer an, die grüne Markierung ist der Startpunkt und die rote Markierung ist der Zielpunkt<br/><br/><b>3-</b> Mit diesem Icon teilst du deinen Lauf<br/><br/><b>4-</b> Dieses Icon löscht den aktuellen Lauf<br/><br/><b>5-</b> Datum und Uhrzeit des Laufs.",
       _help_desc_3:
-        "<b>1-</b> Datum und Uhrzeit des Laufs<br><br><b>2-</b> Höchstes Tempo<br><br><b>3-</b> Durchschnittsgeschwindigkeit<br><br><b>4-</b> Distanz<br><br><b>5-</b> Gesamtzeit hh:mm<br><br><b>6-</b> Höhenunterschied Aufwärts in Meter<br><br><b>7-</b> Höhenunterschied Abwärts in Meter<br><br><b>8-</b> Wetterbedingungen beim Lauf<br><br><b>9-</b> Ergebnis, Zeit, Distanz, Tempo<br><br>",
+        "<b>1-</b> Datum und Uhrzeit des Laufs<br/><br/><b>2-</b> Höchstes Tempo<br/><br/><b>3-</b> Durchschnittsgeschwindigkeit<br/><br/><b>4-</b> Distanz<br/><br/><b>5-</b> Gesamtzeit hh:mm<br/><br/><b>6-</b> Höhenunterschied Aufwärts in Meter<br/><br/><b>7-</b> Höhenunterschied Abwärts in Meter<br/><br/><b>8-</b> Wetterbedingungen beim Lauf<br/><br/><b>9-</b> Ergebnis, Zeit, Distanz, Tempo<br/><br/>",
       _help_subtitle_3: " ",
       _help_subtitle_4: " ",
       _help_desc_4:
@@ -958,7 +988,7 @@ angular
         "Die X-Achse (2) zeigt die Kilometer, die Y-Achse (3) zeigt die Höhenmeter, und die Farben (1) zeigen die Herzfrequenz-Zonen (benötigt einen kompatiblen Bluetooth-Herzfrequenz-Messer)",
       _help_subtitle_6: " ",
       _help_desc_6:
-        "<b>1-</b> Durchschnittliche Herzfrequenz des Laufs <br><br><b>2-</b> Tabelle mit Distanz, Ergebnis, Geschwindigkeit und Herzfrequenz.<br><br><b>3- </b> Die Grafik zeigt die Dauer der Herzfrequenz-Zonen des Laufs.<br><br>Und jetzt drücke Start für deinen ersten Lauf oder Importiere ältere Läufe in den -Einstellungen-",
+        "<b>1-</b> Durchschnittliche Herzfrequenz des Laufs <br/><br/><b>2-</b> Tabelle mit Distanz, Ergebnis, Geschwindigkeit und Herzfrequenz.<br/><br/><b>3- </b> Die Grafik zeigt die Dauer der Herzfrequenz-Zonen des Laufs.<br/><br/>Und jetzt drücke Start für deinen ersten Lauf oder Importiere ältere Läufe in den -Einstellungen-",
       _previous: "Zurück",
       _next: "Vor",
       _gps_lost: "GPS Signal verloren",
@@ -1121,13 +1151,13 @@ angular
       _help_subtitle_1:
         "Bem-vindo ao ForeRunners! Essa pequena ajuda tentará explicar o conceito principal de ForeRunners. Use o botão seguinte e anterior abaixo para navegar nesta ajuda.",
       _help_desc_1:
-        "Este é o ecrã principal apresenta todas as suas sessões de corrida. <br> <br> <b> 1 - </ b> Este botão inicia uma nova sessão de corrida. <br> <br> <b> 2 - </ b> As estatísticas médias são calculadas a partir de todas as sessões <br> <br> <b> 3 - </ b> Os seus melhores registos de corrida <br> <br> <b> 4 - </ b> Aarredondamento do comprimento da sessão <br> <br> <b> 5 - </ b> A pontuação representa a dificuldade da sua corrida <br> <br> <b> 6 - </ b> Um gráfico que mostra a evolução da pontuação e a evolução da duração",
+        "Este é o ecrã principal apresenta todas as suas sessões de corrida. <br/> <br/> <b> 1 - </ b> Este botão inicia uma nova sessão de corrida. <br/> <br/> <b> 2 - </ b> As estatísticas médias são calculadas a partir de todas as sessões <br/> <br/> <b> 3 - </ b> Os seus melhores registos de corrida <br/> <br/> <b> 4 - </ b> Aarredondamento do comprimento da sessão <br/> <br/> <b> 5 - </ b> A pontuação representa a dificuldade da sua corrida <br/> <br/> <b> 6 - </ b> Um gráfico que mostra a evolução da pontuação e a evolução da duração",
       _help_subtitle_2:
         "Este é o detalhe de uma sessão, mostra todas as corridas no mapa, com graficos e estatisticas detalhadas.",
       _help_desc_2:
-        '<b> 1 - </ b> O mapa OpenStreetMap, mostra a sua corrida <br> <br> <b> 2 - </ b> O marcador azul é um marcador de Kilometragem, enquanto o marcador verde "S" é para "Iniciar" e marcador vermelho "E" para "Terminar" <br> <br> <b> 3 - </ b> Este ícone é para compartilhar a sua corrida <br> <br> <b> 4 - </ b> Este ícone é para excluir a sua sessão <br> <br> <b> 5 - </ b> Data da sua sessão de corrida com o resumo de valores.',
+        '<b> 1 - </ b> O mapa OpenStreetMap, mostra a sua corrida <br/> <br/> <b> 2 - </ b> O marcador azul é um marcador de Kilometragem, enquanto o marcador verde "S" é para "Iniciar" e marcador vermelho "E" para "Terminar" <br/> <br/> <b> 3 - </ b> Este ícone é para compartilhar a sua corrida <br/> <br/> <b> 4 - </ b> Este ícone é para excluir a sua sessão <br/> <br/> <b> 5 - </ b> Data da sua sessão de corrida com o resumo de valores.',
       _help_desc_3:
-        "<b> 1 - </ b> Data <br> <br> <b> 2 - </ b> Velocidade média <br> <br> <b> 3 - </ b> Ritmo médio <br> <br> <b> 4 - </ b> Distância <br> <br> <b> 5 - </ b> Duração hh: mm <br> <br> <b> 6 - </ b> Elevação total em metros <br > <br> <b> 7 - </ b> Elevação minima em metros <br> <br> <b> 8 - </ b> Tempo na data da corrida <br> <br> <b> 9- </ b> Pontuação, duração, distância, ritmo <br> <br>",
+        "<b> 1 - </ b> Data <br/> <br/> <b> 2 - </ b> Velocidade média <br/> <br/> <b> 3 - </ b> Ritmo médio <br/> <br/> <b> 4 - </ b> Distância <br/> <br/> <b> 5 - </ b> Duração hh: mm <br/> <br/> <b> 6 - </ b> Elevação total em metros <br > <br/> <b> 7 - </ b> Elevação minima em metros <br/> <br/> <b> 8 - </ b> Tempo na data da corrida <br/> <br/> <b> 9- </ b> Pontuação, duração, distância, ritmo <br/> <br/>",
       _help_subtitle_3: " ",
       _help_subtitle_4: " ",
       _help_desc_4:
@@ -1137,7 +1167,7 @@ angular
         "O eixo X (2) mostra os Kilômetros e o eixo y (3) mostra altitude, enquanto as cores (1) mostram a zona do batimento cardiaco (Exige um sensor corporal bluetooth e um smartphone compatível)",
       _help_subtitle_6: " ",
       _help_desc_6:
-        "<b> 1 - </ b> Freqüência cardíaca média durante a sessão <br> <br> <b> 2 - </ b> Gráfico que mostra a duração em cada zona de frequencia cardiaca <br> <br> <b> 3- < / b> Tabela com ritmo, velocidade e frequencia cardiaca por Kilometros. <br> <br> Agora clique em seguida e comece sua primeira sessão em execução ou importe as sessões anteriores das preferências.",
+        "<b> 1 - </ b> Freqüência cardíaca média durante a sessão <br/> <br/> <b> 2 - </ b> Gráfico que mostra a duração em cada zona de frequencia cardiaca <br/> <br/> <b> 3- < / b> Tabela com ritmo, velocidade e frequencia cardiaca por Kilometros. <br/> <br/> Agora clique em seguida e comece sua primeira sessão em execução ou importe as sessões anteriores das preferências.",
       _previous: "Anterior",
       _next: "Seguinte",
       _gps_lost: "Sinal de GPS perdido",
