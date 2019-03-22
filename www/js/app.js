@@ -285,7 +285,21 @@ angular
             controller: "ChallengesCtrl"
           }
         }
-      });
+      })
+      
+      // beeri's controller
+      .state("app.beeri", {
+        url: "/beeri",
+        views: {
+          menuContent: {
+            templateUrl: "templates/beeri.html",
+            controller: "beeriTestCtrl"
+          }
+        }
+      })
+
+      ;
+      
 
     // if none of the above states are matched, use this as the fallback
 
@@ -481,7 +495,8 @@ angular
       _foodInfo:"Food Information",
       _calculationInfo: "Calculation Information",
       _challenges: "Challenges",
-      _challenge: "Challenge"
+      _challenge: "Challenge",
+      _beeritest: "Beeri"
     });
 
     $translateProvider.translations("fr-FR", {

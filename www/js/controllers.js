@@ -5400,4 +5400,12 @@ $scope.stopChallengeSession = function() {
     };
 
 
+  })
+  
+  .controller("beeriTestCtrl", function(
+    $scope,
+    $state
+  ){
+      
+
   });

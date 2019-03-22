@@ -32,6 +32,7 @@ plugins/
 
 platforms/android/
 node_modules/
+coverage/
 # Built application files
 *.apk
 *.ap_
