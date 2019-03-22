@@ -19,8 +19,22 @@
 
 package net.khertan.forrunners;
 
+import android.os.Bundle;
+import org.apache.cordova.*;
 
-import android.content.Intent;
+public class MainActivity extends CordovaActivity {
+    @Override
+    public void onCreate(Bundle saveInstanceState) {
+        super.onCreate(saveInstanceState);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
+            moveTaskToBack(true);
+        }
+        loadUrl(launchUrl);
+    }
+}
+/*import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.webkit.WebView;
@@ -39,8 +53,10 @@ public class MainActivity extends CordovaActivity
     public static final String KEY_URL_TO_LOAD = "KEY_URL_TO_LOAD";
 
     @VisibleForTesting
-    //protected static final String WEB_FORM_URL = "file:///android_asset/web_form.html";
-    protected static final String WEB_FORM_URL = "http://10.0.2.2:8100/#/app/login";
+    protected static final String WEB_FORM_URL = "http://10.0.2.2:8100/#/app/profile";
+    //protected static final String WEB_FORM_URL = "file:///android_asset/www/templates/login.html";
+    //protected static final String WEB_FORM_URL = "http://10.0.2.2:8100/#/app/login";
+    //protected static final String WEB_FORM_URL_2 = "http://10.0.2.2:8100/#/app/profile";
     //"file:///android_asset/www/templates/signin.html";
     //"javascript:document.getElementById('usr').value = 'test@sf.com’;";
     //"file:///android_asset/www/templates/signin.html";
@@ -69,6 +85,7 @@ public class MainActivity extends CordovaActivity
         String url = intent.getStringExtra(KEY_URL_TO_LOAD);
         return !TextUtils.isEmpty(url) ? url : WEB_FORM_URL;
     }
+    */
     /*public static final String KEY_URL_TO_LOAD = "KEY_URL_TO_LOAD";
     //protected static final String WEB_FORM_URL = "file:///android_asset/www/templates/signin.html";
     @VisibleForTesting
@@ -107,7 +124,7 @@ public class MainActivity extends CordovaActivity
         String url = intent.getStringExtra(KEY_URL_TO_LOAD);
         return !TextUtils.isEmpty(url) ? url : WEB_FORM_URL;
     }*/
-}
+//}
 
 /*
        Licensed to the Apache Software Foundation (ASF) under one
