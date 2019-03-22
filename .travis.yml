@@ -65,5 +65,5 @@ jobs:
       script:  true
       node_js: '6'
     - stage: test
-      script: node_modules/karma/bin/karma start karma.conf.js --browsers PhantomJS --single-run
+      script: node_modules/karma/bin/karma start karma.conf.js --browsers ChromeHeadless --single-run
       node_js: '6' 

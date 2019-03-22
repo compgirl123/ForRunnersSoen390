@@ -2396,7 +2396,9 @@ $scope.stopChallengeSession = function() {
 
     try {
       delete $scope.session.firsttime;
-    } catch (exception) {}
+    } catch (exception) {
+      console.warn(exception.message);
+    }
 
     if ($scope.session.gpxData.length > 0) {
       //Session cleaning
@@ -2461,7 +2463,9 @@ $scope.stopChallengeSession = function() {
           console.log("Failed to release wakelock");
         }
       );
-    } catch (exception) {}
+    } catch (exception) {
+      console.warn(exception.message);
+    }
 
     try {
       cordova.plugins.ActivityRecognition.StopActivityUpdates(
@@ -2479,15 +2483,21 @@ $scope.stopChallengeSession = function() {
 
     try {
       clearInterval($scope.btscanintervalid);
-    } catch (exception) {}
+    } catch (exception) {
+      console.warn(exception.message);
+    }
 
     if ($scope.platform === "firefoxos") {
       try {
         $scope.screen_lock.unlock();
-      } catch (exception) {}
+      } catch (exception) {
+        console.warn(exception.message);
+      }
       try {
         $scope.gps_lock.unlock();
-      } catch (exception) {}
+      } catch (exception) {
+        console.warn(exception.message);
+      }
     }
 
     try {
@@ -4943,7 +4953,7 @@ $scope.stopChallengeSession = function() {
               };
 
               $scope.getActualDistance=function(){
-            if($rootScope.distance_travelled==undefined || $rootScope.distance_travelled==NaN){
+            if($rootScope.distance_travelled==undefined || isNaN($rootScope.distance_travelled)){
                return 0;
       }
       else {
@@ -4986,6 +4996,7 @@ $scope.stopChallengeSession = function() {
     sessionStorage.removeItem('currentUser');
     sessionStorage.removeItem('currentFood');
     sessionStorage.removeItem('foodList');
+    $window.location.href="#/app/login";
     $window.location.reload();
     };
 
@@ -4998,7 +5009,8 @@ $scope.stopChallengeSession = function() {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-         // ...
+        $scope.errMsg = true;
+        $scope.errorMessage = error.message;
        });
 
       firebase.auth().onAuthStateChanged(function(user) {
@@ -5056,10 +5068,10 @@ $scope.stopChallengeSession = function() {
   }])
 
   .controller('ProfileCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseObject','$window', function(
-    $scope, 
-    $firebaseAuth, 
-    $state, 
-    $firebaseObject, 
+    $scope,
+    $firebaseAuth,
+    $state,
+    $firebaseObject,
     $window
     ){
 
@@ -5133,8 +5145,9 @@ $scope.stopChallengeSession = function() {
   .controller("FoodCtrl", function(
     $scope,
     $state,
+    $ionicPopup,
     $window
-  ) {   
+  ) {
 
     var rootRef = firebase.database().ref("Foods").orderByKey();
     rootRef.on("value",function(snapshot) {
@@ -5154,15 +5167,35 @@ $scope.stopChallengeSession = function() {
       $state.go("app.foodInfo");
     };
 
-    $scope.calculate=function(){
 
-      if(sessionStorage.getItem('foodList')!=null){
+    $scope.calculate=function(){
+      if(sessionStorage.getItem('currentUser')!=null){
+        $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
+      }
+      //If all requirements are met user can go to calculation page
+      if(sessionStorage.getItem('foodList')!=null &&
+        $scope.user.age!=null     &&
+        $scope.user.weight!=null  &&
+        $scope.user.gender!=null  &&
+        $scope.user.activity!= null){
         $state.go("app.calculation");
         $scope.errorFoodList=false;
       }else{
-        $scope.errorFoodList=true;
-      }  
-      
+        //If a user info is missing
+        if( $scope.user.age==null     ||
+            $scope.user.weight==null  ||
+            $scope.user.gender==null  ||
+            $scope.user.activity== null){
+              $state.go("app.profile");
+              var profilePopup= $ionicPopup.alert({
+                 title: "Please fill all fields of Profile page!"
+               });
+            }else{
+              //if list of food is empty
+              $scope.errorFoodList=true;
+            }
+      }
+
     };
     $scope.addFood=function(){
       $state.go("app.newFood");
@@ -5195,7 +5228,7 @@ $scope.stopChallengeSession = function() {
         });
         $state.go("app.food");
       }
-      
+
     };
   })
 
@@ -5223,23 +5256,23 @@ $scope.stopChallengeSession = function() {
         let foodArray = [];
         let firstItem={'name':$scope.food.name,'calories':$scope.food.calories,'amount':$scope.food.amount,'unit':$scope.food.unit};
             foodArray.push(firstItem);
-        let value ={'currentCalories':$scope.food.calories,'list':foodArray};    
-        sessionStorage.setItem(key, JSON.stringify(value) );        
+        let value ={'currentCalories':$scope.food.calories,'list':foodArray};
+        sessionStorage.setItem(key, JSON.stringify(value) );
         $state.go("app.food");
       }else{
         //This to add other foods to list
 
         let key = 'foodList';
-        let foodList=JSON.parse(sessionStorage.getItem('foodList'));       
+        let foodList=JSON.parse(sessionStorage.getItem('foodList'));
 
         let calories=foodList.currentCalories + $scope.food.calories;
         let item = {'name':$scope.food.name,'calories':$scope.food.calories,'amount':$scope.food.amount,'unit':$scope.food.unit};
         let foodArray=foodList.list;
             foodArray.push(item);
-        let value ={'currentCalories':calories,'list':foodArray};     
+        let value ={'currentCalories':calories,'list':foodArray};
         sessionStorage.setItem(key, JSON.stringify(value));
         $state.go("app.food");
-      }      
+      }
     };
   })
 
@@ -5250,7 +5283,7 @@ $scope.stopChallengeSession = function() {
     $window
   ){
 
-    if(sessionStorage.getItem('currentUser')!=null && 
+    if(sessionStorage.getItem('currentUser')!=null &&
         sessionStorage.getItem('foodList')!=null){
 
       $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
@@ -5275,34 +5308,34 @@ $scope.stopChallengeSession = function() {
       }else{
         switch (true) {
             case ($scope.user.age>=1 && $scope.user.age<=18 ):
-                $scope.RMR= Math.round(($scope.user.weight*17.5)+ 651);          
+                $scope.RMR= Math.round(($scope.user.weight*17.5)+ 651);
                 break;
             case ($scope.user.age>=19 && $scope.user.age<=30 ):
-                $scope.RMR= Math.round(($scope.user.weight*15.3)+ 679);                
+                $scope.RMR= Math.round(($scope.user.weight*15.3)+ 679);
                 break;
             case ($scope.user.age>=31):
-                $scope.RMR= Math.round(($scope.user.weight*11.6)+ 879);                
+                $scope.RMR= Math.round(($scope.user.weight*11.6)+ 879);
                 break;
             default:
-                console.log("Please enter your age in profile page."); 
+                console.log("Please enter your age in profile page.");
           }
       }
       switch (true) {
             case ($scope.user.activity == "Little/ no exercise"):
-                $scope.expenditure= Math.round($scope.RMR*1.4);                
+                $scope.expenditure= Math.round($scope.RMR*1.4);
                 break;
             case ($scope.user.activity == "Moderately active"):
-                $scope.expenditure= Math.round($scope.RMR*1.7);                
+                $scope.expenditure= Math.round($scope.RMR*1.7);
                 break;
             case ($scope.user.activity == "Very active"):
-                $scope.expenditure= Math.round($scope.RMR*2.0);                
+                $scope.expenditure= Math.round($scope.RMR*2.0);
                 break;
             default:
-                console.log("Please enter your level of activity in profile page."); 
+                console.log("Please enter your level of activity in profile page.");
           }
 
           $scope.caloriesToBurn=$scope.consumedCalories-$scope.expenditure;
-          
+
           //If user consume less calories than he/she needs another message is given
           if($scope.caloriesToBurn<0){
             $scope.negativeMessage=true;
@@ -5314,7 +5347,7 @@ $scope.stopChallengeSession = function() {
     $scope.ok= function(){
       sessionStorage.removeItem('foodList');
       $state.go("app.food");
-    };      
+    };
   })
 
 
