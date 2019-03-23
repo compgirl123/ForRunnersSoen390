@@ -67,7 +67,7 @@ jobs:
       script: ./node_modules/.bin/htmlhint --config htmlconf.json www/templates/*
       script: ./node_modules/.bin/eslint www/js/controllers.js
       node_js: '6'
-      - stage: Building
+    - stage: Building
       script:  true
       node_js: '6'
     - stage: Testing
