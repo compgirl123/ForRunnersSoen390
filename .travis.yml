@@ -69,7 +69,7 @@ jobs:
       node_js: '6'
     - stage: Building
       script:
-      - ionic cordova build browser — prod
+      - ionic cordova build browser - prod
       node_js: '6'
     - stage: Testing
       script: ./node_modules/karma/bin/karma start karma.conf.js --browsers ChromeHeadless --single-run
