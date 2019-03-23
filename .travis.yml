@@ -54,7 +54,7 @@ after_success:
   - codecov --file coverage/lcov/lcov.info --disable search
   - bash <(curl -s https://codecov.io/bash) -t token
 install:
-  - npm install -g ionic codecov
+  - npm install -g ionic cordova codecov
   - npm install htmlhint eslint --save-dev
   - npm install
 jobs:
