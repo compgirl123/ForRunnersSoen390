@@ -68,7 +68,8 @@ jobs:
       script: ./node_modules/.bin/eslint www/js/controllers.js
       node_js: '6'
     - stage: Building
-      script:  true
+      script:
+      - ionic cordova build browser — prod
       node_js: '6'
     - stage: Testing
       script: ./node_modules/karma/bin/karma start karma.conf.js --browsers ChromeHeadless --single-run
