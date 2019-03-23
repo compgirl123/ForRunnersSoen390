@@ -50,14 +50,19 @@ before_install:
   - export TRAVIS_TAG=$(git tag --points-at HEAD)
   - export CODECOV_TOKEN="token"
   - nvm install 8
-  - npm install -g ionic cordova
-  - npm install htmlhint eslint --save-dev
 after_success:
+  - codecov --file coverage/lcov/lcov.info --disable search
   - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
+install:
+  - npm install -g codecov
+  - npm install htmlhint eslint --save-dev
+  - npm install
 jobs:
   include:
     - stage: Code coverage
-      script: npm run codecov --token=$CODECOV_TOKEN
+      script:
+      - codecov --file coverage/lcov/lcov.info --disable search
+      - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
       node_js: '6'
     - stage: Linting
       script: ./node_modules/.bin/htmlhint --config htmlconf.json www/index.html
