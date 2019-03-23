@@ -62,7 +62,7 @@ jobs:
     - stage: Code coverage
       script:
       - codecov --file coverage/lcov/lcov.info --disable search
-      - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
+      - bash <(curl -s https://codecov.io/bash) -Z -t $CODECOV_TOKEN
       node_js: '6'
     - stage: Linting
       script: ./node_modules/.bin/htmlhint --config htmlconf.json www/index.html
