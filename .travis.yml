@@ -49,11 +49,10 @@ before_install:
   - export CHROME_BIN=google-chrome
   - export TRAVIS_TAG=$(git tag --points-at HEAD)
   - export CODECOV_TOKEN="token"
-  - nvm install 8
 after_success:
   - codecov --file coverage/lcov/lcov.info --disable search
-  - bash <(curl -s https://codecov.io/bash) -t token
 install:
+  - nvm install 8
   - npm install -g codecov
   - npm install htmlhint eslint --save-dev
   - npm install
@@ -67,9 +66,11 @@ jobs:
       script: ./node_modules/.bin/htmlhint --config htmlconf.json www/templates/*
       script: ./node_modules/.bin/eslint www/js/controllers.js
       node_js: '6'
+    - stage: Building
+      script: 
+      - ionic cordova build browser — prod
+      node_js: '6'
     - stage: Testing
       script: ./node_modules/karma/bin/karma start karma.conf.js --browsers ChromeHeadless --single-run
       node_js: '6'      
-    - stage: Building
-      script:  true
-      node_js: '6'
+    
