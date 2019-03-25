@@ -14,7 +14,7 @@ describe("Sign In Tests", function(){
     
     $controller = _$controller_;
     $rootScope = _$rootScope_;
-    window.sessionStorage.setItem('currentUser', value);
+    window.sessionStorage.setItem('currentUser', undefined);
   }));
 
 
