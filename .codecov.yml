@@ -2,9 +2,9 @@ codecov:
    token: 4c13217b-6439-4361-9449-20c0ad8a89ce
 
 fixes:
-  - "www/::after/"  # move path   e.g., "before/path" => "after/path"
-  - "::after/"         # move root   e.g., "path/" => "after/path/"
-  - "www/::"        # reduce root e.g., "before/path/" => "path/"
-  - "test/::after/"  # move path   e.g., "before/path" => "after/path"
-  - "::after/"         # move root   e.g., "path/" => "after/path/"
+  - "www/js/::src/"  # move path   e.g., "before/path" => "after/path"
+  - "::src/"         # move root   e.g., "path/" => "after/path/"
+  - "www/js::"        # reduce root e.g., "before/path/" => "path/"
+  - "test/::src/"  # move path   e.g., "before/path" => "after/path"
+  - "::src/"         # move root   e.g., "path/" => "after/path/"
   - "test/::"        # reduce root e.g., "before/path/" => "path/"
