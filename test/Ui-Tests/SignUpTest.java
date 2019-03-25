@@ -83,6 +83,10 @@ public class SignUpTest {
         onWebView().withElement(findElement(Locator.ID,"email2")).check(webMatches(getText(), containsString("Enter a valid email")));
         onWebView().withElement(findElement(Locator.ID,"password2")).check(webMatches(getText(), containsString("Password must be a minimum of 8 characters")));
         onWebView().withElement(findElement(Locator.ID,"submission")).perform(DriverAtoms.webClick());
+
+        Thread.sleep(7000);
+
+        // searching for login element.
         onWebView().withElement(findElement(Locator.ID,"email")).perform(DriverAtoms.webClick());
 
         try{
@@ -99,7 +103,8 @@ public class SignUpTest {
 
     }
 
-    public void signUpPageTest2() throws Exception {
+    @Test
+    public void signUpPageInvalidEmailandPasswords() throws Exception {
 
         Thread.sleep(7000);
 
@@ -110,9 +115,74 @@ public class SignUpTest {
                 .withElement(findElement(Locator.XPATH,signUpXpath)).perform(webClick())
                 .withElement(findElement(Locator.ID,"Username")).perform(DriverAtoms.webKeys(" "));
         Thread.sleep(2000);
-        onWebView().withElement(findElement(Locator.ID,"email")).perform(DriverAtoms.webKeys(" "));
-        onWebView().withElement(findElement(Locator.ID,"Username2")).check(webMatches(getText(), containsString("Enter a valid username")));
+        onWebView().withElement(findElement(Locator.ID,"registeremail")).perform(DriverAtoms.webKeys("testemail@"));
+        onWebView().withElement(findElement(Locator.ID,"registerpassword")).perform(DriverAtoms.webKeys("pass1234"));
+        onWebView().withElement(findElement(Locator.ID,"confirmPassword")).perform(DriverAtoms.webKeys("pass123"));
+        onWebView().withElement(findElement(Locator.ID,"registerpassword")).perform(DriverAtoms.webClick());
+        Thread.sleep(5000);
 
+        onWebView().withElement(findElement(Locator.ID,"Username2")).check(webMatches(getText(), containsString("Enter a valid username")));
+        onWebView().withElement(findElement(Locator.ID,"email2")).check(webMatches(getText(), containsString("Enter a valid email")));
+        onWebView().withElement(findElement(Locator.ID,"confirmPassword2")).check(webMatches(getText(), containsString("Passwords do not match")));
+        onWebView().withElement(findElement(Locator.ID,"submission")).perform(DriverAtoms.webClick());
+
+
+        Thread.sleep(7000);
+
+        // searching for login element.
+        onWebView().withElement(findElement(Locator.ID,"email")).perform(DriverAtoms.webClick());
+
+        try{
+            onWebView().withElement(findElement(Locator.ID,"email")).perform(DriverAtoms.webClick());
+            Thread.sleep(5000);
+        }
+        catch(Exception e)
+        {
+            System.out.print(e);
+
+        }
+
+        Thread.sleep(7000);
+    }
+
+    @Test
+    public void signUpPageWorking() throws Exception {
+
+        Thread.sleep(7000);
+
+        //onWebView().forceJavascriptEnabled();
+
+        onWebView()
+                .withElement(findElement(Locator.XPATH,menuXpath1)).perform(webClick())
+                .withElement(findElement(Locator.XPATH,signUpXpath)).perform(webClick())
+                .withElement(findElement(Locator.ID,"Username")).perform(DriverAtoms.webKeys("test1230"));
+        Thread.sleep(2000);
+        onWebView().withElement(findElement(Locator.ID,"registeremail")).perform(DriverAtoms.webKeys("testemail0@gmail.com"));
+        onWebView().withElement(findElement(Locator.ID,"registerpassword")).perform(DriverAtoms.webKeys("pass1234"));
+        onWebView().withElement(findElement(Locator.ID,"confirmPassword")).perform(DriverAtoms.webKeys("pass1234"));
+        Thread.sleep(5000);
+
+        onWebView().withElement(findElement(Locator.ID,"Username2")).check(webMatches(getText(), containsString("")));
+        onWebView().withElement(findElement(Locator.ID,"email2")).check(webMatches(getText(), containsString("")));
+        onWebView().withElement(findElement(Locator.ID,"confirmPassword2")).check(webMatches(getText(), containsString("")));
+        onWebView().withElement(findElement(Locator.ID,"submission")).perform(DriverAtoms.webClick());
+
+        Thread.sleep(7000);
+
+        // searching for login element.
+        onWebView().withElement(findElement(Locator.ID,"email")).perform(DriverAtoms.webClick());
+
+        try{
+            onWebView().withElement(findElement(Locator.ID,"email")).perform(DriverAtoms.webClick());
+            Thread.sleep(5000);
+        }
+        catch(Exception e)
+        {
+            System.out.print(e);
+
+        }
+
+        Thread.sleep(7000);
     }
 
 
