@@ -89,7 +89,7 @@ module.exports = function(config) {
       dir: 'coverage/',
       reporters: [
           { type: 'lcovonly', subdir: 'lcov' },
-          { type: 'text-summary', subdir: 'text'},
+          { type: 'text-summary'},
       ]
   }
     
