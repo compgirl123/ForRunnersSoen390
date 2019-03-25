@@ -24,7 +24,7 @@ describe("Sign In Tests", function(){
       var $state = $rootScope;
       var $ionicPopup = $rootScope;
       var $rootScope = $rootScope;
-      var controller = $controller('SignInCtrl', { $scope: $scope, $cordovaSQLite: $cordovaSQLite,$state: $state,$ionicPopup: $ionicPopup,$rootScope: $rootScope});
+      var controller = $controller('LoginCtrl', { $scope: $scope, $cordovaSQLite: $cordovaSQLite,$state: $state,$ionicPopup: $ionicPopup,$rootScope: $rootScope});
       $scope.username = 'gintoki@gintama.com'
       $scope.password = 'referencesEverywhere';
       $scope.query();
