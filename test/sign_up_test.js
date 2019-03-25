@@ -13,7 +13,7 @@ describe("Sign Up Tests", function(){
   
   
     describe('RegisterCtrl', function() {
-      it('Expecting the signUp() function to fail', function() {
+      it('Expecting the signUp() function to pass', function() {
         var $scope = $rootScope.$new();
         $scope.signUp = () => {}
         var controller = $controller('RegisterCtrl', 
@@ -25,30 +25,39 @@ describe("Sign Up Tests", function(){
         });
         $scope.user = {
         'Username':'tanya',
-        'email':'gintoki@gintama.com',
-        'password':'referencesEverywhere',
+        'email':'multanitanya@gmail.com',
+        'password':'concordia',
         }
         $scope.signUp();
-
-        // create a variable 
-        //sessionStorage = spyOn(sessionStorage, 'setItem').and.callFake((arg) => {return "key:currentUser"})
-        //expect(sessionStorage).toHaveBeenCalledWith(['currentUser', {"key": "currentUser"}])
-        //expect($scope.count).toEqual(1);
         spyOn($ionicPopup, 'alert');
-
-        //expect(ionicPopup.alert).toHaveBeenCalled();
-
         expect(ionicPopup.alert).toHaveBeenCalledWith({
             title: "Successfully Registered"
         });
-        //var value = {'username': $scope.username,'email': $scope.email,'age': '','age': '', 'weight': '', 'height': ''}
-        //window.sessionStorage.setItem('currentUser', value);
         
-       // expect(window.sessionStorage.setItem).toHaveBeenCalledWith('currentUser', value);
-  
+        it('Expecting the signUp() function to fail', function() {
+          var $scope = $rootScope.$new();
+          $scope.signUp = () => {}
+          var controller = $controller('RegisterCtrl', 
+          { $scope: $scope,
+            $firebaseAuth: $firebaseAuth,
+            $state: $state,
+            $firebaseArray: $firebaseArray,
+            $ionicPopup: $ionicPopup
+          });
+          $scope.user = {
+          'Username':'tanya',
+          'email':'tanyaa@gmail.com',
+          'password':'concordia',
+          }
+          $scope.signUp();
+          spyOn($ionicPopup, 'alert');
+          expect(ionicPopup.alert).toHaveBeenCalledWith({
+              title: "A user already exists with the specified email address"
+          });
       });
       
     });
     
   });
 
+});
