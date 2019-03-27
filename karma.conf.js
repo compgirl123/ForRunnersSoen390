@@ -21,7 +21,7 @@ module.exports = function(config) {
     'node_modules/angular-mocks/angular-mocks.js',
     'www/js/app.js',
     'www/js/controllers.js',
-    'test/*.js',
+    'test/**/*.js',
      ],
 
     // list of files / patterns to exclude
@@ -32,7 +32,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'www/js/controllers.js' : 'coverage'
+      'www/**/*.js' : ['coverage'],
+      'test/**/*.js' : ['coverage']
     },
 
 
