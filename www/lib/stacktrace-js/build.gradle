@@ -9,6 +9,9 @@ buildscript {
 }
 
 apply plugin: 'js'
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'com.google.gms.google-services'
 
 defaultTasks 'all'
 buildDir = 'target'
@@ -16,7 +19,12 @@ buildDir = 'target'
 def srcFile = 'stacktrace.js'
 def destFile = "${buildDir}/stacktrace-min.js"
 def testDir = 'test'
+dependencies {
+	implementation 'com.google.firebase:firebase-core:16.0.1'
 
+    // Add Performance Monitoring dependency line
+    implementation 'com.google.firebase:firebase-perf:16.2.4'
+}
 repositories {
 	mavenRepo url: 'http://repository.springsource.com/maven/bundles/release'
 	mavenCentral()
