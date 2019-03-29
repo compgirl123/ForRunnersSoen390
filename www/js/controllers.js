@@ -5400,4 +5400,71 @@ $scope.stopChallengeSession = function() {
     };
 
 
+  })
+
+  .controller("CalendarCtrl",function($scope){
+      $scope.todayDate = new Date();
+      var days=[31,28,31,30,31,30,31,31,30,31,30,31]; //Days of each month
+      $scope.months=['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      $scope.month=$scope.months[$scope.todayDate.getMonth()];
+      $scope.year=$scope.todayDate.getFullYear();
+      buildMonth();
+      $scope.previous=function(){
+        var currentMonth = $scope.months.indexOf($scope.month);
+        if(currentMonth==0){
+          $scope.month='December';
+          $scope.year--;
+        }else{
+          $scope.month=$scope.months[currentMonth-1];
+        }
+        buildMonth();
+      }
+
+      $scope.next=function(){
+        var n = $scope.months.indexOf($scope.month);
+        if(n==11){
+          $scope.month='January';
+          $scope.year++;
+        }else{
+          $scope.month=$scope.months[n+1];
+        }
+        buildMonth();
+      }
+
+      function buildMonth() {
+        var first_of_month=new Date($scope.year, $scope.months.indexOf($scope.month),1);//First day of month
+        var first_day_month=first_of_month.getDay();
+        var num_weeks =Math.floor((days[$scope.months.indexOf($scope.month)]+first_day_month)/7);
+        if(days[1]==28){
+          days[1]+=CheckLeapYear($scope.year)?1:0;
+          console.log(days[1]);
+        }else{
+          if(days[1]==29 && CheckLeapYear($scope.year)){
+            days[1]=29;
+          }else{
+            days[1]=28;
+          }
+        }
+
+        $scope.weeks=[];
+        var day_number=1;
+        for(i=0; i<=num_weeks; i++){
+              $scope.weeks[i]=[];
+              for(j=0; j<7; j++){
+                if(i==0 && j<first_day_month){ // First week of month, incomplet
+                  $scope.weeks[i][j]="";
+                }else{
+                  if(day_number<=days[$scope.months.indexOf($scope.month)]){
+                    $scope.weeks[i][j]=day_number;
+                    day_number++;
+                  }else{
+                    $scope.weeks[i][j]="";
+                  }
+                }
+              }// end for week days
+            }// end for weeks
+        }
+      function CheckLeapYear(year){
+      return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+      }
   });

@@ -285,6 +285,16 @@ angular
             controller: "ChallengesCtrl"
           }
         }
+      })
+
+      .state("app.calendar", {
+        url: "/calendar",
+        views: {
+          menuContent: {
+            templateUrl: "templates/calendar.html",
+            controller: "CalendarCtrl"
+          }
+        }
       });
 
     // if none of the above states are matched, use this as the fallback
@@ -481,7 +491,8 @@ angular
       _foodInfo:"Food Information",
       _calculationInfo: "Calculation Information",
       _challenges: "Challenges",
-      _challenge: "Challenge"
+      _challenge: "Challenge",
+      _calendar: "Calendar"
     });
 
     $translateProvider.translations("fr-FR", {

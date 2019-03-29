@@ -1,0 +1,27 @@
+<ion-view view-title="{{ '_calendar' | translate }}">
+
+ 	 <ion-content hideBackButton="true">
+
+     <ion-list-header class="row list_header">
+      <i class="fa fa-angle-left fa-3x col col-10" ng-click="previous()"></i>
+      <h3 class="monthName col">{{month}} {{year}}</h3>
+      <i class="fa fa-angle-right fa-3x col col-10" ng-click="next()"></i>
+    </ion-list-header>
+    <ion-grid>
+        <ion-row class="row no-padding">
+            <ion-col class="col weekDays"> S </ion-col>
+            <ion-col class="col weekDays"> M </ion-col>
+            <ion-col class="col weekDays"> T </ion-col>
+            <ion-col class="col weekDays"> W </ion-col>
+            <ion-col class="col weekDays"> T </ion-col>
+            <ion-col class="col weekDays"> F </ion-col>
+            <ion-col class="col weekDays"> S </ion-col>
+      </ion-row>
+      <ion-row class="row no-padding" ng-repeat="week in weeks">
+        <ion-col class="col col-15 day" ng-repeat="day in week track by $index"> {{day}} </ion-col>
+      </ion-row>
+    </ion-grid>
+ 	 </ion-content>
+
+
+</ion-view>
