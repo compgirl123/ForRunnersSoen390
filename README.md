@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/tanyamultani/ForRunnersSoen390/branch/jest_unit_testing/graph/badge.svg?token=tfG4K0KyGl)](https://codecov.io/gh/tanyamultani/ForRunnersSoen390)
+[![codecov](https://codecov.io/gh/tanyamultani/ForRunnersSoen390/branch/master/graph/badge.svg?token=tfG4K0KyGl)](https://codecov.io/gh/tanyamultani/ForRunnersSoen390)
 
 # ForRunners: A mobile application to improve your running
 
