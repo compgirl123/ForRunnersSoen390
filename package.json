@@ -4,7 +4,7 @@
   "description": "ForRunners: A gps tracker for runners",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start karma.conf.js --browsers ChromeHeadless --single-run",
-    "codecov" : "codecov"
+    "codecov": "codecov"
   },
   "dependencies": {
     "@ionic-native/sqlite": "^5.0.0",
