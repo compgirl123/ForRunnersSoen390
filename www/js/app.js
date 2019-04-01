@@ -201,6 +201,16 @@ angular
         }
       })
 
+      .state("app.email", {
+        url: "/email",
+        views: {
+          menuContent: {
+            templateUrl: "templates/email.html",
+            controller: "EmailCtrl"
+          }
+        }
+      })
+
       .state("app.help", {
         url: "/help",
         views: {

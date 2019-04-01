@@ -5108,7 +5108,29 @@ $scope.stopChallengeSession = function() {
     };
 
   }])
+   // HERE
+  .controller("EmailCtrl", function($scope, $http) {
+    var mailgunUrl = "connectconcordia.tk";
+    var mailgunApiKey = window.btoa("api:key-e63cfbbb0bb500d1b5428053228f6360")
 
+    $scope.send = function() {
+      $http({
+        "method": "POST",
+        "url": "https://api.mailgun.net/v3/" + mailgunUrl + "/messages",
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Basic " + mailgunApiKey
+        },
+        data: "from=" + "Excited User <mailgun@connectconcordia.tk>" + "&to=" + "claudia.f.feochari@hotmail.com" + "&subject=" + "MailgunTest" + "&text=" + "EmailBody"
+      }).then(function(success) {
+        console.log("SUCCESS " + JSON.stringify(success));
+      }, function(error) {
+        console.log("ERROR " + JSON.stringify(error));
+      });
+    }
+
+  })
+  // HERE
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
     "use strict";
     $scope.help_cur = 1;
