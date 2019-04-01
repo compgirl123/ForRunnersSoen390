@@ -15,13 +15,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-    
-    'node_modules/angular/angular.js',
-    'node_modules/angular-cookies/angular-cookies.js',
-    'node_modules/angular-mocks/angular-mocks.js',
-    'www/js/app.js',
-    'www/js/controllers.js',
-    'test/*.js',
+      'node_modules/angular/angular.js',
+      'node_modules/angular-mocks/angular-mocks.js',
+      'www/js/app.js',
+      'www/js/controllers.js',
+      'test/**/*.js',
      ],
 
     // list of files / patterns to exclude
@@ -32,7 +30,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'www/js/controllers.js' : 'coverage'
+      'www/**/*.js' : ['coverage'],
+      'test/**/*.js' : ['coverage']
     },
 
 
