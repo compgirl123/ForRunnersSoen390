@@ -1,0 +1,12 @@
+<ion-view view-title="{{day.name}}">
+  <ion-nav-buttons side="right">
+    <!--<button class="button button-icon button-clear ion-android-more-vertical" ng-click="openPopover($event)"></button>-->
+    <button class="button button-icon button-clear ion-android-add" ng-click="addEvent();"></button>
+  </ion-nav-buttons>
+
+  <ion-content hideBackButton="true">
+    <label class="item item-input item-stacked-label" ng-repeat="event in eventsOfDay">
+      <span class="input-label">{{event.name}}</span>
+    </label>
+  </ion-content>
+</ion-view>

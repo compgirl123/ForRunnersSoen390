@@ -5402,7 +5402,9 @@ $scope.stopChallengeSession = function() {
 
   })
 
-  .controller("CalendarCtrl",function($scope){
+  .controller("CalendarCtrl",function(
+    $scope,$state
+  ){
       $scope.todayDate = new Date();
       var days=[31,28,31,30,31,30,31,31,30,31,30,31]; //Days of each month
       $scope.months=['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -5418,7 +5420,7 @@ $scope.stopChallengeSession = function() {
           $scope.month=$scope.months[currentMonth-1];
         }
         buildMonth();
-      }
+      };
 
       $scope.next=function(){
         var n = $scope.months.indexOf($scope.month);
@@ -5429,7 +5431,34 @@ $scope.stopChallengeSession = function() {
           $scope.month=$scope.months[n+1];
         }
         buildMonth();
-      }
+      };
+
+      $scope.addEvent = function() {
+        $state.go("app.createEvent");
+      };
+
+      $scope.seeEvents= function(day){
+        if(day!=""){
+          let key = 'selectedDay';
+          var name=$scope.month+" "+day+","+$scope.year;
+          var date= Date.parse(new Date($scope.year,$scope.months.indexOf($scope.month), day));
+          var id = firebase.auth().currentUser.uid;
+          var rootRef = firebase.database().ref("Users/"+id+"/events").orderByKey();
+          rootRef.once("value",function(snapshot) {
+              $scope.events=[];
+              snapshot.forEach(function(childSnapshot) {
+              var childData = childSnapshot.val();
+              $scope.events.push(childData);
+            });
+          }).then(function(){
+            let value = {"name":name,"date":date,"events":$scope.events};
+                value = JSON.stringify(value);
+                sessionStorage.setItem(key, value);
+            $state.go("app.dayEvents");
+          });
+        }
+
+      };
 
       function buildMonth() {
         var first_of_month=new Date($scope.year, $scope.months.indexOf($scope.month),1);//First day of month
@@ -5437,7 +5466,6 @@ $scope.stopChallengeSession = function() {
         var num_weeks =Math.floor((days[$scope.months.indexOf($scope.month)]+first_day_month)/7);
         if(days[1]==28){
           days[1]+=CheckLeapYear($scope.year)?1:0;
-          console.log(days[1]);
         }else{
           if(days[1]==29 && CheckLeapYear($scope.year)){
             days[1]=29;
@@ -5467,4 +5495,58 @@ $scope.stopChallengeSession = function() {
       function CheckLeapYear(year){
       return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
       }
+
+  })
+
+  .controller("EventCtrl",function($scope,$state){
+
+    $scope.changeStart = function() {
+      if($scope.eventEndTime!=null && $scope.eventStartTime >= $scope.eventEndTime){
+        $scope.startError=true;
+      }else{
+        $scope.startError=false;
+        $scope.endError=false;
+      }
+    };
+    $scope.changeEnd = function() {
+      if($scope.eventStartTime!=null && $scope.eventEndTime <= $scope.eventStartTime){
+        $scope.endError=true;
+      }else{
+        $scope.endError=false;
+        $scope.startError=false;
+      }
+    };
+
+    $scope.saveEvent= function(){
+        var id = firebase.auth().currentUser.uid;
+        var eventId=Date.parse(new Date())+$scope.eventName;
+        firebase.database().ref("Users/"+id+"/events/"+eventId).set({
+          'name':$scope.eventName,
+          'eventDate':Date.parse($scope.eventDate),
+          'startHour':$scope.eventStartTime.getHours(),
+          'startMin':$scope.eventStartTime.getMinutes(),
+          'endHour': $scope.eventEndTime.getHours(),
+          'endMin': $scope.eventEndTime.getMinutes(),
+        });
+        $state.go("app.calendar");
+    };
+  })
+
+  .controller("EventsCtrl", function($scope){
+    if(sessionStorage.getItem('selectedDay')!=null){
+      $scope.day=JSON.parse(sessionStorage.getItem('selectedDay'));
+      var allEvents=$scope.day.events;
+      $scope.eventsOfDay=[];
+      for(event in allEvents){
+        if(allEvents[event].eventDate==$scope.day.date){
+          $scope.eventsOfDay.push(allEvents[event]);
+        }
+      }
+
+    }
+
+
+
+
+
   });

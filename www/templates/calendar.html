@@ -1,5 +1,10 @@
 <ion-view view-title="{{ '_calendar' | translate }}">
 
+  <ion-nav-buttons side="right">
+    <!--<button class="button button-icon button-clear ion-android-more-vertical" ng-click="openPopover($event)"></button>-->
+    <button class="button button-icon button-clear ion-android-add" ng-click="addEvent();"></button>
+  </ion-nav-buttons>
+
  	 <ion-content hideBackButton="true">
 
      <ion-list-header class="row list_header">
@@ -9,16 +14,16 @@
     </ion-list-header>
     <ion-grid>
         <ion-row class="row no-padding">
-            <ion-col class="col weekDays"> S </ion-col>
-            <ion-col class="col weekDays"> M </ion-col>
-            <ion-col class="col weekDays"> T </ion-col>
-            <ion-col class="col weekDays"> W </ion-col>
-            <ion-col class="col weekDays"> T </ion-col>
-            <ion-col class="col weekDays"> F </ion-col>
-            <ion-col class="col weekDays"> S </ion-col>
+            <ion-col class="col weekDays"> Su </ion-col>
+            <ion-col class="col weekDays"> Mo </ion-col>
+            <ion-col class="col weekDays"> Tu </ion-col>
+            <ion-col class="col weekDays"> We </ion-col>
+            <ion-col class="col weekDays"> Th </ion-col>
+            <ion-col class="col weekDays"> Fr </ion-col>
+            <ion-col class="col weekDays"> Sa </ion-col>
       </ion-row>
       <ion-row class="row no-padding" ng-repeat="week in weeks">
-        <ion-col class="col col-15 day" ng-repeat="day in week track by $index"> {{day}} </ion-col>
+        <ion-col class="col col-15 day" ng-repeat="day in week track by $index" ng-click="seeEvents(day)"> {{day}} </ion-col>
       </ion-row>
     </ion-grid>
  	 </ion-content>

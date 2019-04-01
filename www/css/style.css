@@ -332,7 +332,7 @@ ion-item.food_box:hover {
     text-align:center;
 }
 
-input[type=text], input[type=number], select {
+input[type=text], input[type=number],input[type=date],input[type=time], select {
   width: 100%;
   padding: 12px 10px;
   margin: 8px 0;
@@ -340,7 +340,7 @@ input[type=text], input[type=number], select {
   border-radius: 20px;
   box-sizing: border-box;
 }
-input[type=number]{
+input[type=number],input[type=date],input[type=time]{
   text-align:right;
 }
 
@@ -524,6 +524,7 @@ video {
   border-right-style: solid;
   border-width: 0.5px;
   text-align: center;
+  border-color: #bfbfbf;
 }
 i.fa-angle-left {
       text-align: left;
@@ -536,4 +537,5 @@ i.fa-angle-right {
   border-bottom-style: solid;
   border-width: 0.5px;
   height: 71px;
+  border-color: #bfbfbf;
 }

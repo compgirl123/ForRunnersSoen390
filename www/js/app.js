@@ -295,6 +295,26 @@ angular
             controller: "CalendarCtrl"
           }
         }
+      })
+
+      .state("app.createEvent", {
+        url: "/event",
+        views: {
+          menuContent: {
+            templateUrl: "templates/event.html",
+            controller: "EventCtrl"
+          }
+        }
+      })
+
+      .state("app.dayEvents", {
+        url: "/dayEvents",
+        views: {
+          menuContent: {
+            templateUrl: "templates/dayEvents.html",
+            controller: "EventsCtrl"
+          }
+        }
       });
 
     // if none of the above states are matched, use this as the fallback
