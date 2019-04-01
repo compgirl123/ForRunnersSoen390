@@ -8,7 +8,7 @@ angular
     "leaflet-directive",
     "ionic-modal-select",
     "iosDblclick",
-    "firebase"
+    "firebase","ngCordova","spotify","ngCordovaOauth"
   ])
 
   .run(function($ionicPlatform) {
@@ -72,6 +72,31 @@ angular
         templateUrl: "templates/menu.html",
         controller: "AppCtrl"
       })
+      //mywork
+
+      .state("app.lists", {
+          url: "/lists",
+          views :{
+             menuContent : {
+          templateUrl: "templates/lists.html",
+          controller: "ListsCtrl"
+        }
+      }
+        })
+
+
+        .state("app.playlist", {
+            url: "/playlist/:listid/:userid/:listname",
+            views :{
+               menuContent : {
+            templateUrl: "templates/playlist.html",
+            controller: "PlaylistCtrl"
+          }
+        }
+          })
+
+
+      //mywork
 
       .state("app.running", {
         url: "/running",
