@@ -5399,5 +5399,39 @@ $scope.stopChallengeSession = function() {
       $state.go("app.challenge");
     };
 
+    // Camera controller to add picture capturing feature
+    
+
+  })
+  
+  .controller("cameraTestCtrl", function($scope, $state){
+    $scope.takephoto = function(){
+      let opts = {
+        quality: 80,
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        mediaType: Camera.MediaType.PICTURE,
+        encodingType: Camera.EncodingType.JPEG,
+        cameraDirection: Camera.Direction.BACK
+      };
+
+      navigator.camera.getPicture($scope.ftw, $scope.wtf, opts);
+    }// end takephoto fn
+
+    $scope.wtf  = function(imgURI){
+       
+      $scope.camtest_success.push({
+        msg: imgURI,
+        photo: imgURI
+      });
+    } // end ftw fn
+
+    $scope.wtf = function(msg){
+      document.getElementById('msg').textContent = msg;
+      $scope.camtest_fail.push({
+        msg: msg
+      });
+    } // end wtf fn
+
 
   });

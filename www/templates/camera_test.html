@@ -1,0 +1,12 @@
+<ion-view view-title="{{ '_camera_test' | translate }}">
+    <ion-content hideBackButton="true">
+        <h1>Camera</h1>
+        <p>This is to capture pictures using the CAMERA to later to be used for sharing</p>
+
+        <p><img src="{{camtest_success.photo}}" alt="image" id="photo" /></p>
+        <div class="padding">
+            <button ng-click="takePhotos()" class="button button-full button-positive ink">Take PhOTO</button>
+        </div>
+        <p id="msg"></p>
+    </ion-content>
+</ion-view>

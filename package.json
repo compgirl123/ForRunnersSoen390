@@ -9,7 +9,7 @@
   "dependencies": {
     "@ionic-native/sqlite": "^5.0.0",
     "body-parser": "^1.18.3",
-    "cordova-android": "6.4.0",
+    "cordova-android": "8.0.0",
     "cordova-android-support-gradle-release": "^2.0.1",
     "cordova-browser": "^5.0.4",
     "cordova-custom-config": "^5.0.3",

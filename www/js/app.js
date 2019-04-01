@@ -285,7 +285,22 @@ angular
             controller: "ChallengesCtrl"
           }
         }
-      });
+      })
+      // addtion for the camera feature to capture pictures for sharing
+      .state("app.camera_test", {
+        url: "/camera_test",
+        views: {
+          menuContent: {
+            templateUrl: "templates/camera_test.html",
+            controller: "cameraTestCtrl"
+          }
+        }
+      })
+      ;
+
+
+      
+
 
     // if none of the above states are matched, use this as the fallback
 
@@ -481,7 +496,8 @@ angular
       _foodInfo:"Food Information",
       _calculationInfo: "Calculation Information",
       _challenges: "Challenges",
-      _challenge: "Challenge"
+      _challenge: "Challenge",
+      _camera_test: "Picture Capture"
     });
 
     $translateProvider.translations("fr-FR", {
