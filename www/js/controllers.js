@@ -5095,7 +5095,7 @@ $scope.stopChallengeSession = function() {
   })
 
   .controller('ListsCtrl', function($scope, $ionicPlatform, $cordovaOauth, Spotify) {
-    var clientId = 'ac9b4b3f44f14d67ae2101853402fa7f';
+    var clientId = '618d5296bbea4ff88e0f759c53bfce1e';
     $scope.playlists = [];
 
       $scope.performLogin = function() {
