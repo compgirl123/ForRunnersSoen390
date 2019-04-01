@@ -5112,6 +5112,7 @@ $scope.stopChallengeSession = function() {
   .controller("EmailCtrl", function($scope, $http) {
     var mailgunUrl = "connectconcordia.tk";
     var mailgunApiKey = window.btoa("api:key-e63cfbbb0bb500d1b5428053228f6360")
+    var sample_stats = "test1";
 
     $scope.send = function() {
       $http({
@@ -5121,7 +5122,10 @@ $scope.stopChallengeSession = function() {
           "Content-Type": "application/x-www-form-urlencoded",
           "Authorization": "Basic " + mailgunApiKey
         },
-        data: "from=" + "Excited User <mailgun@connectconcordia.tk>" + "&to=" + "claudia.f.feochari@hotmail.com" + "&subject=" + "MailgunTest" + "&text=" + "EmailBody"
+        data: "from=" + "ForRunners Admin <mailgun@connectconcordia.tk>" + "&to=" + "claudia.f.feochari@hotmail.com" + "&subject=" + "Your Weekly Stats" 
+        + "&html="
+        +"<h1>ForRunners : Your Weekly Stats</h1>"+
+        "<h3>Amount Ran : 4km</h3>" + "<h3>Speed of run : 2km/20mins</h3>" +"<h3>Challenges Completed : 1</h3>"
       }).then(function(success) {
         console.log("SUCCESS " + JSON.stringify(success));
       }, function(error) {
