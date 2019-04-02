@@ -7,13 +7,17 @@ describe("Sign In Tests", function(){
 
   CommonProp = {}
   CommonProp.getUserId = () => {}
-  
+  CommonProp.logoutUser = () => {}
 
-  beforeEach(inject(function(_$controller_, _$rootScope_){
+  beforeEach(inject(function(_$controller_, _$rootScope_,_$firebaseAuth_
+    ,_$firebaseAuth_, _$firebaseObject_){
     // The injector unwraps the underscores (_) from around the parameter names when matching
     
     $controller = _$controller_;
     $rootScope = _$rootScope_;
+    $firebaseAuth = _$firebaseAuth_;
+    $firebaseAuth = _$firebaseAuth_;
+    $firebaseObject = _$firebaseObject_;
     window.sessionStorage.setItem('currentUser', undefined);
   }));
 
@@ -22,7 +26,8 @@ describe("Sign In Tests", function(){
     // Added positive test with properly formatted elements
     it('Testing the signIn() function (successful login)', function() {
       var $scope = $rootScope.$new();
-      $scope.query = () => {}
+      $scope.query = () => {};
+      $firebaseAuth = {};
       var controller = $controller('LoginCtrl', { $scope: $scope,
         $firebaseAuth: $firebaseAuth,
         $state: $state,
