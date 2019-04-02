@@ -44,33 +44,26 @@ before_cache:
   - rm -rf $HOME/.gradle/caches/3.5/fileHashes/
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 cache: npm
-before_install:
-  - export LANG=en_US.UTF-8
-  - export CHROME_BIN=google-chrome
-  - export TRAVIS_TAG=$(git tag --points-at HEAD)
-  - export CODECOV_TOKEN="token"
-  - nvm install 8
-after_success:
-  - codecov --file coverage/lcov/lcov.info --disable search
-  - bash <(curl -s https://codecov.io/bash) -t token
+
 install:
-  - npm install -g ionic cordova codecov
-  - npm install htmlhint eslint --save-dev
+  - nvm install 8
   - npm install
+
 jobs:
   include:
-    - stage: Code coverage
-      script: npm run codecov --token="$CODECOV_TOKEN"
-      node_js: '6'
-    - stage: Linting
-      script: ./node_modules/.bin/htmlhint --config htmlconf.json www/index.html
-      script: ./node_modules/.bin/htmlhint --config htmlconf.json www/templates/*
-      script: ./node_modules/.bin/eslint www/js/controllers.js
+    - stage: Building
+      script: cordova platform rm android --save
+      script: cordova platform add android@latest --save
+      script: ionic cordova build android
+      node_js: '6'     
+    - stage: Static Analysis
+      script: npm lint-index
+      script: npm lint-templates
+      script: npm lint-controller
       node_js: '6'
     - stage: Testing
-      script: ./node_modules/karma/bin/karma start karma.conf.js --browsers ChromeHeadless --single-run
+      script: npm test
+      script: npm codecov --token="$CODECOV_TOKEN"
       node_js: '6' 
-    - stage: Building
-      script: true
-      node_js: '6'     
+    
     
