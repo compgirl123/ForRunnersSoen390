@@ -481,7 +481,10 @@ angular
       _foodInfo:"Food Information",
       _calculationInfo: "Calculation Information",
       _challenges: "Challenges",
-      _challenge: "Challenge"
+      _challenge: "Challenge",
+      _swipe_left_pause: "Swipe left to pause",
+      _pause: "Pause",
+      _resume: "Resume"
     });
 
     $translateProvider.translations("fr-FR", {

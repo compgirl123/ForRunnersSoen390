@@ -2396,6 +2396,11 @@ $scope.stopChallengeSession = function() {
 
     try {
       delete $scope.session.firsttime;
+      delete $scope.paused_time;
+      delete $scope.initial_paused_time;
+      delete $scope.isPaused;
+      delete $scope.isResumed;
+      delete $scope.paused_time_after_resume;
     } catch (exception) {
       console.warn(exception.message);
     }
@@ -2581,6 +2586,11 @@ $scope.stopChallengeSession = function() {
 
         try {
           delete $scope.session.firsttime;
+          delete $scope.paused_time;
+          delete $scope.initial_paused_time;
+          delete $scope.isPaused;
+          delete $scope.isResumed;
+          delete $scope.paused_time_after_resume;
         } catch (exception) {
           console.warn(exception.message);
         }
@@ -2869,8 +2879,9 @@ $scope.stopChallengeSession = function() {
         var lonnew = pos.coords.longitude;
 
         // timenew => gets current time in a number form
+        var timenew;
         if($scope.session.distcovered == 0){
-          var timenew = pos.timestamp;
+          timenew = pos.timestamp;
         }
         else{
           //var timenew = pos.timestamp;
@@ -2957,9 +2968,17 @@ $scope.stopChallengeSession = function() {
           if ($scope.session.firsttime !== 0) {
 
             //Elapsed time
+            if($scope.isResumed){
+              elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime - $scope.paused_time;
+              $scope.elapsed_time = elapsed;
 
+            }else if($scope.isPaused){
+              elapsed = $scope.elapsed_time;
+
+            }else {
             elapsed = timenew - $scope.session.firsttime;
-
+            $scope.elapsed_time = elapsed;
+            };
             var hour = Math.floor(elapsed / 3600000);
 
             var minute = (
@@ -3118,9 +3137,15 @@ $scope.stopChallengeSession = function() {
 
                   if (dspeed > 0.001) {
 
-                    $scope.session.equirect += d;
+                    if($scope.isPaused==true){
 
-                    $rootScope.distance_travelled += d;
+                      $scope.session.equirect = $rootScope.distance_travelled;
+
+                    }else {
+
+                      $scope.session.equirect += d;
+                      $rootScope.distance_travelled += d;
+                    };
 
                   }
 
@@ -3524,6 +3549,19 @@ $scope.stopChallengeSession = function() {
       }
     };
 
+    $scope.pauseSession = function() {
+      $scope.initial_paused_time = Date.now();
+      $scope.isPaused = true;
+      $scope.isResumed = false;
+    };
+
+    $scope.resumeSession = function() {
+      $scope.paused_time_after_resume = (Date.now() - $scope.initial_paused_time);
+      $scope.paused_time = $scope.paused_time+ $scope.paused_time_after_resume;
+      $scope.isPaused = false;
+      $scope.isResumed = true;
+    };
+
     $scope.startSession = function() {
       $scope.running = true;
       $scope.gpslostannounced = false;
@@ -3767,10 +3805,23 @@ $scope.stopChallengeSession = function() {
       $scope.runningTimeInterval = $interval(function() {
 
         if ($scope.session.firsttime > 0) {
-
+          var elapsed;
           console.debug($scope.session.firsttime);
 
-          var elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
+          if($scope.isResumed){
+
+            elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime - $scope.paused_time;
+            $scope.elapsed_time = elapsed;
+
+          }else if($scope.isPaused){
+
+            elapsed = $scope.elapsed_time;
+
+          }else {
+            elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
+            $scope.elapsed_time = elapsed;
+            $scope.paused_time = 0;
+          };
 
           var hour = Math.floor(elapsed / 3600000);
 
