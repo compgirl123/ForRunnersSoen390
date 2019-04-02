@@ -23,7 +23,10 @@
             <ion-col class="col weekDays"> Sa </ion-col>
       </ion-row>
       <ion-row class="row no-padding" ng-repeat="week in weeks">
-        <ion-col class="col col-15 day" ng-repeat="day in week track by $index" ng-click="seeEvents(day)"> {{day}} </ion-col>
+        <ion-col class="col col-15 day" ng-repeat="day in week track by $index"
+           ng-click="seeEvents(day.number)"> {{day.number}}
+          <ion-col ng-style="{'background-color':'{{event.color}}'}" ng-repeat="event in day.events">{{event}}</ion-col>
+        </ion-col>
       </ion-row>
     </ion-grid>
  	 </ion-content>

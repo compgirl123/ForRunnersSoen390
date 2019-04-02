@@ -4996,6 +4996,7 @@ $scope.stopChallengeSession = function() {
     sessionStorage.removeItem('currentUser');
     sessionStorage.removeItem('currentFood');
     sessionStorage.removeItem('foodList');
+    sessionStorage.removeItem('selectedDay');
     $window.location.href="#/app/login";
     $window.location.reload();
     };
@@ -5027,7 +5028,9 @@ $scope.stopChallengeSession = function() {
 
             let key = 'currentUser';
             let value = {'username':userInfo.username,'email':userInfo.email,'age':userInfo.age,
-                                  'weight':userInfo.weight, 'height':userInfo.height, 'gender': userInfo.gender, 'activity': userInfo.activity};
+                         'weight':userInfo.weight, 'height':userInfo.height, 'gender': userInfo.gender,
+                         'activity': userInfo.activity,'uid':user.uid
+                        };
             value = JSON.stringify(value);
             sessionStorage.setItem(key, value);
 
@@ -5410,7 +5413,23 @@ $scope.stopChallengeSession = function() {
       $scope.months=['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
       $scope.month=$scope.months[$scope.todayDate.getMonth()];
       $scope.year=$scope.todayDate.getFullYear();
-      buildMonth();
+      if(sessionStorage.getItem("currentUser")!=null){
+        $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
+      }
+      var id=$scope.user.uid;
+
+      var rootRef = firebase.database().ref("Users/"+id+"/events").orderByKey();
+
+      rootRef.once("value",function(snapshot) {
+          $scope.allEvents=[];
+          snapshot.forEach(function(childSnapshot) {
+          var childData = childSnapshot.val();
+          $scope.allEvents.push(childData);
+        });
+      }).then(function(){
+          buildMonth();
+      });
+
       $scope.previous=function(){
         var currentMonth = $scope.months.indexOf($scope.month);
         if(currentMonth==0){
@@ -5461,6 +5480,22 @@ $scope.stopChallengeSession = function() {
       };
 
       function buildMonth() {
+        //Events of this months
+        var eventsOfMonth={};
+        for(ev in $scope.allEvents){
+          var eventDate =new Date($scope.allEvents[ev].eventDate);
+          if(eventDate.getMonth()==$scope.months.indexOf($scope.month)){
+            if(!eventsOfMonth[eventDate.getDate()]){
+              var listDayEv=[];
+              listDayEv.push(ev);
+              eventsOfMonth[eventDate.getDate()]=listDayEv;
+            }else {
+              eventsOfMonth[eventDate.getDate()].push(ev);
+            }
+
+          }
+        }
+        console.log(eventsOfMonth);
         var first_of_month=new Date($scope.year, $scope.months.indexOf($scope.month),1);//First day of month
         var first_day_month=first_of_month.getDay();
         var num_weeks =Math.floor((days[$scope.months.indexOf($scope.month)]+first_day_month)/7);
@@ -5483,7 +5518,13 @@ $scope.stopChallengeSession = function() {
                   $scope.weeks[i][j]="";
                 }else{
                   if(day_number<=days[$scope.months.indexOf($scope.month)]){
-                    $scope.weeks[i][j]=day_number;
+                    if(eventsOfMonth[day_number]){
+                      console.log(eventsOfMonth[day_number]);
+                      $scope.weeks[i][j]={"number":day_number,"events":eventsOfMonth[day_number]};
+                      console.log($scope.weeks[i][j]);
+                    }else{
+                      $scope.weeks[i][j]={"number":day_number};
+                    }
                     day_number++;
                   }else{
                     $scope.weeks[i][j]="";
@@ -5498,7 +5539,7 @@ $scope.stopChallengeSession = function() {
 
   })
 
-  .controller("EventCtrl",function($scope,$state){
+  .controller("EventCtrl",function($scope,$state,$window){
 
     $scope.changeStart = function() {
       if($scope.eventEndTime!=null && $scope.eventStartTime >= $scope.eventEndTime){
@@ -5528,7 +5569,8 @@ $scope.stopChallengeSession = function() {
           'endHour': $scope.eventEndTime.getHours(),
           'endMin': $scope.eventEndTime.getMinutes(),
         });
-        $state.go("app.calendar");
+        $window.location.href="#/app/calendar";
+        $window.location.reload();
     };
   })
 
