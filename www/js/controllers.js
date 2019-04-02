@@ -5459,8 +5459,8 @@ $scope.stopChallengeSession = function() {
       $scope.seeEvents= function(day){
         if(day!=""){
           let key = 'selectedDay';
-          var name=$scope.month+" "+day+","+$scope.year;
-          var date= Date.parse(new Date($scope.year,$scope.months.indexOf($scope.month), day));
+          var name=$scope.month+" "+day.number+","+$scope.year;
+          var date= Date.parse(new Date($scope.year,$scope.months.indexOf($scope.month), day.number));
           var id = firebase.auth().currentUser.uid;
           var rootRef = firebase.database().ref("Users/"+id+"/events").orderByKey();
           rootRef.once("value",function(snapshot) {
@@ -5470,7 +5470,7 @@ $scope.stopChallengeSession = function() {
               $scope.events.push(childData);
             });
           }).then(function(){
-            let value = {"name":name,"date":date,"events":$scope.events};
+            let value = {"name":name,"date":date,"events":$scope.events,"color":day.events};
                 value = JSON.stringify(value);
                 sessionStorage.setItem(key, value);
             $state.go("app.dayEvents");
@@ -5487,15 +5487,16 @@ $scope.stopChallengeSession = function() {
           if(eventDate.getMonth()==$scope.months.indexOf($scope.month)){
             if(!eventsOfMonth[eventDate.getDate()]){
               var listDayEv=[];
-              listDayEv.push(ev);
+              var color=getRandomColor();
+              listDayEv.push({"color":color});
               eventsOfMonth[eventDate.getDate()]=listDayEv;
             }else {
-              eventsOfMonth[eventDate.getDate()].push(ev);
+              var color=getRandomColor();
+              eventsOfMonth[eventDate.getDate()].push({"color":color});
             }
 
           }
         }
-        console.log(eventsOfMonth);
         var first_of_month=new Date($scope.year, $scope.months.indexOf($scope.month),1);//First day of month
         var first_day_month=first_of_month.getDay();
         var num_weeks =Math.floor((days[$scope.months.indexOf($scope.month)]+first_day_month)/7);
@@ -5519,9 +5520,7 @@ $scope.stopChallengeSession = function() {
                 }else{
                   if(day_number<=days[$scope.months.indexOf($scope.month)]){
                     if(eventsOfMonth[day_number]){
-                      console.log(eventsOfMonth[day_number]);
                       $scope.weeks[i][j]={"number":day_number,"events":eventsOfMonth[day_number]};
-                      console.log($scope.weeks[i][j]);
                     }else{
                       $scope.weeks[i][j]={"number":day_number};
                     }
@@ -5535,6 +5534,17 @@ $scope.stopChallengeSession = function() {
         }
       function CheckLeapYear(year){
       return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+      }
+
+      function getRandomColor() {
+          var letters = '012345'.split('');
+          var color = '#';
+          color += letters[Math.round(Math.random() * 5)];
+          letters = '0123456789ABCDEF'.split('');
+          for (var i = 0; i < 5; i++) {
+              color += letters[Math.round(Math.random() * 15)];
+          }
+          return color;
       }
 
   })
@@ -5579,14 +5589,21 @@ $scope.stopChallengeSession = function() {
       $scope.day=JSON.parse(sessionStorage.getItem('selectedDay'));
       var allEvents=$scope.day.events;
       $scope.eventsOfDay=[];
+      var counter=0;
       for(event in allEvents){
         if(allEvents[event].eventDate==$scope.day.date){
+          allEvents[event].startMin=pad2(allEvents[event].startMin);
+          allEvents[event].endMin=pad2(allEvents[event].endMin);
+          allEvents[event].color=$scope.day.color[counter].color;
+          counter++;
           $scope.eventsOfDay.push(allEvents[event]);
         }
       }
-
+      console.log($scope.eventsOfDay);
     }
-
+    function pad2(number) {
+         return (number < 10 ? '0' : '') + number;
+    }
 
 
 

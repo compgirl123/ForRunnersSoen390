@@ -5,8 +5,10 @@
   </ion-nav-buttons>
 
   <ion-content hideBackButton="true">
-    <label class="item item-input item-stacked-label" ng-repeat="event in eventsOfDay">
-      <span class="input-label">{{event.name}}</span>
+    <label class="item item-input item-stacked-label eventsOfDay" ng-repeat="event in eventsOfDay">
+      <span class="row eventName" ng-style="{'background-color':'{{event.color}}'}">{{event.name}}</span>
+      <span class="col">From : {{event.startHour}}:{{event.startMin}}</span>
+      <span class="col">To : {{event.endHour}}:{{event.endMin}}</span>
     </label>
   </ion-content>
 </ion-view>
