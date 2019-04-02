@@ -1,0 +1,33 @@
+<ion-view view-title="{{ '_new_food' | translate }}">
+
+ 	 <ion-content hideBackButton="true">
+ 	 	<form ng-controller="FoodCtrl" ng-submit="save()">
+ 	 	<div class="list">
+ 	 		<label class="item item-input item-stacked-label">
+          		<span class="input-label">Food Name: </span>
+          		<input type="text" placeholder="Food" ng-model="foodName" ng-change="change()" required/>
+        	</label>
+
+        	<span class="errorDuplicate" ng-show="errorMessage">Food already exits.</span>
+
+        	<label class="item item-input item-stacked-label">
+          		<span class="input-label">Amount:</span>
+          		<input type="number" placeholder="1" min="0"  ng-model="amount" required/>
+        	</label>
+
+        	<label class="item item-input item-stacked-label">
+          		<span class="input-label">Unit :</span>
+          		<input type="text" placeholder="i.e : g, cup, liter, slice, oz" min="1"  ng-model="unit" required/>
+        	</label>
+
+        	<label class="item item-input item-stacked-label">
+          		<span class="input-label">Calories: </span>
+          		<input type="number" placeholder="Calories in kcal"  ng-model="calories" required/>
+        	</label>
+        	<input type="submit" value="Save new food"/>
+ 	 	</div> 	 	 	 	    
+ 	 	</form>
+ 	 </ion-content>
+
+	      
+</ion-view>
