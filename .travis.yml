@@ -52,15 +52,15 @@ install:
 
 jobs:
   include:
-    - stage: Building
-      script: 
-      - ionic cordova platform add android@7.0.0
-      - ionic cordova build android
-      node_js: '6'     
     - stage: Static Analysis
       script: npm lint-index
       script: npm lint-templates
       script: npm lint-controller
+      node_js: '6'    
+    - stage: Building
+      script: 
+      - ionic cordova platform add android@7.0.0
+      - ionic cordova build android
       node_js: '6'
     - stage: Testing
       script: npm test
