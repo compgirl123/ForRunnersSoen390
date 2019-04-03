@@ -1053,7 +1053,9 @@ angular
       session.eleUp = Math.round(eleUp);
       session.eleDown = Math.round(eleDown);
       session.distk = session.distance.toFixed(0);
-      session.duration = new Date(d2 - d1);
+      //session.duration = new Date(d2 - d1);
+      var total_duration = new Date(Date.UTC(0, 0, 0, $scope.hours, $scope.minute, $scope.second));
+      session.duration = total_duration;
       session.start = gpxPoints[0].timestamp;
       session.end = gpxPoints[gpxPoints.length - 1].timestamp;
       session.overnote = (
@@ -2571,6 +2573,7 @@ $scope.stopChallengeSession = function() {
 
     //my work
     $scope.stopSession = function() {
+      console.log("Duration: ");
       $scope.session.saving = true;
       $timeout(function() {
         try {
@@ -3824,14 +3827,17 @@ $scope.stopChallengeSession = function() {
           };
 
           var hour = Math.floor(elapsed / 3600000);
+          $scope.hours = hour;
 
           var minute = ("0" + (Math.floor(elapsed / 60000) - hour * 60)).slice(
 
             -2
 
           );
+          $scope.minute = minute;
 
           var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
+          $scope.second = second;
 
           $scope.session.time = hour + ":" + minute + ":" + second;
 
