@@ -54,7 +54,7 @@ jobs:
   include:
     - stage: Building
       script: cordova platform rm android --save
-      script: cordova platform add android@latest --save
+      script: cordova platform add android@8.0.0 --save
       script: ionic cordova build android
       node_js: '6'     
     - stage: Static Analysis
