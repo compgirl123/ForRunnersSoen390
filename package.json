@@ -14,7 +14,6 @@
     "body-parser": "^1.18.3",
     "cordova": "^9.0.0",
     "cordova-android": "8.0.0",
-    "cordova-android-support-gradle-release": "^2.0.1",
     "cordova-browser": "^5.0.4",
     "cordova-custom-config": "^5.0.3",
     "cordova-plugin-app-version": "^0.1.9",
@@ -94,9 +93,6 @@
       "cordova-plugin-filepicker": {},
       "cordova-plugin-device": {},
       "cordova-plugin-tts": {},
-      "cordova-android-support-gradle-release": {
-        "ANDROID_SUPPORT_VERSION": "27.+"
-      },
       "cordova-plugin-x-socialsharing": {
         "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
       }
