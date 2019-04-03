@@ -53,7 +53,6 @@ install:
 jobs:
   include:
     - stage: Building
-      script: ls coverage/
       script: cordova platform add android@8.0.0
       script: cordova clean android
       script: cordova build android
