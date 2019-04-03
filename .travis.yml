@@ -55,7 +55,7 @@ jobs:
     - stage: Static Analysis
       script: 
       - npm run lint-index
-      - npm run lint-templates
+      - npm run lint-template
       - npm run lint-controller
       node_js: '6'    
     - stage: Building
