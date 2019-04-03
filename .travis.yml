@@ -53,9 +53,10 @@ install:
 jobs:
   include:
     - stage: Building
-      script: cordova platform add android@8.0.0
-      script: cordova clean android
-      script: cordova build android
+      script: 
+      - cordova platform add android@6
+      - cordova clean android
+      - cordova build android
       node_js: '6'     
     - stage: Static Analysis
       script: npm lint-index
