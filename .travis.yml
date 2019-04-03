@@ -53,8 +53,10 @@ install:
 jobs:
   include:
     - stage: Building
+      script: ls coverage/
       script: cordova platform rm android --save
       script: cordova platform add android@8.0.0 --save
+      script: cordova clean android
       script: ionic cordova build android
       node_js: '6'     
     - stage: Static Analysis
