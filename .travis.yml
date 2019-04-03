@@ -54,9 +54,8 @@ jobs:
   include:
     - stage: Building
       script: 
-      - cordova platform add android@6
-      - cordova clean android
-      - cordova build android
+      - ionic cordova platform add android@7.0.0
+      - ionic cordova build android
       node_js: '6'     
     - stage: Static Analysis
       script: npm lint-index
