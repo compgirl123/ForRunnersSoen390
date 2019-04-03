@@ -1042,7 +1042,8 @@ angular
       var gpxpacewithoutpause = new Date(dwithoutpause / dTotal);
       session.gpxMaxHeight = Math.round(maxHeight);
       session.gpxMinHeight = Math.round(minHeight);
-      session.distance = Math.round(dTotal * 100) / 100;
+      //session.distance = Math.round(dTotal * 100) / 100;
+      session.distance = Math.round($rootScope.distance_travelled * 100) / 100;
       session.pace = gpxpace;
       session.speed = gpxspeed;
       session.bar = 0;
@@ -2196,7 +2197,7 @@ angular
       $state.go("app.sessions");
     };
     $scope.gotoapp = function() {
-      window.location="../index.html";
+      window.location="index.html";
     };
     $scope.gotodashboard = function() {
       $state.go("app.dashboard");
@@ -2573,7 +2574,6 @@ $scope.stopChallengeSession = function() {
 
     //my work
     $scope.stopSession = function() {
-      console.log("Duration: ");
       $scope.session.saving = true;
       $timeout(function() {
         try {
@@ -3136,16 +3136,8 @@ $scope.stopChallengeSession = function() {
 
                   elapsed = timenew - $scope.session.firsttime;
 
-
-
                   if (dspeed > 0.001) {
-
-                    if($scope.isPaused==true){
-
-                      $scope.session.equirect = $rootScope.distance_travelled;
-
-                    }else {
-
+                    if(!$scope.isPaused){
                       $scope.session.equirect += d;
                       $rootScope.distance_travelled += d;
                     };
@@ -3568,6 +3560,8 @@ $scope.stopChallengeSession = function() {
     $scope.startSession = function() {
       $scope.running = true;
       $scope.gpslostannounced = false;
+      $rootScope.distance_travelled = 0;
+      $scope.isPaused = false;
       $scope.session = {
         gpsGoodSignalToggle: true,
         recclicked: new Date().getTime(),
