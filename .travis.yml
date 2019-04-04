@@ -58,14 +58,16 @@ jobs:
       - npm run lint-template
       - npm run lint-controller
       node_js: '6'    
+    - stage: Testing
+      script: 
+      - npm run test
+      - npm codecov --token="$CODECOV_TOKEN"
+      node_js: '6'    
     - stage: Building
       script: 
       - ionic cordova platform add android@7.0.0
       - ionic cordova build android
       node_js: '6'
-    - stage: Testing
-      script: npm test
-      script: npm codecov --token="$CODECOV_TOKEN"
-      node_js: '6' 
+ 
     
     
