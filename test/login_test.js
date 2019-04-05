@@ -16,7 +16,6 @@ describe("Sign In Tests", function(){
     $controller = _$controller_;
     $rootScope = _$rootScope_;
     $firebaseAuth = _$firebaseAuth_;
-    $firebaseAuth = _$firebaseAuth_;
     $firebaseObject = _$firebaseObject_;
     window.sessionStorage.setItem('currentUser', undefined);
   }));
@@ -25,17 +24,17 @@ describe("Sign In Tests", function(){
   describe('LoginCtrl', function() {
     // Added positive test with properly formatted elements
     it('Testing the signIn() function (successful login)', function() {
-      var $scope = $rootScope.$new();
+      $scope = $rootScope.$new();
       $scope.query = () => {};
-      $firebaseAuth = {};
-      var controller = $controller('LoginCtrl', { $scope: $scope,
-        $firebaseAuth: $firebaseAuth,
-        $state: $state,
-        CommonProp: CommonProp,
-        $window: $window,
-        $firebaseObject: $firebaseObject});
-      
-        $scope.user = {email:'gintoki@gintama.com', password:'referencesEverywhere'} 
+      //$firebaseAuth = {};
+      $controller = $controller('LoginCtrl', { $scope: $scope,
+      $firebaseAuth: $firebaseAuth,
+      $state: $state,
+      CommonProp: CommonProp,
+      $window: $window,
+      $firebaseObject: $firebaseObject});
+    
+      $scope.user = {email:'gintoki@gintama.com', password:'referencesEverywhere'} 
       $scope.signIn();
       // create a variable 
       //sessionStorage = spyOn(sessionStorage, 'setItem').and.callFake((arg) => {return "key:currentUser"})

@@ -61,7 +61,7 @@ jobs:
     - stage: Testing
       script: 
       - npm run test
-      - npm codecov --token="$CODECOV_TOKEN"
+      - npm run codecov
       node_js: '6'    
     - stage: Building
       script: 

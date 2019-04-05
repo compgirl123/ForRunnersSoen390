@@ -7,7 +7,7 @@
     "lint-index": "./node_modules/.bin/htmlhint --config htmlconf.json www/index.html",
     "lint-template": "./node_modules/.bin/htmlhint --config htmlconf.json www/templates/*",
     "lint-controller": "./node_modules/.bin/eslint www/js/controllers.js",
-    "codecov": "codecov --file coverage/lcov/lcov.info --disable search"
+    "codecov": "codecov --file ./coverage/lcov/lcov.info --disable search --token=\"$CODECOV_TOKEN\""
   },
   "dependencies": {
     "@ionic-native/sqlite": "^5.0.0",
@@ -65,6 +65,7 @@
     "karma": "^4.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.2",
+    "karma-firebase": "^0.2.0",
     "karma-jasmine": "^2.0.1",
     "karma-junit-reporter": "^1.2.0",
     "karma-phantomjs-launcher": "^1.0.4",
