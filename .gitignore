@@ -33,6 +33,7 @@ plugins/
 platforms/android/
 platforms/ios/
 node_modules/
+coverage/
 # Built application files
 *.apk
 *.ap_
