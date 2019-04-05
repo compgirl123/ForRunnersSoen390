@@ -5109,10 +5109,47 @@ $scope.stopChallengeSession = function() {
 
   }])
    // HERE
-  .controller("EmailCtrl", function($scope, $http) {
+  .controller("EmailCtrl", 
+   function($scope, $http,$stateParams) {
+
+      if(sessionStorage.getItem('currentUser')!=null){
+        $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
+      }
+      //console.log($scope.user.email);
+      
     var mailgunUrl = "connectconcordia.tk";
     var mailgunApiKey = window.btoa("api:key-e63cfbbb0bb500d1b5428053228f6360")
-    var sample_stats = "test1";
+    var email = $scope.user.email;
+
+    console.log(email);
+
+    /*$scope.session = $scope.sessionsIndex[$stateParams.sessionId];
+    console.log($scope.session)
+    if ($scope.session.equipments === undefined) {
+      $scope.session.equipments = [];
+    }*/
+    
+    /*if ($scope.session.map === undefined) {
+      $scope.session.map = {
+        center: {
+          lat: 48,
+          lng: 4,
+          zoom: 5,
+          autoDiscover: false
+        },
+        paths: {},
+        bounds: {},
+        controls: {
+          scale: true
+        },
+        markers: {},
+        tiles: {
+          url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        }
+      };
+    }*/
+
+    //console.log($scope.session.speed)
 
     $scope.send = function() {
       $http({
@@ -5122,7 +5159,7 @@ $scope.stopChallengeSession = function() {
           "Content-Type": "application/x-www-form-urlencoded",
           "Authorization": "Basic " + mailgunApiKey
         },
-        data: "from=" + "ForRunners Admin <mailgun@connectconcordia.tk>" + "&to=" + "claudia.f.feochari@hotmail.com" + "&subject=" + "Your ForRunners Stats" 
+        data: "from=" + "ForRunners Admin <mailgun@connectconcordia.tk>" + "&to=" + email + "&subject=" + "Your ForRunners Stats" 
         + "&html="
         +"<h1>ForRunners : Your Stats</h1>"+
         '<div class="grid-container" style = "display: grid;grid-template-columns: auto auto;background-color: #000000;padding: 0px;">'+
