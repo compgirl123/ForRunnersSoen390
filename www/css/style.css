@@ -552,7 +552,17 @@ i.fa-angle-right {
   padding: 0px 0px 10px;
   margin: 0px 5px 10px;
 }
+
 .eventName{
+    font-size: large;
     color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+.utilities_btns {
+	float:right;
+}
+.right-edge {
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor:pointer;
 }

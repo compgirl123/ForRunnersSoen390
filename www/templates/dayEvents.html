@@ -5,10 +5,15 @@
   </ion-nav-buttons>
 
   <ion-content hideBackButton="true">
-    <label class="item item-input item-stacked-label eventsOfDay" ng-repeat="event in eventsOfDay">
-      <span class="row eventName" ng-style="{'background-color':'{{event.color}}'}">{{event.name}}</span>
+    <div class="item item-input item-stacked-label eventsOfDay" ng-repeat="event in eventsOfDay">
+      <div class="eventName" ng-style="{'background-color':'{{event.color}}'}">{{event.name}}
+        <div class="utilities_btns">
+        <button data-toggle='tooltip' title='Edit' class="right-edge" ng-click="edit(event);"><i class="fas fa-edit"></i></button>
+        <button data-toggle='tooltip' title='Delete' class="right-edge" ng-click="deleteEvent(event);"><i class="fas fa-trash-alt"></i></button>
+        </div>
+      </div>
       <span class="col">From : {{event.startHour}}:{{event.startMin}}</span>
       <span class="col">To : {{event.endHour}}:{{event.endMin}}</span>
-    </label>
+    </div>
   </ion-content>
 </ion-view>

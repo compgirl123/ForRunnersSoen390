@@ -5417,7 +5417,6 @@ $scope.stopChallengeSession = function() {
         $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
       }
       var id=$scope.user.uid;
-
       var rootRef = firebase.database().ref("Users/"+id+"/events").orderByKey();
 
       rootRef.once("value",function(snapshot) {
@@ -5532,19 +5531,25 @@ $scope.stopChallengeSession = function() {
               }// end for week days
             }// end for weeks
         }
+
       function CheckLeapYear(year){
       return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
       }
 
       function getRandomColor() {
-          var letters = '012345'.split('');
-          var color = '#';
-          color += letters[Math.round(Math.random() * 5)];
-          letters = '0123456789ABCDEF'.split('');
-          for (var i = 0; i < 5; i++) {
-              color += letters[Math.round(Math.random() * 15)];
-          }
-          return color;
+        var lum = -0.25;
+        var hex = String('#' + Math.random().toString(16).slice(2, 8).toUpperCase()).replace(/[^0-9a-f]/gi, '');
+        if (hex.length < 6) {
+            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        }
+        var color = "#",
+            c, i;
+        for (i = 0; i < 3; i++) {
+            c = parseInt(hex.substr(i * 2, 2), 16);
+            c = Math.round(Math.min(Math.max(0, c + (c * lum)), 180)).toString(16);
+            color += ("00" + c).substr(c.length);
+        }
+        return color;
       }
 
   })
@@ -5570,7 +5575,7 @@ $scope.stopChallengeSession = function() {
 
     $scope.saveEvent= function(){
         var id = firebase.auth().currentUser.uid;
-        var eventId=Date.parse(new Date())+$scope.eventName;
+        var eventId=Date.parse(new Date());
         firebase.database().ref("Users/"+id+"/events/"+eventId).set({
           'name':$scope.eventName,
           'eventDate':Date.parse($scope.eventDate),
@@ -5578,13 +5583,19 @@ $scope.stopChallengeSession = function() {
           'startMin':$scope.eventStartTime.getMinutes(),
           'endHour': $scope.eventEndTime.getHours(),
           'endMin': $scope.eventEndTime.getMinutes(),
+          'id':eventId
         });
         $window.location.href="#/app/calendar";
         $window.location.reload();
     };
   })
 
-  .controller("EventsCtrl", function($scope){
+  .controller("EventsCtrl", function(
+    $scope,
+    $ionicPopup,
+    $state
+  ){
+
     if(sessionStorage.getItem('selectedDay')!=null){
       $scope.day=JSON.parse(sessionStorage.getItem('selectedDay'));
       var allEvents=$scope.day.events;
@@ -5595,17 +5606,37 @@ $scope.stopChallengeSession = function() {
           allEvents[event].startMin=pad2(allEvents[event].startMin);
           allEvents[event].endMin=pad2(allEvents[event].endMin);
           allEvents[event].color=$scope.day.color[counter].color;
+          allEvents[event].id=allEvents[event].id;
           counter++;
           $scope.eventsOfDay.push(allEvents[event]);
         }
       }
-      console.log($scope.eventsOfDay);
-    }
+    };
+
     function pad2(number) {
          return (number < 10 ? '0' : '') + number;
-    }
+    };
 
+    $scope.deleteEvent = function(event){
 
+      // confirm dialog
+      var confirmPopup = $ionicPopup.confirm({
+        title: "Delete",
+        template: "Are you sure you want to delete this event?"
+      });
+      confirmPopup.then(function(res) {
+        if (res) {
+          $scope.eventsOfDay.splice($scope.eventsOfDay.indexOf(event), 1);
+          var id = firebase.auth().currentUser.uid;
+          var ref = firebase.database().ref("Users/"+id+"/events/"+event.id);
+          ref.remove();
+        } else {
+          console.error("Error confirm delete event");
+        }
+      });
+    };
 
-
+    $scope.addEvent = function() {
+      $state.go("app.createEvent");
+    };
   });
