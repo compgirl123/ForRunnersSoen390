@@ -5122,10 +5122,15 @@ $scope.stopChallengeSession = function() {
           "Content-Type": "application/x-www-form-urlencoded",
           "Authorization": "Basic " + mailgunApiKey
         },
-        data: "from=" + "ForRunners Admin <mailgun@connectconcordia.tk>" + "&to=" + "claudia.f.feochari@hotmail.com" + "&subject=" + "Your Weekly Stats" 
+        data: "from=" + "ForRunners Admin <mailgun@connectconcordia.tk>" + "&to=" + "claudia.f.feochari@hotmail.com" + "&subject=" + "Your ForRunners Stats" 
         + "&html="
-        +"<h1>ForRunners : Your Weekly Stats</h1>"+
-        "<h3>Amount Ran : 4km</h3>" + "<h3>Speed of run : 2km/20mins</h3>" +"<h3>Challenges Completed : 1</h3>"
+        +"<h1>ForRunners : Your Stats</h1>"+
+        '<div class="grid-container" style = "display: grid;grid-template-columns: auto auto;background-color: #000000;padding: 0px;">'+
+        '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Pace:</p></div>'+
+        '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Distance:</p></div>'+
+        '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Moving Speed:</p></div>'+
+        '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Meters Up and Down:</p></div>'+
+        '</div>'
       }).then(function(success) {
         console.log("SUCCESS " + JSON.stringify(success));
       }, function(error) {
