@@ -566,3 +566,9 @@ i.fa-angle-right {
   color: white;
   cursor:pointer;
 }
+.right-edge-black{
+  color: white;
+  border: none;
+  cursor:pointer;
+  margin: 2px;
+}

@@ -5606,6 +5606,8 @@ $scope.stopChallengeSession = function() {
           allEvents[event].startMin=pad2(allEvents[event].startMin);
           allEvents[event].endMin=pad2(allEvents[event].endMin);
           allEvents[event].color=$scope.day.color[counter].color;
+          allEvents[event].startTime= new Date("January 01, 1970 "+allEvents[event].startHour+":"+allEvents[event].startMin+":00");
+          allEvents[event].endTime= new Date("January 01, 1970 "+allEvents[event].endHour+":"+allEvents[event].endMin+":00");
           allEvents[event].id=allEvents[event].id;
           counter++;
           $scope.eventsOfDay.push(allEvents[event]);
@@ -5635,6 +5637,26 @@ $scope.stopChallengeSession = function() {
         }
       });
     };
+
+    $scope.editEvent = function(event){
+      if(event.inEdition){
+        event.inEdition=false;
+      }else{
+        event.inEdition=true;
+      }
+    };
+
+    $scope.submitEdit= function(event){
+      event.startHour=event.startTime.getHours();
+      event.startMin=pad2(event.startTime.getMinutes());
+      event.endHour=event.endTime.getHours();
+      event.endMin=pad2(event.endTime.getMinutes());
+      event.inEdition=false;
+    }
+
+    $scope.cancelEdit =function(event){
+      event.inEdition=false;
+    }
 
     $scope.addEvent = function() {
       $state.go("app.createEvent");
