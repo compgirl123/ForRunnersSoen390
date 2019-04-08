@@ -5593,7 +5593,8 @@ $scope.stopChallengeSession = function() {
   .controller("EventsCtrl", function(
     $scope,
     $ionicPopup,
-    $state
+    $state,
+    $window
   ){
 
     if(sessionStorage.getItem('selectedDay')!=null){
@@ -5637,6 +5638,9 @@ $scope.stopChallengeSession = function() {
           var id = firebase.auth().currentUser.uid;
           var ref = firebase.database().ref("Users/"+id+"/events/"+event.id);
           ref.remove();
+          $window.location.href="#/app/calendar";
+          //reloading so calendar can have correct number of events in day
+          $window.location.reload();
         } else {
           console.error("Error confirm delete event");
         }
