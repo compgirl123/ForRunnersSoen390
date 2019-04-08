@@ -285,7 +285,17 @@ angular
             controller: "ChallengesCtrl"
           }
         }
-      });
+      })
+      
+    .state("app.create_plan", {
+      url: "/create_plan",
+      views: {
+        menuContent: {
+          templateUrl: "templates/create_plan.html",
+          controller: "CreatePlanCtrl"
+        }
+      }
+    });
 
     // if none of the above states are matched, use this as the fallback
 
@@ -481,7 +491,8 @@ angular
       _foodInfo:"Food Information",
       _calculationInfo: "Calculation Information",
       _challenges: "Challenges",
-      _challenge: "Challenge"
+      _challenge: "Challenge",
+      _create_plan: "Running Plan"
     });
 
     $translateProvider.translations("fr-FR", {

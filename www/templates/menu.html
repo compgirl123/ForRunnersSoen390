@@ -51,6 +51,11 @@
         <ion-item menu-close href="#/app/help">
           {{ "_help" | translate }}
         </ion-item>
+
+        <ion-item menu-close href="#/app/create_plan">
+          {{ "_create_plan" | translate }}
+        </ion-item>
+
         <ion-item ng-controller="LoginCtrl">
         <button class="button button-full  button-dark" ng-click="signout()" ng-if="isLogged">
           {{ "Logout" | translate }}

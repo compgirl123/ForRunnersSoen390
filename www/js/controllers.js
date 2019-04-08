@@ -5400,4 +5400,8 @@ $scope.stopChallengeSession = function() {
     };
 
 
+  })
+  
+  .controller("CreatePlanCtrl", function($scope, $state){
+      console.log("In CreatePlanCtrl controller");
   });
