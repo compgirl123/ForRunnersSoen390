@@ -1081,7 +1081,7 @@ angular
       if ($scope.platform === "Browser") {
         //$scope.writeSessionsToFile($scope.sessions);
         $scope.storageSetObj("sessions", $scope.sessions);
-        $scope.computeResumeGraph();
+        //$scope.computeResumeGraph();
       } else {
         var path = $scope.dataPath + "sessions";
         $scope.remove_file = function(entry) {
@@ -4639,6 +4639,11 @@ $scope.stopChallengeSession = function() {
       });
 
     $scope.editEleUp = function() {
+
+      if ($scope.session.eleUp == undefined) {
+        $scope.session.eleUp = "";
+      }
+
       var editPopup = $ionicPopup.prompt({
         template: "Elevation in meters",
         title: "Enter Elevation Up",
@@ -4652,6 +4657,11 @@ $scope.stopChallengeSession = function() {
     };
 
     $scope.editEleDown = function() {
+
+      if ($scope.session.eleDown == undefined) {
+        $scope.session.eleDown = "";
+      }
+
       var editPopup = $ionicPopup.prompt({
         template: "Elevation in meters",
         title: "Enter Elevation Down",
@@ -4665,6 +4675,11 @@ $scope.stopChallengeSession = function() {
     };
 
     $scope.editPower = function() {
+
+      if ($scope.session.avg_power == undefined) {
+        $scope.session.avg_power = "";
+      }
+
       var editPopup = $ionicPopup.prompt({
         template: "Power in Watts",
         title: "Enter Power",
@@ -4678,6 +4693,11 @@ $scope.stopChallengeSession = function() {
     };
 
     $scope.editCadence = function() {
+
+      if ($scope.session.avg_cadence == undefined) {
+        $scope.session.avg_cadence = "";
+      }
+
       var editPopup = $ionicPopup.prompt({
         template: "Cadence",
         title: "Enter Cadence",
@@ -4691,6 +4711,9 @@ $scope.stopChallengeSession = function() {
     };
 
     $scope.editDistance = function() {
+      if ($scope.session.distance == undefined) {
+        $scope.session.distance = "";
+      }
       var editPopup = $ionicPopup.prompt({
         template: "Distance in Kilometer",
         title: "Enter Distance",
