@@ -5616,7 +5616,12 @@ $scope.stopChallengeSession = function() {
     };
 
     function pad2(number) {
-         return (number < 10 ? '0' : '') + number;
+      var nb=""+number;
+      if(nb.length<2){
+           return (number < 10 ? '0' : '') + number;
+      }else{
+        return number;
+      }
     };
 
     $scope.deleteEvent = function(event){
@@ -5652,6 +5657,24 @@ $scope.stopChallengeSession = function() {
       event.endHour=event.endTime.getHours();
       event.endMin=pad2(event.endTime.getMinutes());
       event.inEdition=false;
+      var id = firebase.auth().currentUser.uid;
+      var eventId= event.id;
+      var ref = firebase.database().ref("Users/"+id+"/events/"+eventId);
+      ref.update({
+        startHour: event.startHour
+      });
+      ref.update({
+        startMin: event.startMin
+      });
+      ref.update({
+        endHour: event.endHour
+      });
+      ref.update({
+        endMin: event.endMin
+      });
+      ref.update({
+        name: event.name
+      });
     }
 
     $scope.cancelEdit =function(event){
