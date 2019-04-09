@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@ionic-native/sqlite": "^5.0.0",
+    "angularfire": "^2.3.0",
     "body-parser": "^1.18.3",
     "cordova-android": "6.4.0",
     "cordova-android-support-gradle-release": "^2.0.1",
