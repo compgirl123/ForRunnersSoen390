@@ -1,6 +1,16 @@
 
 describe("Sign In Tests", function(){
-  
+  beforeAll(function(){
+    firebase.initializeApp({
+      apiKey: "AIzaSyCEI0nzK-GjzeRM72y92ORMQZSLxpXoYS0",
+          authDomain: "forrunners-soen390-a6772.firebaseapp.com",
+          databaseURL: "https://forrunners-soen390-a6772.firebaseio.com",
+          projectId: "forrunners-soen390-a6772",
+          storageBucket: "forrunners-soen390-a6772.appspot.com",
+          messagingSenderId: "961868385218"
+    });
+   });
+
   beforeEach(module('app.controllers'));
 
   var $controller, $rootScope, $scope, $firebaseAuth, $state, CommonProp, $window, $firebaseObject;
@@ -9,15 +19,11 @@ describe("Sign In Tests", function(){
   CommonProp.getUserId = () => {}
   CommonProp.logoutUser = () => {}
 
-  beforeEach(inject(function(_$controller_, _$rootScope_,_$firebaseAuth_
-    ,_$firebaseAuth_, _$firebaseObject_){
+  beforeEach(inject(function(_$controller_, _$rootScope_){
     // The injector unwraps the underscores (_) from around the parameter names when matching
     
     $controller = _$controller_;
     $rootScope = _$rootScope_;
-    $firebaseAuth = _$firebaseAuth_;
-    $firebaseAuth = _$firebaseAuth_;
-    $firebaseObject = _$firebaseObject_;
     window.sessionStorage.setItem('currentUser', undefined);
   }));
 
@@ -27,8 +33,7 @@ describe("Sign In Tests", function(){
     it('Testing the signIn() function (successful login)', function() {
       var $scope = $rootScope.$new();
       $scope.query = () => {};
-      $firebaseAuth = {};
-      var controller = $controller('LoginCtrl', { $scope: $scope,
+      $controller = $controller('LoginCtrl', { $scope: $scope,
         $firebaseAuth: $firebaseAuth,
         $state: $state,
         CommonProp: CommonProp,
@@ -53,7 +58,7 @@ describe("Sign In Tests", function(){
     it('Testing the signIn() function (wrong username)', function() {
       var $scope = $rootScope.$new();
       $scope.query = () => {}
-      var controller = $controller('LoginCtrl', { $scope: $scope,
+      $controller = $controller('LoginCtrl', { $scope: $scope,
         $firebaseAuth: $firebaseAuth,
         $state: $state,
         CommonProp: CommonProp,
@@ -71,7 +76,7 @@ describe("Sign In Tests", function(){
     it('Testing the signIn() function (wrong password)', function() {
       var $scope = $rootScope.$new();
       $scope.query = () => {}
-      var controller = $controller('LoginCtrl', { $scope: $scope,
+      $controller = $controller('LoginCtrl', { $scope: $scope,
         $firebaseAuth: $firebaseAuth,
         $state: $state,
         CommonProp: CommonProp,
@@ -93,7 +98,7 @@ describe("Sign In Tests", function(){
      it('Testing the signout() function when logged in', function() {
       var $scope = $rootScope.$new();
       $scope.query = () => {}
-      var controller = $controller('LoginCtrl', { $scope: $scope,
+      $controller = $controller('LoginCtrl', { $scope: $scope,
         $firebaseAuth: $firebaseAuth,
         $state: $state,
         CommonProp: CommonProp,
@@ -113,7 +118,7 @@ describe("Sign In Tests", function(){
     it('Testing the signout() function when logged out', function() {
       var $scope = $rootScope.$new();
       $scope.query = () => {}
-      var controller = $controller('LoginCtrl', { $scope: $scope,
+      $controller = $controller('LoginCtrl', { $scope: $scope,
         $firebaseAuth: $firebaseAuth,
         $state: $state,
         CommonProp: CommonProp,
