@@ -1,8 +1,14 @@
+require('../node_modules/angular/angular.js');
+require('../node_modules/angular-mocks/angular-mocks.js');
+require('../node_modules/firebase-mock/browser/firebasemock.js');
+require('../www/js/app.js');
+require('../www/js/controllers.js');
+
 describe("SignUp Tests", function(){
     beforeAll(function(){
       
     });
-    beforeEach(module('app.controllers'));
+    beforeEach(angular.mock.module('app.controllers'));
   
     var $controller, $rootScope, $scope, $firebaseAuth, $state, $ionicPopup, $firebaseArray,$firebaseObject,$window;
     
@@ -17,13 +23,12 @@ describe("SignUp Tests", function(){
   
     describe('RegisterCtrl', function() {
       it('Testing change function', function() {
-        var firebasemock = require('ForRunnersSoen390/node_modules/firebase-mock/browser/firebase-mock');
-
-        var mockauth = new firebasemock.MockAuthentication();
+        var firebasemock = require('firebase-mock');
+        var mockauth = new firebasemock.MockFirebase();
         var mockdatabase = new firebasemock.MockFirebase();
-        var mockfirestore = new firebasemock.MockFirestore();
-        var mockstorage = new firebasemock.MockStorage();
-        var mockmessaging = new firebasemock.MockMessaging();
+        // var mockfirestore = new firebasemock.MockFirestore();
+        // var mockstorage = new firebasemock.MockStorage();
+        // var mockmessaging = new firebasemock.MockMessaging();
         var mocksdk = new firebasemock.MockFirebaseSdk(
         // use null if your code does not use RTDB
         (path) => {
@@ -34,17 +39,17 @@ describe("SignUp Tests", function(){
           return mockauth;
         },
         // use null if your code does not use FIRESTORE
-        () => {
-          return mockfirestore;
-        },
+        // () => {
+        //   return mockfirestore;
+        // },
         // use null if your code does not use STORAGE
-        () => {
-          return mockstorage;
-        },
+        // () => {
+        //   return mockstorage;
+        // },
         // use null if your code does not use MESSAGING
-        () => {
-          return mockmessaging;
-        }
+        // () => {
+        //   return mockmessaging;
+        // }
       );
         var $scope = $rootScope.$new();
         var controller = $controller('RegisterCtrl', { $scope: $scope,
