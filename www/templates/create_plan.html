@@ -1,24 +1,28 @@
 <ion-view view-title="{{ '_create_plan' | translate }}">
     <ion-content hideBackButton="true">
-      <div ng-controller="DashboardCtrl">
-      <div class="card">
-        <button class="button button-full button-positive" ng-click = "gotoapp()" >
+      <div align = "center">
+      <h3> Pick Your Plan </h3>
+      <div align = "center">
 
-          <img src="img/3k.png"/>
-          </button>
+      <div ng-controller="CreatePlanCtrl">
+        <div class="card">
+          <div ng-click="threeKm()">
+              <img src="img/exercise.png" height="100" width="300"/>
+          </div>
         </div>
         <div class="card">
-          <button class="button button-full button-positive" ng-click = "gotoapp()" >
+          <div ng-click="exercise()">
+            <img src="img/exercise.png" height="100" width="300"/>
 
-            <img src="img/3k.png"/>
-            </button>
           </div>
-          <div class="card">
-            <button class="button button-full button-positive" ng-click = "gotoapp()" >
+        </div>
+        <div class="card">
+          <div  ng-click="gotodashboard()">
+            <img src="img/tips.png" height="100" width="300"/>
 
-              <img src="img/3k.png"/>
-              </button>
-            </div>
-      </div>
+          </div>
+        </div>
+        </div>
+
     </ion-content>
 </ion-view>

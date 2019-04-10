@@ -286,7 +286,7 @@ angular
           }
         }
       })
-      
+
     .state("app.create_plan", {
       url: "/create_plan",
       views: {
@@ -492,7 +492,7 @@ angular
       _calculationInfo: "Calculation Information",
       _challenges: "Challenges",
       _challenge: "Challenge",
-      _create_plan: "Running Plan"
+      _create_plan: "My Coach"
     });
 
     $translateProvider.translations("fr-FR", {
