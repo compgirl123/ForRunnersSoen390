@@ -8,8 +8,7 @@ angular
     "leaflet-directive",
     "ionic-modal-select",
     "iosDblclick",
-    "firebase",
-    "firebase-mock"
+    "firebase"
   ])
 
   .run(function($ionicPlatform) {
