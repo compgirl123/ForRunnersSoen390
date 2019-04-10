@@ -1,36 +1,33 @@
+<style >
 
-<style>
-#panel, #flip {
-  padding: 5px;
-  text-align: center;
-  background-color: #e5eecc;
-  border: solid 1px #c3c3c3;
-}
 
-#panel {
-  padding: 50px;
-  display: none;
-}
+
 </style>
-
 <ion-view view-title="{{ '_challenge' | translate }}">
 
  	 <ion-content hideBackButton="true">
+    <div ng-controller="CreatePlanCtrl">
 
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-     <script>
-     $(document).ready(function(){
-       $("#flip").click(function(){
-         $("#panel").slideToggle("slow");
-       });
-     });
-     </script>
-     <div ng-controller="CreatePlanCtrl">
-       <div id="flip">Click to slide the panel down or up</div>
-       <div id="panel">Hello world!</div>
+      <div id="myDIV">
+ <p> {{text}} </p>
+    <video id ="change" width="320" height="240" controls>
+  <source src="img/video1.mp4" type="video/mp4">
+
+  Your browser does not support the video tag.
+</video>
 
 
-    </div>
+        </div>
 
+
+
+
+<button class="button button-full button-positive" ng-click="myFunction('img/video1.mp4')"> Warm up </button>
+
+<button class="button button-full button-positive" ng-click="myFunction('img/video2.mp4')">Jumping Lunge </button>
+
+
+
+</div>
  	 </ion-content>
 </ion-view>

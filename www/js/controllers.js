@@ -5402,11 +5402,37 @@ $scope.stopChallengeSession = function() {
 
   })
   //my coach
-  .controller("CreatePlanCtrl", function($scope, $state){
+  .controller("CreatePlanCtrl", function($scope, $state ,$rootScope){
+
+
+
 
     $scope.exercise=function(){
   $state.go("app.excercise");
+};
 
-    };
 
-  });
+
+
+  $scope.myFunction = function (buttonlink) {
+
+ document.getElementById('change').src = buttonlink;
+ 
+    var x = document.getElementById("myDIV");
+
+
+
+
+    if (x.style.display === "none") {
+      x.style.display = "block";
+
+    } else {
+      x.style.display = "none";
+    }
+
+
+  };
+
+
+
+    });
