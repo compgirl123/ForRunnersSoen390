@@ -256,6 +256,16 @@ angular
           }
         }
       })
+      // my coach
+      .state("app.excercise", {
+        url: "/excercise",
+        views: {
+          menuContent: {
+            templateUrl: "templates/excercise.html",
+            controller: "CreatePlanCtrl"
+          }
+        }
+      })
 
       .state("app.dashboard", {
          url: "/Dashboard",

@@ -5405,7 +5405,7 @@ $scope.stopChallengeSession = function() {
   .controller("CreatePlanCtrl", function($scope, $state){
 
     $scope.exercise=function(){
-  $state.go("app.challenge");
+  $state.go("app.excercise");
 
     };
 
