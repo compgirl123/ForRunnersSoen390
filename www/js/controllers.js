@@ -5398,10 +5398,4 @@ $scope.stopChallengeSession = function() {
       $rootScope.message = 'Custom Goal';
       $state.go("app.challenge");
     };
-
-
-  })
-  
-  .controller("CreatePlanCtrl", function($scope, $state){
-      console.log("In CreatePlanCtrl controller");
   });
