@@ -5259,7 +5259,7 @@ $scope.stopChallengeSession = function() {
           "Content-Type": "application/x-www-form-urlencoded",
           "Authorization": "Basic " + mailgunApiKey
         },
-        data: "from=" + "ForRunners Admin <mailgun@connectconcordia.tk>" + "&to=" + /*email*/ "claudia.f.feochari@hotmail.com" + "&subject=" + "Your ForRunners Stats" 
+        data: "from=" + "ForRunners Admin <mailgun@connectconcordia.tk>" + "&to=" + email + "&subject=" + "Your ForRunners Stats" 
         + "&html="+ email_template
       }).then(function(success) {
         console.log("SUCCESS " + JSON.stringify(success));
