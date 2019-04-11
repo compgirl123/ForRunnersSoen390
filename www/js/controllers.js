@@ -4980,9 +4980,9 @@ $scope.stopChallengeSession = function() {
   })
   //bilal
 
-  .controller('LoginCtrl', ['$scope', '$firebaseAuth', '$state', 'CommonProp', '$window','$firebaseObject', function(
+  .controller('LoginCtrl', ['$scope', '$state', 'CommonProp', '$window','$firebaseObject', function(
       $scope,
-      $firebaseAuth,
+      //$firebaseAuth,
       $state,
       CommonProp,
       $window,
@@ -5003,7 +5003,7 @@ $scope.stopChallengeSession = function() {
   	$scope.signIn = function(){
   		var email = $scope.user.email;
   		var password = $scope.user.password;
-  		var auth = $firebaseAuth();
+  		//var auth = $firebaseAuth();
 
   		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
         // Handle Errors here.
@@ -5398,6 +5398,4 @@ $scope.stopChallengeSession = function() {
       $rootScope.message = 'Custom Goal';
       $state.go("app.challenge");
     };
-
-
   });
