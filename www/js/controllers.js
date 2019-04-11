@@ -5408,6 +5408,10 @@ $scope.stopChallengeSession = function() {
     $scope.exercise=function(){
   $state.go("app.excercise");
 };
+$scope.tips=function(){
+$state.go("app.tips");
+};
+
 
 
 

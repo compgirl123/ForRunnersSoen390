@@ -266,6 +266,15 @@ angular
           }
         }
       })
+      .state("app.tips", {
+        url: "/tips",
+        views: {
+          menuContent: {
+            templateUrl: "templates/tips.html",
+            controller: "CreatePlanCtrl"
+          }
+        }
+      })
 
       .state("app.dashboard", {
          url: "/Dashboard",
