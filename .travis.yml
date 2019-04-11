@@ -2,7 +2,7 @@ branches:
   only:
   - master
   - /.*/
-node_js: '6'
+node_js: '10'
 matrix:
   include:
   - os: linux
@@ -34,10 +34,7 @@ matrix:
         - google-chrome-stable
     licenses:
     - android-sdk-license-.+
-  allow_failures:
-  - os: osx
-    language: objective-c
-    osx_image: xcode8.3
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -f  $HOME/.gradle/caches/transforms-1/transforms-1.lock
@@ -46,7 +43,6 @@ before_cache:
 cache: npm
 
 install:
-  - nvm install 8
   - npm install -g ionic cordova@8.1.2 codecov
   - npm install
 
@@ -57,18 +53,18 @@ jobs:
       - cordova -v
       - ionic cordova platform add android
       - ionic cordova build android
-      node_js: '6'
+      node_js: '10'
     - stage: Static Analysis
       script: 
       - npm run lint-index
       - npm run lint-template
       - npm run lint-controller
-      node_js: '6'
+      node_js: '10'
     - stage: Testing
       script: 
       - npm run test
       - npm run codecov
-      node_js: '6'    
+      node_js: '10'   
 
  
     
