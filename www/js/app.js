@@ -511,7 +511,9 @@ angular
       _calculationInfo: "Calculation Information",
       _challenges: "Challenges",
       _challenge: "Challenge",
-      _create_plan: "My Coach"
+      _create_plan: "My Coach",
+      _Tips: "Tips",
+      _Workout: "Workout Session"
     });
 
     $translateProvider.translations("fr-FR", {

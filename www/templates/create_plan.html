@@ -1,27 +1,35 @@
+
 <ion-view view-title="{{ '_create_plan' | translate }}">
     <ion-content hideBackButton="true">
-      <div align = "center">
-      <h3> Pick Your Plan </h3>
-      <div align = "center">
+
+
 
       <div ng-controller="CreatePlanCtrl">
-        <div class="card">
-          <div ng-click="threeKm()">
-              <img src="img/exercise.png" height="100" width="300"/>
-          </div>
-        </div>
-        <div class="card">
-          <div ng-click="exercise()">
-            <img src="img/exercise.png" height="100" width="300"/>
 
-          </div>
-        </div>
-        <div class="card">
-          <div  ng-click="tips()">
-            <img src="img/tips.png" height="100" width="300"/>
 
-          </div>
-        </div>
+
+<ion-item>
+  <ion-thumbnail slot="start">
+    <div ng-click="exercise()">
+    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f">
+    </div>
+  </ion-thumbnail>
+  <ion-label>Workout</ion-label>
+    <p>Workout Session Tutorials</p>
+</ion-item>
+
+<ion-item>
+  <ion-thumbnail slot="start">
+    <div ng-click="tips()">
+    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+    </div>
+  </ion-thumbnail>
+  <ion-label>Tips</ion-label>
+    <p>Improve YourSelf </p>
+</ion-item>
+
+
+
         </div>
 
     </ion-content>
