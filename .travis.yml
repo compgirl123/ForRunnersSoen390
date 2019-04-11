@@ -55,7 +55,7 @@ jobs:
     - stage: Building
       script: 
       - cordova -v
-      - ionic cordova platform add android@7.0.0
+      - ionic cordova platform add android
       - ionic cordova build android
       node_js: '6'
     - stage: Static Analysis
