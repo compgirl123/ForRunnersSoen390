@@ -5244,6 +5244,40 @@ $scope.stopChallengeSession = function() {
       +'</p></div>'+
       '</div>'
     }
+
+    var curr_date = new Date();
+    var hour = curr_date.getHours();
+    var minute = curr_date.getMinutes();
+    var second = curr_date.getSeconds();
+    console.log(minute);
+
+    if(hour == 9 && minute == 00 && second == 00){
+      sendEmailInMorning();
+    }
+
+    function sendEmailInMorning() {
+      var date_of_session = localStorage.getItem(name_of_session).split('"')[$scope.date];
+      console.log("HEEERE");
+      
+      console.log(distance_arr);
+      console.log(date_of_session);
+      // do addition of stuff
+      $http({
+        "method": "POST",
+        "url": "https://api.mailgun.net/v3/" + mailgunUrl + "/messages",
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Basic " + mailgunApiKey
+        },
+        data: "from=" + "ForRunners Admin <mailgun@connectconcordia.tk>" + "&to=" + email + "&subject=" + "Your ForRunners Stats" 
+        + "&html="+ email_template
+      }).then(function(success) {
+        console.log("SUCCESS " + JSON.stringify(success));
+      }, function(error) {
+        console.log("ERROR " + JSON.stringify(error));
+      });
+
+  }
   
     $scope.send = function() {
       var date_of_session = localStorage.getItem(name_of_session).split('"')[$scope.date];
