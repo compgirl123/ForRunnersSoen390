@@ -5149,14 +5149,19 @@ $scope.stopChallengeSession = function() {
     $window
   ) {
 
-    var rootRef = firebase.database().ref("Foods").orderByKey();
-    rootRef.on("value",function(snapshot) {
-        $scope.foods=[];
-        snapshot.forEach(function(childSnapshot) {
-        var childData = childSnapshot.val();
-        $scope.foods.push(childData);
+    $scope.makeFoodList=function(){
+      var rootRef = firebase.database().ref("Foods").orderByKey();
+      rootRef.on("value",function(snapshot) {
+          $scope.foods=[];
+          snapshot.forEach(function(childSnapshot) {
+          var childData = childSnapshot.val();
+          $scope.foods.push(childData);
+        });
       });
-    });
+    };
+
+    $scope.makeFoodList();
+
 
     $scope.foodDetails= function(food){
 
@@ -5227,6 +5232,9 @@ $scope.stopChallengeSession = function() {
           'unit': $scope.unit});
         });
         $state.go("app.food");
+        var newfood={'name':$scope.foodName,'calories':$scope.calories,
+          'amount':$scope.amount,'unit': $scope.unit};
+        return newfood;
       }
 
     };
