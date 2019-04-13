@@ -5243,7 +5243,6 @@ $scope.stopChallengeSession = function() {
   .controller("FoodInfoCtrl",function(
     $scope,
     $state,
-    $stateParams,
     $window
   ){
     if(sessionStorage.getItem('currentFood')!=null){
@@ -5254,6 +5253,7 @@ $scope.stopChallengeSession = function() {
 
     $scope.change = function() {
       $scope.food.calories=Math.round(($scope.food.amount/$scope.localAmount)*$scope.localCalories);
+      return $scope.food.calories;
     };
 
     $scope.addToList= function(){
