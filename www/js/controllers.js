@@ -5516,16 +5516,17 @@ $scope.stopChallengeSession = function() {
       function buildMonth() {
         //Events of this months
         var eventsOfMonth={};
+        var color;
         for(ev in $scope.allEvents){
           var eventDate =new Date($scope.allEvents[ev].eventDate);
           if(eventDate.getMonth()==$scope.months.indexOf($scope.month)){
             if(!eventsOfMonth[eventDate.getDate()]){
               var listDayEv=[];
-              var color=getRandomColor();
+              color=getRandomColor();
               listDayEv.push({"color":color});
               eventsOfMonth[eventDate.getDate()]=listDayEv;
             }else {
-              var color=getRandomColor();
+              color=getRandomColor();
               eventsOfMonth[eventDate.getDate()].push({"color":color});
             }
 
@@ -5637,6 +5638,7 @@ $scope.stopChallengeSession = function() {
       var allEvents=$scope.day.events;
       $scope.eventsOfDay=[];
       var counter=0;
+      var event;
       for(event in allEvents){
         if(allEvents[event].eventDate==$scope.day.date){
           allEvents[event].startMin=pad2(allEvents[event].startMin);
@@ -5644,12 +5646,11 @@ $scope.stopChallengeSession = function() {
           allEvents[event].color=$scope.day.color[counter].color;
           allEvents[event].startTime= new Date("January 01, 1970 "+allEvents[event].startHour+":"+allEvents[event].startMin+":00");
           allEvents[event].endTime= new Date("January 01, 1970 "+allEvents[event].endHour+":"+allEvents[event].endMin+":00");
-          allEvents[event].id=allEvents[event].id;
           counter++;
           $scope.eventsOfDay.push(allEvents[event]);
         }
       }
-    };
+    }
 
     function pad2(number) {
       var nb=""+number;
@@ -5714,11 +5715,11 @@ $scope.stopChallengeSession = function() {
       ref.update({
         name: event.name
       });
-    }
+    };
 
     $scope.cancelEdit =function(event){
       event.inEdition=false;
-    }
+    };
 
     $scope.addEvent = function() {
       $state.go("app.createEvent");
