@@ -5286,11 +5286,11 @@ $scope.stopChallengeSession = function() {
 
   .controller("CalculationCtrl",function(
     $scope,
-    $state,
-    $stateParams,
-    $window
+    $state
   ){
 
+
+    $scope.calculate=function(){
     if(sessionStorage.getItem('currentUser')!=null &&
         sessionStorage.getItem('foodList')!=null){
 
@@ -5347,10 +5347,16 @@ $scope.stopChallengeSession = function() {
           //If user consume less calories than he/she needs another message is given
           if($scope.caloriesToBurn<0){
             $scope.negativeMessage=true;
+            return $scope.negativeMessage;
           }else{
             $scope.distanceToRun=($scope.caloriesToBurn)/100;
+            return $scope.distanceToRun;
           }
+    }else{
+      return false;
     }
+    };
+    $scope.calculate();
 
     $scope.ok= function(){
       sessionStorage.removeItem('foodList');

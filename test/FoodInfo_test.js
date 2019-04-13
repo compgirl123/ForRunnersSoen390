@@ -115,7 +115,7 @@ describe("FoodInfo Tests", function(){
     $scope.food={'name':"Cheddar cheese",'calories':113,
       'amount':1,'unit': "slice (28g)"};
     foodTestArray.push($scope.food);
-    console.info(value);
+    
     var value2 ={'currentCalories':47+113,'list':foodTestArray};
     this.$state.expectedTransitions.push('app.food');
     $scope.addToList();
