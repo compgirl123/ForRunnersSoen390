@@ -1,36 +1,35 @@
 
 <ion-view view-title="{{ '_create_plan' | translate }}">
-    <ion-content hideBackButton="true">
+  <ion-content hideBackButton="true">
+    <div ng-controller="CreatePlanCtrl">
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <div ng-click="exercise()">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f">
+          </div>
+        </ion-thumbnail>
+        <ion-label>Workout</ion-label>
+        <p>Workout Session Tutorials</p>
+      </ion-item>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <div ng-click="tips()">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </div>
+        </ion-thumbnail>
+        <ion-label>Tips</ion-label>
+          <p>Improve YourSelf </p>
+      </ion-item>
 
-
-
-      <div ng-controller="CreatePlanCtrl">
-
-
-
-<ion-item>
-  <ion-thumbnail slot="start">
-    <div ng-click="exercise()">
-    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f">
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <div ng-click="trainPlan()">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </div>
+        </ion-thumbnail>
+        <ion-label>Trainig Plan</ion-label>
+          <p>Setup a coach</p>
+      </ion-item><br/>
     </div>
-  </ion-thumbnail>
-  <ion-label>Workout</ion-label>
-    <p>Workout Session Tutorials</p>
-</ion-item>
-
-<ion-item>
-  <ion-thumbnail slot="start">
-    <div ng-click="tips()">
-    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-    </div>
-  </ion-thumbnail>
-  <ion-label>Tips</ion-label>
-    <p>Improve YourSelf </p>
-</ion-item>
-
-
-
-        </div>
-
-    </ion-content>
+  </ion-content>
 </ion-view>

@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<ion-view view-title="{{ '_TrainPlan' | translate }}">
+    <ion-content hideBackButton="true">
+        <p style="padding: 0 5px 0 15px">Fill in the form below to create a plan</p>
+        <div ng-controller="CreatePlanCtrl">
+            <div class="list-group">
+                <button type="button" class="btn btn-info list-group-item list-group-item-action " data-toggle="collapse" data-target="#tip1">
+                    Number of weeks
+                </button>
+                <div id="tip1" class="collapse">
+                    <card>
+                        <form style="padding: 0 5px 0 15px">
+                            <input type="radio"name="train" id="one"> 1 Week</input><br/>
+                            <input type="radio"name="train" id="two"> 2 Weeks</input><br/>
+                            <input type="radio"name="train" id="three"> 3 Weeks</input><br/>
+                            <input type="radio"name="train" id="four"> 4 Weeks</input>
+                        </form>                        
+                    </card>
+                </div>
+
+                <button type="button" class="btn btn-info list-group-item list-group-item-action" data-toggle="collapse" data-target="#tip2">
+                    Number of runs per week
+                </button>
+                <div id="tip2" class="collapse">
+                    <card>
+                        <form style="padding: 0 5px 0 15px">
+                            <input type="radio"name="run" id="one"> 1 Run</input><br/>
+                            <input type="radio"name="run" id="two"> 2 Runs</input><br/>
+                            <input type="radio"name="run" id="three"> 3 Runs</input><br/>
+                            <input type="radio"name="run" id="four"> 4 Runs</input>
+                        </form>
+                    </card>
+                </div>
+
+                <button type="button" class="btn btn-info list-group-item list-group-item-action" data-toggle="collapse" data-target="#tip3">
+                    Type of run
+                </button>
+                <div id="tip3" class="collapse">
+                    <card>
+                        <form style="padding: 0 5px 0 15px">
+                            <input type="radio"name="type" id="one"> Long Run</input><br/>
+                            <input type="radio"name="type" id="two"> Short Runs</input><br/>
+                            <input type="radio"name="type" id="three"> Jogging</input>
+                        </form>
+                    </card>
+                </div>              
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

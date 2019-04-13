@@ -276,6 +276,16 @@ angular
         }
       })
 
+      .state("app.training_plan", {
+        url: "/training_plan",
+        views: {
+          menuContent: {
+            templateUrl: "templates/training_plan.html",
+            controller: "CreatePlanCtrl"
+          }
+        }
+      })
+
       .state("app.dashboard", {
          url: "/Dashboard",
          views: {
@@ -513,7 +523,8 @@ angular
       _challenge: "Challenge",
       _create_plan: "My Coach",
       _Tips: "Tips",
-      _Workout: "Workout Session"
+      _Workout: "Workout Session",
+      _TrainPlan: "Training Plan"
     });
 
     $translateProvider.translations("fr-FR", {

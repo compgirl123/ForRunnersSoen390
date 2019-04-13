@@ -5403,16 +5403,15 @@ $scope.stopChallengeSession = function() {
   })
   //my coach
   .controller("CreatePlanCtrl", function($scope, $state ,$rootScope){
-
-
     $scope.exercise=function(){
-  $state.go("app.excercise");
-};
-$scope.tips=function(){
-$state.go("app.tips");
-};
-
-
-
-
+    $state.go("app.excercise");
+    };
+    
+    $scope.tips=function(){
+    $state.go("app.tips");
+    };
+    
+    $scope.trainPlan=function(){
+      $state.go("app.training_plan");
+      };
 });
