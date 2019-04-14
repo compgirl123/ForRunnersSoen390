@@ -5659,7 +5659,7 @@ $scope.stopChallengeSession = function() {
       }else{
         return number;
       }
-    };
+    }
 
     $scope.deleteEvent = function(event){
 
