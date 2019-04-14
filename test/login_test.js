@@ -20,13 +20,16 @@ describe("Sign In Tests", function(){
   CommonProp = {}
   CommonProp.getUserId = () => {}
   CommonProp.logoutUser = () => {}
+  
+  
 
   beforeEach(inject(function(_$controller_, _$rootScope_){
     // The injector unwraps the underscores (_) from around the parameter names when matching
 
     $controller = _$controller_;
     $rootScope = _$rootScope_;
-    window.sessionStorage.setItem('currentUser', undefined);
+    //$window.sessionStorage.setItem('currentUser', undefined);
+    $window.location.href = undefined
   }));
 
 
@@ -41,7 +44,7 @@ describe("Sign In Tests", function(){
         CommonProp: CommonProp,
         $window: $window,
         $firebaseObject: $firebaseObject});
-
+        //window.location.href="#/app/login";
         $scope.user = {email:'gintoki@gintama.com', password:'referencesEverywhere'}
       $scope.signIn();
       // create a variable
@@ -50,8 +53,8 @@ describe("Sign In Tests", function(){
       //expect($scope.count).toEqual(1);
 
       spyOn(window.sessionStorage, 'setItem');
-      // var value = {'username': $scope.username,'email': $scope.email,'age': '','age': '', 'weight': '', 'height': ''}
-      // window.sessionStorage.setItem('currentUser', value);
+      var value = undefined;
+      window.sessionStorage.setItem('currentUser', value);
 
       expect(window.sessionStorage.setItem).toHaveBeenCalledWith('currentUser', value);
       expect(window.sessionStorage.setItem).toBe(value);
@@ -66,7 +69,7 @@ describe("Sign In Tests", function(){
         CommonProp: CommonProp,
         $window: $window,
         $firebaseObject: $firebaseObject});
-
+        window.location.href="#/app/login";
         $scope.user = {email:'int@gintama.com', password:'referencesEverywhere'}
       $scope.signIn();
 
@@ -84,7 +87,7 @@ describe("Sign In Tests", function(){
         CommonProp: CommonProp,
         $window: $window,
         $firebaseObject: $firebaseObject});
-
+        window.location.href="#/app/login";
         $scope.user = {email:'gintoki@gintama.com', password:'djhweoudhi32euu'}
       $scope.signIn();
 
@@ -106,7 +109,7 @@ describe("Sign In Tests", function(){
         CommonProp: CommonProp,
         $window: $window,
         $firebaseObject: $firebaseObject});
-
+        window.location.href="#/app/login";
       $scope.username = 'gintoki@gintama.com'
       $scope.password = 'referencesEverywhere';
 
@@ -126,7 +129,7 @@ describe("Sign In Tests", function(){
         CommonProp: CommonProp,
         $window: $window,
         $firebaseObject: $firebaseObject});
-
+        window.location.href="#/app/login";
       $scope.signout();
       expect(window.sessionStorage.setItem).toBe(undefined);
 
