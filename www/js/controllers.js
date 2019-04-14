@@ -5031,9 +5031,9 @@ $scope.stopChallengeSession = function() {
   })
   //bilal
 
-  .controller('LoginCtrl', ['$scope', '$firebaseAuth', '$state', 'CommonProp', '$window','$firebaseObject', function(
+  .controller('LoginCtrl', ['$scope', '$state', 'CommonProp', '$window','$firebaseObject', function(
       $scope,
-      $firebaseAuth,
+      //$firebaseAuth,
       $state,
       CommonProp,
       $window,
@@ -5054,7 +5054,7 @@ $scope.stopChallengeSession = function() {
   	$scope.signIn = function(){
   		var email = $scope.user.email;
   		var password = $scope.user.password;
-  		var auth = $firebaseAuth();
+  		//var auth = $firebaseAuth();
 
   		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
         // Handle Errors here.
@@ -5200,14 +5200,19 @@ $scope.stopChallengeSession = function() {
     $window
   ) {
 
-    var rootRef = firebase.database().ref("Foods").orderByKey();
-    rootRef.on("value",function(snapshot) {
-        $scope.foods=[];
-        snapshot.forEach(function(childSnapshot) {
-        var childData = childSnapshot.val();
-        $scope.foods.push(childData);
+    $scope.makeFoodList=function(){
+      var rootRef = firebase.database().ref("Foods").orderByKey();
+      rootRef.on("value",function(snapshot) {
+          $scope.foods=[];
+          snapshot.forEach(function(childSnapshot) {
+          var childData = childSnapshot.val();
+          $scope.foods.push(childData);
+        });
       });
-    });
+    };
+
+    $scope.makeFoodList();
+
 
     $scope.foodDetails= function(food){
 
@@ -5278,6 +5283,9 @@ $scope.stopChallengeSession = function() {
           'unit': $scope.unit});
         });
         $state.go("app.food");
+        var newfood={'name':$scope.foodName,'calories':$scope.calories,
+          'amount':$scope.amount,'unit': $scope.unit};
+        return newfood;
       }
 
     };
@@ -5286,7 +5294,6 @@ $scope.stopChallengeSession = function() {
   .controller("FoodInfoCtrl",function(
     $scope,
     $state,
-    $stateParams,
     $window
   ){
     if(sessionStorage.getItem('currentFood')!=null){
@@ -5297,6 +5304,7 @@ $scope.stopChallengeSession = function() {
 
     $scope.change = function() {
       $scope.food.calories=Math.round(($scope.food.amount/$scope.localAmount)*$scope.localCalories);
+      return $scope.food.calories;
     };
 
     $scope.addToList= function(){
@@ -5329,11 +5337,11 @@ $scope.stopChallengeSession = function() {
 
   .controller("CalculationCtrl",function(
     $scope,
-    $state,
-    $stateParams,
-    $window
+    $state
   ){
 
+
+    $scope.calculate=function(){
     if(sessionStorage.getItem('currentUser')!=null &&
         sessionStorage.getItem('foodList')!=null){
 
@@ -5390,10 +5398,16 @@ $scope.stopChallengeSession = function() {
           //If user consume less calories than he/she needs another message is given
           if($scope.caloriesToBurn<0){
             $scope.negativeMessage=true;
+            return $scope.negativeMessage;
           }else{
             $scope.distanceToRun=($scope.caloriesToBurn)/100;
+            return $scope.distanceToRun;
           }
+    }else{
+      return false;
     }
+    };
+    $scope.calculate();
 
     $scope.ok= function(){
       sessionStorage.removeItem('foodList');
@@ -5449,6 +5463,4 @@ $scope.stopChallengeSession = function() {
       $rootScope.message = 'Custom Goal';
       $state.go("app.challenge");
     };
-
-
   });
