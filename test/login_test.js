@@ -28,15 +28,19 @@ describe("Sign In Tests", function(){
 
     $controller = _$controller_;
     $rootScope = _$rootScope_;
-    //$window.sessionStorage.setItem('currentUser', undefined);
+
+    $firebaseAuth = _$firebaseAuth_;
+    $firebaseObject = _$firebaseObject_;
+    window.sessionStorage.setItem('currentUser', undefined);
     $window.location.href = undefined
+
   }));
 
 
   describe('LoginCtrl', function() {
     // Added positive test with properly formatted elements
     it('Testing the signIn() function (successful login)', function() {
-      var $scope = $rootScope.$new();
+      $scope = $rootScope.$new();
       $scope.query = () => {};
       $controller = $controller('LoginCtrl', { $scope: $scope,
         $firebaseAuth: $firebaseAuth,
