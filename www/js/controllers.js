@@ -1042,7 +1042,8 @@ angular
       var gpxpacewithoutpause = new Date(dwithoutpause / dTotal);
       session.gpxMaxHeight = Math.round(maxHeight);
       session.gpxMinHeight = Math.round(minHeight);
-      session.distance = Math.round(dTotal * 100) / 100;
+      //session.distance = Math.round(dTotal * 100) / 100;
+      session.distance = Math.round($rootScope.distance_travelled * 100) / 100;
       session.pace = gpxpace;
       session.speed = gpxspeed;
       session.bar = 0;
@@ -1053,7 +1054,9 @@ angular
       session.eleUp = Math.round(eleUp);
       session.eleDown = Math.round(eleDown);
       session.distk = session.distance.toFixed(0);
-      session.duration = new Date(d2 - d1);
+      //session.duration = new Date(d2 - d1);
+      var total_duration = new Date(Date.UTC(0, 0, 0, $scope.hours, $scope.minute, $scope.second));
+      session.duration = total_duration;
       session.start = gpxPoints[0].timestamp;
       session.end = gpxPoints[gpxPoints.length - 1].timestamp;
       session.overnote = (
@@ -2194,7 +2197,7 @@ angular
       $state.go("app.sessions");
     };
     $scope.gotoapp = function() {
-      window.location="../index.html";
+      window.location="index.html";
     };
     $scope.gotodashboard = function() {
       $state.go("app.dashboard");
@@ -2396,6 +2399,11 @@ $scope.stopChallengeSession = function() {
 
     try {
       delete $scope.session.firsttime;
+      delete $scope.paused_time;
+      delete $scope.initial_paused_time;
+      delete $scope.isPaused;
+      delete $scope.isResumed;
+      delete $scope.paused_time_after_resume;
     } catch (exception) {
       console.warn(exception.message);
     }
@@ -2581,6 +2589,11 @@ $scope.stopChallengeSession = function() {
 
         try {
           delete $scope.session.firsttime;
+          delete $scope.paused_time;
+          delete $scope.initial_paused_time;
+          delete $scope.isPaused;
+          delete $scope.isResumed;
+          delete $scope.paused_time_after_resume;
         } catch (exception) {
           console.warn(exception.message);
         }
@@ -2869,8 +2882,9 @@ $scope.stopChallengeSession = function() {
         var lonnew = pos.coords.longitude;
 
         // timenew => gets current time in a number form
+        var timenew;
         if($scope.session.distcovered == 0){
-          var timenew = pos.timestamp;
+          timenew = pos.timestamp;
         }
         else{
           //var timenew = pos.timestamp;
@@ -2957,9 +2971,17 @@ $scope.stopChallengeSession = function() {
           if ($scope.session.firsttime !== 0) {
 
             //Elapsed time
+            if($scope.isResumed){
+              elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime - $scope.paused_time;
+              $scope.elapsed_time = elapsed;
 
+            }else if($scope.isPaused){
+              elapsed = $scope.elapsed_time;
+
+            }else {
             elapsed = timenew - $scope.session.firsttime;
-
+            $scope.elapsed_time = elapsed;
+            };
             var hour = Math.floor(elapsed / 3600000);
 
             var minute = (
@@ -3114,13 +3136,11 @@ $scope.stopChallengeSession = function() {
 
                   elapsed = timenew - $scope.session.firsttime;
 
-
-
                   if (dspeed > 0.001) {
-
-                    $scope.session.equirect += d;
-
-                    $rootScope.distance_travelled += d;
+                    if(!$scope.isPaused){
+                      $scope.session.equirect += d;
+                      $rootScope.distance_travelled += d;
+                    };
 
                   }
 
@@ -3524,9 +3544,24 @@ $scope.stopChallengeSession = function() {
       }
     };
 
+    $scope.pauseSession = function() {
+      $scope.initial_paused_time = Date.now();
+      $scope.isPaused = true;
+      $scope.isResumed = false;
+    };
+
+    $scope.resumeSession = function() {
+      $scope.paused_time_after_resume = (Date.now() - $scope.initial_paused_time);
+      $scope.paused_time = $scope.paused_time+ $scope.paused_time_after_resume;
+      $scope.isPaused = false;
+      $scope.isResumed = true;
+    };
+
     $scope.startSession = function() {
       $scope.running = true;
       $scope.gpslostannounced = false;
+      $rootScope.distance_travelled = 0;
+      $scope.isPaused = false;
       $scope.session = {
         gpsGoodSignalToggle: true,
         recclicked: new Date().getTime(),
@@ -3767,20 +3802,36 @@ $scope.stopChallengeSession = function() {
       $scope.runningTimeInterval = $interval(function() {
 
         if ($scope.session.firsttime > 0) {
-
+          var elapsed;
           console.debug($scope.session.firsttime);
 
-          var elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
+          if($scope.isResumed){
+
+            elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime - $scope.paused_time;
+            $scope.elapsed_time = elapsed;
+
+          }else if($scope.isPaused){
+
+            elapsed = $scope.elapsed_time;
+
+          }else {
+            elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
+            $scope.elapsed_time = elapsed;
+            $scope.paused_time = 0;
+          };
 
           var hour = Math.floor(elapsed / 3600000);
+          $scope.hours = hour;
 
           var minute = ("0" + (Math.floor(elapsed / 60000) - hour * 60)).slice(
 
             -2
 
           );
+          $scope.minute = minute;
 
           var second = ("0" + Math.floor((elapsed % 60000) / 1000)).slice(-2);
+          $scope.second = second;
 
           $scope.session.time = hour + ":" + minute + ":" + second;
 
@@ -5149,14 +5200,19 @@ $scope.stopChallengeSession = function() {
     $window
   ) {
 
-    var rootRef = firebase.database().ref("Foods").orderByKey();
-    rootRef.on("value",function(snapshot) {
-        $scope.foods=[];
-        snapshot.forEach(function(childSnapshot) {
-        var childData = childSnapshot.val();
-        $scope.foods.push(childData);
+    $scope.makeFoodList=function(){
+      var rootRef = firebase.database().ref("Foods").orderByKey();
+      rootRef.on("value",function(snapshot) {
+          $scope.foods=[];
+          snapshot.forEach(function(childSnapshot) {
+          var childData = childSnapshot.val();
+          $scope.foods.push(childData);
+        });
       });
-    });
+    };
+
+    $scope.makeFoodList();
+
 
     $scope.foodDetails= function(food){
 
@@ -5227,6 +5283,9 @@ $scope.stopChallengeSession = function() {
           'unit': $scope.unit});
         });
         $state.go("app.food");
+        var newfood={'name':$scope.foodName,'calories':$scope.calories,
+          'amount':$scope.amount,'unit': $scope.unit};
+        return newfood;
       }
 
     };
@@ -5235,7 +5294,6 @@ $scope.stopChallengeSession = function() {
   .controller("FoodInfoCtrl",function(
     $scope,
     $state,
-    $stateParams,
     $window
   ){
     if(sessionStorage.getItem('currentFood')!=null){
@@ -5246,6 +5304,7 @@ $scope.stopChallengeSession = function() {
 
     $scope.change = function() {
       $scope.food.calories=Math.round(($scope.food.amount/$scope.localAmount)*$scope.localCalories);
+      return $scope.food.calories;
     };
 
     $scope.addToList= function(){
@@ -5278,11 +5337,11 @@ $scope.stopChallengeSession = function() {
 
   .controller("CalculationCtrl",function(
     $scope,
-    $state,
-    $stateParams,
-    $window
+    $state
   ){
 
+
+    $scope.calculate=function(){
     if(sessionStorage.getItem('currentUser')!=null &&
         sessionStorage.getItem('foodList')!=null){
 
@@ -5339,10 +5398,16 @@ $scope.stopChallengeSession = function() {
           //If user consume less calories than he/she needs another message is given
           if($scope.caloriesToBurn<0){
             $scope.negativeMessage=true;
+            return $scope.negativeMessage;
           }else{
             $scope.distanceToRun=($scope.caloriesToBurn)/100;
+            return $scope.distanceToRun;
           }
+    }else{
+      return false;
     }
+    };
+    $scope.calculate();
 
     $scope.ok= function(){
       sessionStorage.removeItem('foodList');
