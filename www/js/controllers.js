@@ -2982,7 +2982,6 @@ $scope.stopChallengeSession = function() {
             elapsed = timenew - $scope.session.firsttime;
             $scope.elapsed_time = elapsed;
             }
-
             var hour = Math.floor(elapsed / 3600000);
 
             var minute = (
