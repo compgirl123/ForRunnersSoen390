@@ -2981,7 +2981,8 @@ $scope.stopChallengeSession = function() {
             }else {
             elapsed = timenew - $scope.session.firsttime;
             $scope.elapsed_time = elapsed;
-            };
+            }
+
             var hour = Math.floor(elapsed / 3600000);
 
             var minute = (
@@ -3140,7 +3141,7 @@ $scope.stopChallengeSession = function() {
                     if(!$scope.isPaused){
                       $scope.session.equirect += d;
                       $rootScope.distance_travelled += d;
-                    };
+                    }
 
                   }
 
@@ -3818,7 +3819,7 @@ $scope.stopChallengeSession = function() {
             elapsed = Date.now() - $scope.session.firsttime - $scope.session.deltagpstime;
             $scope.elapsed_time = elapsed;
             $scope.paused_time = 0;
-          };
+          }
 
           var hour = Math.floor(elapsed / 3600000);
           $scope.hours = hour;
