@@ -5059,7 +5059,6 @@ $scope.stopChallengeSession = function() {
 
   .controller('LoginCtrl', ['$scope', '$state', 'CommonProp', '$window','$firebaseObject', function(
       $scope,
-      //$firebaseAuth,
       $state,
       CommonProp,
       $window,
@@ -5078,21 +5077,19 @@ $scope.stopChallengeSession = function() {
     $window.location.reload();
     };
 
-  	$scope.signIn = function(){
+  	$scope.signIn = function(fb = firebase){
   		var email = $scope.user.email;
   		var password = $scope.user.password;
-  		//var auth = $firebaseAuth();
 
-  		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-        // Handle Errors here.
+  		fb.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
         var errorCode = error.code;
         var errorMessage = error.message;
         $scope.errMsg = true;
         $scope.errorMessage = error.message;
        });
 
-      firebase.auth().onAuthStateChanged(function(user) {
-        firebase.database().ref('Users/' + user.uid).once('value').then(function(snapshot) {
+      fb.auth().onAuthStateChanged(function(user) {
+        fb.database().ref('Users/' + user.uid).once('value').then(function(snapshot) {
             var userInfo=snapshot.val();
 
             // ensures that when the user logs in, they are redirected to profile page and side menu
@@ -5105,9 +5102,8 @@ $scope.stopChallengeSession = function() {
 
             let key = 'currentUser';
             let value = {'username':userInfo.username,'email':userInfo.email,'age':userInfo.age,
-                         'weight':userInfo.weight, 'height':userInfo.height, 'gender': userInfo.gender,
-                         'activity': userInfo.activity,'uid':user.uid
-                        };
+                                  'weight':userInfo.weight, 'height':userInfo.height, 'gender': userInfo.gender, 'activity': userInfo.activity};
+            
             value = JSON.stringify(value);
             sessionStorage.setItem(key, value);
 
