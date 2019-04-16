@@ -334,7 +334,7 @@ angular
             controller: "EventsCtrl"
           }
         }
-      });
+      })
     .state("app.create_plan", {
       url: "/create_plan",
       views: {
