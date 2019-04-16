@@ -512,6 +512,10 @@ angular
       _calculationInfo: "Calculation Information",
       _challenges: "Challenges",
       _challenge: "Challenge",
+      _swipe_left_pause: "Swipe left to pause",
+      _pause: "Pause",
+      _resume: "Resume"
+      _challenge: "Challenge",
       _calendar: "Calendar"
     });
 
