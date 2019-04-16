@@ -306,6 +306,35 @@ angular
         }
       })
 
+      .state("app.calendar", {
+        url: "/calendar",
+        views: {
+          menuContent: {
+            templateUrl: "templates/calendar.html",
+            controller: "CalendarCtrl"
+          }
+        }
+      })
+
+      .state("app.createEvent", {
+        url: "/event",
+        views: {
+          menuContent: {
+            templateUrl: "templates/event.html",
+            controller: "EventCtrl"
+          }
+        }
+      })
+
+      .state("app.dayEvents", {
+        url: "/dayEvents",
+        views: {
+          menuContent: {
+            templateUrl: "templates/dayEvents.html",
+            controller: "EventsCtrl"
+          }
+        }
+      });
     .state("app.create_plan", {
       url: "/create_plan",
       views: {
@@ -511,6 +540,10 @@ angular
       _calculationInfo: "Calculation Information",
       _challenges: "Challenges",
       _challenge: "Challenge",
+      _swipe_left_pause: "Swipe left to pause",
+      _pause: "Pause",
+      _resume: "Resume",
+      _calendar: "Calendar",
       _create_plan: "My Coach",
       _Tips: "Tips",
       _Workout: "Workout Session"
