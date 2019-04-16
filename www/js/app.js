@@ -514,8 +514,7 @@ angular
       _challenge: "Challenge",
       _swipe_left_pause: "Swipe left to pause",
       _pause: "Pause",
-      _resume: "Resume"
-      _challenge: "Challenge",
+      _resume: "Resume",
       _calendar: "Calendar"
     });
 
