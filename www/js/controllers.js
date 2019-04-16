@@ -5570,7 +5570,7 @@ $scope.stopChallengeSession = function() {
         var color;
         for(ev in $scope.allEvents){
           var eventDate =new Date($scope.allEvents[ev].eventDate);
-          if(eventDate.getMonth()==$scope.months.indexOf($scope.month)){
+          if(eventDate.getMonth()==$scope.months.indexOf($scope.month) && eventDate.getFullYear()==$scope.year){
             if(!eventsOfMonth[eventDate.getDate()]){
               var listDayEv=[];
               color=getRandomColor();
