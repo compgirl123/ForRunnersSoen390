@@ -48,6 +48,7 @@ install:
 
 jobs:
   include:
+    - stage: Building
       script:
       - npm install -g cordova@8.1.2
       - npm install -g ionic
@@ -65,7 +66,6 @@ jobs:
       - npm run test
       - npm run codecov
       node_js: '10'
-    - stage: Building
    
 
  
