@@ -43,11 +43,17 @@ before_cache:
 cache: npm
 
 install:
-  - npm install -g ionic cordova@8.0.0 codecov
+  - npm install -g codecov
   - npm install
 
 jobs:
   include:
+      script:
+      - npm install -g cordova@8.1.2
+      - npm install -g ionic
+      - npm i @ionic/v1-toolkit
+      - cordova build android
+      node_js: '10'
     - stage: Static Analysis
       script: 
       - npm run lint-index
@@ -60,10 +66,7 @@ jobs:
       - npm run codecov
       node_js: '10'
     - stage: Building
-      script:
-      - cordova platform add android
-      - cordova build android
-      node_js: '10'   
+   
 
  
     

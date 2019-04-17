@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<ion-view view-title="{{ '_sign_up' | translate }}">
+    <ion-content class= "signup-bckground-color" ng-controller="RegisterCtrl">
+        <div class="signup">
+        <form name="userForm" novalidate>
+        <ion-label fixed>Username</ion-label>
+            <ion-input type="text" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated" >
+                <div class="form-group">
+                    <input type="text" class="form-control" name="Username" id="Username" ng-model="user.Username" ng-required="true"/>
+                    <p ng-show="userForm.Username.$invalid && userForm.Username.$touched" class="help-block" style="color:rgb(165, 30, 30); text-align:center;">Enter a valid username</p>
+                </div>
+            </ion-input>
+        <ion-label fixed>Email</ion-label>
+            <ion-input type="email" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated" >
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" id="email" ng-model="user.email" ng-required="true"/>
+                    <p ng-show="userForm.email.$invalid && userForm.email.$touched" class="help-block" style="color:rgb(165, 30, 30); text-align:center;">Enter a valid email</p>
+                </div>
+            </ion-input>
+        <ion-label fixed>Password</ion-label>
+            <ion-input type="password" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus">
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" id="password" ng-model="user.password" ng-required="true" ng-minlength="8"/>
+                    <p ng-show="userForm.password.$error.minlength && userForm.password.$touched" class="help-block" style="color:rgb(165, 30, 30); text-align:center;">Password must be a minimum of 8 characters</p>
+                    <p ng-show="userForm.password.$touched && userForm.password.$pristine" class="help-block" style="color:rgb(165, 30, 30); text-align:center;">Password is requird</p>
+                </div>
+            </ion-input>
+        <ion-item text-wrap class = "confirmpassword">
+        <ion-label fixed>Confirm Password</ion-label>
+        </ion-item>
+            <ion-input type="password" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus">
+                <div class="form-group">
+                    <input type="password" class="form-control"  name="confirmPassword" id="confirmPassword" ng-model="user.confirmPassword" ng-required="true" ng-pattern="user.password" ng-minlength="8"/>
+                    <p ng-show="userForm.confirmPassword.$error.pattern && userForm.confirmPassword.$touched" class="help-block" style="color:rgb(165, 30, 30); text-align:center;">Passwords do not match</p>
+                </div>
+            </ion-input>
+        <div>
+          <button type="submit" class="button button-full button-positive" ng-disabled="userForm.$invalid" ng-click="signUp()">
+            SIGN UP
+          </button>
+        </div>
+        </form>
+        </div>
+        <div class = "redirect">
+            <h6>Already a user? <a href="#/app/login" style="color:white"> click here</a></h6>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,39 @@
+<ion-view view-title="{{ '_calculationInfo' | translate }}">
+
+	 <ion-content hideBackButton="true">
+	 	 <div class="list">
+      <label class="item item-input item-stacked-label item-text-wrap">
+              <span>Your current resting metabolic rate is {{RMR}} </span>
+      </label>
+      <label class="item item-input item-stacked-label item-text-wrap">
+              <span>Since your activity level is {{user.activity}} your daily expenditure is {{expenditure}} </span>
+      </label>
+
+      <h4>You have consumed: </h4>
+
+      <ion-list-header class="row list_header">
+        <ion-label class="col col-70" style="color:white">Food</ion-label>
+        <ion-label class="col col-25" style="color:white">Calories</ion-label>
+      </ion-list-header>
+
+      <ion-item class="row" ng-repeat="food in consumedFood.list">
+          <ion-label class="col col-70 item-text-wrap">
+            - {{food.amount}} {{food.unit}} of {{food.name}}
+          </ion-label>
+          <ion-label class="col col-25 item-text-wrap">
+            {{food.calories}} kcal
+          </ion-label>
+      </ion-item>
+      
+      <label ng-show="!negativeMessage" class="item item-input item-stacked-label item-text-wrap">
+        <span>You should run {{distanceToRun}} miles to burn {{caloriesToBurn}} kcal</span>
+      </label>
+      <label ng-show="negativeMessage" class="item item-input item-stacked-label item-text-wrap">
+              <span>You have not consumed enough calories to burn when running.</span>
+      </label>
+
+      <input type="submit" ng-click="ok()" value="Ok, delete list"/>
+     </div>
+	 </ion-content>
+
+</ion-view>
