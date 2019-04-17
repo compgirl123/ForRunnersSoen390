@@ -13,7 +13,7 @@
     "@angular/fire": "^5.1.2",
     "@ionic-native/sqlite": "^5.0.0",
     "body-parser": "^1.18.3",
-    "cordova-android": "7.1.4",
+    "cordova-android-support-gradle-release": "~2.0.1",
     "cordova-browser": "^5.0.4",
     "cordova-custom-config": "^5.0.3",
     "cordova-plugin-app-version": "^0.1.9",
@@ -100,11 +100,11 @@
       "cordova-plugin-x-socialsharing": {
         "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
       },
-      "es6-promise-plugin": {}
+      "es6-promise-plugin": {},
+      "cordova-android-support-gradle-release": {}
     },
     "platforms": [
-      "browser",
-      "android"
+      "browser"
     ]
   },
   "cordovaPlugins": [

@@ -53,6 +53,7 @@ jobs:
       - npm install -g cordova@8.1.2
       - npm install -g ionic
       - npm i @ionic/v1-toolkit
+      - cordova platform add android@7.X.X
       - cordova build android
       node_js: '10'
     - stage: Static Analysis
