@@ -1,4 +1,3 @@
-
 package net.khertan.forrunners;
 
 import android.content.Intent;
@@ -18,11 +17,13 @@ import androidx.test.espresso.web.model.Atoms;
 import androidx.test.espresso.web.sugar.Web;
 import androidx.test.espresso.web.webdriver.DriverAtoms;
 import androidx.test.espresso.web.webdriver.Locator;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+//import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
 
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isJavascriptEnabled;
@@ -48,7 +49,7 @@ import static org.hamcrest.core.StringContains.containsString;
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class SignInPageTest{
+public class SignInPageTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mainactivitytest1 =new ActivityTestRule<MainActivity>(MainActivity.class);
@@ -62,8 +63,8 @@ public class SignInPageTest{
     private static final String profileXpathemail = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-bar/div[2]/ion-header-bar/div[1]/span/button";
     private static final String menuXpath1 = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-bar/div[2]/ion-header-bar/div[1]/span/button";
     private static final String menuXpath2 = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-bar/div[2]/ion-header-bar/div[1]/span/button";
-    private static final String signInXpath = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu/ion-content/div/ion-list/div/ion-item[2]/a";
-    private static final String signUpXpath = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu/ion-content/div/ion-list/div/ion-item[3]/a";
+    private static final String signInXpath = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu/ion-content/div/ion-list/div/ion-item[1]/a";
+    private static final String signUpXpath = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu/ion-content/div/ion-list/div/ion-item[2]/a";
     private static final String submitButtonXpath = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/div/ion-view/ion-content/div/div[1]/form/div[3]/button";
     private static final String userxpath = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/div[2]/ion-view/ion-content/div/div[1]/form/ion-input[1]/div//*[@id=\"Username\"]";
 
@@ -155,58 +156,6 @@ public class SignInPageTest{
         Thread.sleep(7000);
 
         onWebView()
-                .withElement(findElement(Locator.ID,"email"))
-                //.check(webMatches(getText(), containsString()));
-                .check(webMatches(getCurrentUrl(), containsString("file:///android_asset/www/index.html#/app/profile")));
-
-        try
-        {
-            onWebView().withElement(findElement(Locator.XPATH,age)).perform(DriverAtoms.webClick());
-        }
-        catch(Exception e)
-        {
-            throw e;
-        }
-    }
-    @Test
-    public void signInTestCheckInputs() throws Exception {
-
-        /**
-         * UI Sign In Page Validation for Our ForRunners Application
-         */
-        //onWebView().forceJavascriptEnabled();
-        Thread.sleep(7000);
-
-
-        // Selects the WebView in your layout. If you have multiple WebViews you can also use a
-        // matcher to select a given WebView, onWebView(withId(R.id.web_view)).
-
-        onWebView()
-                .withElement(findElement(Locator.XPATH,menuXpath1)).perform(DriverAtoms.webClick())
-                .withElement(findElement(Locator.XPATH,signInXpath)).perform(DriverAtoms.webClick());
-        //Thread.sleep(7000);
-        onWebView().withElement(findElement(Locator.ID, "email"))
-                // checks the input that is inputted and checks if it matches a string.
-                // Clear previous input
-                .perform(clearElement())
-                // Enter text into the input element
-                //.perform(DriverAtoms.webKeys(goodEmailTest))
-                // Find the submit button
-                .withElement(findElement(Locator.ID, "email"))
-                .perform(DriverAtoms.webClick());
-                //.check(webMatches(getText(),containsString("c")))
-                Thread.sleep(1000);
-        onWebView().withElement(findElement(Locator.ID, "password"))
-                .perform(clearElement())
-                .withElement(findElement(Locator.ID, "password"))
-                .perform(DriverAtoms.webClick());
-                 Thread.sleep(2000);
-                //.perform(DriverAtoms.webKeys(goodPasswordTest))
-        onWebView().withElement(findElement(Locator.XPATH,submitButtonXpath)).perform(DriverAtoms.webClick());
-        Thread.sleep(2000);
-        /*Thread.sleep(7000);
-
-        onWebView()
                 //.withElement(findElement(Locator.ID,"email"))
                 //.check(webMatches(getText(), containsString()));
                 .check(webMatches(getCurrentUrl(), containsString("file:///android_asset/www/index.html#/app/profile")));
@@ -218,8 +167,98 @@ public class SignInPageTest{
         catch(Exception e)
         {
             throw e;
-        }*/
+        }
     }
+
+    @Test
+    public void signInTestCheckInputs() throws Exception {
+
+        /**
+         * UI Sign In Page Validation for Our ForRunners Application
+         */
+
+        Thread.sleep(7000);
+
+        onWebView()
+                .withElement(findElement(Locator.XPATH,menuXpath1)).perform(DriverAtoms.webClick())
+                .withElement(findElement(Locator.XPATH,signInXpath)).perform(DriverAtoms.webClick());
+
+        onWebView().withElement(findElement(Locator.ID, "email"))
+                .perform(clearElement())
+                .withElement(findElement(Locator.ID, "email"));
+        Thread.sleep(1000);
+        onWebView().withElement(findElement(Locator.ID, "password"))
+                .perform(clearElement())
+                .withElement(findElement(Locator.ID, "password"));
+        Thread.sleep(2000);
+        onWebView().withElement(findElement(Locator.XPATH,submitButtonXpath));
+        Thread.sleep(2000);
+        onWebView().withElement(findElement(Locator.ID, "label-email")).check(webMatches(getText(), containsString("Email")));
+        onWebView().withElement(findElement(Locator.ID, "label-password")).check(webMatches(getText(), containsString("Password")));
+    }
+
+    @Test
+    public void signInTestCheckInputsBad() throws Exception {
+
+        /**
+         * UI Sign In Page Validation for Our ForRunners Application
+         */
+
+        Thread.sleep(7000);
+
+        // Selects the WebView in your layout. If you have multiple WebViews you can also use a
+        // matcher to select a given WebView, onWebView(withId(R.id.web_view)).
+
+        onWebView()
+                .withElement(findElement(Locator.XPATH,menuXpath1)).perform(DriverAtoms.webClick())
+                .withElement(findElement(Locator.XPATH,signInXpath)).perform(DriverAtoms.webClick());
+
+        onWebView().withElement(findElement(Locator.ID, "emailbad"))
+                // checks the input that is inputted and checks if it matches a string.
+                // Clear previous input
+                .perform(clearElement())
+                .withElement(findElement(Locator.ID, "emailbad"));
+        //.perform(DriverAtoms.webClick());
+        Thread.sleep(1000);
+        onWebView().withElement(findElement(Locator.ID, "passwordbad"))
+                .perform(clearElement())
+                .withElement(findElement(Locator.ID, "passwordbad"));
+        //.perform(DriverAtoms.webClick());
+        Thread.sleep(2000);
+        //.perform(DriverAtoms.webKeys(goodPasswordTest))
+        onWebView().withElement(findElement(Locator.XPATH,submitButtonXpath));
+        //.perform(DriverAtoms.webClick());
+        Thread.sleep(2000);
+        onWebView().withElement(findElement(Locator.ID, "label-email")).check(webMatches(getText(), containsString("Email")));
+        onWebView().withElement(findElement(Locator.ID, "label-password")).check(webMatches(getText(), containsString("Password")));
+
+    }
+
+    @Test
+    public void signInTestCheckLablesBad() throws Exception {
+
+        /**
+         * UI Sign In Page Validation for Our ForRunners Application
+         */
+
+        Thread.sleep(7000);
+
+        // Selects the WebView in your layout. If you have multiple WebViews you can also use a
+        // matcher to select a given WebView, onWebView(withId(R.id.web_view)).
+
+        onWebView()
+                .withElement(findElement(Locator.XPATH,menuXpath1)).perform(DriverAtoms.webClick())
+                .withElement(findElement(Locator.XPATH,signInXpath)).perform(DriverAtoms.webClick());
+
+        onWebView().withElement(findElement(Locator.XPATH,submitButtonXpath));
+        Thread.sleep(2000);
+        onWebView().withElement(findElement(Locator.ID, "label-email")).check(webMatches(getText(), containsString("Enter Email")));
+        onWebView().withElement(findElement(Locator.ID, "label-password")).check(webMatches(getText(), containsString("Enter Password")));
+
+
+    }
+
+
 
 
 
