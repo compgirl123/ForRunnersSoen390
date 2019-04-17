@@ -4690,6 +4690,11 @@ $scope.stopChallengeSession = function() {
       });
 
     $scope.editEleUp = function() {
+
+      if ($scope.session.eleUp == undefined) {
+        $scope.session.eleUp = "";
+      }
+
       var editPopup = $ionicPopup.prompt({
         template: "Elevation in meters",
         title: "Enter Elevation Up",
@@ -4703,6 +4708,11 @@ $scope.stopChallengeSession = function() {
     };
 
     $scope.editEleDown = function() {
+
+      if ($scope.session.eleDown == undefined) {
+        $scope.session.eleDown = "";
+      }
+
       var editPopup = $ionicPopup.prompt({
         template: "Elevation in meters",
         title: "Enter Elevation Down",
@@ -4716,6 +4726,11 @@ $scope.stopChallengeSession = function() {
     };
 
     $scope.editPower = function() {
+
+      if ($scope.session.avg_power == undefined) {
+        $scope.session.avg_power = "";
+      }
+
       var editPopup = $ionicPopup.prompt({
         template: "Power in Watts",
         title: "Enter Power",
@@ -4729,6 +4744,11 @@ $scope.stopChallengeSession = function() {
     };
 
     $scope.editCadence = function() {
+
+      if ($scope.session.avg_cadence == undefined) {
+        $scope.session.avg_cadence = "";
+      }
+
       var editPopup = $ionicPopup.prompt({
         template: "Cadence",
         title: "Enter Cadence",
@@ -4742,6 +4762,9 @@ $scope.stopChallengeSession = function() {
     };
 
     $scope.editDistance = function() {
+      if ($scope.session.distance == undefined) {
+        $scope.session.distance = "";
+      }
       var editPopup = $ionicPopup.prompt({
         template: "Distance in Kilometer",
         title: "Enter Distance",
@@ -5047,6 +5070,7 @@ $scope.stopChallengeSession = function() {
     sessionStorage.removeItem('currentUser');
     sessionStorage.removeItem('currentFood');
     sessionStorage.removeItem('foodList');
+    sessionStorage.removeItem('selectedDay');
     $window.location.href="#/app/login";
     $window.location.reload();
     };
@@ -5078,7 +5102,9 @@ $scope.stopChallengeSession = function() {
 
             let key = 'currentUser';
             let value = {'username':userInfo.username,'email':userInfo.email,'age':userInfo.age,
-                                  'weight':userInfo.weight, 'height':userInfo.height, 'gender': userInfo.gender, 'activity': userInfo.activity};
+                         'weight':userInfo.weight, 'height':userInfo.height, 'gender': userInfo.gender,
+                         'activity': userInfo.activity,'uid':user.uid
+                        };
             value = JSON.stringify(value);
             sessionStorage.setItem(key, value);
 
@@ -5462,5 +5488,291 @@ $scope.stopChallengeSession = function() {
       $rootScope.src = 'img/custom-goal-man-tying-shoes.jpeg';
       $rootScope.message = 'Custom Goal';
       $state.go("app.challenge");
+    };
+  })
+
+  .controller("CalendarCtrl",function(
+    $scope,$state
+  ){
+      $scope.todayDate = new Date();
+      var days=[31,28,31,30,31,30,31,31,30,31,30,31]; //Days of each month
+      $scope.months=['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      $scope.month=$scope.months[$scope.todayDate.getMonth()];
+      $scope.year=$scope.todayDate.getFullYear();
+      if(sessionStorage.getItem("currentUser")!=null){
+        $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
+      }
+      var id=$scope.user.uid;
+      var rootRef = firebase.database().ref("Users/"+id+"/events").orderByKey();
+
+      rootRef.once("value",function(snapshot) {
+          $scope.allEvents=[];
+          snapshot.forEach(function(childSnapshot) {
+          var childData = childSnapshot.val();
+          $scope.allEvents.push(childData);
+        });
+      }).then(function(){
+          buildMonth();
+      });
+
+      $scope.previous=function(){
+        var currentMonth = $scope.months.indexOf($scope.month);
+        if(currentMonth==0){
+          $scope.month='December';
+          $scope.year--;
+        }else{
+          $scope.month=$scope.months[currentMonth-1];
+        }
+        buildMonth();
+      };
+
+      $scope.next=function(){
+        var n = $scope.months.indexOf($scope.month);
+        if(n==11){
+          $scope.month='January';
+          $scope.year++;
+        }else{
+          $scope.month=$scope.months[n+1];
+        }
+        buildMonth();
+      };
+
+      $scope.addEvent = function() {
+        $state.go("app.createEvent");
+      };
+
+      $scope.seeEvents= function(day){
+        if(day!=""){
+          let key = 'selectedDay';
+          var name=$scope.month+" "+day.number+","+$scope.year;
+          var date= Date.parse(new Date($scope.year,$scope.months.indexOf($scope.month), day.number));
+          var id = firebase.auth().currentUser.uid;
+          var rootRef = firebase.database().ref("Users/"+id+"/events").orderByKey();
+          rootRef.once("value",function(snapshot) {
+              $scope.events=[];
+              snapshot.forEach(function(childSnapshot) {
+              var childData = childSnapshot.val();
+              $scope.events.push(childData);
+            });
+          }).then(function(){
+            let value = {"name":name,"date":date,"events":$scope.events,"color":day.events};
+                value = JSON.stringify(value);
+                sessionStorage.setItem(key, value);
+            $state.go("app.dayEvents");
+          });
+        }
+
+      };
+
+      function buildMonth() {
+        //Events of this months
+        var eventsOfMonth={};
+        var color;
+        for(ev in $scope.allEvents){
+          var eventDate =new Date($scope.allEvents[ev].eventDate);
+          if(eventDate.getMonth()==$scope.months.indexOf($scope.month)){
+            if(!eventsOfMonth[eventDate.getDate()]){
+              var listDayEv=[];
+              color=getRandomColor();
+              listDayEv.push({"color":color});
+              eventsOfMonth[eventDate.getDate()]=listDayEv;
+            }else {
+              color=getRandomColor();
+              eventsOfMonth[eventDate.getDate()].push({"color":color});
+            }
+
+          }
+        }
+        var first_of_month=new Date($scope.year, $scope.months.indexOf($scope.month),1);//First day of month
+        var first_day_month=first_of_month.getDay();
+        var num_weeks =Math.floor((days[$scope.months.indexOf($scope.month)]+first_day_month)/7);
+        if(days[1]==28){
+          days[1]+=CheckLeapYear($scope.year)?1:0;
+        }else{
+          if(days[1]==29 && CheckLeapYear($scope.year)){
+            days[1]=29;
+          }else{
+            days[1]=28;
+          }
+        }
+
+        $scope.weeks=[];
+        var day_number=1;
+        for(i=0; i<=num_weeks; i++){
+              $scope.weeks[i]=[];
+              for(j=0; j<7; j++){
+                if(i==0 && j<first_day_month){ // First week of month, incomplet
+                  $scope.weeks[i][j]="";
+                }else{
+                  if(day_number<=days[$scope.months.indexOf($scope.month)]){
+                    if(eventsOfMonth[day_number]){
+                      $scope.weeks[i][j]={"number":day_number,"events":eventsOfMonth[day_number]};
+                    }else{
+                      $scope.weeks[i][j]={"number":day_number};
+                    }
+                    day_number++;
+                  }else{
+                    $scope.weeks[i][j]="";
+                  }
+                }
+              }// end for week days
+            }// end for weeks
+        }
+
+      function CheckLeapYear(year){
+      return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+      }
+
+      function getRandomColor() {
+        var lum = -0.25;
+        var hex = String('#' + Math.random().toString(16).slice(2, 8).toUpperCase()).replace(/[^0-9a-f]/gi, '');
+        if (hex.length < 6) {
+            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        }
+        var color = "#",
+            c, i;
+        for (i = 0; i < 3; i++) {
+            c = parseInt(hex.substr(i * 2, 2), 16);
+            c = Math.round(Math.min(Math.max(0, c + (c * lum)), 180)).toString(16);
+            color += ("00" + c).substr(c.length);
+        }
+        return color;
+      }
+
+  })
+
+  .controller("EventCtrl",function($scope,$state,$window){
+
+    $scope.changeStart = function() {
+      if($scope.eventEndTime!=null && $scope.eventStartTime >= $scope.eventEndTime){
+        $scope.startError=true;
+      }else{
+        $scope.startError=false;
+        $scope.endError=false;
+      }
+    };
+    $scope.changeEnd = function() {
+      if($scope.eventStartTime!=null && $scope.eventEndTime <= $scope.eventStartTime){
+        $scope.endError=true;
+      }else{
+        $scope.endError=false;
+        $scope.startError=false;
+      }
+    };
+
+    $scope.saveEvent= function(){
+        var id = firebase.auth().currentUser.uid;
+        var eventId=Date.parse(new Date());
+        firebase.database().ref("Users/"+id+"/events/"+eventId).set({
+          'name':$scope.eventName,
+          'eventDate':Date.parse($scope.eventDate),
+          'startHour':$scope.eventStartTime.getHours(),
+          'startMin':$scope.eventStartTime.getMinutes(),
+          'endHour': $scope.eventEndTime.getHours(),
+          'endMin': $scope.eventEndTime.getMinutes(),
+          'id':eventId
+        });
+        $window.location.href="#/app/calendar";
+        $window.location.reload();
+    };
+  })
+
+  .controller("EventsCtrl", function(
+    $scope,
+    $ionicPopup,
+    $state,
+    $window
+  ){
+
+    if(sessionStorage.getItem('selectedDay')!=null){
+      $scope.day=JSON.parse(sessionStorage.getItem('selectedDay'));
+      var allEvents=$scope.day.events;
+      $scope.eventsOfDay=[];
+      var counter=0;
+      var event;
+      for(event in allEvents){
+        if(allEvents[event].eventDate==$scope.day.date){
+          allEvents[event].startMin=pad2(allEvents[event].startMin);
+          allEvents[event].endMin=pad2(allEvents[event].endMin);
+          allEvents[event].color=$scope.day.color[counter].color;
+          allEvents[event].startTime= new Date("January 01, 1970 "+allEvents[event].startHour+":"+allEvents[event].startMin+":00");
+          allEvents[event].endTime= new Date("January 01, 1970 "+allEvents[event].endHour+":"+allEvents[event].endMin+":00");
+          counter++;
+          $scope.eventsOfDay.push(allEvents[event]);
+        }
+      }
+    }
+
+    function pad2(number) {
+      var nb=""+number;
+      if(nb.length<2){
+           return (number < 10 ? '0' : '') + number;
+      }else{
+        return number;
+      }
+    }
+
+    $scope.deleteEvent = function(event){
+
+      // confirm dialog
+      var confirmPopup = $ionicPopup.confirm({
+        title: "Delete",
+        template: "Are you sure you want to delete this event?"
+      });
+      confirmPopup.then(function(res) {
+        if (res) {
+          $scope.eventsOfDay.splice($scope.eventsOfDay.indexOf(event), 1);
+          var id = firebase.auth().currentUser.uid;
+          var ref = firebase.database().ref("Users/"+id+"/events/"+event.id);
+          ref.remove();
+          $window.location.href="#/app/calendar";
+          //reloading so calendar can have correct number of events in day
+          $window.location.reload();
+        } else {
+          console.error("Error confirm delete event");
+        }
+      });
+    };
+
+    $scope.editEvent = function(event){
+      if(event.inEdition){
+        event.inEdition=false;
+      }else{
+        event.inEdition=true;
+      }
+    };
+
+    $scope.submitEdit= function(event){
+      event.startHour=event.startTime.getHours();
+      event.startMin=pad2(event.startTime.getMinutes());
+      event.endHour=event.endTime.getHours();
+      event.endMin=pad2(event.endTime.getMinutes());
+      event.inEdition=false;
+      var id = firebase.auth().currentUser.uid;
+      var eventId= event.id;
+      var ref = firebase.database().ref("Users/"+id+"/events/"+eventId);
+      ref.update({
+        startHour: event.startHour
+      });
+      ref.update({
+        startMin: event.startMin
+      });
+      ref.update({
+        endHour: event.endHour
+      });
+      ref.update({
+        endMin: event.endMin
+      });
+      ref.update({
+        name: event.name
+      });
+    };
+
+    $scope.cancelEdit =function(event){
+      event.inEdition=false;
+    };
+
+    $scope.addEvent = function() {
+      $state.go("app.createEvent");
     };
   });
