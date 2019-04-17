@@ -84,9 +84,15 @@ describe("Calculation Controller", function(){
        window.sessionStorage.getItem('foodList')!=null){
          window.sessionStorage.removeItem('currentUser');
          window.sessionStorage.removeItem('foodList');
+         expect(window.sessionStorage.getItem('currentUser')).toEqual(null);
+         expect(window.sessionStorage.getItem('foodList')).toEqual(null);
+       }else{
+         if(window.sessionStorage.getItem('currentUser') &&
+            window.sessionStorage.getItem('foodList')){
+              expect(window.sessionStorage.getItem('currentUser')).toEqual(undefined);
+              expect(window.sessionStorage.getItem('foodList')).toEqual(undefined);
+            }
        }
-    expect(window.sessionStorage.getItem('currentUser')).toEqual(null);
-    expect(window.sessionStorage.getItem('foodList')).toEqual(null);
     var response=$scope.calculate();
     expect(response).toEqual(false);
   });
