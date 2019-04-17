@@ -48,14 +48,6 @@ install:
 
 jobs:
   include:
-    - stage: Building
-      script:
-      - npm install -g cordova@8.1.2
-      - npm install -g ionic
-      - npm i @ionic/v1-toolkit
-      - cordova platform add android@7.X.X
-      - cordova build android
-      node_js: '10'
     - stage: Static Analysis
       script: 
       - npm run lint-index
@@ -66,6 +58,14 @@ jobs:
       script: 
       - npm run test
       - npm run codecov
+      node_js: '10'
+    - stage: Building
+      script:
+      - npm install -g cordova@8.1.2
+      - npm install -g ionic
+      - npm i @ionic/v1-toolkit
+      - cordova platform add android@7.X.X
+      - cordova build android
       node_js: '10'
    
 
