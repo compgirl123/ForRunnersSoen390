@@ -5565,7 +5565,7 @@ $scope.stopChallengeSession = function() {
         }
 
       };
-  })
+  
       function buildMonth() {
         //Events of this months
         var eventsOfMonth={};
