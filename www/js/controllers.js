@@ -5501,19 +5501,21 @@ $scope.stopChallengeSession = function() {
       $scope.year=$scope.todayDate.getFullYear();
       if(sessionStorage.getItem("currentUser")!=null){
         $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
-      }
-      var id=$scope.user.uid;
-      var rootRef = firebase.database().ref("Users/"+id+"/events").orderByKey();
 
-      rootRef.once("value",function(snapshot) {
-          $scope.allEvents=[];
-          snapshot.forEach(function(childSnapshot) {
-          var childData = childSnapshot.val();
-          $scope.allEvents.push(childData);
+        var id=$scope.user.uid;
+        var rootRef = firebase.database().ref("Users/"+id+"/events").orderByKey();
+
+        rootRef.once("value",function(snapshot) {
+            $scope.allEvents=[];
+            snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            $scope.allEvents.push(childData);
+          });
+        }).then(function(){
+            buildMonth();
         });
-      }).then(function(){
-          buildMonth();
-      });
+      }
+
 
       $scope.previous=function(){
         var currentMonth = $scope.months.indexOf($scope.month);
@@ -5570,7 +5572,7 @@ $scope.stopChallengeSession = function() {
         var color;
         for(ev in $scope.allEvents){
           var eventDate =new Date($scope.allEvents[ev].eventDate);
-          if(eventDate.getMonth()==$scope.months.indexOf($scope.month)){
+          if(eventDate.getMonth()==$scope.months.indexOf($scope.month) && eventDate.getFullYear()==$scope.year){
             if(!eventsOfMonth[eventDate.getDate()]){
               var listDayEv=[];
               color=getRandomColor();
