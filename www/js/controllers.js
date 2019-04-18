@@ -5057,12 +5057,11 @@ $scope.stopChallengeSession = function() {
   })
   //bilal
 
-  .controller('LoginCtrl', ['$scope', '$state', 'CommonProp', '$window','$firebaseObject', function(
+  .controller('LoginCtrl', ['$scope', '$state', 'CommonProp', '$window', function(
       $scope,
       $state,
       CommonProp,
-      $window,
-      $firebaseObject
+      $window
       ){
 
   	$scope.userId = CommonProp.getUserId();
@@ -5077,19 +5076,19 @@ $scope.stopChallengeSession = function() {
     $window.location.reload();
     };
 
-  	$scope.signIn = function(fb = firebase){
+  	$scope.signIn = function(firebase){
   		var email = $scope.user.email;
   		var password = $scope.user.password;
 
-  		fb.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+  		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
         var errorCode = error.code;
         var errorMessage = error.message;
         $scope.errMsg = true;
         $scope.errorMessage = error.message;
        });
 
-      fb.auth().onAuthStateChanged(function(user) {
-        fb.database().ref('Users/' + user.uid).once('value').then(function(snapshot) {
+      firebase.auth().onAuthStateChanged(function(user) {
+        firebase.database().ref('Users/' + user.uid).once('value').then(function(snapshot) {
             var userInfo=snapshot.val();
 
             // ensures that when the user logs in, they are redirected to profile page and side menu
