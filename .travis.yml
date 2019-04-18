@@ -2,7 +2,7 @@ branches:
   only:
   - master
   - /.*/
-node_js: '6'
+node_js: '10'
 matrix:
   include:
   - os: linux
@@ -13,8 +13,8 @@ matrix:
       - tools
       - platform-tools
       - tools
-      - build-tools-26.0.2
-      - android-26
+      - build-tools-28.0.0
+      - android-28
       - extra-google-google_play_services
       - extra-google-m2repository
       - extra-android-m2repository
@@ -34,43 +34,41 @@ matrix:
         - google-chrome-stable
     licenses:
     - android-sdk-license-.+
-  allow_failures:
-  - os: osx
-    language: objective-c
-    osx_image: xcode8.3
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -f  $HOME/.gradle/caches/transforms-1/transforms-1.lock
   - rm -rf $HOME/.gradle/caches/3.5/fileHashes/
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 cache: npm
-before_install:
-  - export LANG=en_US.UTF-8
-  - export CHROME_BIN=google-chrome
-  - export TRAVIS_TAG=$(git tag --points-at HEAD)
-  - export CODECOV_TOKEN="token"
-  - nvm install 8
-after_success:
-  - codecov --file coverage/lcov/lcov.info --disable search
-  - bash <(curl -s https://codecov.io/bash) -t token
+
 install:
-  - npm install -g ionic cordova codecov
-  - npm install htmlhint eslint --save-dev
+  - npm install -g codecov
   - npm install
+
 jobs:
   include:
-    - stage: Code coverage
-      script: npm run codecov --token="$CODECOV_TOKEN"
-      node_js: '6'
-    - stage: Linting
-      script: ./node_modules/.bin/htmlhint --config htmlconf.json www/index.html
-      script: ./node_modules/.bin/htmlhint --config htmlconf.json www/templates/*
-      script: ./node_modules/.bin/eslint www/js/controllers.js
-      node_js: '6'
+    - stage: Static Analysis
+      script: 
+      - npm run lint-index
+      - npm run lint-template
+      - npm run lint-controller
+      node_js: '10'
     - stage: Testing
-      script: ./node_modules/karma/bin/karma start karma.conf.js --browsers ChromeHeadless --single-run
-      node_js: '6' 
+      script: 
+      - npm run test
+      - npm run codecov
+      node_js: '10'
     - stage: Building
-      script: true
-      node_js: '6'     
+      script:
+      - npm install -g cordova@8.1.2
+      - npm install -g ionic
+      - npm i @ionic/v1-toolkit
+      - cordova platform add android@7.X.X
+      - cordova build android
+      node_js: '10'
+   
+
+ 
+    
     

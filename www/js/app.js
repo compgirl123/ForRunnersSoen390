@@ -295,6 +295,36 @@ angular
             controller: "ChallengesCtrl"
           }
         }
+      })
+
+      .state("app.calendar", {
+        url: "/calendar",
+        views: {
+          menuContent: {
+            templateUrl: "templates/calendar.html",
+            controller: "CalendarCtrl"
+          }
+        }
+      })
+
+      .state("app.createEvent", {
+        url: "/event",
+        views: {
+          menuContent: {
+            templateUrl: "templates/event.html",
+            controller: "EventCtrl"
+          }
+        }
+      })
+
+      .state("app.dayEvents", {
+        url: "/dayEvents",
+        views: {
+          menuContent: {
+            templateUrl: "templates/dayEvents.html",
+            controller: "EventsCtrl"
+          }
+        }
       });
 
     // if none of the above states are matched, use this as the fallback
@@ -491,7 +521,11 @@ angular
       _foodInfo:"Food Information",
       _calculationInfo: "Calculation Information",
       _challenges: "Challenges",
-      _challenge: "Challenge"
+      _challenge: "Challenge",
+      _swipe_left_pause: "Swipe left to pause",
+      _pause: "Pause",
+      _resume: "Resume",
+      _calendar: "Calendar"
     });
 
     $translateProvider.translations("fr-FR", {
