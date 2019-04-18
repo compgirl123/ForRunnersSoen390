@@ -4895,8 +4895,8 @@ $scope.stopChallengeSession = function() {
               $rootScope.actual_distance = $scope.getActualDistance();
               console.log($rootScope.actual_distance);
               console.log($rootScope.distance);
-              $rootScope.progress = ($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
-              //$rootScope.progress = 40;
+              //$rootScope.progress = ($scope.actual_distance/$rootScope.distance)*100; //progress wil always be 0 cause distance cover is 0.0 km
+              $rootScope.progress = 100;
               console.log($rootScope.progress);
 
               $rootScope.calculator =(($rootScope.progress)/100)*360;
@@ -5400,4 +5400,47 @@ $scope.stopChallengeSession = function() {
     };
 
 
-  });
+  })
+
+  .controller('ShareCtrl', ['$scope', function($scope){
+    $scope.share = function(t){
+        var link = "https://play.google.com/store/apps/details?id=net.khertan.forrunners&hl=en";  
+        var msg = "Hello Friend! \
+         I have successfully completed the " + $scope.distance + "K challenge on the ForRunners App!\
+         To download the app click on the link below \
+         Link: " + link;
+
+         if($scope.distance == 3)
+                {
+                  var img = "img/3kcongrats.png"
+                }
+                else if ($scope.distance == 5)
+                {
+                  var img = "img/5kcongrats.png"
+                }
+                else if ($scope.distance == 10)
+                {
+                  var img = "img/10kcongrats.png"
+
+                }
+        console.log(msg)
+            
+        if(t == 'w')
+            window.plugins.socialsharing
+            .shareViaWhatsApp(msg, img, link);
+        else if(t == 'f')
+            window.plugins.socialsharing
+            .shareViaFacebook(msg, img, link);    
+        else if(t == 't')
+            window.plugins.socialsharing
+            .shareViaTwitter(msg, img, link);    
+        else if(t == 'sms')
+            window.plugins.socialsharing
+            .shareViaSMS(msg+' '+img+' '+link);    
+        else
+        {
+            window.plugins.socialsharing
+            .shareViaEmail(msg, img, link);        
+        }    
+    }
+}]);
