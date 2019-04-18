@@ -1,6 +1,17 @@
-
+/* 
 describe("Profile Tests", function(){
   
+  beforeAll(function(){
+    firebase.initializeApp({
+      apiKey: "AIzaSyCEI0nzK-GjzeRM72y92ORMQZSLxpXoYS0",
+          authDomain: "forrunners-soen390-a6772.firebaseapp.com",
+          databaseURL: "https://forrunners-soen390-a6772.firebaseio.com",
+          projectId: "forrunners-soen390-a6772",
+          storageBucket: "forrunners-soen390-a6772.appspot.com",
+          messagingSenderId: "961868385218"
+    });
+   });
+
   beforeEach(module('app.controllers'));
 
   var $controller, $rootScope, $scope, $firebaseAuth, $state, $window, $firebaseObject;
@@ -17,7 +28,7 @@ describe("Profile Tests", function(){
   describe('ProfileCtrl', function() {
     it('Testing change function', function() {
       var $scope = $rootScope.$new();
-      var controller = $controller('ProfileCtrl', { $scope: $scope,
+      $controller = $controller('ProfileCtrl', { $scope: $scope,
         $firebaseAuth: $firebaseAuth,
         $state: $state,
         $firebaseObject: $firebaseObject,
@@ -41,4 +52,4 @@ describe("Profile Tests", function(){
     });
   });
   
-});
+}); */
