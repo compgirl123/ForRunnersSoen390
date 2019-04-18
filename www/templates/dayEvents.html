@@ -12,20 +12,20 @@
           {{event.name}}
         </div>
         <div class="col col-75 eventName" ng-show="event.inEdition">
-          <input type="text" ng-model="event.name" value="{{event.name}}">
+          <input type="text" ng-model="event.name" value="{{event.name}}" />
         </div>
         <div class="col col-30 utilities_btns">
-        <button data-toggle='tooltip' title='Edit' class="right-edge" ng-click="editEvent(event);"><i class="fas fa-edit"></i></button>
-        <button data-toggle='tooltip' title='Delete' class="right-edge" ng-click="deleteEvent(event);"><i class="fas fa-trash-alt"></i></button>
+        <button data-toggle="tooltip" title="Edit" class="right-edge" ng-click="editEvent(event);"><i class="fas fa-edit"></i></button>
+        <button data-toggle="tooltip" title="Delete" class="right-edge" ng-click="deleteEvent(event);"><i class="fas fa-trash-alt"></i></button>
         </div>
       </div>
       <div class="col">From :
         <span ng-hide="event.inEdition">{{event.startHour}}:{{event.startMin}}</span>
-        <input ng-show="event.inEdition" ng-model="event.startTime" type="time" value="{{event.startHour}}:{{event.startMin}}">
+        <input ng-show="event.inEdition" ng-model="event.startTime" type="time" value="{{event.startHour}}:{{event.startMin}}" />
       </div>
       <div class="col">To :
         <span ng-hide="event.inEdition">{{event.endHour}}:{{event.endMin}}</span>
-        <input ng-show="event.inEdition" type="time" ng-model="event.endTime" value="{{event.endHour}}:{{event.endMin}}">
+        <input ng-show="event.inEdition" type="time" ng-model="event.endTime" value="{{event.endHour}}:{{event.endMin}}" />
       </div>
       <div class="row">
         <button type="submit" ng-click="submitEdit(event)" ng-style="{'background-color':'{{event.color}}'}" ng-show="event.inEdition" class="col col-30 right-edge-black">Submit</button>

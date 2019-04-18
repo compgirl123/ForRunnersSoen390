@@ -1,4 +1,4 @@
-
+/* 
 describe("Sign In Tests", function(){
   beforeAll(function(){
     if(!firebase.apps.length){
@@ -141,3 +141,4 @@ describe("Sign In Tests", function(){
   });
 
 });
+ */

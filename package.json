@@ -14,8 +14,7 @@
     "@ionic-native/sqlite": "^5.0.0",
     "angularfire": "^2.3.0",
     "body-parser": "^1.18.3",
-    "cordova-android": "8.0.0",
-    "cordova-android-support-gradle-release": "^2.0.1",
+    "cordova-android-support-gradle-release": "~2.0.1",
     "cordova-browser": "^5.0.4",
     "cordova-custom-config": "^5.0.3",
     "cordova-plugin-app-version": "^0.1.9",
@@ -26,11 +25,11 @@
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-file": "^4.3.3",
     "cordova-plugin-file-transfer": "^1.7.1",
-    "cordova-plugin-filepicker": "git+https://github.com/jcesarmobile/FilePicker-Phonegap-iOS-Plugin.git",
+    "cordova-plugin-filepicker": "https://github.com/jcesarmobile/FilePicker-Phonegap-iOS-Plugin.git",
     "cordova-plugin-geolocation": "^2.4.3",
     "cordova-plugin-globalization": "^1.11.0",
     "cordova-plugin-gpslocation": "^1.0.0",
-    "cordova-plugin-insomnia": "git+https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git",
+    "cordova-plugin-insomnia": "https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git",
     "cordova-plugin-nativestorage": "^2.3.2",
     "cordova-plugin-request-location-accuracy": "^2.2.3",
     "cordova-plugin-splashscreen": "^3.2.2",
@@ -102,7 +101,8 @@
       "cordova-plugin-x-socialsharing": {
         "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
       },
-      "es6-promise-plugin": {}
+      "es6-promise-plugin": {},
+      "cordova-android-support-gradle-release": {}
     },
     "platforms": [
       "browser"
