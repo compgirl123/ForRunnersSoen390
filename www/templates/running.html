@@ -41,7 +41,7 @@
 
                     <div class="item item-dark" ng-if="session.beatsPerMinute">
                         <h3 style="color: #ccc;">{{ "_bpm" | translate }}</h3>
-                        <h1 style="margin-top:0px;color: #fff;">{{session.beatsPerMinute | number:1 }} <span class="unit">{{ "_bpms_label" | translate}}</span></h1>  
+                        <h1 style="margin-top:0px;color: #fff;">{{session.beatsPerMinute | number:1 }} <span class="unit">{{ "_bpms_label" | translate}}</span></h1>
                     </div>
 
                     <div class="item item-dark">
@@ -61,6 +61,11 @@
         <ion-slide-box show-pager="false">
            <ion-slide><button  ng-class="session.gpsGoodSignalToggle === false ? 'button-assertive' : 'button-positive'" class="button button-block ">{{ "_swipe_left" | translate }}</button></ion-slide>
             <ion-slide><button ng-click="stopSession()" class="button button-block button-assertive">{{ "_stop" | translate }}</button></ion-slide>
+        </ion-slide-box>
+        <ion-slide-box show-pager="false">
+           <ion-slide><button  ng-class="session.gpsGoodSignalToggle === false ? 'button-assertive' : 'button-positive'" class="button button-block ">{{ "_swipe_left_pause" | translate }}</button></ion-slide>
+           <ion-slide><button ng-if="!isPaused" ng-click="pauseSession()" class="button button-block button-assertive">{{ "_pause" | translate }}</button></ion-slide>
+           <ion-slide><button ng-if="isPaused" ng-click="resumeSession()" class="button button-block button-assertive">{{ "_resume" | translate }}</button></ion-slide>
         </ion-slide-box>
 
     </ion-content>
