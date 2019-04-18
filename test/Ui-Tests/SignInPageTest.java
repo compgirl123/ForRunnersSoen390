@@ -185,18 +185,19 @@ public class SignInPageTest {
 
         onWebView().withElement(findElement(Locator.ID, "email"))
                 .perform(clearElement())
-                .withElement(findElement(Locator.ID, "email"));
+                .withElement(findElement(Locator.ID, "email"))
+                .check(webMatches(getText(),containsString("")));
         Thread.sleep(1000);
         onWebView().withElement(findElement(Locator.ID, "password"))
                 .perform(clearElement())
-                .withElement(findElement(Locator.ID, "password"));
+                .withElement(findElement(Locator.ID, "password"))
+                .check(webMatches(getText(),containsString("")));
         Thread.sleep(2000);
-        onWebView().withElement(findElement(Locator.XPATH,submitButtonXpath));
+        onWebView().withElement(findElement(Locator.XPATH,submitButtonXpath)).check(webMatches(getText(),containsString("Sign In")));;
         Thread.sleep(2000);
         onWebView().withElement(findElement(Locator.ID, "label-email")).check(webMatches(getText(), containsString("Email")));
         onWebView().withElement(findElement(Locator.ID, "label-password")).check(webMatches(getText(), containsString("Password")));
     }
-
     @Test
     public void signInTestCheckInputsBad() throws Exception {
 
