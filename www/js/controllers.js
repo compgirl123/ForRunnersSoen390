@@ -5283,13 +5283,14 @@ $scope.stopChallengeSession = function() {
           return session_ids;
       }, []);
      
-      /*console.log($scope.speed);
-      console.log(localStorage.getItem(name_of_session).split('"')[$scope.speed].substring(1,2));*/
+      console.log("HHH");
+      //console.log($scope.speed);
+      //console.log(localStorage.getItem(name_of_session).split('"')[$scope.speed].substring(1,4));
       speed.push(localStorage.getItem(name_of_session).split('"')[$scope.speed].substring(1,4));
 
       $scope.pace= 
           localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
-          if (e === 'pace')
+          if (e === 'pace') 
           session_ids.push(i+2);
           return session_ids;
       }, []);
@@ -5322,7 +5323,7 @@ $scope.stopChallengeSession = function() {
       '</div>'
     }
 
-    var curr_date = new Date();
+    /*var curr_date = new Date();
     var hour = curr_date.getHours();
     var minute = curr_date.getMinutes();
     var second = curr_date.getSeconds();
@@ -5354,7 +5355,7 @@ $scope.stopChallengeSession = function() {
         console.log("ERROR " + JSON.stringify(error));
       });
 
-  }
+    }*/
   
     $scope.send = function() {
       var date_of_session = localStorage.getItem(name_of_session).split('"')[$scope.date];
