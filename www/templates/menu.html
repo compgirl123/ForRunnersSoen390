@@ -53,6 +53,14 @@
         <ion-item menu-close href="#/app/help">
           {{ "_help" | translate }}
         </ion-item>
+        <!--<ion-item menu-close ng-controller="EmailCtrl" ng-click="send()">
+          {{ "Email" | translate }}
+        </ion-item>-->
+        <ion-item ng-controller="EmailCtrl">
+          <button class="button button-full  button-dark" ng-click="send()" ng-if="isLogged">
+            {{ "Send Email Stats" | translate }}
+          </button>
+          </ion-item>
         <ion-item ng-controller="LoginCtrl">
         <button class="button button-full  button-dark" ng-click="signout()" ng-if="isLogged">
           {{ "Logout" | translate }}
