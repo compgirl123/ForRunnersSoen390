@@ -5300,12 +5300,12 @@ $scope.stopChallengeSession = function() {
       pace.push(localStorage.getItem(name_of_session).split('"')[$scope.pace].substring(11,19));
 
     var mailgunUrl = "connectconcordia.tk";
-    var mailgunApiKey = window.btoa("api:key-e63cfbbb0bb500d1b5428053228f6360")
+    var mailgunApiKey = window.btoa("api:key-e63cfbbb0bb500d1b5428053228f6360");
     var email = $scope.user.email;
   }
     console.log($scope.user);
     console.log(duration);
-    email_template = ''
+    email_template = '';
     for (i = 0; i < $scope.test.length; i++) { 
       email_template += "<h1>ForRunners : Your Stats</h1>"
       +"<h2>Name of Session: "+localStorage.getItem(name_arr[i]).split('"')[$scope.name]+"</h2>"
@@ -5320,7 +5320,7 @@ $scope.stopChallengeSession = function() {
       '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Time for one Km covered: '+
       pace[i]
       +'</p></div>'+
-      '</div>'
+      '</div>';
     }
 
     /*var curr_date = new Date();
@@ -5379,7 +5379,7 @@ $scope.stopChallengeSession = function() {
         console.log("ERROR " + JSON.stringify(error));
       });
 
-  }
+  };
 
   })
 
