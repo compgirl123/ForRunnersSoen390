@@ -57,6 +57,7 @@ jobs:
   include:
     - stage: Static Analysis
       script: 
+      - ls /usr/local/
       - npm run lint-index
       - npm run lint-template
       - npm run lint-controller
