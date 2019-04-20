@@ -48,7 +48,6 @@ before_install:
   - export TRAVIS_TAG=$(git tag --points-at HEAD)
   - nvm install 8
   - npm install -g ionic cordova@8.1.2
-  - yes | sdkmanager "platforms;android-26"
 
 install:
   - npm install -g codecov
