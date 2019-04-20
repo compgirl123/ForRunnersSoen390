@@ -13,8 +13,8 @@
     "@angular/fire": "^5.1.2",
     "@ionic-native/sqlite": "^5.0.0",
     "body-parser": "^1.18.3",
+    "cordova-android": "^6.4.0",
     "cordova-android-support-gradle-release": "~2.0.1",
-    "cordova-browser": "^5.0.4",
     "cordova-custom-config": "^5.0.3",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-background-mode": "git+https://github.com/katzer/cordova-plugin-background-mode.git",
@@ -46,7 +46,8 @@
     "gulp-sass": "^1.3.3",
     "ionic": "^4.12.0",
     "jest": "^24.5.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "cordova-browser": "^5.0.4"
   },
   "devDependencies": {
     "@ionic/cli-plugin-cordova": "1.6.2",
@@ -104,6 +105,7 @@
       "cordova-android-support-gradle-release": {}
     },
     "platforms": [
+      "android",
       "browser"
     ]
   },
