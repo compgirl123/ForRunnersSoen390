@@ -57,7 +57,6 @@ jobs:
   include:
     - stage: Static Analysis
       script: 
-      - ls /usr/local/
       - npm run lint-index
       - npm run lint-template
       - npm run lint-controller
@@ -68,7 +67,9 @@ jobs:
       - npm run codecov
       node_js: '8.9.4'
     - stage: Building
+      language: android
       script:
+      - ls /usr/local/
       - npm i @ionic/v1-toolkit
       - cordova platform add android@6
       - cordova build android
