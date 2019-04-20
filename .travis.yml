@@ -47,7 +47,6 @@ before_install:
   - export CHROME_BIN=google-chrome
   - export TRAVIS_TAG=$(git tag --points-at HEAD)
   - nvm install 8
-  - npm install -g ionic cordova@8.1.2
 
 install:
   - npm install -g codecov
@@ -69,7 +68,9 @@ jobs:
     - stage: Building
       language: android
       script:
-      - ls /usr/local/
+      - ls /usr/local/      
+      - npm install -g ionic cordova@8.1.2
+      - yes | sdkmanager "platforms;android-26"
       - npm i @ionic/v1-toolkit
       - cordova platform add android@6
       - cordova build android
