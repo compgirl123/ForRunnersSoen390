@@ -34,16 +34,23 @@ public class ProfilePageTest{
 
     private static final String menuXpath1 = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-bar/div[2]/ion-header-bar/div[1]/span/button";
     private static final String weight = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view/ion-content/div/form/div/label[3]/input";
+    private static final String weightbad = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view/ion-content/div/form/div/label[8]/input";
     private static final String height = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view/ion-content/div/form/div/label[4]/input";
+    private static final String heightbad = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view/ion-content/div/form/div/label[9]/input";
     private static final String age  = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view/ion-content/div/form/div/label[5]/input";
+    private static final String agebad  = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view/ion-content/div/form/div/label[10]/input";
     private static final String gender  = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view/ion-content/div/form/div/label[6]/select";
+    private static final String genderbad  = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view/ion-content/div/form/div/label11]/select";
     private static final String activityLevel  = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view/ion-content/div/form/div/label[7]/select";
+    private static final String activityLevelbad  = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view/ion-content/div/form/div/label[12]/select";
     private static final String sessionsXpathpage = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu/ion-content/div/ion-list/div/ion-item[1]/a";
     private static final String profileXpathpage = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu/ion-content/div/ion-list/div/ion-item[4]/a";
     private static final String logoutButtonXPath = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu/ion-content/div/ion-list/div/ion-item[10]/button";
+    private static final String emailXpath = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view[2]/ion-content/div/form/div/label[1]/input";
+    private static final String usernameXpath = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view[2]/ion-content/div/form/div/label[2]/input";
 
     @Test
-    public void profilePageTestCheckButtonsGood() throws Exception {
+    public void profilePageUiTestCheckButtonsGood() throws Exception {
 
         /**
          * UI Profile Page Validation Test for Our ForRunners Application.
@@ -65,6 +72,9 @@ public class ProfilePageTest{
         onWebView().withElement(findElement(Locator.XPATH,profileXpathpage))
                 .perform(DriverAtoms.webClick());
 
+        onWebView().withElement(findElement(Locator.XPATH,emailXpath));
+        onWebView().withElement(findElement(Locator.XPATH,usernameXpath));
+
         onWebView().withElement(findElement(Locator.XPATH,weight))
                 .perform(clearElement())
                 .check(webMatches(getText(),containsString("")));
@@ -80,16 +90,28 @@ public class ProfilePageTest{
         onWebView().withElement(findElement(Locator.XPATH,gender));
 
         onWebView().withElement(findElement(Locator.XPATH,activityLevel));
+
+
     }
 
     @Test
-    public void profilePageTestCheckButtonsBad() throws Exception {
+    public void profilePageUiTestCheckButtonsBad() throws Exception {
 
         /**
+         * UI Profile Page Validation Test for Our ForRunners Application.
+         * This UI test checks if the weight, height, age text boxes are there as well as
+         * the gender and activity levels dropdown menus are present.
+         * Also, there are tests verifying if the labels on top of the text boxes and
+         * dropdown menus are present and written appropriately.
+         * Fails Due to :
+         * - email Locator id being wrong
+         * - password Locator id being wrong
+         * - Sign In Button Label being wrong
+         * - Labels Over the Text Box Entries being wrong
          */
-        // TO DO
+
         // Login into app to ensure that profile page can be displayed
-        /*SignInPageTest a = new SignInPageTest();
+        SignInPageTest a = new SignInPageTest();
         a.signInPageGoodTest();
 
         onWebView().withElement(findElement(Locator.XPATH,menuXpath1))
@@ -100,7 +122,24 @@ public class ProfilePageTest{
         onWebView().withElement(findElement(Locator.XPATH,profileXpathpage))
                 .perform(DriverAtoms.webClick());
 
-        Thread.sleep(3000);*/
+        onWebView().withElement(findElement(Locator.XPATH,emailXpath));
+        onWebView().withElement(findElement(Locator.XPATH,usernameXpath));
+
+        onWebView().withElement(findElement(Locator.XPATH,weightbad))
+                .perform(clearElement())
+                .check(webMatches(getText(),containsString("")));
+
+        onWebView().withElement(findElement(Locator.XPATH,heightbad))
+                .perform(clearElement())
+                .check(webMatches(getText(),containsString("")));
+
+        onWebView().withElement(findElement(Locator.XPATH,agebad))
+                .perform(clearElement())
+                .check(webMatches(getText(),containsString("")));
+
+        onWebView().withElement(findElement(Locator.XPATH,genderbad));
+
+        onWebView().withElement(findElement(Locator.XPATH,activityLevelbad));
 
 
     }
