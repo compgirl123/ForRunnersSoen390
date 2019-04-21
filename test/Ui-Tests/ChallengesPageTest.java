@@ -39,7 +39,11 @@ public class ChallengesPageTest{
     public void challengeTestCheckButtonsGood() throws Exception {
 
         /**
-         *
+         * UI Challenges Page Validation Test for Our ForRunners Application.
+         * This UI test checks if the 3km, 5km and 10km buttons for each challenge are present
+         * as well as their labels.
+         * It also checks in the custom goal section if the distance input text box and time text box
+         * are present as well as their labels.
          */
 
         // Login into app to ensure that profile page can be displayed
@@ -84,6 +88,15 @@ public class ChallengesPageTest{
     public void challengeTestCheckButtonsBad() throws Exception {
 
         /**
+         * UI Challenges Page Validation Test for Our ForRunners Application.
+         * This UI test checks if the 3km, 5km and 10km buttons for each challenge are present
+         * as well as their labels.
+         * It also checks in the custom goal section if the distance input text box and time text box
+         * are present as well as their labels.
+         * Fails Due to :
+         * - 3km General Description Top Label being wrong
+         * - 5km Distance Bottom Label being wrong
+         * - distance text box id being wrong
          */
 
         // Login into app to ensure that profile page can be displayed
@@ -100,8 +113,27 @@ public class ChallengesPageTest{
 
         Thread.sleep(3000);
 
+        onWebView().withElement(findElement(Locator.ID, "label3km")).check(webMatches(getText(), containsString("3 kilometers")));
+        onWebView().withElement(findElement(Locator.ID, "3kilo")).check(webMatches(getText(), containsString("3 km")));
 
+        onWebView().withElement(findElement(Locator.ID, "label5km")).check(webMatches(getText(), containsString("The Next Step")));
+        onWebView().withElement(findElement(Locator.ID, "5kilo")).check(webMatches(getText(), containsString("5 km")));
 
+        onWebView().withElement(findElement(Locator.ID, "label10km")).check(webMatches(getText(), containsString("A Serious Goal")));
+        onWebView().withElement(findElement(Locator.ID, "10kilo")).check(webMatches(getText(), containsString("10 km")));
+
+        onWebView().withElement(findElement(Locator.ID, "customgoal")).check(webMatches(getText(), containsString("Custom Goal")));
+        onWebView().withElement(findElement(Locator.ID, "distance")).check(webMatches(getText(), containsString("Distance (km)")));
+        onWebView().withElement(findElement(Locator.ID, "time")).check(webMatches(getText(), containsString("Time (minute)")));
+
+        onWebView().withElement(findElement(Locator.ID, "distancetxtbox"))
+                .perform(clearElement())
+                .check(webMatches(getText(),containsString("")));
+        onWebView().withElement(findElement(Locator.ID, "timetextbox"))
+                .perform(clearElement())
+                .check(webMatches(getText(),containsString("")));
+
+        Thread.sleep(3000);
 
     }
 
