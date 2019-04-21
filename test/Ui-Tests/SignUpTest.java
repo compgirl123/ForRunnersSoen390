@@ -41,7 +41,7 @@ public class SignUpTest {
     public void signUpTestCheckInputsGood() throws Exception {
 
         /**
-         * UI Sign Up Page Validation Test for Our ForRunners Application.
+         * UI Passing Sign Up Page Validation Test for Our ForRunners Application.
          * This UI test checks if the username, email, password and confirm password
          * text boxes are empty and are loaded and present on the page.
          * It also checks if the Sign In button is there and has the appropriate label.
@@ -72,7 +72,7 @@ public class SignUpTest {
                 .perform(clearElement())
                 .check(webMatches(getText(),containsString("")));
 
-       onWebView().withElement(findElement(Locator.ID,"submitbutton"))
+        onWebView().withElement(findElement(Locator.ID,"submitbutton"))
                .check(webMatches(getText(),containsString("SIGN UP")));
 
     }
@@ -80,19 +80,44 @@ public class SignUpTest {
     @Test
     public void signUpTestCheckInputsBad() throws Exception {
 
-        /**
-         * UI Sign Up Page Validation for Our ForRunners Application.
-         * It checks if the
+         /**
+          * UI Failing/ Negative Sign Up Page Validation Test for Our ForRunners Application.
+          * This UI test checks if the username, email, password and confirm password
+          * text boxes are empty and are loaded and present on the page.
+          * It also checks if the Sign In button is there and has the appropriate label.
+          * Also, there are tests verifying if the labels on top of the text boxes are present and     hread.sleep(7000);
+          * written appropriately.
+          * Fails Due to :
+          * - email Locator id being wrong
+          * - password Locator id being wrong
+          * - Submit Button Label being wrong
          */
 
         Thread.sleep(7000);
 
         onWebView()
                 .withElement(findElement(Locator.XPATH,menuXpath1)).perform(webClick())
-                .withElement(findElement(Locator.XPATH,signUpXpath)).perform(webClick())
-                .withElement(findElement(Locator.ID,"Username")).perform(DriverAtoms.webKeys(" "));
+                .withElement(findElement(Locator.XPATH,signUpXpath)).perform(webClick());
+
         Thread.sleep(2000);
 
+        onWebView().withElement(findElement(Locator.ID,"Username")).perform(DriverAtoms.webKeys(" "))
+                .check(webMatches(getText(),containsString("")));
+
+        onWebView().withElement(findElement(Locator.ID,"email")).perform(DriverAtoms.webKeys(" "))
+                .perform(clearElement())
+                .check(webMatches(getText(),containsString("")));
+
+        onWebView().withElement(findElement(Locator.ID,"password")).perform(DriverAtoms.webKeys(" "))
+                .perform(clearElement())
+                .check(webMatches(getText(),containsString("")));
+
+        onWebView().withElement(findElement(Locator.ID,"registerconfirmPassword")).perform(DriverAtoms.webKeys(" "))
+                .perform(clearElement())
+                .check(webMatches(getText(),containsString("")));
+
+        onWebView().withElement(findElement(Locator.ID,"submitbutton"))
+                .check(webMatches(getText(),containsString("Sign Up")));
     }
 
     @Test
