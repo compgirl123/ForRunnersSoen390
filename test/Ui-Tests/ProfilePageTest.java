@@ -72,24 +72,32 @@ public class ProfilePageTest{
         onWebView().withElement(findElement(Locator.XPATH,profileXpathpage))
                 .perform(DriverAtoms.webClick());
 
-        onWebView().withElement(findElement(Locator.XPATH,emailXpath));
-        onWebView().withElement(findElement(Locator.XPATH,usernameXpath));
+        onWebView().withElement(findElement(Locator.ID,"emailp"));
+        onWebView().withElement(findElement(Locator.ID,"em")).check(webMatches(getText(),containsString("Email")));
+
+        onWebView().withElement(findElement(Locator.ID,"userp"));
+        onWebView().withElement(findElement(Locator.ID,"user")).check(webMatches(getText(),containsString("Username")));
 
         onWebView().withElement(findElement(Locator.XPATH,weight))
                 .perform(clearElement())
                 .check(webMatches(getText(),containsString("")));
+        onWebView().withElement(findElement(Locator.ID,"weightkg")).check(webMatches(getText(),containsString("Weight (Kg) :")));
 
         onWebView().withElement(findElement(Locator.XPATH,height))
                 .perform(clearElement())
                 .check(webMatches(getText(),containsString("")));
+        onWebView().withElement(findElement(Locator.ID,"heightm")).check(webMatches(getText(),containsString("Height (m) :")));
 
         onWebView().withElement(findElement(Locator.XPATH,age))
                 .perform(clearElement())
                 .check(webMatches(getText(),containsString("")));
+        onWebView().withElement(findElement(Locator.ID,"age1")).check(webMatches(getText(),containsString("Age :")));
 
         onWebView().withElement(findElement(Locator.XPATH,gender));
+        onWebView().withElement(findElement(Locator.ID,"g")).check(webMatches(getText(),containsString("Gender :")));
 
         onWebView().withElement(findElement(Locator.XPATH,activityLevel));
+        onWebView().withElement(findElement(Locator.ID,"loa")).check(webMatches(getText(),containsString("Level of activity :")));
 
 
     }
@@ -98,17 +106,23 @@ public class ProfilePageTest{
     public void profilePageUiTestCheckButtonsBad() throws Exception {
 
         /**
-         * UI Profile Page Validation Test for Our ForRunners Application.
+         * UI Failing Profile Page Validation Test for Our ForRunners Application.
          * This UI test checks if the weight, height, age text boxes are there as well as
          * the gender and activity levels dropdown menus are present.
          * Also, there are tests verifying if the labels on top of the text boxes and
          * dropdown menus are present and written appropriately.
          * Fails Due to :
          * - email Locator id being wrong
-         * - password Locator id being wrong
-         * - Sign In Button Label being wrong
-         * - Labels Over the Text Box Entries being wrong
+         * - username Locator id being wrong
+         * - weight Locator id being wrong
+         * - height Locator id being wrong
+         * - age Locator id being wrong
+         * - gender Locator id being wrong
+         * - level of activity Locator id being wrong
+         * - level of activity id identifier label being wrong
+         * - height label being wrong
          */
+
 
         // Login into app to ensure that profile page can be displayed
         SignInPageTest a = new SignInPageTest();
@@ -122,27 +136,40 @@ public class ProfilePageTest{
         onWebView().withElement(findElement(Locator.XPATH,profileXpathpage))
                 .perform(DriverAtoms.webClick());
 
-        onWebView().withElement(findElement(Locator.XPATH,emailXpath));
-        onWebView().withElement(findElement(Locator.XPATH,usernameXpath));
+        onWebView().withElement(findElement(Locator.ID,"emailpp"));
+        onWebView().withElement(findElement(Locator.ID,"em")).check(webMatches(getText(),containsString("Email")));
+
+        onWebView().withElement(findElement(Locator.ID,"userp"));
+        onWebView().withElement(findElement(Locator.ID,"user")).check(webMatches(getText(),containsString("Username")));
 
         onWebView().withElement(findElement(Locator.XPATH,weightbad))
                 .perform(clearElement())
                 .check(webMatches(getText(),containsString("")));
+        onWebView().withElement(findElement(Locator.ID,"weightkg")).check(webMatches(getText(),containsString("Weight (Kg) :")));
 
         onWebView().withElement(findElement(Locator.XPATH,heightbad))
                 .perform(clearElement())
                 .check(webMatches(getText(),containsString("")));
+        onWebView().withElement(findElement(Locator.ID,"height")).check(webMatches(getText(),containsString("height(m) :")));
 
         onWebView().withElement(findElement(Locator.XPATH,agebad))
                 .perform(clearElement())
                 .check(webMatches(getText(),containsString("")));
+        onWebView().withElement(findElement(Locator.ID,"age1")).check(webMatches(getText(),containsString("Age :")));
 
         onWebView().withElement(findElement(Locator.XPATH,genderbad));
+        onWebView().withElement(findElement(Locator.ID,"g")).check(webMatches(getText(),containsString("Gender :")));
 
         onWebView().withElement(findElement(Locator.XPATH,activityLevelbad));
+        onWebView().withElement(findElement(Locator.ID,"levelofactivity")).check(webMatches(getText(),containsString("Level of activity :")));
 
 
     }
+
+    /**
+     * THE TESTS LISTED BELOW ARE SIMULATION TESTS. THEY ACTUALLY SIMULATE USES CASES THAT
+     * STANDARD USERS MIGHT GO THROUGH WHEN USING THE APP.
+     */
 
     public void profilePageTestBad() throws Exception{
         // Login into app to ensure that profile page can be displayed
