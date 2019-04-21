@@ -12,14 +12,14 @@
                     <p ng-show="userForm.Username.$invalid && userForm.Username.$touched" class="help-block" style="color:rgb(165, 30, 30); text-align:center;">Enter a valid username</p>
                 </div>
             </ion-input>
-        <ion-label fixed>Email</ion-label>
+        <ion-label fixed id="e_mail">Email</ion-label>
             <ion-input type="email" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated" >
                 <div class="form-group">
                     <input type="email" class="form-control" name="email" id="registeremail" ng-model="user.email" ng-required="true"/>
                     <p ng-show="userForm.email.$invalid && userForm.email.$touched" class="help-block" style="color:rgb(165, 30, 30); text-align:center;">Enter a valid email</p>
                 </div>
             </ion-input>
-        <ion-label fixed>Password</ion-label>
+        <ion-label fixed id="p_assword">Password</ion-label>
             <ion-input type="password" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus">
                 <div class="form-group">
                     <input type="password" class="form-control" name="password" id="registerpassword" ng-model="user.password" ng-required="true" ng-minlength="8"/>
@@ -28,7 +28,7 @@
                 </div>
             </ion-input>
         <ion-item text-wrap class = "confirmpassword">
-        <ion-label fixed>Confirm Password</ion-label>
+        <ion-label fixed id="c_password">Confirm Password</ion-label>
         </ion-item>
             <ion-input type="password" class="sc-ion-input-ios-h sc-ion-input-ios-s hydrated has-focus">
                 <div class="form-group">

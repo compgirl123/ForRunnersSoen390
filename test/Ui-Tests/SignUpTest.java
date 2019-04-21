@@ -75,6 +75,11 @@ public class SignUpTest {
         onWebView().withElement(findElement(Locator.ID,"submitbutton"))
                .check(webMatches(getText(),containsString("SIGN UP")));
 
+        onWebView().withElement(findElement(Locator.ID, "user_name")).check(webMatches(getText(), containsString("Username")));
+        onWebView().withElement(findElement(Locator.ID, "e_mail")).check(webMatches(getText(), containsString("Email")));
+        onWebView().withElement(findElement(Locator.ID, "p_assword")).check(webMatches(getText(), containsString("Password")));
+        onWebView().withElement(findElement(Locator.ID, "c_password")).check(webMatches(getText(), containsString("Confirm Password")));
+
     }
 
     @Test
@@ -91,6 +96,7 @@ public class SignUpTest {
           * - email Locator id being wrong
           * - password Locator id being wrong
           * - Sign Up Button Label being wrong
+          * - Labels Over the Text Box Entries being wrong
          */
 
         Thread.sleep(7000);
@@ -104,20 +110,25 @@ public class SignUpTest {
         onWebView().withElement(findElement(Locator.ID,"Username")).perform(DriverAtoms.webKeys(" "))
                 .check(webMatches(getText(),containsString("")));
 
-        onWebView().withElement(findElement(Locator.ID,"email")).perform(DriverAtoms.webKeys(" "))
+        onWebView().withElement(findElement(Locator.ID,"emailbad")).perform(DriverAtoms.webKeys(" "))
                 .perform(clearElement())
                 .check(webMatches(getText(),containsString("")));
 
-        onWebView().withElement(findElement(Locator.ID,"password")).perform(DriverAtoms.webKeys(" "))
+        onWebView().withElement(findElement(Locator.ID,"passwordbad")).perform(DriverAtoms.webKeys(" "))
                 .perform(clearElement())
                 .check(webMatches(getText(),containsString("")));
 
-        onWebView().withElement(findElement(Locator.ID,"registerconfirmPassword")).perform(DriverAtoms.webKeys(" "))
+        onWebView().withElement(findElement(Locator.ID,"registerconfirmPasswordbad")).perform(DriverAtoms.webKeys(" "))
                 .perform(clearElement())
                 .check(webMatches(getText(),containsString("")));
 
         onWebView().withElement(findElement(Locator.ID,"submitbutton"))
                 .check(webMatches(getText(),containsString("Sign Up")));
+
+        onWebView().withElement(findElement(Locator.ID, "user_name")).check(webMatches(getText(), containsString("User")));
+        onWebView().withElement(findElement(Locator.ID, "e_mail")).check(webMatches(getText(), containsString("E-mail")));
+        onWebView().withElement(findElement(Locator.ID, "p_assword")).check(webMatches(getText(), containsString("Pass")));
+        onWebView().withElement(findElement(Locator.ID, "c_password")).check(webMatches(getText(), containsString("Confirm Pass")));
     }
 
     @Test

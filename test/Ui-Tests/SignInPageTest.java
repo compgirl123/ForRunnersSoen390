@@ -95,6 +95,7 @@ public class SignInPageTest {
          * - email Locator id being wrong
          * - password Locator id being wrong
          * - Sign In Button Label being wrong
+         * - Labels Over the Text Box Entries being wrong
          */
 
         Thread.sleep(7000);
@@ -120,8 +121,8 @@ public class SignInPageTest {
 
         Thread.sleep(2000);
 
-        onWebView().withElement(findElement(Locator.ID, "label-email")).check(webMatches(getText(), containsString("Email")));
-        onWebView().withElement(findElement(Locator.ID, "label-password")).check(webMatches(getText(), containsString("Password")));
+        onWebView().withElement(findElement(Locator.ID, "label-email")).check(webMatches(getText(), containsString("E-mail")));
+        onWebView().withElement(findElement(Locator.ID, "label-password")).check(webMatches(getText(), containsString("Pass")));
 
     }
 
