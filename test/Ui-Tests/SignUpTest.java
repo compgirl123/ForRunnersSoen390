@@ -90,7 +90,7 @@ public class SignUpTest {
           * Fails Due to :
           * - email Locator id being wrong
           * - password Locator id being wrong
-          * - Submit Button Label being wrong
+          * - Sign Up Button Label being wrong
          */
 
         Thread.sleep(7000);

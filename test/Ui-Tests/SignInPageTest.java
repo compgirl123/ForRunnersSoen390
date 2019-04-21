@@ -42,7 +42,7 @@ public class SignInPageTest {
     private static final String age = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view/ion-content/div/form/div/label[3]/input";
 
     @Test
-    public void signInTestCheckInputs() throws Exception {
+    public void signInTestCheckInputsGood() throws Exception {
 
         /**
          * UI Sign In Page Validation Test for Our ForRunners Application.
@@ -85,8 +85,16 @@ public class SignInPageTest {
     public void signInTestCheckInputsBad() throws Exception {
 
         /**
-         * UI Sign In Page Validation for Our ForRunners Application.
-         * It checks if the
+         * UI Sign In Page Validation Test for Our ForRunners Application.
+         * This UI test checks if the email and password text boxes are empty and are loaded
+         * and present on the page.
+         * It also checks if the Sign In button is there and has the appropriate label.
+         * Also, there are tests verifying if the labels on top of the text boxes are present and
+         * written appropriately
+         * Fails Due to :
+         * - email Locator id being wrong
+         * - password Locator id being wrong
+         * - Sign In Button Label being wrong
          */
 
         Thread.sleep(7000);
@@ -108,6 +116,7 @@ public class SignInPageTest {
         Thread.sleep(2000);
 
         onWebView().withElement(findElement(Locator.XPATH,submitButtonXpath));
+        onWebView().withElement(findElement(Locator.XPATH,submitButtonXpath)).check(webMatches(getText(),containsString("SIGN IN ")));
 
         Thread.sleep(2000);
 
@@ -116,27 +125,6 @@ public class SignInPageTest {
 
     }
 
-    @Test
-    public void signInTestCheckLablesBad() throws Exception {
-
-        /**
-         * UI Sign In Page Validation for Our ForRunners Application
-         */
-
-        Thread.sleep(7000);
-
-        onWebView()
-                .withElement(findElement(Locator.XPATH,menuXpath1)).perform(DriverAtoms.webClick())
-                .withElement(findElement(Locator.XPATH,signInXpath)).perform(DriverAtoms.webClick());
-
-        onWebView().withElement(findElement(Locator.XPATH,submitButtonXpath));
-
-        Thread.sleep(2000);
-
-        onWebView().withElement(findElement(Locator.ID, "label-email")).check(webMatches(getText(), containsString("Enter Email")));
-        onWebView().withElement(findElement(Locator.ID, "label-password")).check(webMatches(getText(), containsString("Enter Password")));
-
-    }
     @Test
     public void signInPageBadTest() throws Exception {
         /**
