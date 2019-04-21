@@ -85,7 +85,7 @@ public class SignInPageTest {
     public void signInTestCheckInputsBad() throws Exception {
 
         /**
-         * UI Sign In Page Validation Test for Our ForRunners Application.
+         * UI Failing Sign In Page Validation Test for Our ForRunners Application.
          * This UI test checks if the email and password text boxes are empty and are loaded
          * and present on the page.
          * It also checks if the Sign In button is there and has the appropriate label.
