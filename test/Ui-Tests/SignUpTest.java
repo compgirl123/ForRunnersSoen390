@@ -131,6 +131,12 @@ public class SignUpTest {
         onWebView().withElement(findElement(Locator.ID, "c_password")).check(webMatches(getText(), containsString("Confirm Pass")));
     }
 
+
+    /**
+     * THE TESTS LISTED BELOW ARE SIMULATION TESTS. THEY ACTUALLY SIMULATE USES CASES THAT
+     * STANDARD USERS MIGHT GO THROUGH WHEN USING THE APP.
+     */
+
     @Test
     public void signUpPageTestAllBlanks() throws Exception{
 

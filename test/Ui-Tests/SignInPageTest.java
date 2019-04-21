@@ -42,7 +42,7 @@ public class SignInPageTest {
     private static final String age = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-view/ion-view/ion-content/div/form/div/label[3]/input";
 
     @Test
-    public void signInTestCheckInputsGood() throws Exception {
+    public void signInTestUiCheckInputsGood() throws Exception {
 
         /**
          * UI Sign In Page Validation Test for Our ForRunners Application.
@@ -82,7 +82,7 @@ public class SignInPageTest {
     }
 
     @Test
-    public void signInTestCheckInputsBad() throws Exception {
+    public void signInTestUiCheckInputsBad() throws Exception {
 
         /**
          * UI Failing Sign In Page Validation Test for Our ForRunners Application.
@@ -125,6 +125,11 @@ public class SignInPageTest {
         onWebView().withElement(findElement(Locator.ID, "label-password")).check(webMatches(getText(), containsString("Pass")));
 
     }
+
+    /**
+     * THE TESTS LISTED BELOW ARE SIMULATION TESTS. THEY ACTUALLY SIMULATE USES CASES THAT
+     * STANDARD USERS MIGHT GO THROUGH WHEN USING THE APP.
+     */
 
     @Test
     public void signInPageBadTest() throws Exception {

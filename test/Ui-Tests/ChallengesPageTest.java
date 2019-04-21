@@ -137,6 +137,11 @@ public class ChallengesPageTest{
 
     }
 
+    /**
+     * THE TESTS LISTED BELOW ARE SIMULATION TESTS. THEY ACTUALLY SIMULATE USES CASES THAT
+     * STANDARD USERS MIGHT GO THROUGH WHEN USING THE APP.
+     */
+
     @Test
     public void challengeTestStartTimer() throws Exception{
         // Login into app to ensure that profile page can be displayed
