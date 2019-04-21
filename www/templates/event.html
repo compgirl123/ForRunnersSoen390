@@ -1,33 +1,34 @@
 <ion-view view-title="New Event">
 
-  <ion-content hideBackButton="true">
-   <form ng-controller="EventCtrl" ng-submit="saveEvent()">
-   <div class="list">
-     <label class="item item-input item-stacked-label">
-             <span class="input-label">Event Name: </span>
-             <input type="text" placeholder="Event" ng-model="eventName" required/>
-         </label>
-         <label class="item item-input item-stacked-label row">
-             <span class="input-label">Date:  </span>
-             <input clas="col col-70" type="date" ng-model="eventDate" required/>
-         </label>
-
-         <label class="item item-input item-stacked-label row">
-           <span class="input-label">Start time :</span>
-           <input clas="col col-70" type="time" ng-model="eventStartTime"
-                  max="eventEndTime" required ng-change="changeStart()"/>
-         </label>
-         <span class="errorDuplicate" ng-show="startError">Start time has to be less than end time.</span>
-
-         <label class="item item-input item-stacked-label row">
-             <span class="input-label">Ends :</span>
-             <input clas="col col-70" type="time" ng-model="eventEndTime"
-                  min="eventStartTime" required ng-change="changeEnd()"/>
-         </label>
-         <span class="errorDuplicate" ng-show="endError">End time has to be bigger than start time.</span>
-
-         <input type="submit" value="Save new event"/>
-   </div>
-   </form>
-  </ion-content>
-  </ion-View>
+    <ion-content hideBackButton="true">
+     <form ng-controller="EventCtrl" ng-submit="saveEvent()">
+     <div class="list">
+       <label class="item item-input item-stacked-label">
+               <span class="input-label" id="event_name">Event Name: </span>
+               <input type="text" placeholder="Event" ng-model="eventName" id="eventName" required/>
+           </label>
+           <label class="item item-input item-stacked-label row">
+               <span class="input-label" id="dt">Date:  </span>
+               <input clas="col col-70" type="date" ng-model="eventDate" id = "date_" required/>
+           </label>
+  
+           <label class="item item-input item-stacked-label row">
+             <span class="input-label" id="start_time">Start time :</span>
+             <input clas="col col-70" type="time" ng-model="eventStartTime"
+                    max="eventEndTime" required ng-change="changeStart()" id="eventStartTime"/>
+           </label>
+           <span class="errorDuplicate" ng-show="startError">Start time has to be less than end time.</span>
+  
+           <label class="item item-input item-stacked-label row">
+               <span class="input-label" id="ends">Ends :</span>
+               <input clas="col col-70" type="time" ng-model="eventEndTime"
+                    min="eventStartTime" required ng-change="changeEnd()" id="eventEndTime"/>
+           </label>
+           <span class="errorDuplicate" ng-show="endError">End time has to be bigger than start time.</span>
+  
+           <input type="submit" id="savebutton" value="Save new event"/>
+     </div>
+     </form>
+    </ion-content>
+    </ion-View>
+  
