@@ -5199,110 +5199,59 @@ $scope.stopChallengeSession = function() {
       if(sessionStorage.getItem('currentUser')!=null){
         $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
 
-        var session_id = localStorage.getItem("index").split('"');
-        session_ids = [];
+      /*console.log($scope.date);
+      console.log(date_of_session);*/
+      dates.push(date_of_session);
 
-        $scope.test=
-            session_id.reduce(function(session_ids, e, i) {
-            if (e === 'name')
-            session_ids.push(i-2);
-            return session_ids;
-        }, []);
+      $scope.name= 
+          localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
+          if (e === 'name')
+          session_ids.push(i+2);
+          return session_ids;
+      }, []);
+     
+      /*console.log($scope.name);
+      console.log(localStorage.getItem(name_of_session).split('"')[$scope.name]);*/
+      session_names.push(localStorage.getItem(name_of_session).split('"')[$scope.name]);
 
-        var distance_arr = [];
-        var name_arr = [];
-        var dates = [];
-        var session_names = [];
-        var duration =[];
-        var speed = [];
-        var pace =[];
+      $scope.duration= 
+          localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
+          if (e === 'duration')
+          session_ids.push(i+2);
+          return session_ids;
+      }, []);
+     
+      /*console.log($scope.duration);
+      console.log(localStorage.getItem(name_of_session).split('"')[$scope.duration].substring(11,19));*/
+      duration.push(localStorage.getItem(name_of_session).split('"')[$scope.duration].substring(11,19));
 
-        for (i = 0; i < $scope.test.length; i++) {
-          console.log("***********");
-          console.log(session_id[$scope.test[i]]);
+      $scope.speed= 
+          localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
+          if (e === 'speed')
+          session_ids.push(i+1);
+          return session_ids;
+      }, []);
+     
+      console.log("HHH");
+      //console.log($scope.speed);
+      //console.log(localStorage.getItem(name_of_session).split('"')[$scope.speed].substring(1,4));
+      speed.push(localStorage.getItem(name_of_session).split('"')[$scope.speed].substring(1,4));
 
-          var name_of_session = session_id[$scope.test[i]] + '.json';
-          console.log(name_of_session);
-          console.log("***********");
-          name_arr.push(name_of_session);
-          var get_information_per_session = localStorage.getItem(""+name_of_session+"");
+      $scope.pace= 
+          localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
+          if (e === 'pace') 
+          session_ids.push(i+2);
+          return session_ids;
+      }, []);
 
-        $scope.distanced=
-            localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
-            if (e === 'distance')
-            session_ids.push(i+1);
-            return session_ids;
-        }, []);
+      /*console.log($scope.pace);
+      console.log(localStorage.getItem(name_of_session).split('"')[$scope.pace].substring(11,19));*/
+      pace.push(localStorage.getItem(name_of_session).split('"')[$scope.pace].substring(11,19));
 
-        console.log($scope.distanced);
-
-        /*var distance_travelled = localStorage.getItem(name_of_session).split('"')[$scope.distanced].substring(1,2);
-        distance_arr.push(distance_travelled);
-        console.log("CHUNGUS");
-        console.log(distance_travelled);
-        */
-        $scope.date=
-            localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
-            if (e === 'date')
-            session_ids.push(i+2);
-            return session_ids;
-        }, []);
-
-        var date_of_session = localStorage.getItem(name_of_session).split('"')[$scope.date];
-
-        /*console.log($scope.date);
-        console.log(date_of_session);*/
-        dates.push(date_of_session);
-
-        $scope.name=
-            localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
-            if (e === 'name')
-            session_ids.push(i+2);
-            return session_ids;
-        }, []);
-
-        /*console.log($scope.name);
-        console.log(localStorage.getItem(name_of_session).split('"')[$scope.name]);*/
-        session_names.push(localStorage.getItem(name_of_session).split('"')[$scope.name]);
-
-        $scope.duration=
-            localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
-            if (e === 'duration')
-            session_ids.push(i+2);
-            return session_ids;
-        }, []);
-
-        /*console.log($scope.duration);
-        console.log(localStorage.getItem(name_of_session).split('"')[$scope.duration].substring(11,19));*/
-        //duration.push(localStorage.getItem(name_of_session).split('"')[$scope.duration].substring(11,19));
-
-        $scope.speed=
-            localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
-            if (e === 'speed')
-            session_ids.push(i+1);
-            return session_ids;
-        }, []);
-
-        console.log("HHH");
-        //console.log($scope.speed);
-        //console.log(localStorage.getItem(name_of_session).split('"')[$scope.speed].substring(1,4));
-        speed.push(localStorage.getItem(name_of_session).split('"')[$scope.speed].substring(1,4));
-
-        $scope.pace=
-            localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
-            if (e === 'pace')
-            session_ids.push(i+2);
-            return session_ids;
-        }, []);
-
-        /*console.log($scope.pace);
-        console.log(localStorage.getItem(name_of_session).split('"')[$scope.pace].substring(11,19));*/
-        //pace.push(localStorage.getItem(name_of_session).split('"')[$scope.pace].substring(11,19));
-
-      var mailgunUrl = "connectconcordia.tk";
-      var mailgunApiKey = window.btoa("api:key-e63cfbbb0bb500d1b5428053228f6360");
-      var email = $scope.user.email;
-    }
+    var mailgunUrl = "connectconcordia.tk";
+    var mailgunApiKey = window.btoa("api:key-e63cfbbb0bb500d1b5428053228f6360");
+    
+  }
     console.log($scope.user);
     console.log(duration);
     email_template = '';
@@ -5366,6 +5315,7 @@ $scope.stopChallengeSession = function() {
 
       console.log(distance_arr);
       console.log(date_of_session);
+      var email = $scope.user.email;
       // do addition of stuff
       $http({
         "method": "POST",
