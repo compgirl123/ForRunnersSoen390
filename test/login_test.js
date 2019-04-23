@@ -20,8 +20,8 @@ describe("Sign In Tests", function(){
   CommonProp = {}
   CommonProp.getUserId = () => {}
   CommonProp.logoutUser = () => {}
-  
-  
+
+
 
   beforeEach(inject(function(_$controller_, _$rootScope_){
     // The injector unwraps the underscores (_) from around the parameter names when matching

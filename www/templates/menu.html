@@ -41,6 +41,9 @@
         <ion-item menu-close href="#/app/challenges"  ng-if="isLogged">
           {{ "_challenges" | translate }}
         </ion-item>
+        <ion-item menu-close href="#/app/create_plan"  ng-if="isLogged">
+          {{ "_create_plan" | translate }}
+        </ion-item>
         <ion-item menu-close href="#/app/calendar"  ng-if="isLogged">
           {{ "_calendar" | translate }}
         </ion-item>
@@ -61,6 +64,9 @@
             {{ "Send Email Stats" | translate }}
           </button>
           </ion-item>
+
+
+
         <ion-item ng-controller="LoginCtrl">
         <button class="button button-full  button-dark" ng-click="signout()" ng-if="isLogged">
           {{ "Logout" | translate }}

@@ -5977,4 +5977,20 @@ $scope.stopChallengeSession = function() {
     $scope.addEvent = function() {
       $state.go("app.createEvent");
     };
-  });
+  
+  })
+  //my coach
+  .controller("CreatePlanCtrl", function($scope, $state ,$rootScope){
+
+
+    $scope.exercise=function(){
+  $state.go("app.excercise");
+};
+$scope.tips=function(){
+$state.go("app.tips");
+};
+
+
+
+
+});
