@@ -5195,7 +5195,25 @@ $scope.stopChallengeSession = function() {
       if(sessionStorage.getItem('currentUser')!=null){
         $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
       }
-      var session_id = localStorage.getItem("index").split('"');
+      var session_id = localStorage.getItem("index");
+      console.log(localStorage.getItem("index")!=='{}');
+
+      var distance_arr = [];
+      var name_arr = [];
+      var dates = [];
+      var session_names = [];
+      var duration =[];
+      var speed = [];
+      var pace =[];
+      
+      console.log("HEEERE");
+      console.log(localStorage.getItem("index")!=='{}');
+
+      if(localStorage.getItem("index")!=='{}'){
+        console.log(localStorage.getItem("index")!=='{}');
+        //var session_id = localStroage.getItem("index")
+        var session_id = localStorage.getItem("index").split('"');
+      
       session_ids = [];
 
       $scope.test= 
@@ -5216,7 +5234,6 @@ $scope.stopChallengeSession = function() {
       for (i = 0; i < $scope.test.length; i++) { 
         console.log("***********");
         console.log(session_id[$scope.test[i]]);
-        
         var name_of_session = session_id[$scope.test[i]] + '.json';
         console.log(name_of_session);
         console.log("***********");
@@ -5234,7 +5251,6 @@ $scope.stopChallengeSession = function() {
       
       var distance_travelled = localStorage.getItem(name_of_session).split('"')[$scope.distanced].substring(1,2);
       distance_arr.push(distance_travelled);
-      console.log("CHUNGUS");
       console.log(distance_travelled);
 
       $scope.date= 
@@ -5307,14 +5323,33 @@ $scope.stopChallengeSession = function() {
       +'</p></div>'+
       '</div>';
     }
-      }
+  }
+  else{
+    email_template = '';
+    email_template += "<h1>ForRunners : Your Stats</h1>"
+      +"<h2>Name of Session: "+"</h2>"
+      +"<h2>Date: "+"</h2>"+
+      '<div class="grid-container" style = "display: grid;grid-template-columns: auto auto;background-color: #000000;padding: 0px;">'+
+      '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Average Speed:'+
+      'km/hr'+'</p></div>'+
+      '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Distance:'+' '+
+      ' km'+'</p></div>'+
+      '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Total Time of Run: '+
+      '</p></div>'+
+      '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Time for one Km covered: '+
+      '</p></div>'+
+      '</div>';
 
-
-
+  }
     $scope.send = function() {
-      var date_of_session = localStorage.getItem(name_of_session).split('"')[$scope.date];
+      if(localStorage.getItem("index")!=='{}'){
+        var date_of_session = localStorage.getItem(name_of_session).split('"')[$scope.date];
+      }
+      else{
+        var date_of_session = '';
+      }
+      //var date_of_session = localStorage.getItem(name_of_session).split('"')[$scope.date];
       console.log("HEEERE");
-
       console.log(distance_arr);
       console.log(date_of_session);
       var email = $scope.user.email;
