@@ -16,11 +16,13 @@ describe("Login In Tests", function(){
 
   beforeEach(module('app.controllers'));
   var LoginCtrl, $scope, CommonProp, $window;
+  var testUser = {username:"testName", email:"test@test.com", age:"42", weight:"125 lb", height:"6.5", gender:"male", activity:"regular"};
   // Create mocked $state.
   beforeEach(function() {
     
     var self = this;
-
+    
+   
     module(function($provide) {
       // mock firebase object
       $provide.service('firebase', function() {
@@ -33,7 +35,7 @@ describe("Login In Tests", function(){
                 ref: function(string) {
                   return {
                     once: function(string){
-                      return Promise({val: "value"});
+                      return Promise({val: testUser});
                     }
                   };
                 }
@@ -42,7 +44,17 @@ describe("Login In Tests", function(){
           };
         }
       });
+      $provide.service('$window', function() {
+        this.location = function(){
+          return {
+            href:"", 
+            reload:function(){
+              return;
+            }
+          };
+        }
 
+      });
       $provide.service('$state', function() {
 
         this.expectedTransitions = [];
@@ -82,13 +94,13 @@ describe("Login In Tests", function(){
   beforeEach(function () {
     var store = {};
 
-    spyOn(window.sessionStorage, 'getItem').and.callFake(function (key) {
+    spyOn(sessionStorage, 'getItem').and.callFake(function (key) {
       return store[key];
     });
-    spyOn(window.sessionStorage, 'setItem').and.callFake(function (key, value) {
+    spyOn(sessionStorage, 'setItem').and.callFake(function (key, value) {
       return store[key] = value + '';
     });
-    spyOn(window.sessionStorage, 'clear').and.callFake(function () {
+    spyOn(sessionStorage, 'clear').and.callFake(function () {
         store = {};
     });
   });
@@ -128,9 +140,10 @@ describe("Login In Tests", function(){
       
   
       $scope.signIn();
-
-      
-      var value = {'username': 'sajeel', 'email': $scope.user.email,'age': '55', 'weight': '29', 'height': '2.6', 'gender':'Male'};
+      // expect()
+      expect(sessionStorage.setItem).toHaveBeenCalled();
+      // expect($window.sessionStorage.setItem).toHaveBeenCalledWith('currentUser',testUser);
+      // var value = {'username': 'sajeel', 'email': $scope.user.email,'age': '55', 'weight': '29', 'height': '2.6', 'gender':'Male'};
       
     }); 
   });

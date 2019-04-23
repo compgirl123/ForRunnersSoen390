@@ -5076,7 +5076,7 @@ $scope.stopChallengeSession = function() {
     $window.location.reload();
     };
 
-  	$scope.signIn = function(firebase){
+  	$scope.signIn = function(){
   		var email = $scope.user.email;
   		var password = $scope.user.password;
 
