@@ -1196,6 +1196,9 @@ angular
           var sf = new SessionFactory();
           $scope.session_files.forEach(function(file) {
             console.debug(file.name);
+            localStorage.setItem('test1', 'test');
+            //console.debug("asdf");
+            //console.debug(localStorage.getItem("1554445027804"));
             if (file.name.slice(-5) === ".json") {
               $timeout(function() {
                 sf.loadFromFile(file.name.slice(0, -5)).then(function(session) {
@@ -5149,7 +5152,8 @@ $scope.stopChallengeSession = function() {
     $firebaseAuth,
     $state,
     $firebaseObject,
-    $window
+    $window,
+    SessionFactory
     ){
 
     if(sessionStorage.getItem('currentUser')!=null){
@@ -5185,6 +5189,202 @@ $scope.stopChallengeSession = function() {
     };
 
   }])
+
+  .controller("EmailCtrl",
+   function($scope, $http,$stateParams) {
+     // train of thought for tmr:
+     // store elements in arrays for each function(speed,pace, etc)
+     // store html's while looping in functions
+
+      if(sessionStorage.getItem('currentUser')!=null){
+        $scope.user=JSON.parse(sessionStorage.getItem('currentUser'));
+
+        var session_id = localStorage.getItem("index").split('"');
+        session_ids = [];
+
+        $scope.test=
+            session_id.reduce(function(session_ids, e, i) {
+            if (e === 'name')
+            session_ids.push(i-2);
+            return session_ids;
+        }, []);
+
+        var distance_arr = [];
+        var name_arr = [];
+        var dates = [];
+        var session_names = [];
+        var duration =[];
+        var speed = [];
+        var pace =[];
+
+        for (i = 0; i < $scope.test.length; i++) {
+          console.log("***********");
+          console.log(session_id[$scope.test[i]]);
+
+          var name_of_session = session_id[$scope.test[i]] + '.json';
+          console.log(name_of_session);
+          console.log("***********");
+          name_arr.push(name_of_session);
+          var get_information_per_session = localStorage.getItem(""+name_of_session+"");
+
+        $scope.distanced=
+            localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
+            if (e === 'distance')
+            session_ids.push(i+1);
+            return session_ids;
+        }, []);
+
+        console.log($scope.distanced);
+
+        /*var distance_travelled = localStorage.getItem(name_of_session).split('"')[$scope.distanced].substring(1,2);
+        distance_arr.push(distance_travelled);
+        console.log("CHUNGUS");
+        console.log(distance_travelled);
+        */
+        $scope.date=
+            localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
+            if (e === 'date')
+            session_ids.push(i+2);
+            return session_ids;
+        }, []);
+
+        var date_of_session = localStorage.getItem(name_of_session).split('"')[$scope.date];
+
+        /*console.log($scope.date);
+        console.log(date_of_session);*/
+        dates.push(date_of_session);
+
+        $scope.name=
+            localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
+            if (e === 'name')
+            session_ids.push(i+2);
+            return session_ids;
+        }, []);
+
+        /*console.log($scope.name);
+        console.log(localStorage.getItem(name_of_session).split('"')[$scope.name]);*/
+        session_names.push(localStorage.getItem(name_of_session).split('"')[$scope.name]);
+
+        $scope.duration=
+            localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
+            if (e === 'duration')
+            session_ids.push(i+2);
+            return session_ids;
+        }, []);
+
+        /*console.log($scope.duration);
+        console.log(localStorage.getItem(name_of_session).split('"')[$scope.duration].substring(11,19));*/
+        //duration.push(localStorage.getItem(name_of_session).split('"')[$scope.duration].substring(11,19));
+
+        $scope.speed=
+            localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
+            if (e === 'speed')
+            session_ids.push(i+1);
+            return session_ids;
+        }, []);
+
+        console.log("HHH");
+        //console.log($scope.speed);
+        //console.log(localStorage.getItem(name_of_session).split('"')[$scope.speed].substring(1,4));
+        speed.push(localStorage.getItem(name_of_session).split('"')[$scope.speed].substring(1,4));
+
+        $scope.pace=
+            localStorage.getItem(name_of_session).split('"').reduce(function(session_ids, e, i) {
+            if (e === 'pace')
+            session_ids.push(i+2);
+            return session_ids;
+        }, []);
+
+        /*console.log($scope.pace);
+        console.log(localStorage.getItem(name_of_session).split('"')[$scope.pace].substring(11,19));*/
+        //pace.push(localStorage.getItem(name_of_session).split('"')[$scope.pace].substring(11,19));
+
+      var mailgunUrl = "connectconcordia.tk";
+      var mailgunApiKey = window.btoa("api:key-e63cfbbb0bb500d1b5428053228f6360");
+      var email = $scope.user.email;
+    }
+    console.log($scope.user);
+    console.log(duration);
+    email_template = '';
+    for (i = 0; i < $scope.test.length; i++) {
+      email_template += "<h1>ForRunners : Your Stats</h1>"
+      +"<h2>Name of Session: "+localStorage.getItem(name_arr[i]).split('"')[$scope.name]+"</h2>"
+      +"<h2>Date: "+dates[i]+"</h2>"+
+      '<div class="grid-container" style = "display: grid;grid-template-columns: auto auto;background-color: #000000;padding: 0px;">'+
+      '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Average Speed:'+
+      speed[i]+'km/hr'+'</p></div>'+
+      '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Distance:'+' '+
+      distance_arr[i] +' km'+'</p></div>'+
+      '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Total Time of Run: '+
+      duration[i]+'</p></div>'+
+      '<div class="grid-item" style="background-color: rgba(255, 255, 255, 0.8);border: 5px solid rgba(255, 255, 255, 255);padding: 30px;font-size: 30px;text-align: center;background-color:#2196F3;"><p style="color:white;background-color:#2196F3;">Time for one Km covered: '+
+      pace[i]
+      +'</p></div>'+
+      '</div>';
+    }
+      }
+
+
+
+    /*var curr_date = new Date();
+    var hour = curr_date.getHours();
+    var minute = curr_date.getMinutes();
+    var second = curr_date.getSeconds();
+    console.log(minute);
+
+    if(hour == 9 && minute == 00 && second == 00){
+      sendEmailInMorning();
+    }
+
+    function sendEmailInMorning() {
+      var date_of_session = localStorage.getItem(name_of_session).split('"')[$scope.date];
+      console.log("HEEERE");
+
+      console.log(distance_arr);
+      console.log(date_of_session);
+      // do addition of stuff
+      $http({
+        "method": "POST",
+        "url": "https://api.mailgun.net/v3/" + mailgunUrl + "/messages",
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Basic " + mailgunApiKey
+        },
+        data: "from=" + "ForRunners Admin <mailgun@connectconcordia.tk>" + "&to=" + email + "&subject=" + "Your ForRunners Stats"
+        + "&html="+ email_template
+      }).then(function(success) {
+        console.log("SUCCESS " + JSON.stringify(success));
+      }, function(error) {
+        console.log("ERROR " + JSON.stringify(error));
+      });
+
+    }*/
+
+    $scope.send = function() {
+      var date_of_session = localStorage.getItem(name_of_session).split('"')[$scope.date];
+      console.log("HEEERE");
+
+      console.log(distance_arr);
+      console.log(date_of_session);
+      // do addition of stuff
+      $http({
+        "method": "POST",
+        "url": "https://api.mailgun.net/v3/" + mailgunUrl + "/messages",
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Basic " + mailgunApiKey
+        },
+        data: "from=" + "ForRunners Admin <mailgun@connectconcordia.tk>" + "&to=" + email + "&subject=" + "Your ForRunners Stats"
+        + "&html="+ email_template
+      }).then(function(success) {
+        console.log("SUCCESS " + JSON.stringify(success));
+      }, function(error) {
+        console.log("ERROR " + JSON.stringify(error));
+      });
+
+  };
+
+  })
 
   .controller("HelpCtrl", function($scope, $state, $ionicScrollDelegate) {
     "use strict";
@@ -5565,7 +5765,7 @@ $scope.stopChallengeSession = function() {
         }
 
       };
-  
+
       function buildMonth() {
         //Events of this months
         var eventsOfMonth={};
@@ -5777,12 +5977,29 @@ $scope.stopChallengeSession = function() {
     $scope.addEvent = function() {
       $state.go("app.createEvent");
     };
+
   })
+  //my coach
+  .controller("CreatePlanCtrl", function($scope, $state ,$rootScope){
+
+
+    $scope.exercise=function(){
+  $state.go("app.excercise");
+};
+$scope.tips=function(){
+$state.go("app.tips");
+};
+
+
+
+
+})
+
 
 
   .controller('ShareCtrl', ['$scope', function($scope){
     $scope.share = function(t){
-        var link = "https://play.google.com/store/apps/details?id=net.khertan.forrunners&hl=en";  
+        var link = "https://play.google.com/store/apps/details?id=net.khertan.forrunners&hl=en";
         var msg = "Hello Friend! \
          I have successfully completed the " + $scope.distance + "K challenge on the ForRunners App!\
          To download the app click on the link below \
@@ -5802,23 +6019,23 @@ $scope.stopChallengeSession = function() {
 
                 }
         console.log(msg)
-            
+
         if(t == 'w')
             window.plugins.socialsharing
             .shareViaWhatsApp(msg, img, link);
         else if(t == 'f')
             window.plugins.socialsharing
-            .shareViaFacebook(msg, img, link);    
+            .shareViaFacebook(msg, img, link);
         else if(t == 't')
             window.plugins.socialsharing
-            .shareViaTwitter(msg, img, link);    
+            .shareViaTwitter(msg, img, link);
         else if(t == 'sms')
             window.plugins.socialsharing
-            .shareViaSMS(msg+' '+img+' '+link);    
+            .shareViaSMS(msg+' '+img+' '+link);
         else
         {
             window.plugins.socialsharing
-            .shareViaEmail(msg, img, link);        
-        }    
+            .shareViaEmail(msg, img, link);
+        }
     }
 }]);
