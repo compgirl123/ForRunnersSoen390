@@ -91,19 +91,16 @@ describe("Login In Tests", function(){
         
     });
     spyOn(firebase, 'database').and.returnValue(
-      {
-        
-      ref: function(string) {
-        return {
-          once: function(strng){
-            return {then: function(callback){
-              callback({val: function(){return testUser;}});
-            }}
-          }
-        };
-      }
-          
-        
+      {   
+        ref: function(string) {
+          return {
+            once: function(strng){
+              return {then: function(callback){
+                callback({val: function(){return testUser;}});
+              }}
+            }
+          };
+        }
       }
     );
   });

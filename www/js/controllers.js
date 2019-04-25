@@ -5113,17 +5113,17 @@ $scope.stopChallengeSession = function() {
 
   }])
 
-  .controller('RegisterCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseArray','$ionicPopup', function($scope, $firebaseAuth, $state, $firebaseArray, $ionicPopup){
+  .controller('RegisterCtrl', ['$scope', '$state','$ionicPopup', function($scope, $state, $ionicPopup){
 
-  	$scope.signUp = function(){
+  	$scope.signUp = function(fb = firebase){
       var username = $scope.user.Username;
       var email = $scope.user.email;
   		var password = $scope.user.password;
 
   		if(email && password){
-  			firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
-        var id = firebase.auth().currentUser.uid;
-        var ref = firebase.database().ref("Users/"+id).set({email: email, password: password, username: username});
+  			fb.auth().createUserWithEmailAndPassword(email, password).then(function(){
+        var id = fb.auth().currentUser.uid;
+        var ref = fb.database().ref("Users/"+id).set({email: email, password: password, username: username});
   			$state.go("app.login");
         var registeredPopup= $ionicPopup.alert({
            title: "Successfully Registered"
