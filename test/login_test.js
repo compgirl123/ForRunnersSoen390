@@ -67,10 +67,10 @@ describe("Login In Tests", function(){
     var store = {};
     
     // all spies
-    spyOn(sessionStorage, 'getItem').and.callFake(function (key) {
-      return store[key];
-    });
     spyOn(sessionStorage, 'setItem').and.callFake(function (key, value) {
+      return store[key] = value + '';
+    });
+    spyOn(sessionStorage, 'removeItem').and.callFake(function (key, value) {
       return store[key] = value + '';
     });
     spyOn(sessionStorage, 'clear').and.callFake(function () {
@@ -82,7 +82,7 @@ describe("Login In Tests", function(){
         signInWithEmailAndPassword: function(email, password) {
           return {catch: function(callback){
             if (errorCase)
-              callback({error: {code: "test error", message: "test message"}});
+              callback({code: "test error", message: "test message"});
           }}
         },
         onAuthStateChanged: function(callback) {
@@ -153,6 +153,23 @@ describe("Login In Tests", function(){
       $scope.signIn(firebase);
       
       expect($scope.errMsg).toBeTruthy();
+      expect($scope.errorMessage).toBe("test message");
+    }); 
+
+    it('Testing the signout() function', function() {
+      errorCase = true;
+      $scope.query = () => {};
+      $scope.user = {email:'sajeel155@yahoo.com', password:'test1234'};
+     
+      this.$state.expectedTransitions.push("app.profile");
+
+      $scope.signout();
+      
+      expect(sessionStorage.removeItem).toHaveBeenCalledWith('currentUser');
+      expect(sessionStorage.removeItem).toHaveBeenCalledWith('currentFood');
+      expect(sessionStorage.removeItem).toHaveBeenCalledWith('foodList');
+      expect(sessionStorage.removeItem).toHaveBeenCalledWith('selectedDay');
+      expect(this.$window.location.href).toBe("#/app/login","The logout does not redirects to the login page");
     }); 
   });
 
