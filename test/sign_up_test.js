@@ -79,14 +79,14 @@ describe("Sign Up Tests", function(){
                 catch: function(callback){
                   callback({code: "test error", message: "test message"});
                 }
-              }
+              };
             }
             else{
               callback();
               return {catch: function(callback){}};
             }
           }
-        }
+        };
       },
       currentUser: testUser
     });

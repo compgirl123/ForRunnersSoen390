@@ -83,7 +83,7 @@ describe("Login In Tests", function(){
           return {catch: function(callback){
             if (errorCase)
               callback({code: "test error", message: "test message"});
-          }}
+          }};
         },
         onAuthStateChanged: function(callback) {
           callback(testUser);
@@ -97,7 +97,7 @@ describe("Login In Tests", function(){
             once: function(strng){
               return {then: function(callback){
                 callback({val: function(){return testUser;}});
-              }}
+              }};
             }
           };
         }

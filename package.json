@@ -7,6 +7,7 @@
     "lint-index": "./node_modules/.bin/htmlhint --config htmlconf.json www/index.html",
     "lint-template": "./node_modules/.bin/htmlhint --config htmlconf.json www/templates/*",
     "lint-controller": "./node_modules/.bin/eslint www/js/controllers.js",
+    "lint-tests": "./node_modules/.bin/eslint test/*.js",
     "codecov": "codecov --token=\"$CODECOV_TOKEN\""
   },
   "dependencies": {
