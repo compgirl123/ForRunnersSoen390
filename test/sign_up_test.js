@@ -75,7 +75,11 @@ describe("Sign Up Tests", function(){
         return {
           then: function(callback){
             if (errorCase){
-              return {code: "test error", message: "test message"};
+              return {
+                catch: function(callback){
+                  callback({code: "test error", message: "test message"});
+                }
+              }
             }
             else{
               callback();
@@ -114,8 +118,7 @@ describe("Sign Up Tests", function(){
 
   describe('RegisterCtrl', function() {
    
-    it('Testing the signUp() function (successful login)', function() {
-      $scope.query = () => {};
+    it('Testing the signUp() function (successful registration)', function() {
       $scope.user = {email:'sajeel155@yahoo.com', password:'test1234'};
      
       this.$state.expectedTransitions.push("app.login");
@@ -123,6 +126,18 @@ describe("Sign Up Tests", function(){
       $scope.signUp(firebase);
       
       expect($scope.errMsg).toBeFalsy();
+    }); 
+
+    it('Testing the signUp() function (error registration)', function() {
+      errorCase = true;
+      $scope.user = {email:'sajeel155@yahoo.com', password:'test1234'};
+     
+      this.$state.expectedTransitions.push("app.login");
+
+      $scope.signUp(firebase);
+      
+      expect($scope.errMsg).toBeTruthy();
+      expect($scope.errorMessage).toBe("test message");
     }); 
 
  
