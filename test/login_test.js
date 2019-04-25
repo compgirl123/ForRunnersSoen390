@@ -1,6 +1,6 @@
 
 describe("Login In Tests", function(){
- 
+  var errorCase;
   beforeAll(function(){
     if(!firebase.apps.length){
       firebase.initializeApp({
@@ -16,47 +16,23 @@ describe("Login In Tests", function(){
 
   beforeEach(module('app.controllers'));
   var LoginCtrl, $scope, CommonProp, $window;
-  var testUser = {username:"testName", email:"test@test.com", age:"42", weight:"125 lb", height:"6.5", gender:"male", activity:"regular"};
+  var testUser = {uid:"test", username:"testName", email:"test@test.com", age:"42", weight:"125 lb", height:"6.5", gender:"male", activity:"regular"};
   // Create mocked $state.
   beforeEach(function() {
-    
+    errorCase = false;
     var self = this;
     
    
     module(function($provide) {
-      // mock firebase object
-      $provide.service('firebase', function() {
-        this.auth = function() {
-          return {
-            signInWithEmailAndPassword: function(email, password) {},
-            onAuthStateChanged: function(key) {},
-            database: function(){
-              return {
-                ref: function(string) {
-                  return {
-                    once: function(string){
-                      return Promise({val: testUser});
-                    }
-                  };
-                }
-              };
-            }
-          };
-        }
-      });
       $provide.service('$window', function() {
-        this.location = function(){
-          return {
+        this.location = {
             href:"", 
-            reload:function(){
-              return;
-            }
+            reload:function(){}
           };
-        }
-
       });
-      $provide.service('$state', function() {
 
+      $provide.service('$state', function() {
+        this.reload = function(){};
         this.expectedTransitions = [];
         this.current = {};
         this.params = {};
@@ -88,12 +64,9 @@ describe("Login In Tests", function(){
       });
 
     });
-  });
-
-  // Set spies
-  beforeEach(function () {
     var store = {};
-
+    
+    // all spies
     spyOn(sessionStorage, 'getItem').and.callFake(function (key) {
       return store[key];
     });
@@ -103,26 +76,58 @@ describe("Login In Tests", function(){
     spyOn(sessionStorage, 'clear').and.callFake(function () {
         store = {};
     });
+
+    spyOn(firebase, 'auth').and.returnValue(
+    {
+        signInWithEmailAndPassword: function(email, password) {
+          return {catch: function(callback){
+            if (errorCase)
+              callback({error: {code: "test error", message: "test message"}});
+          }}
+        },
+        onAuthStateChanged: function(callback) {
+          callback(testUser);
+        },
+        
+    });
+    spyOn(firebase, 'database').and.returnValue(
+      {
+        
+      ref: function(string) {
+        return {
+          once: function(strng){
+            return {then: function(callback){
+              callback({val: function(){return testUser;}});
+            }}
+          }
+        };
+      }
+          
+        
+      }
+    );
   });
   
   
   
   
 
-  beforeEach(inject(function($controller, $rootScope, _$state_){
+  beforeEach(inject(function($controller, $rootScope, _$state_,_$q_, _$window_){
     // The injector unwraps the underscores (_) from around the parameter names when matching
     var self = this;
     CommonProp = {};
     CommonProp.getUserId = () => {};
     CommonProp.logoutUser = () => {};
     $scope = $rootScope.$new();
+    self.$q = _$q_;
     self.$state = _$state_;
     self.$CommonProp = CommonProp;
+    self.$window = _$window_;
     LoginCtrl = $controller('LoginCtrl', {
       $scope: $scope,
       $state: _$state_,
       CommonProp: CommonProp,
-      $window: $window,
+      $window: _$window_,
     });
   }));
 
@@ -130,21 +135,16 @@ describe("Login In Tests", function(){
   describe('LoginCtrl', function() {
     // Added positive test with properly formatted elements
     it('Testing the signIn() function (successful login)', function() {
-      
       $scope.query = () => {};
-      
-      
       $scope.user = {email:'sajeel155@yahoo.com', password:'test1234'};
      
+      this.$state.expectedTransitions.push("app.profile");
+
+      $scope.signIn(firebase);
       
+      expect($scope.errMsg).toBeFalsy();
       
-  
-      $scope.signIn();
-      // expect()
-      expect(sessionStorage.setItem).toHaveBeenCalled();
-      // expect($window.sessionStorage.setItem).toHaveBeenCalledWith('currentUser',testUser);
-      // var value = {'username': 'sajeel', 'email': $scope.user.email,'age': '55', 'weight': '29', 'height': '2.6', 'gender':'Male'};
-      
+      expect(sessionStorage.setItem).toHaveBeenCalledWith('currentUser','{"username":"testName","email":"test@test.com","age":"42","weight":"125 lb","height":"6.5","gender":"male","activity":"regular"}');
     }); 
   });
 
