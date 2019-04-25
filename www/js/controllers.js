@@ -5140,13 +5140,8 @@ $scope.stopChallengeSession = function() {
 
   }])
 
-  .controller('ProfileCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseObject','$window', function(
-    $scope,
-    $firebaseAuth,
-    $state,
-    $firebaseObject,
-    $window,
-    SessionFactory
+  .controller('ProfileCtrl', ['$scope', function(
+    $scope
     ){
 
     if(sessionStorage.getItem('currentUser')!=null){
@@ -5157,13 +5152,13 @@ $scope.stopChallengeSession = function() {
     $scope.activity=["Little/ no exercise","Moderately active","Very active"];
 
     //Updates user info without having to press a button "save"
-    $scope.change = function() {
+    $scope.change = function(fb = firebase) {
       let key = 'currentUser';
       let value = $scope.user;
       value = JSON.stringify(value);
       sessionStorage.setItem(key, value);
-      var id = firebase.auth().currentUser.uid;
-      var ref = firebase.database().ref("Users/"+id);
+      var id = fb.auth().currentUser.uid;
+      var ref = fb.database().ref("Users/"+id);
       ref.update({
         age: $scope.user.age
       });

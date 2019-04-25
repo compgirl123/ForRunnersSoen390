@@ -22,14 +22,7 @@ describe("Sign Up Tests", function(){
     errorCase = false;
     var self = this;
     
-   
     module(function($provide) {
-      // $provide.service('$window', function() {
-      //   this.location = {
-      //       href:"", 
-      //       reload:function(){}
-      //     };
-      // });
       $provide.service('$ionicPopup', function() {
         this.alert = function(object){};
       });
@@ -139,8 +132,5 @@ describe("Sign Up Tests", function(){
       expect($scope.errMsg).toBeTruthy();
       expect($scope.errorMessage).toBe("test message");
     }); 
-
- 
   });
-
 });

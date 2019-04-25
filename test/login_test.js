@@ -71,7 +71,7 @@ describe("Login In Tests", function(){
       return store[key] = value + '';
     });
     spyOn(sessionStorage, 'removeItem').and.callFake(function (key, value) {
-      return store[key] = value + '';
+      return store[key] = '';
     });
     spyOn(sessionStorage, 'clear').and.callFake(function () {
         store = {};
@@ -169,6 +169,5 @@ describe("Login In Tests", function(){
       expect(this.$window.location.href).toBe("#/app/login","The logout does not redirects to the login page");
     }); 
   });
-
 });
  
