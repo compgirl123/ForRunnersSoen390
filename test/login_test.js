@@ -107,10 +107,6 @@ describe("Login In Tests", function(){
       }
     );
   });
-  
-  
-  
-  
 
   beforeEach(inject(function($controller, $rootScope, _$state_,_$q_, _$window_){
     // The injector unwraps the underscores (_) from around the parameter names when matching
@@ -145,6 +141,18 @@ describe("Login In Tests", function(){
       expect($scope.errMsg).toBeFalsy();
       
       expect(sessionStorage.setItem).toHaveBeenCalledWith('currentUser','{"username":"testName","email":"test@test.com","age":"42","weight":"125 lb","height":"6.5","gender":"male","activity":"regular"}');
+    }); 
+
+    it('Testing the signIn() function (error message)', function() {
+      errorCase = true;
+      $scope.query = () => {};
+      $scope.user = {email:'sajeel155@yahoo.com', password:'test1234'};
+     
+      this.$state.expectedTransitions.push("app.profile");
+
+      $scope.signIn(firebase);
+      
+      expect($scope.errMsg).toBeTruthy();
     }); 
   });
 
