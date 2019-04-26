@@ -5057,13 +5057,11 @@ $scope.stopChallengeSession = function() {
   })
   //bilal
 
-  .controller('LoginCtrl', ['$scope', '$state', 'CommonProp', '$window','$firebaseObject', function(
+  .controller('LoginCtrl', ['$scope', '$state', 'CommonProp', '$window', function(
       $scope,
-      //$firebaseAuth,
       $state,
       CommonProp,
-      $window,
-      $firebaseObject
+      $window
       ){
 
   	$scope.userId = CommonProp.getUserId();
@@ -5078,23 +5076,20 @@ $scope.stopChallengeSession = function() {
     $window.location.reload();
     };
 
-  	$scope.signIn = function(){
+  	$scope.signIn = function(fb = firebase){
   		var email = $scope.user.email;
   		var password = $scope.user.password;
-  		//var auth = $firebaseAuth();
 
-  		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-        // Handle Errors here.
+  		fb.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
         var errorCode = error.code;
         var errorMessage = error.message;
         $scope.errMsg = true;
         $scope.errorMessage = error.message;
        });
 
-      firebase.auth().onAuthStateChanged(function(user) {
-        firebase.database().ref('Users/' + user.uid).once('value').then(function(snapshot) {
+      fb.auth().onAuthStateChanged(function(user) {
+        fb.database().ref('Users/' + user.uid).once('value').then(function(snapshot) {
             var userInfo=snapshot.val();
-
             // ensures that when the user logs in, they are redirected to profile page and side menu
             // can be accessed without going back to login page.
             // redirects to profile page on successful login
@@ -5105,32 +5100,30 @@ $scope.stopChallengeSession = function() {
 
             let key = 'currentUser';
             let value = {'username':userInfo.username,'email':userInfo.email,'age':userInfo.age,
-                         'weight':userInfo.weight, 'height':userInfo.height, 'gender': userInfo.gender,
-                         'activity': userInfo.activity,'uid':user.uid
-                        };
+                                  'weight':userInfo.weight, 'height':userInfo.height, 'gender': userInfo.gender, 'activity': userInfo.activity};
             value = JSON.stringify(value);
             sessionStorage.setItem(key, value);
 
 
           });
       });
-
+      
   	};
 
 
   }])
 
-  .controller('RegisterCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseArray','$ionicPopup', function($scope, $firebaseAuth, $state, $firebaseArray, $ionicPopup){
+  .controller('RegisterCtrl', ['$scope', '$state','$ionicPopup', function($scope, $state, $ionicPopup){
 
-  	$scope.signUp = function(){
+  	$scope.signUp = function(fb = firebase){
       var username = $scope.user.Username;
       var email = $scope.user.email;
   		var password = $scope.user.password;
 
   		if(email && password){
-  			firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
-        var id = firebase.auth().currentUser.uid;
-        var ref = firebase.database().ref("Users/"+id).set({email: email, password: password, username: username});
+  			fb.auth().createUserWithEmailAndPassword(email, password).then(function(){
+        var id = fb.auth().currentUser.uid;
+        var ref = fb.database().ref("Users/"+id).set({email: email, password: password, username: username});
   			$state.go("app.login");
         var registeredPopup= $ionicPopup.alert({
            title: "Successfully Registered"
@@ -5147,13 +5140,8 @@ $scope.stopChallengeSession = function() {
 
   }])
 
-  .controller('ProfileCtrl', ['$scope', '$firebaseAuth', '$state','$firebaseObject','$window', function(
-    $scope,
-    $firebaseAuth,
-    $state,
-    $firebaseObject,
-    $window,
-    SessionFactory
+  .controller('ProfileCtrl', ['$scope', function(
+    $scope
     ){
 
     if(sessionStorage.getItem('currentUser')!=null){
@@ -5164,13 +5152,13 @@ $scope.stopChallengeSession = function() {
     $scope.activity=["Little/ no exercise","Moderately active","Very active"];
 
     //Updates user info without having to press a button "save"
-    $scope.change = function() {
+    $scope.change = function(fb = firebase) {
       let key = 'currentUser';
       let value = $scope.user;
       value = JSON.stringify(value);
       sessionStorage.setItem(key, value);
-      var id = firebase.auth().currentUser.uid;
-      var ref = firebase.database().ref("Users/"+id);
+      var id = fb.auth().currentUser.uid;
+      var ref = fb.database().ref("Users/"+id);
       ref.update({
         age: $scope.user.age
       });
