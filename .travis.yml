@@ -59,6 +59,7 @@ jobs:
       - npm run lint-index
       - npm run lint-template
       - npm run lint-controller
+      - npm run lint-tests
       node_js: '8.9.4'
     - stage: Testing
       script: 
