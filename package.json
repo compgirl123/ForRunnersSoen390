@@ -50,7 +50,8 @@
     "jest": "^24.5.0",
     "request": "^2.88.0",
     "cordova-browser": "^5.0.4",
-    "acorn": "^6.1.1"
+    "acorn": "^6.1.1",
+    "uri-js": "^4.2.2"
   },
   "devDependencies": {
     "@ionic/cli-plugin-cordova": "1.6.2",
