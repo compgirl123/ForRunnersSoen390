@@ -5990,18 +5990,18 @@ $state.go("app.tips");
          I have successfully completed the " + $scope.distance + "K challenge on the ForRunners App!\
          To download the app click on the link below \
          Link: " + link;
-
+         var img = "";
          if($scope.distance == 3)
                 {
-                  var img = "img/3kcongrats.png";
+                  img = "img/3kcongrats.png";
                 }
                 else if ($scope.distance == 5)
                 {
-                  var img = "img/5kcongrats.png";
+                  img = "img/5kcongrats.png";
                 }
                 else if ($scope.distance == 10)
                 {
-                  var img = "img/10kcongrats.png";
+                  img = "img/10kcongrats.png";
 
                 }
         console.log(msg);
@@ -6023,5 +6023,5 @@ $state.go("app.tips");
             window.plugins.socialsharing
             .shareViaEmail(msg, img, link);
         }
-    }
+    };
 }]);
