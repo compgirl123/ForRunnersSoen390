@@ -1,55 +1,70 @@
-/* 
 describe("Profile Tests", function(){
-  
+  var ref = {update: function(object){}};
   beforeAll(function(){
-    firebase.initializeApp({
-      apiKey: "AIzaSyCEI0nzK-GjzeRM72y92ORMQZSLxpXoYS0",
-          authDomain: "forrunners-soen390-a6772.firebaseapp.com",
-          databaseURL: "https://forrunners-soen390-a6772.firebaseio.com",
-          projectId: "forrunners-soen390-a6772",
-          storageBucket: "forrunners-soen390-a6772.appspot.com",
-          messagingSenderId: "961868385218"
-    });
+    if(!firebase.apps.length){
+      firebase.initializeApp({
+        apiKey: "AIzaSyCEI0nzK-GjzeRM72y92ORMQZSLxpXoYS0",
+            authDomain: "forrunners-soen390-a6772.firebaseapp.com",
+            databaseURL: "https://forrunners-soen390-a6772.firebaseio.com",
+            projectId: "forrunners-soen390-a6772",
+            storageBucket: "forrunners-soen390-a6772.appspot.com",
+            messagingSenderId: "961868385218"
+      });
+    }
    });
 
   beforeEach(module('app.controllers'));
-
-  var $controller, $rootScope, $scope, $firebaseAuth, $state, $window, $firebaseObject;
-  
-
-  beforeEach(inject(function(_$controller_, _$rootScope_){
-    // The injector unwraps the underscores (_) from around the parameter names when matching
+  var ProfileCtrl, $scope, CommonProp, $window;
+  var testUser = {uid:"test", username:"testName", email:"test@test.com", age:"42", weight:"125 lb", height:"6.5", gender:"male", activity:"regular"};
+  // Create mocked $state.
+  beforeEach(function() {
+    errorCase = false;
+    var self = this;
     
-    $controller = _$controller_;
-    $rootScope = _$rootScope_;
+    
+   
+    module(function($provide) {
+      var store = {};
+      spyOn(sessionStorage, 'setItem').and.callFake(function (key, value) {
+        return store[key] = value + '';
+      });
+      spyOn(firebase, 'auth').and.returnValue(
+      {
+        currentUser: testUser
+      });
+      spyOn(ref, 'update');
+      spyOn(firebase, 'database').and.returnValue(
+        {   
+          ref: function(string) {
+            return ref;
+          }
+        }
+      );
+    });
+  });
+
+  beforeEach(inject(function($controller, $rootScope){
+    var self = this;
+    $scope = $rootScope.$new();
+
+    LoginCtrl = $controller('ProfileCtrl', {
+      $scope: $scope,
+    });
   }));
 
 
   describe('ProfileCtrl', function() {
-    it('Testing change function', function() {
-      var $scope = $rootScope.$new();
-      $controller = $controller('ProfileCtrl', { $scope: $scope,
-        $firebaseAuth: $firebaseAuth,
-        $state: $state,
-        $firebaseObject: $firebaseObject,
-        $window: $window
-       });
-      
-      $scope.genders=["Male","Female"];
-      $scope.activity=["Little/ no exercise","Moderately active","Very active"];
-      // create a variable 
-      //sessionStorage = spyOn(sessionStorage, 'setItem').and.callFake((arg) => {return "key:currentUser"})
-      //expect(sessionStorage).toHaveBeenCalledWith(['currentUser', {"key": "currentUser"}])
-      //expect($scope.count).toEqual(1);
+    it('Testing the change() function', function() {
+      $scope.user = testUser;
 
-      spyOn(window.sessionStorage, 'getItem');
-      $scope.user = {'username': 'Test1','email':'test@gmail.com','age': '21','weight': '65', 'height': '1.8','gender':'Male','activity':'Very active'}
-      window.sessionStorage.getItem('currentUser');
+      $scope.change(firebase);
       
-      expect(window.sessionStorage.getItem).toHaveBeenCalledWith('currentUser');
-      expect(window.sessionStorage.getItem).not.toBe(null);
-
-    });
+      expect(sessionStorage.setItem).toHaveBeenCalledWith('currentUser','{"uid":"test","username":"testName","email":"test@test.com","age":"42","weight":"125 lb","height":"6.5","gender":"male","activity":"regular"}');
+      expect(ref.update).toHaveBeenCalledWith({age: $scope.user.age});
+      expect(ref.update).toHaveBeenCalledWith({weight: $scope.user.weight});
+      expect(ref.update).toHaveBeenCalledWith({height: $scope.user.height});
+      expect(ref.update).toHaveBeenCalledWith({gender: $scope.user.gender});
+      expect(ref.update).toHaveBeenCalledWith({activity: $scope.user.activity});
+    }); 
   });
-  
-}); */
+});

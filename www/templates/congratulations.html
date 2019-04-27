@@ -10,6 +10,32 @@
              <button type="submit" class="btn btn-lg btn-primary btn-block" id="cntbtn" ng-click = "gotodashboard()">Continue</button>
              <div class = "write">Congratulations</div>
              <div class = "writes1">You have successfully completed the {{target_distance}}K Challenge</div>
+
+             <div class="card" data-ng-controller="ShareCtrl">
+                <div class="item item-text-wrap row">
+                  <button ng-click="share('w');"
+                               class="button button-light col col-20">
+                      <i class="icon ion-social-whatsapp"></i>
+                  </button>
+                  <button ng-click="share('f');"
+                               class="button button-light col col-20">
+                      <i class="icon ion-social-facebook"></i>
+                  </button>
+                  <button ng-click="share('t');"
+                               class="button button-light col col-20">
+                      <i class="icon ion-social-twitter"></i>
+                  </button>  
+                  <button ng-click="share('sms');"
+                               class="button button-light col col-20">
+                      <i class="icon ion-android-textsms"></i>
+                  </button> 
+                  <button ng-click="share('email');"
+                               class="button button-light col col-20">
+                      <i class="icon ion-ios-email"></i>
+                  </button> 
+                </div>
+               </div> 
+ 
 </ion-content>
 </ion-view>
 

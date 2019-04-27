@@ -266,6 +266,25 @@ angular
           }
         }
       })
+      // my coach
+      .state("app.excercise", {
+        url: "/excercise",
+        views: {
+          menuContent: {
+            templateUrl: "templates/excercise.html",
+            controller: "CreatePlanCtrl"
+          }
+        }
+      })
+      .state("app.tips", {
+        url: "/tips",
+        views: {
+          menuContent: {
+            templateUrl: "templates/tips.html",
+            controller: "CreatePlanCtrl"
+          }
+        }
+      })
 
       .state("app.dashboard", {
          url: "/Dashboard",
@@ -325,7 +344,16 @@ angular
             controller: "EventsCtrl"
           }
         }
-      });
+      })
+    .state("app.create_plan", {
+      url: "/create_plan",
+      views: {
+        menuContent: {
+          templateUrl: "templates/create_plan.html",
+          controller: "CreatePlanCtrl"
+        }
+      }
+    });
 
     // if none of the above states are matched, use this as the fallback
 
@@ -525,7 +553,10 @@ angular
       _swipe_left_pause: "Swipe left to pause",
       _pause: "Pause",
       _resume: "Resume",
-      _calendar: "Calendar"
+      _calendar: "Calendar",
+      _create_plan: "My Coach",
+      _Tips: "Tips",
+      _Workout: "Workout Session"
     });
 
     $translateProvider.translations("fr-FR", {

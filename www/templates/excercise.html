@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<ion-view view-title="{{ '_Workout' | translate }}">
+
+ 	 <ion-content hideBackButton="true">
+    <div ng-controller="CreatePlanCtrl">
+
+
+<div class="list-group">
+  <button type="button" class="btn btn-info list-group-item list-group-item-action " data-toggle="collapse" data-target="#video1">Warm up</button>
+  <div id="video1" class="collapse">
+    <video  width="320" height="240" controls>
+      <source src="img/video1.mp4" type="video/mp4"/>
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <button type="button" class="btn btn-info list-group-item list-group-item-action" data-toggle="collapse" data-target="#video2">Jump lunge</button>
+    <div id="video2" class="collapse">
+      <video  width="320" height="240" controls>
+        <source src="img/video2.mp4" type="video/mp4"/>
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <button type="button" class="btn btn-info list-group-item list-group-item-action" data-toggle="collapse" data-target="#video3">Cardio Workout </button>
+      <div id="video3" class="collapse">
+        <video  width="320" height="240" controls>
+          <source src="img/video3.mp4" type="video/mp4"/>
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+
+        <button type="button" class="btn btn-info list-group-item list-group-item-action" data-toggle="collapse" data-target="#video4">Plyometric and Cardio HIIT for Legs</button>
+        <div id="video4" class="collapse">
+          <video  width="320" height="240" controls>
+            <source src="img/video4.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+
+          <button type="button" class="btn btn-info list-group-item list-group-item-action" data-toggle="collapse" data-target="#video5">Double Ladder</button>
+          <div id="video5" class="collapse">
+            <video  width="320" height="240" controls>
+              <source src="img/video5.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+ 	 </ion-content>
+</ion-view>
