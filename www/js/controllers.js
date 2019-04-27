@@ -5983,8 +5983,6 @@ $state.go("app.tips");
 
 })
 
-
-
   .controller('ShareCtrl', ['$scope', function($scope){
     $scope.share = function(t){
         var link = "https://play.google.com/store/apps/details?id=net.khertan.forrunners&hl=en";
