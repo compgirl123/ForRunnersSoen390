@@ -34,15 +34,15 @@ public class EmailButtonTest{
 
     private static final String menuXpath1 = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu-content/ion-nav-bar/div[2]/ion-header-bar/div[1]/span/button";
 
-    private static final String sendEmailMenuXpath = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu/ion-content/div/ion-list/div/ion-item[13]/button";
+    private static final String logoutMenuXpath = "/html/body/ion-nav-view/ion-side-menus/ion-side-menu/ion-content/div/ion-list/div/ion-item[14]/button";
 
 
     @Test
-    public void emailButtonClickTestGood() throws Exception{
+    public void logoutButtonClickTestGood() throws Exception{
 
         /**
-         * UI Test simulating a valid click of the Email Stats Button.
-         * The label for the email stats button page matches exactly to the one
+         * UI Test simulating a valid click of the Logout Button.
+         * The label for the Logout button page matches exactly to the one
          * displayed in the application.
          */
 
@@ -55,23 +55,23 @@ public class EmailButtonTest{
 
         Thread.sleep(3000);
 
-        onWebView().withElement(findElement(Locator.XPATH,sendEmailMenuXpath))
+        onWebView().withElement(findElement(Locator.XPATH,logoutMenuXpath))
                 .perform(DriverAtoms.webClick());
 
         Thread.sleep(3000);
 
-        onWebView().withElement(findElement(Locator.ID, "email-button")).check(webMatches(getText(), containsString("SEND EMAIL STATS")));
+        onWebView().withElement(findElement(Locator.ID, "logout-button")).check(webMatches(getText(), containsString("LOGOUT")));
 
         Thread.sleep(3000);
 
     }
 
     @Test
-    public void emailButtonClickTestNegative() throws Exception{
+    public void logoutButtonClickTestNegative() throws Exception{
 
         /**
-         * UI Test simulating an invalid click of the Email Stats Button.
-         * The label for the email stats button page does not exactly match
+         * UI Test simulating an invalid click of the Logout Button.
+         * The label for the Logout button page does not exactly match
          * to the one displayed in the application.
          */
 
@@ -84,12 +84,12 @@ public class EmailButtonTest{
 
         Thread.sleep(3000);
 
-        onWebView().withElement(findElement(Locator.XPATH,sendEmailMenuXpath))
+        onWebView().withElement(findElement(Locator.XPATH,logoutMenuXpath))
                 .perform(DriverAtoms.webClick());
 
         Thread.sleep(3000);
 
-        onWebView().withElement(findElement(Locator.ID, "email-button")).check(webMatches(getText(), containsString("Send Email Stats")));
+        onWebView().withElement(findElement(Locator.ID, "logout-button")).check(webMatches(getText(), containsString("Log Out")));
 
         Thread.sleep(3000);
 

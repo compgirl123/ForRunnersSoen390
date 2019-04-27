@@ -3,18 +3,18 @@
         <ion-list>
             <ion-item ng-repeat="item in tracks" class="list card">
                 <div class="item item-avatar">
-                    <img src="{{item.track.album.images[0].url}}">
-                    <h2>{{item.track.name}}</h2>
-                    <p>{{item.track.artists[0].name}}</p>
+                    <img id="album-name" src="{{item.track.album.images[0].url}}">
+                    <h2 id="track-name">{{item.track.name}}</h2>
+                    <p id="artist-name">{{item.track.artists[0].name}}</p>
                 </div>
                 <div class="item tabs tabs-secondary tabs-icon-left">
                     <a class="tab-item" ng-click="playTrack(item)">
                         <i class="icon ion-music-note"></i>
-                        Play Preview
+                        <p id="play-preview-label"> Play Preview</p>
                     </a>
                     <a class="tab-item" ng-click="openSpotify(item.track.external_urls.spotify)">
                         <i class="icon ion-share"></i>
-                        Open in Spotify
+                        <p id="open-spotify-label">Open in Spotify</p>
                     </a>
                 </div>
             </ion-item>

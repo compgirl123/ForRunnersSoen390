@@ -6243,8 +6243,6 @@ $state.go("app.tips");
 
 })
 
-
-
   .controller('ShareCtrl', ['$scope', function($scope){
     $scope.share = function(t){
         var link = "https://play.google.com/store/apps/details?id=net.khertan.forrunners&hl=en";
@@ -6252,21 +6250,21 @@ $state.go("app.tips");
          I have successfully completed the " + $scope.distance + "K challenge on the ForRunners App!\
          To download the app click on the link below \
          Link: " + link;
-
+         var img = "";
          if($scope.distance == 3)
                 {
-                  var img = "img/3kcongrats.png"
+                  img = "img/3kcongrats.png";
                 }
                 else if ($scope.distance == 5)
                 {
-                  var img = "img/5kcongrats.png"
+                  img = "img/5kcongrats.png";
                 }
                 else if ($scope.distance == 10)
                 {
-                  var img = "img/10kcongrats.png"
+                  img = "img/10kcongrats.png";
 
                 }
-        console.log(msg)
+        console.log(msg);
 
         if(t == 'w')
             window.plugins.socialsharing
@@ -6285,5 +6283,5 @@ $state.go("app.tips");
             window.plugins.socialsharing
             .shareViaEmail(msg, img, link);
         }
-    }
+    };
 }]);

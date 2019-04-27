@@ -63,7 +63,7 @@
           {{ "Email" | translate }}
         </ion-item>-->
         <ion-item ng-controller="EmailCtrl">
-          <button class="button button-full  button-dark" ng-click="send()" ng-if="isLogged">
+          <button class="button button-full  button-dark" id="email-button" ng-click="send()" ng-if="isLogged">
             {{ "Send Email Stats" | translate }}
           </button>
           </ion-item>
@@ -71,7 +71,7 @@
 
 
         <ion-item ng-controller="LoginCtrl">
-        <button class="button button-full  button-dark" ng-click="signout()" ng-if="isLogged">
+        <button class="button button-full button-dark" id="logout-button" ng-click="signout()" ng-if="isLogged">
           {{ "Logout" | translate }}
         </button>
         </ion-item>
