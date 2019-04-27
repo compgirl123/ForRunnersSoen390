@@ -5060,7 +5060,7 @@ $scope.stopChallengeSession = function() {
 
 
   })
-  controller('ListsCtrl', function($scope, $ionicPlatform, $cordovaOauth, Spotify) {
+  .controller('ListsCtrl', function($scope, $ionicPlatform, $cordovaOauth, Spotify) {
 
 
 
