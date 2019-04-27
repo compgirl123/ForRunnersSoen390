@@ -606,7 +606,8 @@ angular
       _calendar: "Calendar",
       _create_plan: "My Coach",
       _Tips: "Tips",
-      _Workout: "Workout Session"
+      _Workout: "Workout Session",
+      _music : "music"
     });
 
     $translateProvider.translations("fr-FR", {
