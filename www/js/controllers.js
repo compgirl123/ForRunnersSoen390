@@ -5995,18 +5995,18 @@ $state.go("app.tips");
 
          if($scope.distance == 3)
                 {
-                  var img = "img/3kcongrats.png"
+                  var img = "img/3kcongrats.png";
                 }
                 else if ($scope.distance == 5)
                 {
-                  var img = "img/5kcongrats.png"
+                  var img = "img/5kcongrats.png";
                 }
                 else if ($scope.distance == 10)
                 {
-                  var img = "img/10kcongrats.png"
+                  var img = "img/10kcongrats.png";
 
                 }
-        console.log(msg)
+        console.log(msg);
 
         if(t == 'w')
             window.plugins.socialsharing
