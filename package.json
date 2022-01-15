@@ -79,7 +79,7 @@
     "karma-jasmine": "^2.0.1",
     "karma-junit-reporter": "^1.2.0",
     "karma-phantomjs-launcher": "^1.0.4",
-    "shelljs": "^0.3.0"
+    "shelljs": "^0.8.5"
   },
   "cordova": {
     "plugins": {
